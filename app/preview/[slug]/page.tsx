@@ -73,6 +73,12 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                   Make It Live
                 </button>
               </form>
+              <Link
+                href={`/couple-portal/${slug}`}
+                className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
+              >
+                Open Couple Portal
+              </Link>
               {weddingRecord.status === "live" ? (
                 <Link
                   href={`/site/${slug}`}

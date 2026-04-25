@@ -20,6 +20,7 @@ type SiteHeaderProps = {
   siteBasePath?: string;
   allowModeToggle?: boolean;
   weddingData?: WeddingData;
+  adminNavItemsOverride?: Array<{ label: string; path: string }>;
 };
 
 export function SiteHeader({
@@ -30,10 +31,13 @@ export function SiteHeader({
   portalType = "couple",
   siteBasePath = "/templates",
   allowModeToggle = true,
-  weddingData
+  weddingData,
+  adminNavItemsOverride
 }: SiteHeaderProps) {
   const wedding = weddingData ?? getWeddingData();
-  const adminNavItems = portalType === "operator" ? operatorNavItems : portalNavItems;
+  const adminNavItems =
+    adminNavItemsOverride ??
+    (portalType === "operator" ? operatorNavItems : portalNavItems);
 
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_84%,white)]/95 backdrop-blur">

@@ -12,9 +12,13 @@ type ChecklistItem = {
 
 type CoupleChecklistProps = {
   initialItems: ChecklistItem[];
+  apiBasePath?: string;
 };
 
-export function CoupleChecklist({ initialItems }: CoupleChecklistProps) {
+export function CoupleChecklist({
+  initialItems,
+  apiBasePath = "/api/portal"
+}: CoupleChecklistProps) {
   const [items, setItems] = useState<ChecklistItem[]>(initialItems);
   const [draftTitle, setDraftTitle] = useState("");
   const [draftCategory, setDraftCategory] = useState("Planning");
@@ -50,7 +54,7 @@ export function CoupleChecklist({ initialItems }: CoupleChecklistProps) {
       )
     );
 
-    const response = await fetch(`/api/portal/checklist/${id}`, {
+    const response = await fetch(`${apiBasePath}/checklist/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -86,7 +90,7 @@ export function CoupleChecklist({ initialItems }: CoupleChecklistProps) {
       return;
     }
 
-    const response = await fetch(`/api/portal/checklist/${id}`, {
+    const response = await fetch(`${apiBasePath}/checklist/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -104,7 +108,7 @@ export function CoupleChecklist({ initialItems }: CoupleChecklistProps) {
   async function addItem() {
     if (!draftTitle.trim()) return;
 
-    const response = await fetch("/api/portal/checklist", {
+    const response = await fetch(`${apiBasePath}/checklist`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -138,7 +142,7 @@ export function CoupleChecklist({ initialItems }: CoupleChecklistProps) {
     const previousItems = items;
     setItems((current) => current.filter((item) => item.id !== id));
 
-    const response = await fetch(`/api/portal/checklist/${id}`, {
+    const response = await fetch(`${apiBasePath}/checklist/${id}`, {
       method: "DELETE"
     });
 

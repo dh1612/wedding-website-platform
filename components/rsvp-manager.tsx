@@ -18,6 +18,7 @@ type PortalGuest = {
 
 type RSVPManagerProps = {
   guests: PortalGuest[];
+  apiBasePath?: string;
 };
 
 type DraftGuest = {
@@ -36,7 +37,10 @@ const emptyDraft: DraftGuest = {
   dietary: ""
 };
 
-export function RSVPManager({ guests }: RSVPManagerProps) {
+export function RSVPManager({
+  guests,
+  apiBasePath = "/api/portal"
+}: RSVPManagerProps) {
   const [guestList, setGuestList] = useState<PortalGuest[]>(guests);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | RSVPStatus>("all");
@@ -79,7 +83,7 @@ export function RSVPManager({ guests }: RSVPManagerProps) {
       return;
     }
 
-    const response = await fetch("/api/portal/guests", {
+    const response = await fetch(`${apiBasePath}/guests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -109,7 +113,7 @@ export function RSVPManager({ guests }: RSVPManagerProps) {
     const previousGuests = guestList;
     setGuestList((current) => current.filter((guest) => guest.id !== id));
 
-    const response = await fetch(`/api/portal/guests/${id}`, {
+    const response = await fetch(`${apiBasePath}/guests/${id}`, {
       method: "DELETE"
     });
 

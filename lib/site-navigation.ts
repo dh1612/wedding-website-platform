@@ -28,6 +28,16 @@ export const portalNavItems = [
   { label: "Seating", path: "/plan-your-tables" }
 ];
 
+export function buildPortalNavItems(basePath: string) {
+  return [
+    { label: "Portal Home", path: basePath },
+    { label: "Checklist", path: `${basePath}#checklist` },
+    { label: "Calendar", path: `${basePath}#calendar` },
+    { label: "RSVPs", path: `/rsvp-dashboard/${basePath.split("/").pop()}` },
+    { label: "Seating", path: `/plan-your-tables/${basePath.split("/").pop()}` }
+  ];
+}
+
 export const operatorNavItems = [
   { label: "Admin", path: "/admin" },
   { label: "Portal", path: "/couple-portal" },

@@ -2,6 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { type SiteMode } from "@/lib/site-navigation";
 import { type CSSProperties, type ReactNode } from "react";
+import type { WeddingData } from "@/types/wedding";
 
 type SiteFrameProps = {
   children: ReactNode;
@@ -11,6 +12,8 @@ type SiteFrameProps = {
   themeStyle: CSSProperties;
   adminView?: boolean;
   portalType?: "couple" | "operator";
+  adminNavItemsOverride?: Array<{ label: string; path: string }>;
+  weddingData?: WeddingData;
 };
 
 export function SiteFrame({
@@ -20,7 +23,9 @@ export function SiteFrame({
   themeId,
   themeStyle,
   adminView = false,
-  portalType = "couple"
+  portalType = "couple",
+  adminNavItemsOverride,
+  weddingData
 }: SiteFrameProps) {
   return (
     <main data-theme={themeId} data-admin={adminView ? "true" : "false"} style={themeStyle}>
@@ -30,6 +35,8 @@ export function SiteFrame({
         themeId={themeId}
         adminView={adminView}
         portalType={portalType}
+        adminNavItemsOverride={adminNavItemsOverride}
+        weddingData={weddingData}
       />
       {children}
       <SiteFooter />

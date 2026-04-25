@@ -14,6 +14,7 @@ type CalendarTask = {
 type WeddingCalendarPlannerProps = {
   weddingDateLabel: string;
   initialItems: CalendarTask[];
+  apiBasePath?: string;
 };
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -76,7 +77,8 @@ function startOfMonth(date: Date) {
 
 export function WeddingCalendarPlanner({
   weddingDateLabel,
-  initialItems
+  initialItems,
+  apiBasePath = "/api/portal"
 }: WeddingCalendarPlannerProps) {
   const [tasks, setTasks] = useState<CalendarTask[]>(initialItems);
   const [draftTitle, setDraftTitle] = useState("");
@@ -199,7 +201,7 @@ export function WeddingCalendarPlanner({
       return;
     }
 
-    const response = await fetch("/api/portal/calendar", {
+    const response = await fetch(`${apiBasePath}/calendar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -238,7 +240,7 @@ export function WeddingCalendarPlanner({
     const previousTasks = tasks;
     setTasks((current) => current.filter((task) => task.id !== id));
 
-    const response = await fetch(`/api/portal/calendar/${id}`, {
+    const response = await fetch(`${apiBasePath}/calendar/${id}`, {
       method: "DELETE"
     });
 
