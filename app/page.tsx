@@ -154,6 +154,13 @@ export default function MarketingHomePage() {
             >
               Start Your Website
             </Link>
+            <Link
+              href="/brochure"
+              className="rounded-full border border-[#d8cfc5] bg-white/80 px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-white"
+              style={{ color: "#4e453f", backgroundColor: "#ffffff" }}
+            >
+              Open Brochure
+            </Link>
             <a
               href="#packages"
               className="rounded-full border border-[#d8cfc5] bg-white/80 px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-white"
@@ -209,6 +216,48 @@ export default function MarketingHomePage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="templates" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-14">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-4">
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Digital Brochure</p>
+              <h2 className="text-4xl leading-none sm:text-5xl">A quicker visual walkthrough for couples who want the highlights fast</h2>
+              <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
+                Instead of reading through every section on one long page, couples can open a cleaner brochure-style preview with visual pages for the website, packages, and private couple area.
+              </p>
+            </div>
+            <Link
+              href="/brochure"
+              className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45]"
+              style={{ color: "#ffffff", backgroundColor: "#184b38" }}
+            >
+              Open The Brochure
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {featuredThemes.map((theme) => (
+              <Link
+                key={theme.id}
+                href="/brochure"
+                className="overflow-hidden rounded-[1.7rem] border border-black/6 bg-[#fcfaf7] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(52,35,24,0.12)]"
+              >
+                <div className="h-40 w-full" style={theme.previewStyle} />
+                <div className="p-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-2xl">{theme.name}</h3>
+                    <span className="text-[11px] uppercase tracking-[0.26em] text-[#9a7d64]">
+                      {theme.season}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm font-medium text-[#184b38]">{theme.label}</p>
+                  <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.description}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -347,47 +396,6 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      <section id="templates" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-14">
-        <div className="rounded-[2.2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-4">
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Digital Brochure</p>
-              <h2 className="text-4xl leading-none sm:text-5xl">A quicker visual walkthrough for couples who want the highlights fast</h2>
-              <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-                Instead of reading through every section on one long page, couples can open a cleaner brochure-style preview with visual pages for the website, packages, and private couple area.
-              </p>
-            </div>
-            <Link
-              href="/brochure"
-              className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45]"
-              style={{ color: "#ffffff", backgroundColor: "#184b38" }}
-            >
-              Open The Brochure
-            </Link>
-          </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {featuredThemes.map((theme) => (
-              <Link
-                key={theme.id}
-                href="/brochure"
-                className="overflow-hidden rounded-[1.7rem] border border-black/6 bg-[#fcfaf7] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(52,35,24,0.12)]"
-              >
-                <div className="h-40 w-full" style={theme.previewStyle} />
-                <div className="p-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-2xl">{theme.name}</h3>
-                    <span className="text-[11px] uppercase tracking-[0.26em] text-[#9a7d64]">
-                      {theme.season}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm font-medium text-[#184b38]">{theme.label}</p>
-                  <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.description}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
