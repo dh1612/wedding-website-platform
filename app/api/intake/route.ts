@@ -30,10 +30,10 @@ function getReadableErrorMessage(error: unknown) {
   }
 
   if (message.includes("Invalid `prisma")) {
-    return "The database save step failed on the live server. Please check the Vercel function logs for the intake route.";
+    return `The database save step failed on the live server: ${message}`;
   }
 
-  return "We could not save your details just yet. Please try once more in a moment.";
+  return `We could not save your details just yet. Server said: ${message}`;
 }
 
 export async function POST(request: Request) {
