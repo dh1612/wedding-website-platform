@@ -23,13 +23,13 @@ export default async function GetStartedPage({
       <section className="mx-auto w-full max-w-6xl px-6 pt-14 lg:px-8">
         <div className="max-w-3xl space-y-5">
           <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-            Share Your Details
+            Start Your Website
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            Share what you know and we will prepare the first version for you
+            Start the process and we will prepare the first version with you
           </h1>
           <p className="text-lg leading-8 text-[#5f564e]">
-            The goal is simple: minimal effort for you, a beautiful first version for us to prepare, and a private link for you to review when it is ready.
+            Fill in what is ready, leave anything that is still unknown, and the website will be shaped from there.
           </p>
         </div>
       </section>

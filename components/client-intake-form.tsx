@@ -157,10 +157,10 @@ export function ClientIntakeForm({
       <div className="grid gap-8 xl:grid-cols-[0.8fr_1.2fr]">
         <div className="order-2 rounded-[2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 xl:order-1">
           <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-            Share Your Details
+            Start Your Website
           </p>
           <h1 className="mt-4 text-4xl leading-none sm:text-5xl">
-            Share what you know and we will prepare the first version for you
+            Start the process here and we will prepare the first version with you
           </h1>
           <p className="mt-5 text-lg leading-8 text-[#5f564e]">
             This is not a DIY builder. You send over the details, we shape them into a beautiful website, and you review it before it goes live.
@@ -251,6 +251,7 @@ export function ClientIntakeForm({
                     <span className="font-medium text-[#433b34]">Couple names</span>
                     <span className="text-[#9a7d64]">Required</span>
                   </div>
+                  <p className="text-sm leading-6 text-[#7a7168]">Type the names exactly as they should appear on the website.</p>
                 <input
                   value={values.couple}
                   onChange={(event) => updateField("couple", event.target.value)}
@@ -264,6 +265,7 @@ export function ClientIntakeForm({
                       <span className="font-medium text-[#433b34]">Client email</span>
                       <span className="text-[#9a7d64]">Required</span>
                     </div>
+                    <p className="text-sm leading-6 text-[#7a7168]">This is where the review link and updates will be sent.</p>
                     <input
                       value={values.email}
                       onChange={(event) => updateField("email", event.target.value)}
@@ -276,6 +278,7 @@ export function ClientIntakeForm({
                       <span className="font-medium text-[#433b34]">Wedding date</span>
                       <span className="text-[#9a7d64]">Required</span>
                     </div>
+                    <p className="text-sm leading-6 text-[#7a7168]">Choose the wedding date so the website timing and wording can be set correctly.</p>
                     <input
                       type="date"
                       value={values.date}
@@ -289,6 +292,7 @@ export function ClientIntakeForm({
                     <span className="font-medium text-[#433b34]">General location</span>
                     <span className="text-[#9a7d64]">Required</span>
                   </div>
+                  <p className="text-sm leading-6 text-[#7a7168]">A simple place name is enough here, like Santorini, Cork, or Tuscany.</p>
                   <input
                     value={values.locationSummary}
                     onChange={(event) =>
@@ -306,6 +310,9 @@ export function ClientIntakeForm({
                 <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
                   Everything on this step is optional. Add what you know now and leave the rest for later.
                 </div>
+                <p className="text-sm leading-6 text-[#7a7168]">
+                  If a box applies, type into it. If not, leave it empty and continue.
+                </p>
                 <div className="grid gap-4 md:grid-cols-2">
                   <input
                     value={values.ceremonyTime}
@@ -371,6 +378,9 @@ export function ClientIntakeForm({
                 <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
                   These details make the guest site more useful, but they are not needed to prepare the first version.
                 </div>
+                <p className="text-sm leading-6 text-[#7a7168]">
+                  Add guest-facing information here if it is already known. Otherwise, this can be skipped for now.
+                </p>
                 <textarea
                   value={values.accommodationText}
                   onChange={(event) =>
@@ -402,6 +412,9 @@ export function ClientIntakeForm({
                 <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
                   Raw notes are perfect here. We can turn rough wording into something polished in the first version.
                 </div>
+                <p className="text-sm leading-6 text-[#7a7168]">
+                  This is the free-text step. Write in full sentences, bullet points, or rough notes.
+                </p>
                 <textarea
                   value={values.storyText}
                   onChange={(event) => updateField("storyText", event.target.value)}
