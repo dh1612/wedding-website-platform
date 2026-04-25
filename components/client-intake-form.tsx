@@ -171,7 +171,7 @@ export function ClientIntakeForm({
   }
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-10 lg:px-8 lg:pb-24">
+    <section className="mx-auto w-full max-w-4xl px-6 pb-16 pt-10 lg:px-8 lg:pb-24">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <button
           type="button"
@@ -189,237 +189,200 @@ export function ClientIntakeForm({
         </Link>
       </div>
 
-      <div className="grid gap-8 xl:grid-cols-[0.78fr_1.22fr]">
-        <div className="rounded-[2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
-          <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-            Before You Start
-          </p>
-          <h2 className="mt-4 text-4xl leading-none sm:text-5xl">
-            Send what is ready
-          </h2>
-          <p className="mt-5 text-lg leading-8 text-[#5f564e]">
-            Takes 2 minutes. Fill in what you have and we handle the rest.
-          </p>
-          <div className="mt-6 rounded-[1.5rem] border border-[#184b38]/12 bg-[#f6fbf8] p-5 text-sm leading-7 text-[#486159]">
-            This is not a DIY builder. The couple shares the basics, we prepare the first version, then refine it after review.
+      <div className="rounded-[2rem] border border-black/6 bg-white/88 p-6 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-8 lg:p-10">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="max-w-2xl">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+              Create Your Website
+            </p>
+            <h2 className="mt-2 text-3xl sm:text-4xl">The important bits first</h2>
+            <p className="mt-4 text-base leading-7 text-[#5f564e]">
+              Takes 2 minutes. Fill in what you have. Rough notes are perfect.
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[#486159]">
+              Progress is saved while you move around, so nothing already typed should disappear.
+            </p>
           </div>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] p-5">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Required</p>
-              <p className="mt-3 text-lg leading-7">Couple names and contact email.</p>
-            </div>
-            <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] p-5">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Optional</p>
-              <p className="mt-3 text-lg leading-7">Wedding date, location, story, schedule, travel notes, FAQ, images, and preferred style direction.</p>
-            </div>
-          </div>
-
-          {selectedTheme ? (
-            <div className="mt-8 rounded-[1.5rem] border border-black/6 bg-[#faf7f2] p-5">
-              <p className="text-[12px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                Selected style
-              </p>
-              <div className="mt-4 grid gap-4 md:grid-cols-[180px_1fr]">
-                <div className="h-32 rounded-[1.2rem]" style={selectedTheme.previewStyle} />
-                <div>
-                  <h3 className="text-2xl">{selectedTheme.name}</h3>
-                  <p className="mt-2 text-sm font-medium text-[#184b38]">
-                    {selectedTheme.label}
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-[#6d655d]">
-                    {selectedTheme.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ) : null}
+          <button
+            type="button"
+            onClick={() => {
+              setValues({ ...defaultValues, packageTier: initialPackage });
+              window.localStorage.removeItem(STORAGE_KEY);
+              setStatusMessage("");
+              setResult(null);
+            }}
+            className="rounded-full border border-black/8 px-4 py-2 text-sm text-[#5f564e]"
+          >
+            Clear
+          </button>
         </div>
 
-        <div className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
-          <div className="flex items-center justify-between gap-4">
+        <div className="mt-6 rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-base leading-7 text-[#486159]">
+          Send us rough details — we&apos;ll turn it into a polished wedding website.
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4 text-sm leading-6 text-[#6f665e]">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Required</p>
+            <p className="mt-2">Couple names and contact email.</p>
+          </div>
+          <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4 text-sm leading-6 text-[#6f665e]">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Optional</p>
+            <p className="mt-2">Wedding date, location, style, story, schedule, travel notes, FAQ, and images.</p>
+          </div>
+        </div>
+
+        {statusMessage && !result ? (
+          <div className="mt-6 rounded-[1.2rem] border border-[#b86a53]/18 bg-[#fff3ef] px-4 py-3 text-sm leading-6 text-[#8a4c3a]">
+            {statusMessage}
+          </div>
+        ) : null}
+
+        <div className="mt-8 space-y-6">
+          <div className="space-y-4">
             <div>
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-                Create Your Website
-              </p>
-              <h2 className="mt-2 text-3xl">Send the details once</h2>
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Package selection</p>
+              <h3 className="mt-2 text-2xl">Choose the support level</h3>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setValues({ ...defaultValues, packageTier: initialPackage });
-                window.localStorage.removeItem(STORAGE_KEY);
-                setStatusMessage("");
-                setResult(null);
-              }}
-              className="rounded-full border border-black/8 px-4 py-2 text-sm text-[#5f564e]"
-            >
-              Clear
-            </button>
-          </div>
-
-          <div className="mt-6 rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-base leading-7 text-[#486159]">
-            Send us rough details — we&apos;ll turn it into a polished wedding website.
-          </div>
-
-          <div className="mt-6 rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
-            Takes 2 minutes. Fill in what you have. Rough notes are perfect.
-          </div>
-
-          <p className="mt-3 text-sm leading-6 text-[#6d655d]">
-            Progress is saved while you move around, so nothing already typed should disappear.
-          </p>
-
-          {statusMessage && !result ? (
-            <div className="mt-6 rounded-[1.2rem] border border-[#b86a53]/18 bg-[#fff3ef] px-4 py-3 text-sm leading-6 text-[#8a4c3a]">
-              {statusMessage}
-            </div>
-          ) : null}
-
-          <div className="mt-8 space-y-8">
-            <div className="space-y-4">
-              <div>
-                <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Package selection</p>
-                <h3 className="mt-2 text-2xl">Choose the support level</h3>
-              </div>
-              <div className="grid gap-4 md:grid-cols-3">
-                {intakePackages.map((pkg) => (
-                  <button
-                    key={pkg.id}
-                    type="button"
-                    onClick={() => updateField("packageTier", pkg.id)}
-                    className={`rounded-[1.4rem] border p-5 text-left ${
-                      values.packageTier === pkg.id
-                        ? "border-[#184b38] bg-[#184b38] text-white"
-                        : "border-black/6 bg-[#faf7f2]"
-                    }`}
-                  >
-                    <p className="text-sm font-medium">{pkg.name}</p>
-                    <p className="mt-2 text-2xl">{pkg.price}</p>
-                    <p
-                      className={`mt-3 text-sm leading-6 ${
-                        values.packageTier === pkg.id ? "text-white/78" : "text-[#6d655d]"
-                      }`}
-                    >
-                      {pkg.summary}
-                    </p>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Preferred style direction</p>
-                <h3 className="mt-2 text-2xl">Choose a look, or let us choose</h3>
-                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                  Pick a direction early so the first version feels closer to the right look straight away.
-                </p>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-3">
+              {intakePackages.map((pkg) => (
                 <button
+                  key={pkg.id}
                   type="button"
-                  onClick={() => updateField("themePreference", "")}
-                  className={`rounded-[1.35rem] border p-4 text-left ${
-                    !values.themePreference
+                  onClick={() => updateField("packageTier", pkg.id)}
+                  className={`rounded-[1.4rem] border p-5 text-left ${
+                    values.packageTier === pkg.id
                       ? "border-[#184b38] bg-[#184b38] text-white"
-                      : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
+                      : "border-black/6 bg-[#faf7f2]"
                   }`}
                 >
-                  <p className="text-sm font-medium">Not sure? We&apos;ll choose for you</p>
+                  <p className="text-sm font-medium">{pkg.name}</p>
+                  <p className="mt-2 text-2xl">{pkg.price}</p>
                   <p
-                    className={`mt-2 text-sm leading-6 ${
-                      !values.themePreference ? "text-white/78" : "text-[#6d655d]"
+                    className={`mt-3 text-sm leading-6 ${
+                      values.packageTier === pkg.id ? "text-white/78" : "text-[#6d655d]"
                     }`}
                   >
-                    This is selected by default, so there is no pressure to choose a style right away.
+                    {pkg.summary}
                   </p>
                 </button>
-                {intakeThemeOptions.map((theme) => {
-                  const isSelected = values.themePreference === theme.id;
+              ))}
+            </div>
+          </div>
 
-                  return (
-                    <button
-                      key={theme.id}
-                      type="button"
-                      onClick={() => updateField("themePreference", theme.id)}
-                      className={`overflow-hidden rounded-[1.35rem] border text-left ${
-                        isSelected
-                          ? "border-[#184b38] bg-[#184b38] text-white"
-                          : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
-                      }`}
-                    >
-                      <div className="h-28 w-full" style={theme.previewStyle} />
-                      <div className="p-4">
-                        <p className="text-lg font-medium">{theme.name}</p>
-                        <p
-                          className={`mt-2 text-sm leading-6 ${
-                            isSelected ? "text-white/78" : "text-[#6d655d]"
-                          }`}
-                        >
-                          {theme.label}. {theme.description}
-                        </p>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
-                Want to browse more design directions first?{" "}
-                <Link
-                  href="/brochure#designs"
-                  className="font-medium text-[#184b38] underline underline-offset-2"
+          <div className="space-y-4">
+            <div>
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
+              <h3 className="mt-2 text-2xl">The only essentials</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                Only names and email are needed to get the first version started.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <input
+                value={values.couple}
+                onChange={(event) => updateField("couple", event.target.value)}
+                placeholder="Couple names"
+                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+              />
+              <input
+                value={values.email}
+                onChange={(event) => updateField("email", event.target.value)}
+                placeholder="Contact email"
+                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+              />
+              <input
+                type="date"
+                value={values.date}
+                onChange={(event) => updateField("date", event.target.value)}
+                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+              />
+              <input
+                value={values.locationSummary}
+                onChange={(event) => updateField("locationSummary", event.target.value)}
+                placeholder="General location"
+                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Preferred style direction</p>
+              <h3 className="mt-2 text-2xl">Choose a look, or let us choose</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                Pick a direction early so the first version feels closer to the right look straight away.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <button
+                type="button"
+                onClick={() => updateField("themePreference", "")}
+                className={`rounded-[1.35rem] border p-4 text-left ${
+                  !values.themePreference
+                    ? "border-[#184b38] bg-[#184b38] text-white"
+                    : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
+                }`}
+              >
+                <p className="text-sm font-medium">Not sure? We&apos;ll choose for you</p>
+                <p
+                  className={`mt-2 text-sm leading-6 ${
+                    !values.themePreference ? "text-white/78" : "text-[#6d655d]"
+                  }`}
                 >
-                  View the brochure designs
-                </Link>
-                .
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
-                <h3 className="mt-2 text-2xl">The only essentials</h3>
-                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                  Only names and email are needed to get the first version started.
+                  This is selected by default, so there is no pressure to choose a style right away.
                 </p>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <input
-                  value={values.couple}
-                  onChange={(event) => updateField("couple", event.target.value)}
-                  placeholder="Couple names"
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-                <input
-                  value={values.email}
-                  onChange={(event) => updateField("email", event.target.value)}
-                  placeholder="Contact email"
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-                <input
-                  type="date"
-                  value={values.date}
-                  onChange={(event) => updateField("date", event.target.value)}
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-                <input
-                  value={values.locationSummary}
-                  onChange={(event) => updateField("locationSummary", event.target.value)}
-                  placeholder="General location"
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-              </div>
-            </div>
+              </button>
+              {intakeThemeOptions.map((theme) => {
+                const isSelected = values.themePreference === theme.id;
 
-            <div className="space-y-4">
-              <div>
-                <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
-                <h3 className="mt-2 text-2xl">Anything already known</h3>
-                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                  Add as much or as little as is ready right now.
-                </p>
-              </div>
+                return (
+                  <button
+                    key={theme.id}
+                    type="button"
+                    onClick={() => updateField("themePreference", theme.id)}
+                    className={`overflow-hidden rounded-[1.35rem] border text-left ${
+                      isSelected
+                        ? "border-[#184b38] bg-[#184b38] text-white"
+                        : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
+                    }`}
+                  >
+                    <div className="h-28 w-full" style={theme.previewStyle} />
+                    <div className="p-4">
+                      <p className="text-lg font-medium">{theme.name}</p>
+                      <p
+                        className={`mt-2 text-sm leading-6 ${
+                          isSelected ? "text-white/78" : "text-[#6d655d]"
+                        }`}
+                      >
+                        {theme.label}. {theme.description}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
+              Want to browse more design directions first?{" "}
+              <Link
+                href="/brochure#designs"
+                className="font-medium text-[#184b38] underline underline-offset-2"
+              >
+                View the brochure designs
+              </Link>
+              .
+            </div>
+          </div>
+
+          <details className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4">
+            <summary className="cursor-pointer list-none">
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
+              <h3 className="mt-2 text-2xl">Add more if it is ready</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                Ceremony, reception, travel, FAQ, story, and images can all be added later.
+              </p>
+            </summary>
+            <div className="mt-6 space-y-6">
               <div className="grid gap-4 md:grid-cols-2">
                 <input
                   value={values.ceremonyTime}
@@ -450,35 +413,28 @@ export function ClientIntakeForm({
                 value={values.scheduleText}
                 onChange={(event) => updateField("scheduleText", event.target.value)}
                 placeholder={"Schedule, one item per line\n4:00 PM - Guests arrive\n4:30 PM - Ceremony"}
-                rows={5}
+                rows={4}
                 className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
               />
               <textarea
                 value={values.travelText}
                 onChange={(event) => updateField("travelText", event.target.value)}
                 placeholder="Travel and transport notes"
-                rows={4}
+                rows={3}
                 className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
               />
               <textarea
                 value={values.faqText}
                 onChange={(event) => updateField("faqText", event.target.value)}
                 placeholder={"FAQ, one item per line\nCan I bring a plus one? Only if named on the invitation."}
-                rows={5}
+                rows={4}
                 className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
               />
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Story and images</p>
-                <h3 className="mt-2 text-2xl">Rough notes are perfect</h3>
-              </div>
               <textarea
                 value={values.storyText}
                 onChange={(event) => updateField("storyText", event.target.value)}
                 placeholder="Share the couple story in raw notes, short phrases, or rough paragraphs."
-                rows={8}
+                rows={5}
                 className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
               />
               <textarea
@@ -493,83 +449,59 @@ export function ClientIntakeForm({
                   )
                 }
                 placeholder={"Image URLs, one per line\nhttps://..."}
-                rows={5}
+                rows={4}
                 className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
               />
             </div>
-          </div>
+          </details>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <div className="space-y-1">
-              <p className="text-sm leading-6 text-[#6d655d]">
-                You send the details once. We prepare the first version for review.
+          {result ? (
+            <div className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">
+                First version started
               </p>
-              <p className="text-sm leading-6 text-[#184b38]">
+              <h3 className="mt-3 text-3xl">Thank you</h3>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-[#486159]">
+                The details have been received and the first version is now being prepared for review.
+                A private review link will be shared once everything has been checked and prepared properly.
+              </p>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href={result.styleExampleHref}
+                  className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#133c2d]"
+                >
+                  View {result.styleName} Example
+                </Link>
+                {result.packageTier === "premium" ? (
+                  <Link
+                    href="/couple-area"
+                    className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-6 py-3 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+                  >
+                    View Premium Couple Area
+                  </Link>
+                ) : null}
+              </div>
+
+              <p className="mt-4 text-sm leading-6 text-[#6d655d]">
+                Reference: {result.slug}
+              </p>
+            </div>
+          ) : (
+            <div className="mt-8">
+              <button
+                type="button"
+                onClick={submitIntake}
+                disabled={isSubmitting}
+                className="inline-flex w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-4 text-base font-medium text-white transition hover:bg-[#133c2d] disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {isSubmitting ? "Preparing..." : "Prepare My Website"}
+              </button>
+              <p className="mt-3 text-center text-sm leading-6 text-[#486159]">
                 No payment needed to get your first version started.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={submitIntake}
-              disabled={isSubmitting}
-              className="rounded-full bg-[#184b38] px-6 py-3.5 text-sm font-medium text-white disabled:opacity-50"
-            >
-              {isSubmitting ? "Preparing your website..." : "Prepare My Website"}
-            </button>
-          </div>
-
-          {result ? (
-            <div className="mt-8 rounded-[1.5rem] border border-[#184b38]/20 bg-[#edf6f2] p-6">
-              <p className="text-[12px] uppercase tracking-[0.3em] text-[#184b38]">
-                Thank You
-              </p>
-              <p className="mt-3 text-lg text-[#23413a]">
-                The details have been received and the first version is now being prepared for review.
-              </p>
-              <p className="mt-4 text-sm leading-6 text-[#50645f]">
-                A private review link will be shared once everything has been checked and prepared properly. There is nothing else needed from the couple right now.
-              </p>
-              <div className="mt-6 rounded-[1.4rem] border border-[#184b38]/12 bg-white/75 p-5">
-                <p className="text-[12px] uppercase tracking-[0.28em] text-[#2f6f58]">
-                  Preview what comes next
-                </p>
-                <h4 className="mt-2 text-2xl text-[#23413a]">
-                  {result.packageTier === "premium"
-                    ? "Website example plus couple area preview"
-                    : `${result.styleName} website example`}
-                </h4>
-                <p className="mt-3 text-sm leading-6 text-[#486159]">
-                  {result.packageTier === "premium"
-                    ? "This gives a quick feel for both the guest-facing website and the private planning area included in Premium."
-                    : result.packageTier === "smart"
-                      ? "This gives a quick feel for the selected style direction. Smart also includes AI-assisted wording polish on the first version."
-                      : "This is a quick visual example of the direction selected for the website."}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <Link
-                    href={result.styleExampleHref}
-                    className="inline-flex rounded-full bg-[#184b38] px-5 py-3 text-sm font-medium text-white"
-                  >
-                    View Website Example
-                  </Link>
-                  {result.packageTier === "premium" ? (
-                    <Link
-                      href="/couple-area"
-                      className="inline-flex rounded-full border border-[#184b38]/12 bg-white px-5 py-3 text-sm font-medium text-[#22483c]"
-                    >
-                      View Couple Area Preview
-                    </Link>
-                  ) : null}
-                  <Link
-                    href="/brochure"
-                    className="inline-flex rounded-full border border-[#184b38]/12 bg-white px-5 py-3 text-sm font-medium text-[#22483c]"
-                  >
-                    Open Brochure
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ) : null}
+          )}
         </div>
       </div>
     </section>
