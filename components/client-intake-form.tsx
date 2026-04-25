@@ -1,17 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   intakePackages,
   type IntakePackage,
   type IntakeSubmission
 } from "@/lib/intake";
+import { weddingThemes } from "@/lib/themes";
 
 type ClientIntakeFormProps = {
   initialPackage?: IntakePackage;
 };
 
 const STORAGE_KEY = "wedding-intake-draft-v1";
+const intakeThemeOptions = weddingThemes.slice(0, 6);
 
 function isLikelyImageUrl(value: string) {
   try {
@@ -73,7 +76,11 @@ export function ClientIntakeForm({
   });
   const [statusMessage, setStatusMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [result, setResult] = useState<{ slug: string } | null>(null);
+  const [result, setResult] = useState<{
+    slug: string;
+    styleExampleHref: string;
+    styleName: string;
+  } | null>(null);
 
   const missingBasics = useMemo(() => {
     const missing: string[] = [];
@@ -113,6 +120,12 @@ export function ClientIntakeForm({
   const progress = useMemo(
     () => `${step + 1} / ${stepMeta.length}`,
     [step]
+  );
+  const selectedTheme = useMemo(
+    () =>
+      intakeThemeOptions.find((theme) => theme.id === values.themePreference) ??
+      null,
+    [values.themePreference]
   );
 
   function updateField<Key extends keyof IntakeSubmission>(
@@ -178,9 +191,15 @@ export function ClientIntakeForm({
     }
 
     const data = (await response.json()) as { slug: string; message: string };
+    const themeId = values.themePreference || weddingThemes[0]?.id || "soft-blush";
+    const themeName =
+      weddingThemes.find((theme) => theme.id === themeId)?.name ??
+      "Selected Style";
 
     setResult({
-      slug: data.slug
+      slug: data.slug,
+      styleExampleHref: `/wedding?theme=${themeId}`,
+      styleName: themeName
     });
     setStatusMessage(data.message);
     window.localStorage.removeItem(STORAGE_KEY);
@@ -285,6 +304,73 @@ export function ClientIntakeForm({
                       </p>
                     </button>
                   ))}
+                </div>
+                <div className="space-y-3 pt-2">
+                  <div className="flex items-center justify-between gap-3 text-sm">
+                    <span className="font-medium text-[#433b34]">Preferred style direction</span>
+                    <span className="text-[#7a7168]">Optional</span>
+                  </div>
+                  <p className="text-sm leading-6 text-[#7a7168]">
+                    Pick the look that feels closest to the wedding. This helps guide the first version we prepare.
+                  </p>
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    <button
+                      type="button"
+                      onClick={() => updateField("themePreference", "")}
+                      className={`rounded-[1.35rem] border p-4 text-left ${
+                        !values.themePreference
+                          ? "border-[#184b38] bg-[#184b38] text-white"
+                          : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
+                      }`}
+                    >
+                      <p className="text-sm font-medium">Let us choose</p>
+                      <p
+                        className={`mt-2 text-sm leading-6 ${
+                          !values.themePreference ? "text-white/78" : "text-[#6d655d]"
+                        }`}
+                      >
+                        If no style is selected, we will choose the direction that fits the wedding best.
+                      </p>
+                    </button>
+                    {intakeThemeOptions.map((theme) => {
+                      const isSelected = values.themePreference === theme.id;
+
+                      return (
+                        <button
+                          key={theme.id}
+                          type="button"
+                          onClick={() => updateField("themePreference", theme.id)}
+                          className={`overflow-hidden rounded-[1.35rem] border text-left ${
+                            isSelected
+                              ? "border-[#184b38] bg-[#184b38] text-white"
+                              : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
+                          }`}
+                        >
+                          <div className="h-28 w-full" style={theme.previewStyle} />
+                          <div className="p-4">
+                            <p className="text-lg font-medium">{theme.name}</p>
+                            <p
+                              className={`mt-2 text-sm leading-6 ${
+                                isSelected ? "text-white/78" : "text-[#6d655d]"
+                              }`}
+                            >
+                              {theme.label}. {theme.description}
+                            </p>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
+                    Want to browse a few more options first?{" "}
+                    <Link
+                      href="/brochure#designs"
+                      className="font-medium text-[#184b38] underline underline-offset-2"
+                    >
+                      View the brochure designs
+                    </Link>
+                    .
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-3 text-sm">
@@ -538,6 +624,49 @@ export function ClientIntakeForm({
                 <p className="mt-4 text-sm leading-6 text-[#50645f]">
                   A private review link will be shared once everything has been checked and prepared properly. There is nothing else needed from the couple right now.
                 </p>
+                <div className="mt-6 rounded-[1.4rem] border border-[#184b38]/12 bg-white/75 p-5">
+                  <p className="text-[12px] uppercase tracking-[0.28em] text-[#2f6f58]">
+                    Style preview
+                  </p>
+                  <h4 className="mt-2 text-2xl text-[#23413a]">{result.styleName}</h4>
+                  <p className="mt-3 text-sm leading-6 text-[#486159]">
+                    While the private first version is being checked, this gives a quick visual example of the selected direction.
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <Link
+                      href={result.styleExampleHref}
+                      className="inline-flex rounded-full bg-[#184b38] px-5 py-3 text-sm font-medium text-white"
+                    >
+                      View Style Example
+                    </Link>
+                    <Link
+                      href="/brochure"
+                      className="inline-flex rounded-full border border-[#184b38]/12 bg-white px-5 py-3 text-sm font-medium text-[#22483c]"
+                    >
+                      Open Brochure
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
+            {selectedTheme && !result ? (
+              <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] p-5">
+                <p className="text-[12px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                  Selected style
+                </p>
+                <div className="mt-4 grid gap-4 md:grid-cols-[220px_1fr]">
+                  <div className="h-36 rounded-[1.2rem]" style={selectedTheme.previewStyle} />
+                  <div>
+                    <h4 className="text-2xl">{selectedTheme.name}</h4>
+                    <p className="mt-2 text-sm font-medium text-[#184b38]">
+                      {selectedTheme.label}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-[#6d655d]">
+                      {selectedTheme.description}
+                    </p>
+                  </div>
+                </div>
               </div>
             ) : null}
           </div>
