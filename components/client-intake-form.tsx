@@ -75,6 +75,15 @@ export function ClientIntakeForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{ slug: string } | null>(null);
 
+  const missingBasics = useMemo(() => {
+    const missing: string[] = [];
+    if (!values.couple.trim()) missing.push("couple names");
+    if (!values.email.trim()) missing.push("contact email");
+    if (!values.date.trim()) missing.push("wedding date");
+    if (!values.locationSummary.trim()) missing.push("general location");
+    return missing;
+  }, [values.couple, values.email, values.date, values.locationSummary]);
+
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (!saved) return;
@@ -117,6 +126,12 @@ export function ClientIntakeForm({
   }
 
   function nextStep() {
+    if (step === 0 && missingBasics.length > 0) {
+      setStatusMessage(`Please add: ${missingBasics.join(", ")}.`);
+      return;
+    }
+
+    setStatusMessage("");
     setStep((current) => Math.min(current + 1, stepMeta.length - 1));
   }
 
@@ -125,6 +140,12 @@ export function ClientIntakeForm({
   }
 
   async function submitIntake() {
+    if (missingBasics.length > 0) {
+      setStep(0);
+      setStatusMessage(`Please add: ${missingBasics.join(", ")}.`);
+      return;
+    }
+
     setIsSubmitting(true);
     setStatusMessage("");
 
@@ -146,7 +167,13 @@ export function ClientIntakeForm({
     setIsSubmitting(false);
 
     if (!response.ok) {
-      setStatusMessage("We could not save your details just yet. Please check the essentials and try again.");
+      const errorBody = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+      setStatusMessage(
+        errorBody?.error ||
+          "We could not save your details just yet. Please check the essentials and try again."
+      );
       return;
     }
 
@@ -226,6 +253,12 @@ export function ClientIntakeForm({
           </div>
 
           <div className="mt-8 space-y-5">
+            {statusMessage && !result ? (
+              <div className="rounded-[1.2rem] border border-[#b86a53]/18 bg-[#fff3ef] px-4 py-3 text-sm leading-6 text-[#8a4c3a]">
+                {statusMessage}
+              </div>
+            ) : null}
+
             {step === 0 ? (
               <>
                 <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
@@ -453,12 +486,6 @@ export function ClientIntakeForm({
               </>
             ) : null}
           </div>
-
-          {statusMessage && !result ? (
-            <p className="mt-6 rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm text-[#5f564e]">
-              {statusMessage}
-            </p>
-          ) : null}
 
           <div className="mt-8 space-y-5">
             <div className="flex flex-wrap justify-between gap-3">
