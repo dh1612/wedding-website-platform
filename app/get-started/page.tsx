@@ -37,6 +37,9 @@ export default async function GetStartedPage({
           <p className="max-w-3xl text-sm leading-6 text-[#184b38]">
             No payment needed to get your first version started.
           </p>
+          <p className="max-w-3xl text-base leading-7 text-[#486159]">
+            Send us rough details — we&apos;ll turn it into a polished wedding website.
+          </p>
         </div>
       </section>
       <ClientIntakeForm initialPackage={packageTier} />

@@ -106,6 +106,17 @@ export function ClientIntakeForm({
     }));
   }
 
+  function handleBack() {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    }
+  }
+
   async function submitIntake() {
     if (missingBasics.length > 0) {
       setStatusMessage(`Please add: ${missingBasics.join(", ")}.`);
@@ -161,6 +172,23 @@ export function ClientIntakeForm({
 
   return (
     <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-10 lg:px-8 lg:pb-24">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="inline-flex items-center gap-2 rounded-full border border-black/8 bg-white/80 px-4 py-2.5 text-sm font-medium text-[#4e453f] transition hover:bg-white"
+        >
+          <span aria-hidden="true">←</span>
+          Back
+        </button>
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center rounded-full border border-black/8 bg-white/80 px-4 py-2.5 text-sm font-medium text-[#4e453f] transition hover:bg-white"
+        >
+          Return to Home
+        </Link>
+      </div>
+
       <div className="grid gap-8 xl:grid-cols-[0.78fr_1.22fr]">
         <div className="rounded-[2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
           <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
@@ -230,9 +258,17 @@ export function ClientIntakeForm({
             </button>
           </div>
 
+          <div className="mt-6 rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-base leading-7 text-[#486159]">
+            Send us rough details — we&apos;ll turn it into a polished wedding website.
+          </div>
+
           <div className="mt-6 rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
             Takes 2 minutes. Fill in what you have. Rough notes are perfect.
           </div>
+
+          <p className="mt-3 text-sm leading-6 text-[#6d655d]">
+            Progress is saved while you move around, so nothing already typed should disappear.
+          </p>
 
           {statusMessage && !result ? (
             <div className="mt-6 rounded-[1.2rem] border border-[#b86a53]/18 bg-[#fff3ef] px-4 py-3 text-sm leading-6 text-[#8a4c3a]">
