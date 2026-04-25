@@ -140,10 +140,13 @@ export default function MarketingHomePage() {
               Done-for-you wedding websites
             </p>
             <h1 className="max-w-3xl text-5xl leading-none sm:text-6xl lg:text-7xl">
-              Beautiful wedding websites, prepared with minimal effort from the couple
+              We build your wedding website for you
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              No DIY builder, no complicated setup, and no need for the couple to have every detail ready from day one. The process is simple, guided, and handled for them.
+              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website.
+            </p>
+            <p className="max-w-2xl text-base leading-7 text-[#5f564e] sm:text-lg">
+              We prepare the first version for you. You review, we refine, then you go live.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -209,10 +212,10 @@ export default function MarketingHomePage() {
               <div className="rounded-[1.7rem] border border-white/12 bg-white/92 p-6 shadow-[0_20px_60px_rgba(17,28,23,0.18)]">
                 <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">What makes it different</p>
                 <p className="mt-3 text-2xl leading-tight">
-                  A done-for-you service with beautiful design, structure, and review built in.
+                  This is not a DIY builder.
                 </p>
                 <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  Couples share what they know, the first version is prepared for them, and everything stays private until it is ready to review.
+                  We prepare the first version for you. You review, we refine, then you go live.
                 </p>
               </div>
             </div>

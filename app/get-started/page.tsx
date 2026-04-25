@@ -26,10 +26,13 @@ export default async function GetStartedPage({
             Start Your Website
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            Start the process and we will prepare the first version with you
+            We build your wedding website for you
           </h1>
           <p className="text-lg leading-8 text-[#5f564e]">
-            Fill in what is ready, leave anything that is still unknown, and the website will be shaped from there.
+            No DIY builder. No complicated setup. Fill in what is ready, and we prepare the first version for you.
+          </p>
+          <p className="max-w-3xl text-base leading-7 text-[#5f564e]">
+            You review, we refine, then you go live.
           </p>
         </div>
       </section>

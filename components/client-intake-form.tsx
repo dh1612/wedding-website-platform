@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   intakePackages,
   type IntakePackage,
@@ -65,6 +65,7 @@ const stepMeta = [
 export function ClientIntakeForm({
   initialPackage = "smart"
 }: ClientIntakeFormProps) {
+  const formPanelRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState(0);
   const [values, setValues] = useState<IntakeSubmission>({
     ...defaultValues,
@@ -93,6 +94,12 @@ export function ClientIntakeForm({
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
   }, [values]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(max-width: 1279px)").matches) return;
+    formPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [step]);
 
   const progress = useMemo(
     () => `${step + 1} / ${stepMeta.length}`,
@@ -160,13 +167,13 @@ export function ClientIntakeForm({
             Start Your Website
           </p>
           <h1 className="mt-4 text-4xl leading-none sm:text-5xl">
-            Start the process here and we will prepare the first version with you
+            We build your wedding website for you
           </h1>
           <p className="mt-5 text-lg leading-8 text-[#5f564e]">
-            This is not a DIY builder. You send over the details, we shape them into a beautiful website, and you review it before it goes live.
+            No DIY builder. No complicated setup. Fill in what is ready, and we prepare the first version for you.
           </p>
           <div className="mt-6 rounded-[1.5rem] border border-[#184b38]/12 bg-[#f6fbf8] p-5 text-sm leading-7 text-[#486159]">
-            Only the first few basics are truly needed to begin. If you do not have everything yet, leave the rest loose or skip it for now. Rough notes are more than enough for a beautiful first version.
+            You review, we refine, then you go live. Only the first few basics are truly needed to begin. If anything is not ready yet, skip it for now.
           </div>
 
           <div className="mt-8 space-y-4">
@@ -198,7 +205,7 @@ export function ClientIntakeForm({
 
         </div>
 
-        <div className="order-1 rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 xl:order-2">
+        <div ref={formPanelRef} className="order-1 rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 xl:order-2">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">

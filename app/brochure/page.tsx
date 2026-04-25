@@ -141,9 +141,10 @@ export default function BrochurePage() {
           </div>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             {brochureThemes.map((theme) => (
-              <article
+              <Link
                 key={theme.id}
-                className="overflow-hidden rounded-[1.9rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)]"
+                href={`/wedding?theme=${theme.id}`}
+                className="overflow-hidden rounded-[1.9rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
               >
                 <div className="h-56 w-full" style={theme.previewStyle} />
                 <div className="p-6">
@@ -155,8 +156,9 @@ export default function BrochurePage() {
                   </div>
                   <p className="mt-3 text-base font-medium text-[#184b38]">{theme.label}</p>
                   <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.description}</p>
+                  <p className="mt-5 text-sm font-medium text-[#184b38]">Open sample website</p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
