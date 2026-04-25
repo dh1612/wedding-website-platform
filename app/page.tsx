@@ -57,6 +57,32 @@ const trustCards = [
 ];
 
 const featuredThemes = weddingThemes.slice(0, 3);
+const portalPreviewCards = [
+  {
+    label: "Checklist",
+    title: "A calm task list for the final details",
+    copy: "Keep reminders, last checks, and wedding-week notes together in one place.",
+    tone: "soft"
+  },
+  {
+    label: "RSVP View",
+    title: "Guest replies that stay easy to read",
+    copy: "Track attending, pending, and declined guests without managing separate spreadsheets.",
+    tone: "white"
+  },
+  {
+    label: "Key Dates",
+    title: "Important deadlines in one timeline",
+    copy: "See RSVP reminders, supplier payments, and final wedding-week tasks at a glance.",
+    tone: "dark"
+  },
+  {
+    label: "Seating Plan",
+    title: "A clearer way to think through tables",
+    copy: "Visual table planning helps couples place groups more confidently before finalising the room.",
+    tone: "soft"
+  }
+];
 
 export default function MarketingHomePage() {
   return (
@@ -213,28 +239,76 @@ export default function MarketingHomePage() {
               >
                 View Full Example
               </Link>
+              <Link
+                href="/couple-area"
+                className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+              >
+                See Couple Area Preview
+              </Link>
             </div>
-            <Link
-              href={exampleHref}
-              className="overflow-hidden rounded-[2rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
-            >
-              <div
-                className="h-[320px] w-full bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
-                }}
-              />
-              <div className="p-6">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                  Preview
-                </p>
-                <h3 className="mt-3 text-3xl">Aegean destination example</h3>
-                <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  A guest-facing site with hero, schedule, travel details, story, and RSVP flow already styled and ready to explore.
-                </p>
-              </div>
-            </Link>
+            <div className="grid gap-5">
+              <Link
+                href={exampleHref}
+                className="overflow-hidden rounded-[2rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
+              >
+                <div
+                  className="h-[240px] w-full bg-cover bg-center"
+                  style={{
+                    backgroundImage:
+                      "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
+                  }}
+                />
+                <div className="p-6">
+                  <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                    Public Website Example
+                  </p>
+                  <h3 className="mt-3 text-3xl">Aegean destination example</h3>
+                  <p className="mt-3 text-base leading-7 text-[#5f564e]">
+                    A guest-facing site with hero, schedule, travel details, story, and RSVP flow already styled and ready to explore.
+                  </p>
+                </div>
+              </Link>
+
+              <Link
+                href="/couple-area"
+                className="rounded-[2rem] border border-black/6 bg-[#f7fbf8] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                      Private Couple Area
+                    </p>
+                    <h3 className="mt-3 text-3xl">See the planning side too</h3>
+                  </div>
+                  <span className="rounded-full bg-[#184b38] px-4 py-2 text-xs font-medium uppercase tracking-[0.24em] text-white">
+                    Premium
+                  </span>
+                </div>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {portalPreviewCards.map((card) => (
+                    <div
+                      key={card.label}
+                      className={`rounded-[1.2rem] border p-4 ${
+                        card.tone === "dark"
+                          ? "border-[#184b38] bg-[#184b38] text-white"
+                          : card.tone === "white"
+                            ? "border-[#ddd4ca] bg-white text-[#241f1b]"
+                            : "border-[#e6ddd2] bg-[#fbf7f2] text-[#241f1b]"
+                      }`}
+                    >
+                      <p
+                        className={`text-[11px] uppercase tracking-[0.28em] ${
+                          card.tone === "dark" ? "text-[#d8c6a7]" : "text-[#9a7d64]"
+                        }`}
+                      >
+                        {card.label}
+                      </p>
+                      <p className="mt-3 text-lg leading-tight">{card.title}</p>
+                    </div>
+                  ))}
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -15,6 +15,11 @@ const featureCards = [
     title: "Dates & Timeline",
     copy:
       "See key dates together, from RSVP reminders to final payments and the wedding week."
+  },
+  {
+    title: "Seating Plan",
+    copy:
+      "Start thinking visually about tables, guest groups, and where everyone will feel most comfortable."
   }
 ];
 
@@ -103,7 +108,7 @@ export default function CoupleAreaPage() {
 
             <div className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
               <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Screen 2</p>
-              <h3 className="mt-3 text-2xl">Guest overview</h3>
+              <h3 className="mt-3 text-2xl">RSVP overview</h3>
               <div className="mt-5 rounded-[1.3rem] border border-[#d8cfc5] bg-white p-5">
                 <div className="grid gap-3 sm:grid-cols-3">
                   <div className="rounded-[1rem] bg-[#edf6f2] p-4">
@@ -120,8 +125,8 @@ export default function CoupleAreaPage() {
                   </div>
                 </div>
                 <div className="mt-4 rounded-[1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3">
-                  <p className="text-sm font-medium text-[#184b38]">Guest list stays easy to scan</p>
-                  <p className="mt-2 text-sm text-[#6f665e]">Guest replies stay organised without needing to manage separate spreadsheets.</p>
+                  <p className="text-sm font-medium text-[#184b38]">Replies stay easy to follow</p>
+                  <p className="mt-2 text-sm text-[#6f665e]">Guest responses stay organised without needing to manage separate spreadsheets.</p>
                 </div>
               </div>
             </div>
@@ -146,12 +151,39 @@ export default function CoupleAreaPage() {
                 </div>
               </div>
             </div>
+
+            <div className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)] xl:col-span-3">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Screen 4</p>
+              <h3 className="mt-3 text-2xl">Seating plan view</h3>
+              <div className="mt-5 rounded-[1.3rem] border border-[#d8cfc5] bg-white p-5">
+                <div className="grid gap-4 md:grid-cols-3">
+                  {[
+                    { name: "Top Table", guests: "6 seats", tone: "bg-[#184b38] text-white border-[#184b38]" },
+                    { name: "Family Table", guests: "8 seats", tone: "bg-[#faf7f2] text-[#241f1b] border-[#e8ddd0]" },
+                    { name: "Friends Table", guests: "10 seats", tone: "bg-[#faf7f2] text-[#241f1b] border-[#e8ddd0]" }
+                  ].map((table) => (
+                    <div
+                      key={table.name}
+                      className={`rounded-[1.2rem] border p-5 ${table.tone}`}
+                    >
+                      <p className="text-[11px] uppercase tracking-[0.24em] opacity-80">Table</p>
+                      <p className="mt-3 text-xl">{table.name}</p>
+                      <p className="mt-2 text-sm opacity-80">{table.guests}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 rounded-[1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3">
+                  <p className="text-sm font-medium text-[#184b38]">A visual starting point for table planning</p>
+                  <p className="mt-2 text-sm text-[#6f665e]">Couples can think through groupings, awkward combinations, and top table choices before finalising the room plan.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-6 py-6 lg:px-8 lg:py-10">
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {featureCards.map((card) => (
             <div
               key={card.title}
