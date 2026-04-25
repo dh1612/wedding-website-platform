@@ -31,13 +31,27 @@ export default function CoupleAreaPage() {
           <div className="space-y-6">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Private Couple Area</p>
             <h1 className="text-5xl leading-none sm:text-6xl">
-              A simple planning space that sits behind the wedding website
+              The premium planning side of the wedding experience
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-              For couples who want more than a beautiful website, the private couple area adds a calm space for RSVPs, planning notes, checklists, and key dates.
+              Premium is not just a website. It adds a private space for RSVPs, planning dates, checklist items, and seating decisions in one calmer place.
             </p>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4">
+                <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">RSVPs</p>
+                <p className="mt-2 text-2xl text-[#184b38]">One place</p>
+              </div>
+              <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4">
+                <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Dates</p>
+                <p className="mt-2 text-2xl text-[#184b38]">Clear timeline</p>
+              </div>
+              <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4">
+                <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Tables</p>
+                <p className="mt-2 text-2xl text-[#184b38]">Visual planning</p>
+              </div>
+            </div>
             <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4 text-sm leading-7 text-[#6f665e]">
-              This is a read-only preview of the couple experience. It shows the value of the private area without giving public visitors access to the live planning tools.
+              This is a read-only preview of the couple experience. It shows the value of the private area without opening the live planning tools to the public.
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
@@ -59,7 +73,7 @@ export default function CoupleAreaPage() {
 
           <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-6 shadow-[0_24px_70px_rgba(52,35,24,0.1)] sm:p-8">
             <div className="rounded-[1.5rem] bg-[#184b38] p-6 text-white">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-[#d8c6a7]">Inside The Couple Area</p>
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#d8c6a7]">Premium Includes</p>
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <div className="rounded-[1.2rem] bg-white/10 p-4">
                   <p className="text-sm font-medium">Wedding checklist</p>
@@ -69,9 +83,13 @@ export default function CoupleAreaPage() {
                   <p className="text-sm font-medium">Guest responses</p>
                   <p className="mt-2 text-sm text-white/78">See replies and guest changes more clearly.</p>
                 </div>
-                <div className="rounded-[1.2rem] bg-white/10 p-4 md:col-span-2">
+                <div className="rounded-[1.2rem] bg-white/10 p-4">
                   <p className="text-sm font-medium">Planning dates</p>
-                  <p className="mt-2 text-sm text-white/78">Track important moments like RSVP reminders, supplier deadlines, and final wedding-week tasks.</p>
+                  <p className="mt-2 text-sm text-white/78">Track RSVP reminders, supplier deadlines, and final tasks.</p>
+                </div>
+                <div className="rounded-[1.2rem] bg-white/10 p-4">
+                  <p className="text-sm font-medium">Seating plan view</p>
+                  <p className="mt-2 text-sm text-white/78">Think through groups and table choices more visually.</p>
                 </div>
               </div>
             </div>

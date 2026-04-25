@@ -40,14 +40,14 @@ export function WeddingSitePage({
         weddingData={weddingData}
       />
       <HeroSection themeId={activeTheme.id} weddingData={weddingData} />
-      <StorySection weddingData={weddingData} />
-      <ScheduleSection weddingData={weddingData} />
-      <TravelSection weddingData={weddingData} />
-      <AccommodationSection weddingData={weddingData} />
       <FAQSection
         weddingData={weddingData}
         conciergeApiPath={conciergeApiPath}
       />
+      <StorySection weddingData={weddingData} />
+      <ScheduleSection weddingData={weddingData} />
+      <TravelSection weddingData={weddingData} />
+      <AccommodationSection weddingData={weddingData} />
       <RSVPSection weddingData={weddingData} />
       <GalleryRegistrySection weddingData={weddingData} />
       <SiteFooter weddingData={weddingData} />

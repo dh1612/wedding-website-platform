@@ -310,44 +310,11 @@ export function ClientIntakeForm({
 
             <div className="space-y-4">
               <div>
-                <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
-                <h3 className="mt-2 text-2xl">The only essentials</h3>
-                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                  Only names and email are needed to get the first version started.
-                </p>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <input
-                  value={values.couple}
-                  onChange={(event) => updateField("couple", event.target.value)}
-                  placeholder="Couple names"
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-                <input
-                  value={values.email}
-                  onChange={(event) => updateField("email", event.target.value)}
-                  placeholder="Contact email"
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-                <input
-                  type="date"
-                  value={values.date}
-                  onChange={(event) => updateField("date", event.target.value)}
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-                <input
-                  value={values.locationSummary}
-                  onChange={(event) => updateField("locationSummary", event.target.value)}
-                  placeholder="General location"
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
                 <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Preferred style direction</p>
                 <h3 className="mt-2 text-2xl">Choose a look, or let us choose</h3>
+                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                  Pick a direction early so the first version feels closer to the right look straight away.
+                </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 <button
@@ -406,6 +373,42 @@ export function ClientIntakeForm({
                   View the brochure designs
                 </Link>
                 .
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
+                <h3 className="mt-2 text-2xl">The only essentials</h3>
+                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                  Only names and email are needed to get the first version started.
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  value={values.couple}
+                  onChange={(event) => updateField("couple", event.target.value)}
+                  placeholder="Couple names"
+                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+                />
+                <input
+                  value={values.email}
+                  onChange={(event) => updateField("email", event.target.value)}
+                  placeholder="Contact email"
+                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+                />
+                <input
+                  type="date"
+                  value={values.date}
+                  onChange={(event) => updateField("date", event.target.value)}
+                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+                />
+                <input
+                  value={values.locationSummary}
+                  onChange={(event) => updateField("locationSummary", event.target.value)}
+                  placeholder="General location"
+                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+                />
               </div>
             </div>
 

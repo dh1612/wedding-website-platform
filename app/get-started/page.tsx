@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ClientIntakeForm } from "@/components/client-intake-form";
 import type { IntakePackage } from "@/lib/intake";
 
@@ -40,9 +41,25 @@ export default async function GetStartedPage({
           <p className="max-w-3xl text-base leading-7 text-[#486159]">
             Send us rough details — we&apos;ll turn it into a polished wedding website.
           </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#builder"
+              className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white"
+            >
+              Go To Builder
+            </a>
+            <Link
+              href="/brochure"
+              className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-6 py-3 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+            >
+              View Pricing & Features
+            </Link>
+          </div>
         </div>
       </section>
-      <ClientIntakeForm initialPackage={packageTier} />
+      <div id="builder">
+        <ClientIntakeForm initialPackage={packageTier} />
+      </div>
     </main>
   );
 }
