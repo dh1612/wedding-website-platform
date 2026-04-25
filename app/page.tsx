@@ -50,43 +50,46 @@ const flowSteps = [
   "We refine it and go live"
 ];
 
-const trustCards = [
-  "No DIY or setup",
-  "We prepare it for you",
-  "Private review before guests see it"
+const reassurancePoints = [
+  "We prepare everything for you",
+  "You review before it goes live",
+  "No setup, no tech, no stress"
+];
+
+const emotionalPoints = [
+  "No late nights building pages",
+  "No chasing guests for info",
+  "Everything handled for you"
 ];
 
 const featuredThemes = weddingThemes.slice(0, 3);
+
 const portalPreviewCards = [
   {
     label: "Checklist",
     title: "A calm task list for the final details",
-    copy: "Keep reminders, last checks, and wedding-week notes together in one place.",
     tone: "soft"
   },
   {
     label: "RSVP View",
     title: "Guest replies that stay easy to read",
-    copy: "Track attending, pending, and declined guests without managing separate spreadsheets.",
     tone: "white"
   },
   {
     label: "Key Dates",
     title: "Important deadlines in one timeline",
-    copy: "See RSVP reminders, supplier payments, and final wedding-week tasks at a glance.",
     tone: "dark"
   },
   {
     label: "Seating Plan",
     title: "A clearer way to think through tables",
-    copy: "Visual table planning helps couples place groups more confidently before finalising the room.",
     tone: "soft"
   }
 ];
 
 export default function MarketingHomePage() {
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] pb-24 text-[#1f1d1a] md:pb-0">
       <header className="sticky top-0 z-30 border-b border-black/5 bg-white/90 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
           <div>
@@ -97,14 +100,11 @@ export default function MarketingHomePage() {
           </div>
 
           <nav className="hidden items-center gap-2 md:flex">
-            <a href="#how-it-works" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
-              How It Works
+            <a href="#example" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
+              View Example
             </a>
             <a href="#packages" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Packages
-            </a>
-            <a href="#why-us" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
-              Why Couples Choose This
             </a>
             <Link
               href="/get-started"
@@ -120,21 +120,15 @@ export default function MarketingHomePage() {
             </summary>
             <div className="absolute right-0 top-[calc(100%+0.75rem)] w-72 rounded-[1.5rem] border border-black/6 bg-white p-4 shadow-[0_20px_50px_rgba(52,35,24,0.12)]">
               <div className="flex flex-col gap-2">
+                <a href="#example" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
+                  View Example
+                </a>
                 <a href="#how-it-works" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
                   How It Works
                 </a>
                 <a href="#packages" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
                   Packages
                 </a>
-                <a href="#why-us" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
-                  Why Couples Choose This
-                </a>
-                <Link
-                  href="/brochure"
-                  className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
-                >
-                  View Brochure
-                </Link>
                 <Link
                   href="/get-started"
                   className="mt-2 inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-3 text-sm font-medium text-white"
@@ -147,7 +141,7 @@ export default function MarketingHomePage() {
         </div>
       </header>
 
-      <section className="mx-auto grid w-full max-w-6xl gap-10 px-6 pb-12 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pb-18 lg:pt-16">
+      <section className="mx-auto grid w-full max-w-6xl gap-10 px-6 pb-10 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-16">
         <div className="space-y-7">
           <div className="space-y-5">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
@@ -176,9 +170,14 @@ export default function MarketingHomePage() {
             </Link>
           </div>
 
-          <p className="text-sm leading-6 text-[#6d655d]">
-            Takes ~2 minutes to get your first version started.
-          </p>
+          <div className="space-y-1">
+            <p className="text-sm leading-6 text-[#6d655d]">
+              Takes ~2 minutes to get your first version started.
+            </p>
+            <p className="text-sm leading-6 text-[#184b38]">
+              No payment needed to get your first version started.
+            </p>
+          </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
             This is not a DIY builder. We prepare the first version for you. You review, we refine, then you go live.
@@ -220,7 +219,7 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-10">
+      <section id="example" className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-10">
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div className="space-y-4">
@@ -228,23 +227,25 @@ export default function MarketingHomePage() {
                 Real Example
               </p>
               <h2 className="text-4xl leading-none sm:text-5xl">
-                See a real wedding website
+                See what your wedding website could look like
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-                The quickest way to understand the service is to see the kind of website a couple would actually receive.
+                The quickest way to understand the service is to see the kind of website and private couple area a couple would actually receive.
               </p>
-              <Link
-                href={exampleHref}
-                className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white"
-              >
-                View Full Example
-              </Link>
-              <Link
-                href="/couple-area"
-                className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
-              >
-                See Couple Area Preview
-              </Link>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href={exampleHref}
+                  className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white"
+                >
+                  View Full Example
+                </Link>
+                <Link
+                  href="/couple-area"
+                  className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+                >
+                  See Couple Area Preview
+                </Link>
+              </div>
             </div>
             <div className="grid gap-5">
               <Link
@@ -396,39 +397,53 @@ export default function MarketingHomePage() {
 
       <section id="why-us" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="rounded-[2.2rem] border border-black/6 bg-[#fdfaf6] p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-center">
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div className="space-y-4">
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Why Couples Choose This</p>
-              <h2 className="text-4xl leading-none sm:text-5xl">Built for minimal effort on the couple’s side</h2>
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Not A Website Builder</p>
+              <h2 className="text-4xl leading-none sm:text-5xl">A service with smart software underneath</h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-                The value is not in handing couples another tool. The value is that they send the details once, and the website is prepared for them.
+                The website is prepared for the couple. The software simply helps deliver it faster and more smoothly.
               </p>
+              <div className="grid gap-4">
+                {reassurancePoints.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-[1.3rem] border border-black/6 bg-white/84 p-5 text-lg font-medium text-[#2d241f] shadow-[0_14px_40px_rgba(52,35,24,0.08)]"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid gap-4">
-              {trustCards.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-[1.5rem] border border-black/6 bg-white/84 p-5 text-lg font-medium text-[#2d241f] shadow-[0_14px_40px_rgba(52,35,24,0.08)]"
-                >
-                  {item}
-                </div>
-              ))}
+            <div className="space-y-4">
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Focus On Your Wedding</p>
+              <h3 className="text-3xl leading-tight sm:text-4xl">The point is to take the website off the couple’s plate</h3>
+              <div className="grid gap-4">
+                {emotionalPoints.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-[1.3rem] border border-black/6 bg-white/84 p-5 text-lg font-medium text-[#2d241f] shadow-[0_14px_40px_rgba(52,35,24,0.08)]"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
               <div className="rounded-[1.5rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-sm leading-7 text-[#486159]">
-                The private couple area is available in the fuller package, but the main promise stays the same: you send details, we build the website.
+                Couples do not need to learn a builder, fill in every field perfectly, or be ready with every detail on day one.
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-6 lg:px-8 lg:pb-24">
-        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-4">
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Brochure</p>
-              <h2 className="text-4xl leading-none sm:text-5xl">Prefer a quicker visual overview?</h2>
-              <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-                Open the brochure for a faster scroll-through view of the design directions, packages, and private couple area.
+      <section className="mx-auto w-full max-w-6xl px-6 py-2 lg:px-8 lg:py-6">
+        <div className="rounded-[2rem] border border-black/6 bg-white/84 p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)] sm:p-8">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div className="space-y-2">
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Need More Detail?</p>
+              <h2 className="text-3xl leading-tight sm:text-4xl">The brochure gives a quicker visual overview</h2>
+              <p className="max-w-2xl text-base leading-7 text-[#5f564e]">
+                Browse design directions, packages, and the private couple area without reading a long sales page.
               </p>
             </div>
             <Link
@@ -437,6 +452,18 @@ export default function MarketingHomePage() {
             >
               View Brochure
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-6 lg:px-8 lg:pb-24">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="space-y-4">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Three Style Directions</p>
+            <h2 className="text-4xl leading-none sm:text-5xl">A quick feel for the design range</h2>
+            <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
+              Every website is prepared for the couple, but the style direction still shapes how it feels.
+            </p>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {featuredThemes.map((theme) => (
@@ -460,6 +487,15 @@ export default function MarketingHomePage() {
           </div>
         </div>
       </section>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/6 bg-white/95 p-4 shadow-[0_-12px_30px_rgba(52,35,24,0.1)] backdrop-blur md:hidden">
+        <Link
+          href="/get-started"
+          className="inline-flex w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-3.5 text-sm font-medium text-white"
+        >
+          Start Your Website
+        </Link>
+      </div>
     </main>
   );
 }

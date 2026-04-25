@@ -85,10 +85,8 @@ export function ClientIntakeForm({
     const missing: string[] = [];
     if (!values.couple.trim()) missing.push("couple names");
     if (!values.email.trim()) missing.push("contact email");
-    if (!values.date.trim()) missing.push("wedding date");
-    if (!values.locationSummary.trim()) missing.push("general location");
     return missing;
-  }, [values.couple, values.email, values.date, values.locationSummary]);
+  }, [values.couple, values.email]);
 
   const selectedTheme = useMemo(
     () =>
@@ -170,7 +168,7 @@ export function ClientIntakeForm({
             Send what is ready
           </h2>
           <p className="mt-5 text-lg leading-8 text-[#5f564e]">
-            Fill in what you have. Rough notes are perfect.
+            Takes 2 minutes. Fill in what you have and we handle the rest.
           </p>
           <div className="mt-6 rounded-[1.5rem] border border-[#184b38]/12 bg-[#f6fbf8] p-5 text-sm leading-7 text-[#486159]">
             This is not a DIY builder. The couple shares the basics, we prepare the first version, then refine it after review.
@@ -179,11 +177,11 @@ export function ClientIntakeForm({
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] p-5">
               <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Required</p>
-              <p className="mt-3 text-lg leading-7">Package, couple names, email, wedding date, and general location.</p>
+              <p className="mt-3 text-lg leading-7">Couple names and contact email.</p>
             </div>
             <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] p-5">
               <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Optional</p>
-              <p className="mt-3 text-lg leading-7">Story, schedule, travel notes, FAQ, images, and preferred style direction.</p>
+              <p className="mt-3 text-lg leading-7">Wedding date, location, story, schedule, travel notes, FAQ, images, and preferred style direction.</p>
             </div>
           </div>
 
@@ -231,7 +229,7 @@ export function ClientIntakeForm({
           </div>
 
           <div className="mt-6 rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
-            Fill in what you have — rough notes are perfect.
+            Takes 2 minutes. Fill in what you have. Rough notes are perfect.
           </div>
 
           {statusMessage && !result ? (
@@ -276,6 +274,9 @@ export function ClientIntakeForm({
               <div>
                 <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
                 <h3 className="mt-2 text-2xl">The only essentials</h3>
+                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                  Only names and email are needed to get the first version started.
+                </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <input
@@ -374,6 +375,9 @@ export function ClientIntakeForm({
               <div>
                 <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
                 <h3 className="mt-2 text-2xl">Anything already known</h3>
+                <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                  Add as much or as little as is ready right now.
+                </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <input
@@ -455,9 +459,14 @@ export function ClientIntakeForm({
           </div>
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <p className="text-sm leading-6 text-[#6d655d]">
-              You send the details once. We prepare the first version for review.
-            </p>
+            <div className="space-y-1">
+              <p className="text-sm leading-6 text-[#6d655d]">
+                You send the details once. We prepare the first version for review.
+              </p>
+              <p className="text-sm leading-6 text-[#184b38]">
+                No payment needed to get your first version started.
+              </p>
+            </div>
             <button
               type="button"
               onClick={submitIntake}
