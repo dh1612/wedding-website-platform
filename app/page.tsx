@@ -40,13 +40,6 @@ const packageCards = [
   }
 ];
 
-const featurePoints = [
-  "A guided details form turns wedding notes into a beautifully organised first version",
-  "Optional AI can tidy rough wording into polished guest-facing copy",
-  "Every website is checked privately before the review link is shared",
-  "The whole service is done for the couple, not handed back as a builder"
-];
-
 const flowSteps = [
   {
     step: "01",
@@ -76,7 +69,7 @@ const flowSteps = [
 ];
 
 export default function MarketingHomePage() {
-  const featuredThemes = weddingThemes.slice(0, 6);
+  const featuredThemes = weddingThemes.slice(0, 3);
 
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
@@ -95,18 +88,18 @@ export default function MarketingHomePage() {
             <a href="#packages" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Packages
             </a>
-            <Link
-              href="/couple-area"
-              className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
-            >
+            <a href="#couple-area" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Couple Area
-            </Link>
+            </a>
+            <a href="#templates" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
+              Templates
+            </a>
             <Link
               href="/get-started"
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
               style={{ color: "#ffffff", backgroundColor: "#184b38" }}
             >
-              Share Your Details
+              Start Your Website
             </Link>
           </nav>
         </div>
@@ -131,7 +124,7 @@ export default function MarketingHomePage() {
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45]"
               style={{ color: "#ffffff", backgroundColor: "#184b38" }}
             >
-              Share Your Details
+              Start Your Website
             </Link>
             <a
               href="#packages"
@@ -157,34 +150,37 @@ export default function MarketingHomePage() {
           </div>
         </div>
 
-        <div className="relative min-h-[560px]">
-          <div className="absolute inset-x-0 top-0 h-[78%] rounded-[2.4rem] bg-[#184b38]" />
-          <div className="absolute left-5 top-5 h-[54%] w-[48%] overflow-hidden rounded-[2rem] border border-white/20 shadow-[0_24px_80px_rgba(18,39,31,0.28)]">
-            <div
-              className="h-full w-full bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
-              }}
-            />
-          </div>
-          <div className="absolute right-5 top-20 h-[44%] w-[38%] overflow-hidden rounded-[1.7rem] border border-white/20 shadow-[0_24px_80px_rgba(18,39,31,0.28)]">
-            <div
-              className="h-full w-full bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
-              }}
-            />
-          </div>
-          <div className="absolute bottom-8 left-10 right-10 rounded-[2rem] border border-black/6 bg-white/88 p-7 shadow-[0_24px_80px_rgba(47,31,20,0.14)] backdrop-blur">
-            <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">What makes it different</p>
-            <p className="mt-4 text-2xl leading-tight">
-              This is not a DIY builder. It is a service with automation underneath.
-            </p>
-            <p className="mt-4 text-base leading-7 text-[#5f564e]">
-              The value is in the guided handover, polished templates, review step, and the reusable backend that lets each new wedding launch quickly.
-            </p>
+        <div className="rounded-[2.4rem] bg-[#184b38] p-5 shadow-[0_24px_80px_rgba(18,39,31,0.2)]">
+          <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
+            <div className="overflow-hidden rounded-[2rem] border border-white/16 bg-white/10">
+              <div
+                className="h-[380px] w-full bg-cover bg-center sm:h-[520px]"
+                style={{
+                  backgroundImage:
+                    "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
+                }}
+              />
+            </div>
+            <div className="grid gap-4">
+              <div className="overflow-hidden rounded-[1.7rem] border border-white/16 bg-white/10">
+                <div
+                  className="h-[240px] w-full bg-cover bg-center sm:h-[300px]"
+                  style={{
+                    backgroundImage:
+                      "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
+                  }}
+                />
+              </div>
+              <div className="rounded-[1.7rem] border border-white/12 bg-white/92 p-6 shadow-[0_20px_60px_rgba(17,28,23,0.18)]">
+                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">What makes it different</p>
+                <p className="mt-3 text-2xl leading-tight">
+                  A done-for-you service with beautiful design, structure, and review built in.
+                </p>
+                <p className="mt-3 text-base leading-7 text-[#5f564e]">
+                  Couples share what they know, the first version is prepared for them, and everything stays private until it is ready to review.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -197,7 +193,7 @@ export default function MarketingHomePage() {
               A simple step-by-step flow that feels easy for the couple
             </h2>
             <p className="text-lg leading-8 text-[#5f564e]">
-              The whole experience is designed to feel easy. The couple shares the essentials, and the service turns that into a guest-ready first version.
+              Five clear steps, with no builder feel and no complicated setup.
             </p>
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
@@ -211,16 +207,6 @@ export default function MarketingHomePage() {
                 </p>
                 <h3 className="mt-3 text-2xl leading-tight text-[#2b2621]">{item.title}</h3>
                 <p className="mt-3 text-base leading-7 text-[#5f564e]">{item.copy}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {featurePoints.map((point) => (
-              <div
-                key={point}
-                className="rounded-[1.5rem] border border-black/6 bg-[#fcfaf7] p-5 text-base leading-7 text-[#453c35]"
-              >
-                {point}
               </div>
             ))}
           </div>
@@ -283,14 +269,14 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-14">
+      <section id="couple-area" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-14">
         <div className="rounded-[2.2rem] border border-black/6 bg-[#fdfaf6] p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div className="space-y-4">
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Couple Area</p>
               <h2 className="text-4xl leading-none sm:text-5xl">A calm private space for the couple after the website is underway</h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-                The public website is the first part of the service. After that, couples can have their own private area for RSVPs, planning notes, checklists, and key dates.
+                For couples who choose the fuller package, there is also a private planning space for RSVP updates, checklists, and key dates.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -309,38 +295,31 @@ export default function MarketingHomePage() {
                 </Link>
               </div>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-3">
               <div className="rounded-[1.7rem] border border-black/6 bg-white p-6 shadow-[0_20px_50px_rgba(52,35,24,0.08)]">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Guest List</p>
-                <h3 className="mt-3 text-2xl">RSVPs and guest updates</h3>
+                <h3 className="text-2xl">RSVPs</h3>
                 <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  A simple place to see who is coming, add guests manually, and keep the list organised.
+                  Keep the guest list organised without a spreadsheet.
                 </p>
               </div>
               <div className="rounded-[1.7rem] border border-black/6 bg-white p-6 shadow-[0_20px_50px_rgba(52,35,24,0.08)]">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Planning</p>
-                <h3 className="mt-3 text-2xl">Checklist and key dates</h3>
+                <h3 className="text-2xl">Checklist</h3>
                 <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  Couples can keep important to-dos and dates together without juggling separate tools.
+                  Keep suppliers, reminders, and wedding tasks in one place.
                 </p>
               </div>
-              <div className="rounded-[1.7rem] border border-black/6 bg-[#184b38] p-7 text-white shadow-[0_20px_50px_rgba(24,75,56,0.18)] md:col-span-2">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#d8c6a7]">Premium Feature</p>
-                <h3 className="mt-3 text-3xl leading-tight">A planning space that feels supportive, not complicated</h3>
-                <p className="mt-4 max-w-3xl text-base leading-7 text-white/82">
-                  This sits behind the main website service, so couples first understand the beautiful guest-facing website and then discover the extra value of a private planning space.
+              <div className="rounded-[1.7rem] border border-black/6 bg-[#184b38] p-6 text-white shadow-[0_20px_50px_rgba(24,75,56,0.18)]">
+                <h3 className="text-2xl">Key Dates</h3>
+                <p className="mt-3 text-base leading-7 text-white/82">
+                  A simple planning overview without turning the process into another job.
                 </p>
-                <div className="mt-6 rounded-[1.2rem] bg-white/10 p-4">
-                  <p className="text-sm font-medium text-white">Checklist, RSVPs, key dates, and planning notes</p>
-                  <p className="mt-2 text-sm text-white/78">Everything sits in one calm private area, so the couple is not piecing things together across separate tools.</p>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-14">
+      <section id="templates" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-14">
         <div className="rounded-[2.2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-4">
@@ -378,34 +357,6 @@ export default function MarketingHomePage() {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-6 lg:px-8 lg:pb-24">
-        <div className="rounded-[2.2rem] bg-[#184b38] p-8 text-white shadow-[0_26px_80px_rgba(18,39,31,0.24)] sm:p-10 lg:flex lg:items-end lg:justify-between lg:p-14">
-          <div className="max-w-2xl space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#d8c6a7]">Enquiries</p>
-            <h2 className="text-4xl leading-none sm:text-5xl">A cleaner funnel for ads, DMs, and enquiries</h2>
-            <p className="text-lg leading-8 text-white/82">
-              Couples land here, choose a package, share the wedding details, and then receive a private review link once the first version has been prepared. The deeper planning tools stay behind the scenes until they are needed.
-            </p>
-          </div>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-0">
-            <Link
-              href="/get-started"
-              className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-center text-sm font-medium text-[#184b38] shadow-sm transition hover:bg-[#f3ece2]"
-              style={{ color: "#184b38", backgroundColor: "#ffffff" }}
-            >
-              Share Your Details
-            </Link>
-            <Link
-              href="/templates"
-              className="inline-flex items-center justify-center rounded-full border border-white/24 px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-white/10"
-              style={{ color: "#ffffff", borderColor: "rgba(255,255,255,0.24)" }}
-            >
-              Browse Templates
-            </Link>
           </div>
         </div>
       </section>
