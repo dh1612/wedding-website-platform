@@ -29,10 +29,10 @@ export default async function GetStartedPage({
             We build your wedding website for you
           </h1>
           <p className="text-lg leading-8 text-[#5f564e]">
-            No DIY builder. No complicated setup. Fill in what is ready, and we prepare the first version for you.
+            No DIY builder. No complicated setup. Just a beautiful, ready-to-share website.
           </p>
           <p className="max-w-3xl text-base leading-7 text-[#5f564e]">
-            You review, we refine, then you go live.
+            Fill in what is ready, we prepare the first version for you, then you review and we refine it before it goes live.
           </p>
         </div>
       </section>

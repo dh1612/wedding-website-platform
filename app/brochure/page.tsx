@@ -6,17 +6,17 @@ const brochureThemes = weddingThemes.slice(0, 3);
 const packageSlides = [
   {
     name: "Basic",
-    price: "EUR195",
+    price: "EUR245",
     copy: "A polished guest-facing website, prepared from the details already shared."
   },
   {
     name: "Smart",
-    price: "EUR345",
+    price: "EUR395",
     copy: "Adds AI-assisted copy polish and a more refined first version."
   },
   {
     name: "Premium",
-    price: "EUR595",
+    price: "EUR645",
     copy: "Includes the website plus the private couple area and planning support."
   }
 ];
