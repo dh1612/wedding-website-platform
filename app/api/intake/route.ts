@@ -10,6 +10,32 @@ function stripUndefined<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
+function getReadableErrorMessage(error: unknown) {
+  const message =
+    error instanceof Error ? error.message : "Unknown server error";
+
+  if (!process.env.DATABASE_URL) {
+    return "The live database is not connected yet. Please check the Vercel environment variables.";
+  }
+
+  if (message.includes("Can't reach database server")) {
+    return "The live site cannot reach the database server yet. The Vercel database connection still needs to be updated.";
+  }
+
+  if (
+    message.includes("Environment variable not found") ||
+    message.includes("DATABASE_URL")
+  ) {
+    return "The database connection setting is missing from Vercel.";
+  }
+
+  if (message.includes("Invalid `prisma")) {
+    return "The database save step failed on the live server. Please check the Vercel function logs for the intake route.";
+  }
+
+  return "We could not save your details just yet. Please try once more in a moment.";
+}
+
 export async function POST(request: Request) {
   const submission = stripUndefined((await request.json()) as IntakeSubmission);
 
@@ -49,8 +75,7 @@ export async function POST(request: Request) {
     console.error("Intake submission failed", error);
     return NextResponse.json(
       {
-        error:
-          "We could not save your details just yet. Please try once more in a moment."
+        error: getReadableErrorMessage(error)
       },
       { status: 500 }
     );
