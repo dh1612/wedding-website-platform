@@ -37,6 +37,7 @@ export async function POST(request: Request) {
     status: created.status,
     previewUrl: `/preview/${created.slug}`,
     liveUrl: `/site/${created.slug}`,
-    message: "Your wedding site is being prepared."
+    message:
+      "Thank you. Your details are in and the first version is now being prepared. A private review link will be shared once it has been checked."
   });
 }

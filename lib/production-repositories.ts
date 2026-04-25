@@ -21,6 +21,8 @@ export async function listWeddings() {
       title: true,
       status: true,
       eventDate: true,
+      createdAt: true,
+      plannerSettingsJson: true,
       _count: {
         select: {
           guests: true,

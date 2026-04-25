@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import {
   intakePackages,
   type IntakePackage,
@@ -73,11 +72,7 @@ export function ClientIntakeForm({
   });
   const [statusMessage, setStatusMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [result, setResult] = useState<{
-    previewUrl: string;
-    liveUrl: string;
-    slug: string;
-  } | null>(null);
+  const [result, setResult] = useState<{ slug: string } | null>(null);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -148,16 +143,9 @@ export function ClientIntakeForm({
       return;
     }
 
-    const data = (await response.json()) as {
-      previewUrl: string;
-      liveUrl: string;
-      slug: string;
-      message: string;
-    };
+    const data = (await response.json()) as { slug: string; message: string };
 
     setResult({
-      previewUrl: data.previewUrl,
-      liveUrl: data.liveUrl,
       slug: data.slug
     });
     setStatusMessage(data.message);
@@ -167,7 +155,7 @@ export function ClientIntakeForm({
   return (
     <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-10 lg:px-8 lg:pb-24">
       <div className="grid gap-8 xl:grid-cols-[0.8fr_1.2fr]">
-        <div className="rounded-[2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
+        <div className="order-2 rounded-[2rem] border border-black/6 bg-white/84 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 xl:order-1">
           <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
             Share Your Details
           </p>
@@ -210,7 +198,7 @@ export function ClientIntakeForm({
 
         </div>
 
-        <div className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
+        <div className="order-1 rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 xl:order-2">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
@@ -495,19 +483,14 @@ export function ClientIntakeForm({
             {result ? (
               <div className="rounded-[1.5rem] border border-[#184b38]/20 bg-[#edf6f2] p-6">
                 <p className="text-[12px] uppercase tracking-[0.3em] text-[#184b38]">
-                  Your Website Is Ready To Review
+                  Thank You
                 </p>
                 <p className="mt-3 text-lg text-[#23413a]">
-                  Your first version is ready here. Open the private review page below and we can refine anything that still needs adjusting.
+                  The details have been received and the first version is now being prepared for review.
                 </p>
-                <div className="mt-5 flex flex-col gap-3">
-                  <Link href={result.previewUrl} className="rounded-full bg-[#184b38] px-5 py-3 text-center text-sm font-medium text-white">
-                    Open Your Review Link
-                  </Link>
-                  <p className="text-sm leading-6 text-[#50645f]">
-                    This link is just for review. The guest-facing website only gets its public link once you decide to make it live.
-                  </p>
-                </div>
+                <p className="mt-4 text-sm leading-6 text-[#50645f]">
+                  A private review link will be shared once everything has been checked and prepared properly. There is nothing else needed from the couple right now.
+                </p>
               </div>
             ) : null}
           </div>

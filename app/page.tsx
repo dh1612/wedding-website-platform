@@ -41,11 +41,10 @@ const packageCards = [
 ];
 
 const featurePoints = [
-  "A guided details form turns client answers into a beautifully organised website",
-  "Optional AI cleans rough notes into polished wedding website copy",
-  "Each wedding gets a private review link before it goes live",
-  "Beautiful templates, smart automation, and admin tools already sit underneath",
-  "This is a done-for-you service, not a DIY website builder"
+  "A guided details form turns wedding notes into a beautifully organised first version",
+  "Optional AI can tidy rough wording into polished guest-facing copy",
+  "Every website is checked privately before the review link is shared",
+  "The whole service is done for the couple, not handed back as a builder"
 ];
 
 const flowSteps = [
@@ -67,7 +66,7 @@ const flowSteps = [
   {
     step: "04",
     title: "Review privately",
-    copy: "A private link is shared so nothing goes public too early."
+    copy: "A private review link is shared once the first version has been checked."
   },
   {
     step: "05",
@@ -215,7 +214,7 @@ export default function MarketingHomePage() {
               </div>
             ))}
           </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {featurePoints.map((point) => (
               <div
                 key={point}
@@ -286,7 +285,7 @@ export default function MarketingHomePage() {
 
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-14">
         <div className="rounded-[2.2rem] border border-black/6 bg-[#fdfaf6] p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div className="space-y-4">
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Couple Area</p>
               <h2 className="text-4xl leading-none sm:text-5xl">A calm private space for the couple after the website is underway</h2>
@@ -331,15 +330,9 @@ export default function MarketingHomePage() {
                 <p className="mt-4 max-w-3xl text-base leading-7 text-white/82">
                   This sits behind the main website service, so couples first understand the beautiful guest-facing website and then discover the extra value of a private planning space.
                 </p>
-                <div className="mt-6 grid gap-4 md:grid-cols-2">
-                  <div className="rounded-[1.2rem] bg-white/10 p-4">
-                    <p className="text-sm font-medium text-white">Wedding checklist</p>
-                    <p className="mt-2 text-sm text-white/78">Confirm suppliers, finalise the guest list, and keep important reminders in one place.</p>
-                  </div>
-                  <div className="rounded-[1.2rem] bg-white/10 p-4">
-                    <p className="text-sm font-medium text-white">Planning dates</p>
-                    <p className="mt-2 text-sm text-white/78">See key dates together without turning the planning into another stressful tool.</p>
-                  </div>
+                <div className="mt-6 rounded-[1.2rem] bg-white/10 p-4">
+                  <p className="text-sm font-medium text-white">Checklist, RSVPs, key dates, and planning notes</p>
+                  <p className="mt-2 text-sm text-white/78">Everything sits in one calm private area, so the couple is not piecing things together across separate tools.</p>
                 </div>
               </div>
             </div>
@@ -395,7 +388,7 @@ export default function MarketingHomePage() {
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#d8c6a7]">Enquiries</p>
             <h2 className="text-4xl leading-none sm:text-5xl">A cleaner funnel for ads, DMs, and enquiries</h2>
             <p className="text-lg leading-8 text-white/82">
-              Couples land here, choose a package, share the wedding details, and receive a private review link. The deeper planning tools stay behind the scenes until they are needed.
+              Couples land here, choose a package, share the wedding details, and then receive a private review link once the first version has been prepared. The deeper planning tools stay behind the scenes until they are needed.
             </p>
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-0">

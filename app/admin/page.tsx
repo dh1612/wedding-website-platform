@@ -30,8 +30,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     >
       <PageHero
         eyebrow="Operator Backend"
-        title="Multi-Wedding Admin"
-        description="Your centralized backend for creating, managing, and later duplicating weddings from one shared product database."
+        title="Preparation Queue"
+        description="New wedding submissions arrive here first so they can be checked, polished, and only then shared back as a private review link."
         themeId={theme.id}
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
@@ -40,10 +40,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </div>
         <div className="mt-6 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="section-shell rounded-[2rem] p-8">
-            <p className="eyebrow">Create Wedding</p>
-            <h2 className="mt-3 text-3xl">New Draft</h2>
+            <p className="eyebrow">Manual Draft</p>
+            <h2 className="mt-3 text-3xl">Create One Yourself</h2>
             <p className="prose-copy mt-3">
-              Start a new couple as a fresh wedding record in the central database. Later we can add duplicate-from-template and import flows here too.
+              This is still useful for manual setups, but the main path is now client submission first, followed by your own review and polish.
             </p>
             <form action={createWeddingDraftAction} className="mt-6 space-y-4">
               <input
@@ -65,8 +65,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <div className="section-shell rounded-[2rem] p-8">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="eyebrow">Wedding Records</p>
-                <h2 className="mt-3 text-3xl">Central List</h2>
+                <p className="eyebrow">Client Submissions</p>
+                <h2 className="mt-3 text-3xl">Needs Review</h2>
               </div>
               <div className="accent-panel rounded-full px-4 py-2 text-sm">
                 {weddings.length} weddings
@@ -86,21 +86,33 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             : ""}
                         </p>
                         <p className="mt-1 text-sm text-[var(--muted)]">
+                          Submitted {new Date(record.createdAt).toLocaleDateString("en-IE")}
+                          {(() => {
+                            const plannerSettings = record.plannerSettingsJson as
+                              | { intake?: { email?: string; packageTier?: string } }
+                              | null;
+                            const email = plannerSettings?.intake?.email;
+                            const packageTier = plannerSettings?.intake?.packageTier;
+                            if (!email && !packageTier) return "";
+                            return ` · ${packageTier ? `${packageTier} package` : ""}${packageTier && email ? " · " : ""}${email ?? ""}`;
+                          })()}
+                        </p>
+                        <p className="mt-1 text-sm text-[var(--muted)]">
                           {record._count.guests} guests · {record._count.rsvpResponses} RSVP responses · {record._count.seatingPlans} seating plans
                         </p>
                       </div>
                       <div className="flex gap-3">
                         <Link
-                          href="/couple-portal"
+                          href={`/preview/${record.slug}`}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >
-                          Portal
+                          Review Draft
                         </Link>
                         <Link
-                          href="/production"
+                          href={`/site/${record.slug}`}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >
-                          Structure
+                          Live Page
                         </Link>
                       </div>
                     </div>
@@ -108,7 +120,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 ))
               ) : (
                 <div className="accent-panel rounded-[1.5rem] p-5">
-                  No weddings in the database yet. Create your first draft on the left.
+                  No client submissions yet. Once someone shares their details, the draft will appear here for review.
                 </div>
               )}
             </div>
