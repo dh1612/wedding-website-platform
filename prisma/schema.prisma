@@ -1,0 +1,216 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum WeddingStatus {
+  draft
+  approved
+  live
+}
+
+enum Role {
+  owner
+  planner
+}
+
+enum InvitationSide {
+  bride
+  groom
+  friends
+  family
+  work
+  other
+}
+
+enum RSVPStatus {
+  pending
+  attending
+  declined
+}
+
+enum MealChoice {
+  beef
+  fish
+  vegetarian
+  vegan
+  kids
+  custom
+}
+
+enum TableShape {
+  round
+  long
+}
+
+model Wedding {
+  id                  String             @id @default(cuid())
+  slug                String             @unique
+  title               String
+  status              WeddingStatus      @default(draft)
+  eventDate           DateTime?
+  timezone            String             @default("Europe/Dublin")
+  contentJson         Json?
+  plannerSettingsJson Json?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  adminUsers          WeddingAdminUser[]
+  guests              Guest[]
+  rsvpResponses       RSVPResponse[]
+  seatingPlans        SeatingPlan[]
+  checklistItems      ChecklistItem[]
+  calendarItems       CalendarItem[]
+}
+
+model WeddingAdminUser {
+  id           String   @id @default(cuid())
+  weddingId    String
+  email        String
+  name         String?
+  passwordHash String
+  role         Role     @default(owner)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  wedding      Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  @@unique([weddingId, email])
+  @@index([weddingId])
+}
+
+model Guest {
+  id               String         @id @default(cuid())
+  weddingId        String
+  householdKey     String?
+  invitationName   String
+  email            String?
+  phone            String?
+  side             InvitationSide @default(other)
+  defaultMeal      MealChoice?
+  dietaryNotes     String?
+  plusOneAllowed   Boolean        @default(false)
+  childGuest       Boolean        @default(false)
+  notes            String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  wedding          Wedding        @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  rsvpResponses    RSVPResponse[]
+  seatAssignments  SeatAssignment[]
+
+  @@index([weddingId])
+  @@index([weddingId, householdKey])
+}
+
+model RSVPResponse {
+  id                String      @id @default(cuid())
+  weddingId         String
+  guestId           String
+  status            RSVPStatus  @default(pending)
+  attendingCount    Int         @default(1)
+  mealChoice        MealChoice?
+  dietaryNotes      String?
+  songRequest       String?
+  messageToCouple   String?
+  submittedAt       DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  wedding           Wedding     @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  guest             Guest       @relation(fields: [guestId], references: [id], onDelete: Cascade)
+
+  @@unique([weddingId, guestId])
+  @@index([weddingId, status])
+}
+
+model SeatingPlan {
+  id              String          @id @default(cuid())
+  weddingId       String
+  name            String
+  roomLabel       String?
+  canvasWidth     Int             @default(1600)
+  canvasHeight    Int             @default(1200)
+  isDefault       Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  wedding         Wedding         @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  tables          SeatingTable[]
+
+  @@index([weddingId])
+}
+
+model SeatingTable {
+  id              String          @id @default(cuid())
+  seatingPlanId   String
+  label           String
+  shape           TableShape      @default(round)
+  seats           Int
+  x               Float
+  y               Float
+  rotation        Int             @default(0)
+  placed          Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  seatingPlan     SeatingPlan     @relation(fields: [seatingPlanId], references: [id], onDelete: Cascade)
+  seatAssignments SeatAssignment[]
+
+  @@index([seatingPlanId])
+}
+
+model SeatAssignment {
+  id              String        @id @default(cuid())
+  seatingTableId  String
+  guestId         String
+  seatIndex       Int
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  seatingTable    SeatingTable  @relation(fields: [seatingTableId], references: [id], onDelete: Cascade)
+  guest           Guest         @relation(fields: [guestId], references: [id], onDelete: Cascade)
+
+  @@unique([seatingTableId, seatIndex])
+  @@unique([seatingTableId, guestId])
+  @@index([guestId])
+}
+
+model ChecklistItem {
+  id          String    @id @default(cuid())
+  weddingId   String
+  title       String
+  category    String
+  completed   Boolean   @default(false)
+  notes       String?
+  sortOrder   Int       @default(0)
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  wedding     Wedding   @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  @@index([weddingId, category])
+  @@index([weddingId, sortOrder])
+}
+
+model CalendarItem {
+  id          String    @id @default(cuid())
+  weddingId   String
+  title       String
+  category    String
+  startDate   DateTime
+  endDate     DateTime
+  notes       String?
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  wedding     Wedding   @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  @@index([weddingId, startDate])
+  @@index([weddingId, sortOrder])
+}

@@ -1,0 +1,127 @@
+{
+  "couple": "Jo & Mike",
+  "date": "September 18, 2027",
+  "theme": "aegean-romance",
+  "locationSummary": "Santorini, Greece",
+  "tagline": "A sun-soaked celebration by the sea with our favourite people in one unforgettable place.",
+  "announcement": "We are so excited to celebrate in Greece. You will find the key details for the wedding weekend here.",
+  "heroImage": "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=1400&q=80",
+  "story": {
+    "heading": "Our Story",
+    "paragraphs": [
+      "We met, laughed easily from the start, and somehow every ordinary day together kept turning into something special.",
+      "Over time, weekends away turned into bigger adventures, family dinners became traditions, and our plans slowly started to look like a life.",
+      "Now we cannot wait to gather everyone we love in Greece and celebrate this next chapter together."
+    ]
+  },
+  "ceremony": {
+    "title": "Ceremony",
+    "time": "4:30 PM",
+    "location": "Santorini Gem",
+    "address": "Pyrgos Kallistis, Santorini, Greece",
+    "description": "Guests are invited to arrive from 4:00 PM to enjoy a relaxed arrival before the ceremony begins."
+  },
+  "reception": {
+    "title": "Reception",
+    "time": "6:00 PM",
+    "location": "Santorini Gem",
+    "address": "Pyrgos Kallistis, Santorini, Greece",
+    "description": "Drinks, dinner, sunset views, speeches, and dancing into the evening."
+  },
+  "schedule": [
+    {
+      "time": "4:00 PM",
+      "title": "Guest Arrival",
+      "details": "Guests begin arriving at the venue and are shown to their seats."
+    },
+    {
+      "time": "4:30 PM",
+      "title": "Ceremony Begins",
+      "details": "Our ceremony begins overlooking the caldera."
+    },
+    {
+      "time": "5:15 PM",
+      "title": "Drinks & Photos",
+      "details": "Cocktails, canapes, and a little time to soak in the view."
+    },
+    {
+      "time": "6:30 PM",
+      "title": "Dinner",
+      "details": "Dinner is served on the terrace as the sun sets."
+    },
+    {
+      "time": "8:30 PM",
+      "title": "Speeches",
+      "details": "A few words before the evening party begins."
+    },
+    {
+      "time": "9:30 PM",
+      "title": "Dancing",
+      "details": "Music, dancing, and a long warm night with everyone together."
+    }
+  ],
+  "travel": {
+    "transport": "We recommend arranging transfers or taxis in advance, as Santorini can be busy around wedding season.",
+    "parking": "Limited parking is available near the venue, so shared transport is encouraged where possible.",
+    "directions": "Pyrgos is centrally located on the island and around 15 minutes by car from Fira and nearby accommodation areas.",
+    "mapLink": "https://maps.google.com/?q=Santorini+Gem+Pyrgos+Santorini"
+  },
+  "accommodation": [
+    {
+      "name": "El Greco Resort",
+      "note": "A popular base near Fira with easy access to wedding transport and island transfers.",
+      "link": "https://www.elgrecoresort.com/"
+    },
+    {
+      "name": "Aressana Spa Hotel & Suites",
+      "note": "A central Fira option for guests wanting to stay close to restaurants and nightlife.",
+      "link": "https://www.aressana.com/"
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring a plus one?",
+      "a": "Only if named on the invitation."
+    },
+    {
+      "q": "Are children invited?",
+      "a": "Adults only."
+    },
+    {
+      "q": "What should I wear?",
+      "a": "The dress code is elegant summer wedding attire. Please keep the warm weather and uneven paths in mind when choosing shoes."
+    },
+    {
+      "q": "Do we need to arrange transport?",
+      "a": "Yes, we recommend pre-booking taxis or transfers, especially for the journey back later in the evening."
+    },
+    {
+      "q": "Is the wedding outdoors?",
+      "a": "Yes, much of the day will be outdoors, so sunglasses, light layers, and comfortable footwear are a good idea."
+    }
+  ],
+  "rsvp": {
+    "label": "Contact Jo & Mike",
+    "description": "If your travel plans change or you need anything before the wedding, please get in touch directly.",
+    "url": "mailto:joandmikewedding@example.com",
+    "deadline": "Before you travel"
+  },
+  "gallery": {
+    "heading": "A Few Favourite Moments",
+    "description": "A little glimpse of us before we celebrate in Santorini.",
+    "images": [
+      "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  "registry": {
+    "message": "Your presence in Greece is more than enough, and we are simply excited to celebrate with you.",
+    "links": []
+  },
+  "contact": {
+    "email": "joandmikewedding@example.com",
+    "note": "If you cannot find what you need here, please send us an email and we will point you in the right direction."
+  },
+  "aiConciergeEnabled": true
+}

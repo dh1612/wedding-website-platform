@@ -1,0 +1,197 @@
+import Link from "next/link";
+
+const featureCards = [
+  {
+    title: "Guest List & RSVPs",
+    copy:
+      "Keep names, replies, and last-minute changes in one place without needing separate spreadsheets."
+  },
+  {
+    title: "Checklist & Notes",
+    copy:
+      "A simple way to keep track of wedding to-dos, reminders, and planning notes."
+  },
+  {
+    title: "Dates & Timeline",
+    copy:
+      "See key dates together, from RSVP reminders to final payments and the wedding week."
+  }
+];
+
+export default function CoupleAreaPage() {
+  return (
+    <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
+      <section className="mx-auto w-full max-w-6xl px-6 pb-12 pt-14 lg:px-8 lg:pb-20">
+        <div className="grid gap-10 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
+          <div className="space-y-6">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Private Couple Area</p>
+            <h1 className="text-5xl leading-none sm:text-6xl">
+              A simple planning space that sits behind the wedding website
+            </h1>
+            <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
+              For couples who want more than a beautiful website, the private couple area adds a calm space for RSVPs, planning notes, checklists, and key dates.
+            </p>
+            <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4 text-sm leading-7 text-[#6f665e]">
+              This is a read-only preview of the couple experience. It shows the value of the private area without giving public visitors access to the live planning tools.
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/get-started?package=premium"
+                className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45]"
+                style={{ color: "#ffffff", backgroundColor: "#184b38" }}
+              >
+                Choose Premium
+              </Link>
+              <Link
+                href="/couple-area"
+                className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+                style={{ color: "#4e453f", backgroundColor: "#ffffff" }}
+              >
+                You Are Viewing The Preview
+              </Link>
+            </div>
+          </div>
+
+          <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-6 shadow-[0_24px_70px_rgba(52,35,24,0.1)] sm:p-8">
+            <div className="rounded-[1.5rem] bg-[#184b38] p-6 text-white">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#d8c6a7]">Inside The Couple Area</p>
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
+                <div className="rounded-[1.2rem] bg-white/10 p-4">
+                  <p className="text-sm font-medium">Wedding checklist</p>
+                  <p className="mt-2 text-sm text-white/78">Keep tasks and reminders in one calm place.</p>
+                </div>
+                <div className="rounded-[1.2rem] bg-white/10 p-4">
+                  <p className="text-sm font-medium">Guest responses</p>
+                  <p className="mt-2 text-sm text-white/78">See replies and guest changes more clearly.</p>
+                </div>
+                <div className="rounded-[1.2rem] bg-white/10 p-4 md:col-span-2">
+                  <p className="text-sm font-medium">Planning dates</p>
+                  <p className="mt-2 text-sm text-white/78">Track important moments like RSVP reminders, supplier deadlines, and final wedding-week tasks.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 py-6 lg:px-8 lg:py-10">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
+          <div className="max-w-3xl space-y-4">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Inside The Experience</p>
+            <h2 className="text-4xl leading-none sm:text-5xl">A look at the kind of features included in the couple area</h2>
+            <p className="text-lg leading-8 text-[#5f564e]">
+              Rather than opening the live private area from the sales page, this section shows the feel of it in a cleaner and more controlled way.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-6 xl:grid-cols-3">
+            <div className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Screen 1</p>
+              <h3 className="mt-3 text-2xl">Checklist view</h3>
+              <div className="mt-5 rounded-[1.3rem] border border-[#d8cfc5] bg-white p-5">
+                <div className="space-y-3">
+                  <div className="rounded-[1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3">
+                    <p className="text-sm font-medium text-[#184b38]">Confirm final guest list</p>
+                    <p className="mt-2 text-sm text-[#6f665e]">Check evening guests and last dietary notes.</p>
+                  </div>
+                  <div className="rounded-[1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3">
+                    <p className="text-sm font-medium text-[#184b38]">Share wedding-week timings</p>
+                    <p className="mt-2 text-sm text-[#6f665e]">Transport, arrival windows, and final reminders.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Screen 2</p>
+              <h3 className="mt-3 text-2xl">Guest overview</h3>
+              <div className="mt-5 rounded-[1.3rem] border border-[#d8cfc5] bg-white p-5">
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-[1rem] bg-[#edf6f2] p-4">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#3e6b59]">Attending</p>
+                    <p className="mt-2 text-3xl text-[#184b38]">82</p>
+                  </div>
+                  <div className="rounded-[1rem] bg-[#faf7f2] p-4">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Pending</p>
+                    <p className="mt-2 text-3xl text-[#4e453f]">26</p>
+                  </div>
+                  <div className="rounded-[1rem] bg-[#faf7f2] p-4">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Declined</p>
+                    <p className="mt-2 text-3xl text-[#4e453f]">9</p>
+                  </div>
+                </div>
+                <div className="mt-4 rounded-[1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3">
+                  <p className="text-sm font-medium text-[#184b38]">Guest list stays easy to scan</p>
+                  <p className="mt-2 text-sm text-[#6f665e]">Guest replies stay organised without needing to manage separate spreadsheets.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Screen 3</p>
+              <h3 className="mt-3 text-2xl">Key dates view</h3>
+              <div className="mt-5 rounded-[1.3rem] border border-[#d8cfc5] bg-white p-5">
+                <div className="space-y-3">
+                  <div className="rounded-[1rem] bg-[#184b38] px-4 py-3 text-white">
+                    <p className="text-sm font-medium">RSVP reminder</p>
+                    <p className="mt-2 text-sm text-white/78">12 Aug 2027</p>
+                  </div>
+                  <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3">
+                    <p className="text-sm font-medium text-[#184b38]">Final supplier payments</p>
+                    <p className="mt-2 text-sm text-[#6f665e]">28 Aug 2027</p>
+                  </div>
+                  <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3">
+                    <p className="text-sm font-medium text-[#184b38]">Wedding-week handover</p>
+                    <p className="mt-2 text-sm text-[#6f665e]">14 Sep 2027</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 py-6 lg:px-8 lg:py-10">
+        <div className="grid gap-6 md:grid-cols-3">
+          {featureCards.map((card) => (
+            <div
+              key={card.title}
+              className="rounded-[1.8rem] border border-black/6 bg-white/86 p-7 shadow-[0_20px_60px_rgba(52,35,24,0.08)]"
+            >
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Feature</p>
+              <h2 className="mt-4 text-3xl leading-tight">{card.title}</h2>
+              <p className="mt-4 text-base leading-7 text-[#5f564e]">{card.copy}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-6 lg:px-8 lg:pb-24">
+        <div className="rounded-[2.2rem] bg-[#184b38] p-8 text-white shadow-[0_26px_80px_rgba(18,39,31,0.24)] sm:p-10 lg:flex lg:items-end lg:justify-between lg:p-14">
+          <div className="max-w-2xl space-y-4">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#d8c6a7]">How It Fits</p>
+            <h2 className="text-4xl leading-none sm:text-5xl">The website stays front and centre. The planning space comes after.</h2>
+            <p className="text-lg leading-8 text-white/82">
+              This is why the main homepage focuses on the wedding website first. The couple area is an extra layer of value, not the first thing a bride needs to understand.
+            </p>
+          </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-0">
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-center text-sm font-medium text-[#184b38] transition hover:bg-[#f3ece2]"
+              style={{ color: "#184b38", backgroundColor: "#ffffff" }}
+            >
+              Back To Homepage
+            </Link>
+            <Link
+              href="/get-started?package=premium"
+              className="inline-flex items-center justify-center rounded-full border border-white/24 px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-white/10"
+              style={{ color: "#ffffff", borderColor: "rgba(255,255,255,0.24)" }}
+            >
+              Start Premium
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}

@@ -1,0 +1,50 @@
+Create one polished 16:9 text-free art-direction plate for the slide described below.
+
+Rules:
+- Make it creative, professional, and presentation-ready as visual direction, not as a finished slide screenshot.
+- Create a strictly text-free art plate: no readable titles, bullets, labels, numbers, dates, legends, table text, UI copy, logos, citations, or annotations.
+- Use the plate to establish or follow a visual system: palette, atmosphere, motif, image treatment, icon style, density, and broad composition mood.
+- Leave broad calm regions where deterministic editable PowerPoint objects can be authored later.
+- Be mindful of the intended slide composition, aspect ratio, placement, and crop. If the final slide will place editable text on one side, compose the subject or focal object on the opposite side with calm negative space for that text.
+- Use abstract placeholder strokes, unlabeled diagrams, soft panels, texture fields, collage areas, and broad hierarchy cues rather than exact text boxes that must be guessed later.
+- Do not create dense precise grids of cards, boxes, UI panels, tables, or chart frames unless the final builder will author matching editable geometry from a separate layout map.
+- Use at most one hero image or complex hero diagram per slide.
+- For slides after slide 1, only make the image suitable as a full-slide background if it has clear, low-detail calm regions where foreground cards, titles, charts, and labels can sit without visual clash. Otherwise compose it as a side panel, hero frame, texture strip, or decorative accent with generous negative space.
+- Include decorative or supporting visual material where useful: texture, atmosphere, motifs, contextual objects, cutaways, secondary details, and background depth. Do not make every slide depend on a single hero image.
+- If icons appear, make them simple Lucide/Heroicons-style glyphs, not invented branded symbols.
+- Vary layouts across slides; do not use left text / right image every time.
+- Do not reuse the exact visual content from earlier slides unless the prompt explicitly calls for a repeated background, texture, or branded motif.
+- Prefer lighter backgrounds unless the style guidance requests otherwise.
+- Do not use "key insight" or "takeaway" pop-up boxes.
+- Do not create a generic corporate blue slide unless the prompt specifically calls for it.
+- Keep a clear authored-deck target in mind: the final deck will place editable cards, charts, callouts, labels, and text with deterministic PowerPoint geometry over or alongside this art plate.
+- Hero/diagram/collage art should be easy to use as a full-slide background with fit: cover.
+
+Create slide 4 as a distinct slide that still belongs to the same deck visual system as slide 1. If the platform can use prior generated images as context, use slide 1 only as a style reference; do not reuse slide 1 content.
+Target canvas: 1280x720 16:9. If the image tool offers aspect controls, use a wide 16:9 composition.
+The outline begins with one intro paragraph, followed by exactly 6 slide sections. Each slide section has one title line and one explanatory paragraph. For this request, use only the 4th slide section after the intro paragraph, whose semantic concept is "Feature Comparison". Use that concept only for composition and visual subject matter; never render the title or any section text as readable text in the image. Do not use neighboring sections' titles, facts, dates, or examples.
+
+Apply this style guidance to palette, typography feel, layout, icon treatment, density, and tone:
+Premium wedding brochure, editorial and refined, deep evergreen and soft ivory palette, muted gold accents, paper texture, airy layout, modern luxury without looking corporate, calm negative space for editable brochure copy, varied compositions across slides.
+
+Full outline:
+This brochure presents a premium wedding website and planning portal service for couples who want something elegant, practical, and easy to manage without building it themselves.
+
+Cover
+Create an elegant opening visual for a modern wedding website and portal service. The mood should feel editorial, romantic, premium, and quietly luxurious, with broad calm space for a large title and short supporting line.
+
+What Couples Receive
+Show the feeling of a complete digital wedding experience: guest information, RSVP management, planning support, and polished design. The image should suggest structure and calm rather than technical complexity.
+
+Packages
+Create a visual that feels like three distinct service tiers or tailored options, without using readable text. It should feel premium and organised rather than busy or corporate.
+
+Feature Comparison
+Create a clean, comparison-friendly composition with soft structure and negative space where a comparison table can sit clearly. The visual should feel orderly, light, and high-end.
+
+Why This Is Different
+Express the idea that this is more than a template or generic AI output. The image should suggest craftsmanship, thoughtful structure, and a more bespoke digital experience.
+
+How It Works
+Create a calm visual sense of a simple client journey from enquiry to launch. The composition should support a four-step process with elegant directional flow and clear space for short explanatory copy.
+
