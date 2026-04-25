@@ -57,6 +57,7 @@ export function ClientIntakeForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{
     slug: string;
+    packageTier: IntakePackage;
     styleExampleHref: string;
     styleName: string;
   } | null>(null);
@@ -150,6 +151,7 @@ export function ClientIntakeForm({
 
     setResult({
       slug: data.slug,
+      packageTier: values.packageTier,
       styleExampleHref: `/wedding?theme=${themeId}`,
       styleName: themeName
     });
@@ -490,19 +492,35 @@ export function ClientIntakeForm({
               </p>
               <div className="mt-6 rounded-[1.4rem] border border-[#184b38]/12 bg-white/75 p-5">
                 <p className="text-[12px] uppercase tracking-[0.28em] text-[#2f6f58]">
-                  Style preview
+                  Preview what comes next
                 </p>
-                <h4 className="mt-2 text-2xl text-[#23413a]">{result.styleName}</h4>
+                <h4 className="mt-2 text-2xl text-[#23413a]">
+                  {result.packageTier === "premium"
+                    ? "Website example plus couple area preview"
+                    : `${result.styleName} website example`}
+                </h4>
                 <p className="mt-3 text-sm leading-6 text-[#486159]">
-                  This is a quick visual example of the direction selected for the website.
+                  {result.packageTier === "premium"
+                    ? "This gives a quick feel for both the guest-facing website and the private planning area included in Premium."
+                    : result.packageTier === "smart"
+                      ? "This gives a quick feel for the selected style direction. Smart also includes AI-assisted wording polish on the first version."
+                      : "This is a quick visual example of the direction selected for the website."}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
                   <Link
                     href={result.styleExampleHref}
                     className="inline-flex rounded-full bg-[#184b38] px-5 py-3 text-sm font-medium text-white"
                   >
-                    View Style Example
+                    View Website Example
                   </Link>
+                  {result.packageTier === "premium" ? (
+                    <Link
+                      href="/couple-area"
+                      className="inline-flex rounded-full border border-[#184b38]/12 bg-white px-5 py-3 text-sm font-medium text-[#22483c]"
+                    >
+                      View Couple Area Preview
+                    </Link>
+                  ) : null}
                   <Link
                     href="/brochure"
                     className="inline-flex rounded-full border border-[#184b38]/12 bg-white px-5 py-3 text-sm font-medium text-[#22483c]"

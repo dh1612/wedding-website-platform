@@ -177,6 +177,9 @@ export default function MarketingHomePage() {
             <p className="text-sm leading-6 text-[#184b38]">
               No payment needed to get your first version started.
             </p>
+            <p className="text-sm leading-6 text-[#184b38]">
+              Most couples choose Smart for AI-assisted wording polish.
+            </p>
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
@@ -206,12 +209,12 @@ export default function MarketingHomePage() {
                 />
               </div>
               <div className="rounded-[1.7rem] border border-white/12 bg-white/92 p-6 shadow-[0_20px_60px_rgba(17,28,23,0.18)]">
-                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Service promise</p>
+                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Smart package highlight</p>
                 <p className="mt-3 text-2xl leading-tight">
-                  A polished first version, prepared for you.
+                  AI-assisted wording polish for a more finished first version.
                 </p>
                 <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  The couple shares the basics. The website is prepared, checked, and only then sent back for review.
+                  Couples can send rough notes. The Smart package helps turn that into cleaner website copy with less back-and-forth.
                 </p>
               </div>
             </div>
