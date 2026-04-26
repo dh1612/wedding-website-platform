@@ -116,13 +116,13 @@ export default function MarketingHomePage() {
               href={exampleHref}
               className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
             >
-              View Guest Website
+              View Guest Website Example
             </Link>
             <Link
               href="/couple-area"
               className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
             >
-              View Couple Area
+              View Premium Couple Area Demo
             </Link>
             <a href="#packages" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Packages
@@ -145,13 +145,13 @@ export default function MarketingHomePage() {
                   href={exampleHref}
                   className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
                 >
-                  View Guest Website
+                  View Guest Website Example
                 </Link>
                 <Link
                   href="/couple-area"
                   className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
                 >
-                  View Couple Area
+                  View Premium Couple Area Demo
                 </Link>
                 <a href="#how-it-works" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
                   How It Works
@@ -201,7 +201,7 @@ export default function MarketingHomePage() {
               href={exampleHref}
               className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
-              View Guest Website
+              View Guest Website Example
             </Link>
           </div>
 
@@ -299,7 +299,7 @@ export default function MarketingHomePage() {
                   href="/couple-area"
                   className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                 >
-                  View Premium Couple Area
+                  View Premium Couple Area Demo
                 </Link>
               </div>
             </div>

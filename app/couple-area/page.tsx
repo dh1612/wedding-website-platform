@@ -44,7 +44,7 @@ export default function CoupleAreaPage() {
               href="/#example"
               className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
             >
-              View Guest Website
+              View Guest Website Example
             </Link>
             <Link
               href="/#packages"
@@ -70,7 +70,7 @@ export default function CoupleAreaPage() {
                   href="/#example"
                   className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
                 >
-                  View Guest Website
+                  View Guest Website Example
                 </Link>
                 <Link
                   href="/#packages"

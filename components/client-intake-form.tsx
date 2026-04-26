@@ -615,7 +615,7 @@ export function ClientIntakeForm({
                   href={result.styleExampleHref}
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#133c2d]"
                 >
-                  View {result.styleName} Guest Website
+                  View {result.styleName} Guest Website Example
                 </Link>
                 {result.packageTier === "premium" ? (
                   <Link
