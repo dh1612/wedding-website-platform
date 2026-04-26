@@ -54,7 +54,7 @@ export default function BrochurePage() {
         <div className="rounded-[2.5rem] border border-black/6 bg-white/88 p-8 shadow-[0_24px_70px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div className="space-y-5">
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Slide 1</p>
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Overview</p>
               <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
                 A done-for-you wedding website, explained visually
               </h1>
@@ -112,7 +112,7 @@ export default function BrochurePage() {
       <section id="designs" className="mx-auto w-full max-w-6xl px-6 py-6 lg:px-8 lg:py-10">
         <div className="rounded-[2.5rem] border border-black/6 bg-white/88 p-8 shadow-[0_24px_70px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Slide 2</p>
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Design directions</p>
             <h2 className="text-4xl leading-none sm:text-5xl">A few design directions, shown like a visual deck</h2>
             <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
               These are sample directions only. The point is to show style, quality, and the kind of finish the couple can expect.
@@ -135,7 +135,7 @@ export default function BrochurePage() {
                   </div>
                   <p className="mt-3 text-base font-medium text-[#184b38]">{theme.label}</p>
                   <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.description}</p>
-                  <p className="mt-5 text-sm font-medium text-[#184b38]">Open sample website</p>
+                  <p className="mt-5 text-sm font-medium text-[#184b38]">View guest website example</p>
                 </div>
               </Link>
             ))}
@@ -146,7 +146,7 @@ export default function BrochurePage() {
       <section id="packages" className="mx-auto w-full max-w-6xl px-6 py-6 lg:px-8 lg:py-10">
         <div className="rounded-[2.5rem] border border-black/6 bg-white/88 p-8 shadow-[0_24px_70px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Slide 3</p>
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Packages</p>
             <h2 className="text-4xl leading-none sm:text-5xl">Packages at a glance</h2>
             <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
               A quick visual comparison for couples who want to understand the options without reading a long list first.
@@ -185,7 +185,7 @@ export default function BrochurePage() {
       <section id="portal" className="mx-auto w-full max-w-6xl px-6 pb-16 pt-6 lg:px-8 lg:pb-24 lg:pt-10">
         <div className="rounded-[2.5rem] border border-black/6 bg-white/88 p-8 shadow-[0_24px_70px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Slide 4</p>
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Private couple area</p>
             <h2 className="text-4xl leading-none sm:text-5xl">The private couple area</h2>
             <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
               In the fuller package, the website can be paired with a private planning area for RSVPs, checklists, and key dates.

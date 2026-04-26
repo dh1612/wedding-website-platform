@@ -44,7 +44,7 @@ export default function CoupleAreaPage() {
               href="/#example"
               className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
             >
-              View Example
+              View Guest Website
             </Link>
             <Link
               href="/#packages"
@@ -70,7 +70,7 @@ export default function CoupleAreaPage() {
                   href="/#example"
                   className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
                 >
-                  View Example
+                  View Guest Website
                 </Link>
                 <Link
                   href="/#packages"
@@ -122,20 +122,6 @@ export default function CoupleAreaPage() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/get-started?package=premium"
-                className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45]"
-              >
-                Choose Premium
-              </Link>
-              <Link
-                href="/wedding?theme=aegean-romance"
-                className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
-              >
-                View Public Website Example
-              </Link>
-            </div>
           </div>
 
           <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-6 shadow-[0_24px_70px_rgba(52,35,24,0.1)] sm:p-8">
@@ -321,6 +307,23 @@ export default function CoupleAreaPage() {
               <p className="mt-4 text-base leading-7 text-[#5f564e]">{card.copy}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10 rounded-[2rem] border border-black/6 bg-white/88 p-7 text-center shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-8">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[#9a7d64]">Ready for the fuller setup?</p>
+          <h2 className="mt-3 text-3xl sm:text-4xl">Premium is for couples who want the website and the planning support together</h2>
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-[#5f564e]">
+            Once the couple has seen what the private area actually looks like, the next step is
+            simply choosing Premium and getting the first version started.
+          </p>
+          <div className="mt-6">
+            <Link
+              href="/get-started?package=premium"
+              className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45]"
+            >
+              Choose Premium
+            </Link>
+          </div>
         </div>
       </section>
     </main>

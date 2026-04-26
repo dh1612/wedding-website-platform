@@ -615,14 +615,14 @@ export function ClientIntakeForm({
                   href={result.styleExampleHref}
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#133c2d]"
                 >
-                  View {result.styleName} Example
+                  View {result.styleName} Guest Website
                 </Link>
                 {result.packageTier === "premium" ? (
                   <Link
                     href="/couple-area"
                     className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-6 py-3 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                   >
-                    View Premium Couple Area
+                    View Premium Couple Area Demo
                   </Link>
                 ) : null}
               </div>

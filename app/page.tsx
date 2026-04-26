@@ -201,7 +201,7 @@ export default function MarketingHomePage() {
               href={exampleHref}
               className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
-              View Example
+              View Guest Website
             </Link>
           </div>
 
@@ -293,13 +293,13 @@ export default function MarketingHomePage() {
                   href={exampleHref}
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white"
                 >
-                  View Full Example
+                  View Full Guest Website
                 </Link>
                 <Link
                   href="/couple-area"
                   className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                 >
-                  Premium Package Area Preview
+                  View Premium Couple Area
                 </Link>
               </div>
             </div>
@@ -323,6 +323,7 @@ export default function MarketingHomePage() {
                   <p className="mt-3 text-base leading-7 text-[#5f564e]">
                     A guest-facing site with hero, schedule, travel details, story, and RSVP flow already styled and ready to explore.
                   </p>
+                  <p className="mt-5 text-sm font-medium text-[#184b38]">View guest website example</p>
                 </div>
               </Link>
 

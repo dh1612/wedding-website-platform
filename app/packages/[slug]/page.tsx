@@ -32,7 +32,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
               href="/#example"
               className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
             >
-              View Example
+              View Guest Website
             </Link>
             <Link
               href="/brochure#packages"
@@ -79,7 +79,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                     href={isSmart ? "/wedding?theme=aegean-romance#faq" : "/wedding?theme=aegean-romance"}
                     className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                   >
-                    {isSmart ? "View AI Example" : "View Public Example"}
+                    {isSmart ? "View AI Guest Website" : "View Guest Website"}
                   </Link>
                 )}
               </div>
