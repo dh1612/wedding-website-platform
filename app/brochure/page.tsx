@@ -1,26 +1,9 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
+import { packageOffers } from "@/lib/package-offers";
 import { weddingThemes } from "@/lib/themes";
 
 const brochureThemes = weddingThemes.slice(0, 3);
-
-const packageSlides = [
-  {
-    name: "Basic",
-    price: "EUR245",
-    copy: "A polished guest-facing website, prepared from the details already shared."
-  },
-  {
-    name: "Smart",
-    price: "EUR395",
-    copy: "Adds AI-assisted copy polish and a more refined first version."
-  },
-  {
-    name: "Premium",
-    price: "EUR645",
-    copy: "Includes the website plus the private couple area and planning support."
-  }
-];
 
 const portalCards = [
   {
@@ -170,9 +153,9 @@ export default function BrochurePage() {
             </p>
           </div>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            {packageSlides.map((item, index) => (
+            {packageOffers.map((item, index) => (
               <article
-                key={item.name}
+                key={item.id}
                 className={`rounded-[1.9rem] p-7 shadow-[0_18px_50px_rgba(52,35,24,0.08)] ${
                   index === 2 ? "bg-[#184b38] text-white" : "border border-black/6 bg-[#fcfaf7] text-[#241f1b]"
                 }`}
@@ -182,7 +165,17 @@ export default function BrochurePage() {
                 </p>
                 <h3 className="mt-4 text-4xl">{item.name}</h3>
                 <p className={`mt-4 text-4xl ${index === 2 ? "text-white" : "text-[#184b38]"}`}>{item.price}</p>
-                <p className={`mt-5 text-base leading-7 ${index === 2 ? "text-white/82" : "text-[#5f564e]"}`}>{item.copy}</p>
+                <p className={`mt-5 text-base leading-7 ${index === 2 ? "text-white/82" : "text-[#5f564e]"}`}>{item.brochureCopy}</p>
+                <Link
+                  href={`/packages/${item.id}`}
+                  className={`mt-6 inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition ${
+                    index === 2
+                      ? "border border-white/16 bg-white text-[#184b38] hover:bg-[#f7f2ea]"
+                      : "border border-[#d8cfc5] bg-white text-[#4e453f] hover:bg-[#faf7f2]"
+                  }`}
+                >
+                  See more
+                </Link>
               </article>
             ))}
           </div>
