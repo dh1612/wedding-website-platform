@@ -453,6 +453,48 @@ export const weddingThemes: ThemeDefinition[] = [
     heroLayout: "panorama"
   },
   {
+    id: "en-kipo-garden",
+    name: "En Kipo Garden",
+    label: "Santorini garden dinner",
+    description: "Olive greens, warm stone, soft candlelight, and a more intimate Greek garden feel inspired by En Kipo.",
+    season: "Spring / summer / destination",
+    previewStyle: {
+      backgroundImage:
+        "linear-gradient(180deg, rgba(28,45,36,0.18), rgba(28,45,36,0.1)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80')",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    },
+    style: createThemeStyle({
+      background: "#f5f1e8",
+      foreground: "#223129",
+      surface: "rgba(255, 252, 247, 0.84)",
+      surfaceStrong: "#fffdf8",
+      border: "rgba(74, 97, 83, 0.16)",
+      accent: "#7e9275",
+      accentSoft: "rgba(126, 146, 117, 0.14)",
+      accentStrong: "#465c4f",
+      accentContrast: "#f7fbf6",
+      muted: "#5f6f66",
+      gold: "#c9ab72",
+      shadow: "0 24px 72px rgba(47, 66, 56, 0.14)",
+      pageGradient:
+        "radial-gradient(circle at 12% 0%, rgba(255,255,255,0.92), transparent 26%), radial-gradient(circle at 84% 18%, rgba(201,171,114,0.16), transparent 22%), linear-gradient(180deg, #fbf7ef 0%, #f2efe6 45%, #e6e2d5 100%)",
+      cardGlow:
+        "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(247,243,233,0.08))",
+      heroGlow:
+        "radial-gradient(circle at top right, rgba(126,146,117,0.18), transparent 30%), radial-gradient(circle at 72% 14%, rgba(201,171,114,0.14), transparent 18%), linear-gradient(180deg, rgba(255,255,255,0.18), transparent)",
+      fontBody: "'Palatino Linotype', Palatino, serif",
+      fontDisplay: "'Cormorant Garamond', 'Hoefler Text', Garamond, serif",
+      fontScript:
+        "'Snell Roundhand', 'Apple Chancery', 'Zapfino', 'URW Chancery L', cursive"
+    }),
+    heroImage:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    detailImage:
+      "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=900",
+    heroLayout: "editorial-frame"
+  },
+  {
     id: "winter-velvet",
     name: "Winter Velvet",
     label: "Rich seasonal",
