@@ -3,7 +3,7 @@ import { PageHero } from "@/components/page-hero";
 import { SeatingPlanner } from "@/components/seating-planner";
 import { SiteFrame } from "@/components/site-frame";
 import { mockGuests, sampleTables } from "@/lib/mock-wedding-ops";
-import { buildPortalNavItems } from "@/lib/site-navigation";
+import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import { getWeddingSiteBySlug } from "@/lib/production-repositories";
 import { getThemeById } from "@/lib/themes";
 import { coerceWeddingData } from "@/lib/wedding-data";
@@ -34,7 +34,9 @@ export default async function PlanYourTablesBySlugPage({
       themeId={theme.id}
       themeStyle={theme.style}
       adminView
-      adminNavItemsOverride={buildPortalNavItems(`/couple-portal/${slug}`)}
+      portalType="operator"
+      adminNavItemsOverride={buildOperatorWeddingNavItems(slug)}
+      showFooter={false}
       weddingData={weddingData}
     >
       <PageHero

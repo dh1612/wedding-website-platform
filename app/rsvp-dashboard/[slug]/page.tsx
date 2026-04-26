@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { PageHero } from "@/components/page-hero";
 import { RSVPManager } from "@/components/rsvp-manager";
 import { SiteFrame } from "@/components/site-frame";
-import { buildPortalNavItems } from "@/lib/site-navigation";
+import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import {
   getWeddingSiteBySlug,
   listPortalGuests
@@ -37,7 +37,9 @@ export default async function RSVPDashboardBySlugPage({
       themeId={theme.id}
       themeStyle={theme.style}
       adminView
-      adminNavItemsOverride={buildPortalNavItems(`/couple-portal/${slug}`)}
+      portalType="operator"
+      adminNavItemsOverride={buildOperatorWeddingNavItems(slug)}
+      showFooter={false}
       weddingData={weddingData}
     >
       <PageHero

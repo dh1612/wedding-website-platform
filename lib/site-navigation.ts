@@ -39,12 +39,20 @@ export function buildPortalNavItems(basePath: string) {
 }
 
 export const operatorNavItems = [
-  { label: "Admin", path: "/admin" },
-  { label: "Portal", path: "/couple-portal" },
-  { label: "RSVPs", path: "/rsvp-dashboard" },
-  { label: "Seating", path: "/plan-your-tables" },
+  { label: "Dashboard", path: "/admin" },
   { label: "Production", path: "/production" }
 ];
+
+export function buildOperatorWeddingNavItems(slug: string) {
+  return [
+    { label: "Dashboard", path: "/admin" },
+    { label: "Edit Wedding", path: `/admin/weddings/${slug}` },
+    { label: "Preview", path: `/preview/${slug}` },
+    { label: "Portal", path: `/couple-portal/${slug}` },
+    { label: "RSVPs", path: `/rsvp-dashboard/${slug}` },
+    { label: "Seating", path: `/plan-your-tables/${slug}` }
+  ];
+}
 
 export function buildModeHref(
   path: string,

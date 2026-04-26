@@ -4,6 +4,7 @@ import { updateWeddingContentAction } from "@/app/admin/actions";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
 import { getWeddingRecordForAdmin } from "@/lib/production-repositories";
+import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import { getThemeById, weddingThemes } from "@/lib/themes";
 import { coerceWeddingData } from "@/lib/wedding-data";
 
@@ -36,12 +37,14 @@ export default async function AdminWeddingEditPage({
 
   return (
     <SiteFrame
-      currentPath="/admin"
+      currentPath={`/admin/weddings/${record.slug}`}
       mode="pages"
       themeId={theme.id}
       themeStyle={theme.style}
       adminView
       portalType="operator"
+      adminNavItemsOverride={buildOperatorWeddingNavItems(record.slug)}
+      showFooter={false}
     >
       <PageHero
         eyebrow="Wedding Editor"
@@ -59,6 +62,12 @@ export default async function AdminWeddingEditPage({
           </Link>
           <Link href={`/couple-portal/${record.slug}`} className="accent-panel rounded-full px-4 py-2 text-sm">
             Open Couple Portal
+          </Link>
+          <Link href={`/rsvp-dashboard/${record.slug}`} className="accent-panel rounded-full px-4 py-2 text-sm">
+            Manage RSVPs
+          </Link>
+          <Link href={`/plan-your-tables/${record.slug}`} className="accent-panel rounded-full px-4 py-2 text-sm">
+            Manage Seating
           </Link>
         </div>
 

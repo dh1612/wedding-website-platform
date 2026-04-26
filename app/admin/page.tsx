@@ -30,6 +30,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       themeStyle={theme.style}
       adminView
       portalType="operator"
+      showFooter={false}
     >
       <PageHero
         eyebrow="Operator Backend"
@@ -122,6 +123,18 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >
                           Couple Portal
+                        </Link>
+                        <Link
+                          href={`/rsvp-dashboard/${record.slug}`}
+                          className="accent-panel rounded-full px-4 py-2 text-sm"
+                        >
+                          RSVP Manager
+                        </Link>
+                        <Link
+                          href={`/plan-your-tables/${record.slug}`}
+                          className="accent-panel rounded-full px-4 py-2 text-sm"
+                        >
+                          Seating
                         </Link>
                         <Link
                           href={`/site/${record.slug}`}
