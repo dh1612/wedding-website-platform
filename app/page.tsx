@@ -44,11 +44,26 @@ const packageCards = [
 ];
 
 const flowSteps = [
-  "Choose your package",
-  "Share your details",
-  "We build your first version",
-  "You review privately",
-  "We refine and go live"
+  {
+    title: "Share a few details (2 minutes)",
+    copy: "Names, date, location — nothing complicated"
+  },
+  {
+    title: "We build your website for you",
+    copy: "Designed, written, and structured around your day"
+  },
+  {
+    title: "You review privately",
+    copy: "Nothing is shared until you’re happy"
+  },
+  {
+    title: "We refine it together",
+    copy: "Small tweaks, final touches, everything polished"
+  },
+  {
+    title: "You go live with confidence",
+    copy: "A beautiful site, ready for your guests"
+  }
 ];
 
 const featuredThemes = weddingThemes.slice(0, 3);
@@ -165,6 +180,26 @@ export default function MarketingHomePage() {
             </p>
           </div>
 
+          <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 sm:p-6">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it works</p>
+            <h2 className="mt-3 text-2xl leading-tight text-[#184b38] sm:text-3xl">
+              We handle everything — you stay in control
+            </h2>
+            <div className="mt-5 space-y-4">
+              {flowSteps.map((step, index) => (
+                <div key={step.title} className="flex gap-4">
+                  <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#184b38] text-xs font-medium text-white">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-base font-medium leading-6 text-[#2d241f]">{step.title}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#6d655d]">{step.copy}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
               href="/get-started"
@@ -178,12 +213,6 @@ export default function MarketingHomePage() {
             >
               View Example Website
             </Link>
-          </div>
-
-          <div className="space-y-2">
-            <p className="text-sm leading-6 text-[#6d655d]">• Takes ~2 minutes to get started</p>
-            <p className="text-sm leading-6 text-[#6d655d]">• No payment required upfront</p>
-            <p className="text-sm leading-6 text-[#6d655d]">• Private review before anything is shared</p>
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
@@ -419,12 +448,12 @@ export default function MarketingHomePage() {
               <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">How It Works</p>
               <p className="mt-2 text-sm leading-6 text-[#184b38]">No setup. No tools. No stress.</p>
               <div className="mt-4 space-y-3">
-                {flowSteps.map((title, index) => (
-                  <div key={title} className="flex gap-3">
+                {flowSteps.map((step, index) => (
+                  <div key={step.title} className="flex gap-3">
                     <span className="mt-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#184b38] text-xs font-medium text-white">
                       {index + 1}
                     </span>
-                    <p className="text-sm leading-6 text-[#4e453f]">{title}</p>
+                    <p className="text-sm leading-6 text-[#4e453f]">{step.title}</p>
                   </div>
                 ))}
               </div>
