@@ -15,6 +15,11 @@ type ClientIntakeFormProps = {
 
 const STORAGE_KEY = "wedding-intake-draft-v2";
 const intakeThemeOptions = weddingThemes.slice(0, 6);
+const submissionSteps = [
+  "Designing layout...",
+  "Adding your details...",
+  "Finalising your preview..."
+];
 
 const defaultValues: IntakeSubmission = {
   packageTier: "smart",
@@ -55,6 +60,8 @@ export function ClientIntakeForm({
   });
   const [statusMessage, setStatusMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSubmissionFeedback, setShowSubmissionFeedback] = useState(false);
+  const [submissionStepIndex, setSubmissionStepIndex] = useState(0);
   const [result, setResult] = useState<{
     slug: string;
     packageTier: IntakePackage;
@@ -81,6 +88,18 @@ export function ClientIntakeForm({
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
   }, [values]);
+
+  useEffect(() => {
+    if (!showSubmissionFeedback || result) return;
+
+    if (submissionStepIndex >= submissionSteps.length - 1) return;
+
+    const timer = window.setTimeout(() => {
+      setSubmissionStepIndex((current) => current + 1);
+    }, 900);
+
+    return () => window.clearTimeout(timer);
+  }, [showSubmissionFeedback, submissionStepIndex, result]);
 
   const missingBasics = useMemo(() => {
     const missing: string[] = [];
@@ -125,6 +144,8 @@ export function ClientIntakeForm({
 
     setIsSubmitting(true);
     setStatusMessage("");
+    setShowSubmissionFeedback(false);
+    setSubmissionStepIndex(0);
 
     const imageUrls = (values.imageUrls ?? [])
       .map((item) => item.trim())
@@ -160,18 +181,22 @@ export function ClientIntakeForm({
       weddingThemes.find((theme) => theme.id === themeId)?.name ??
       "Selected Style";
 
-    setResult({
-      slug: data.slug,
-      packageTier: values.packageTier,
-      styleExampleHref: `/wedding?theme=${themeId}`,
-      styleName: themeName
-    });
+    setShowSubmissionFeedback(true);
     setStatusMessage(data.message);
     window.localStorage.removeItem(STORAGE_KEY);
+
+    window.setTimeout(() => {
+      setResult({
+        slug: data.slug,
+        packageTier: values.packageTier,
+        styleExampleHref: `/wedding?theme=${themeId}`,
+        styleName: themeName
+      });
+    }, submissionSteps.length * 900 + 350);
   }
 
   return (
-    <section className="mx-auto w-full max-w-4xl px-6 pb-16 pt-10 lg:px-8 lg:pb-24">
+    <section className="mx-auto w-full max-w-4xl px-6 pb-28 pt-8 lg:px-8 lg:pb-24">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <button
           type="button"
@@ -189,7 +214,7 @@ export function ClientIntakeForm({
         </Link>
       </div>
 
-      <div className="rounded-[2rem] border border-black/6 bg-white/88 p-6 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-8 lg:p-10">
+      <div className="rounded-[2rem] border border-black/6 bg-white/88 p-5 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-7 lg:p-9">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="max-w-2xl">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
@@ -198,6 +223,9 @@ export function ClientIntakeForm({
             <h2 className="mt-2 text-3xl sm:text-4xl">The important bits first</h2>
             <p className="mt-4 text-base leading-7 text-[#5f564e]">
               Takes 2 minutes. Fill in what you have. Rough notes are perfect.
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[#184b38]">
+              Rough answers are perfect — we&apos;ll polish everything.
             </p>
             <p className="mt-2 text-sm leading-6 text-[#486159]">
               Progress is saved while you move around, so nothing already typed should disappear.
@@ -225,7 +253,7 @@ export function ClientIntakeForm({
           changes before anything goes live.
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4 text-sm leading-6 text-[#6f665e]">
             <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Required</p>
             <p className="mt-2">Couple names and contact email.</p>
@@ -242,19 +270,19 @@ export function ClientIntakeForm({
           </div>
         ) : null}
 
-        <div className="mt-8 space-y-6">
-          <div className="space-y-4">
+        <div className="mt-7 space-y-5">
+          <div className="space-y-3">
             <div>
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Package selection</p>
               <h3 className="mt-2 text-2xl">Choose the support level</h3>
             </div>
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-3 md:grid-cols-3">
               {intakePackages.map((pkg) => (
                 <button
                   key={pkg.id}
                   type="button"
                   onClick={() => updateField("packageTier", pkg.id)}
-                  className={`rounded-[1.4rem] border p-5 text-left ${
+                  className={`rounded-[1.35rem] border p-4 text-left ${
                     values.packageTier === pkg.id
                       ? "border-[#184b38] bg-[#184b38] text-white"
                       : "border-black/6 bg-[#faf7f2]"
@@ -274,7 +302,7 @@ export function ClientIntakeForm({
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
               <h3 className="mt-2 text-2xl">The only essentials</h3>
@@ -282,7 +310,7 @@ export function ClientIntakeForm({
                 Only names and email are needed to get the first version started.
               </p>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2">
               <input
                 value={values.couple}
                 onChange={(event) => updateField("couple", event.target.value)}
@@ -310,7 +338,11 @@ export function ClientIntakeForm({
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="rounded-[1.2rem] border border-[#184b38]/12 bg-[#f6fbf8] px-4 py-3 text-sm leading-6 text-[#486159]">
+            This will become your wedding website — ready to share with your guests.
+          </div>
+
+          <div className="space-y-3">
             <div>
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Preferred style direction</p>
               <h3 className="mt-2 text-2xl">Choose a look, or let us choose</h3>
@@ -318,7 +350,7 @@ export function ClientIntakeForm({
                 Pick a direction early so the first version feels closer to the right look straight away.
               </p>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               <button
                 type="button"
                 onClick={() => updateField("themePreference", "")}
@@ -386,8 +418,8 @@ export function ClientIntakeForm({
                 Ceremony, reception, travel, FAQ, story, and images can all be added later.
               </p>
             </summary>
-            <div className="mt-6 space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
+            <div className="mt-5 space-y-5">
+              <div className="grid gap-3 md:grid-cols-2">
                 <input
                   value={values.ceremonyTime}
                   onChange={(event) => updateField("ceremonyTime", event.target.value)}
@@ -459,6 +491,33 @@ export function ClientIntakeForm({
             </div>
           </details>
 
+          {showSubmissionFeedback && !result ? (
+            <div className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">
+                Preparing your website
+              </p>
+              <h3 className="mt-3 text-3xl">Your wedding website is being prepared 🎉</h3>
+              <div className="mt-5 space-y-3">
+                {submissionSteps.map((step, index) => {
+                  const isActive = index <= submissionStepIndex;
+
+                  return (
+                    <div
+                      key={step}
+                      className={`rounded-[1rem] border px-4 py-3 text-sm leading-6 transition ${
+                        isActive
+                          ? "border-[#184b38]/18 bg-white text-[#184b38]"
+                          : "border-black/6 bg-[#faf7f2] text-[#7d746b]"
+                      }`}
+                    >
+                      {step}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+
           {result ? (
             <div className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">
@@ -497,17 +556,33 @@ export function ClientIntakeForm({
                 type="button"
                 onClick={submitIntake}
                 disabled={isSubmitting}
-                className="inline-flex w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-4 text-base font-medium text-white transition hover:bg-[#133c2d] disabled:cursor-not-allowed disabled:opacity-70"
+                className="hidden w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-4 text-base font-medium text-white transition hover:bg-[#133c2d] disabled:cursor-not-allowed disabled:opacity-70 md:inline-flex"
               >
                 {isSubmitting ? "Preparing..." : "Prepare My Website"}
               </button>
-              <p className="mt-3 text-center text-sm leading-6 text-[#486159]">
+              <p className="mt-3 hidden text-center text-sm leading-6 text-[#486159] md:block">
                 No payment needed to get your first version started.
               </p>
             </div>
           )}
         </div>
       </div>
+
+      {!result ? (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/6 bg-white/95 p-4 shadow-[0_-12px_30px_rgba(52,35,24,0.1)] backdrop-blur md:hidden">
+          <button
+            type="button"
+            onClick={submitIntake}
+            disabled={isSubmitting}
+            className="inline-flex w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-3.5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            {isSubmitting ? "Preparing..." : "Prepare My Website"}
+          </button>
+          <p className="mt-2 text-center text-xs leading-5 text-[#486159]">
+            No payment needed to get your first version started.
+          </p>
+        </div>
+      ) : null}
     </section>
   );
 }
