@@ -4,9 +4,10 @@ import { SectionHeading } from "@/components/section-heading";
 
 type RSVPSectionProps = {
   weddingData?: WeddingData;
+  demoMode?: boolean;
 };
 
-export function RSVPSection({ weddingData }: RSVPSectionProps) {
+export function RSVPSection({ weddingData, demoMode = false }: RSVPSectionProps) {
   const wedding = weddingData ?? getWeddingData();
 
   return (
@@ -16,22 +17,34 @@ export function RSVPSection({ weddingData }: RSVPSectionProps) {
           <SectionHeading
             eyebrow="RSVP"
             title="Let Us Know If You Can Make It"
-            description={wedding.rsvp.description}
+            description={
+              demoMode
+                ? "In the finished version, this becomes the couple's RSVP form and response flow, shaped around exactly what they want guests to answer."
+                : wedding.rsvp.description
+            }
           />
           <div className="accent-panel rounded-[1.75rem] p-8">
             <p className="eyebrow">Deadline</p>
-            <p className="mt-3 text-3xl">{wedding.rsvp.deadline}</p>
+            <p className="mt-3 text-3xl">{demoMode ? "Set around the couple's plans" : wedding.rsvp.deadline}</p>
             <p className="prose-copy mt-4">
-              Use this section for final guest updates, questions, or any last-minute changes before the wedding.
+              {demoMode
+                ? "This section can collect attendance, dietary notes, travel updates, and anything else the couple wants included in their guest response form."
+                : "Use this section for final guest updates, questions, or any last-minute changes before the wedding."}
             </p>
-            <a
-              href={wedding.rsvp.url}
-              target="_blank"
-              rel="noreferrer"
-              className="accent-button mt-6 inline-flex rounded-full px-6 py-3 text-sm font-medium"
-            >
-              {wedding.rsvp.label}
-            </a>
+            {demoMode ? (
+              <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/65 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+                Example only: the final RSVP form and wording are prepared around the couple's guest list and preferences.
+              </div>
+            ) : (
+              <a
+                href={wedding.rsvp.url}
+                target="_blank"
+                rel="noreferrer"
+                className="accent-button mt-6 inline-flex rounded-full px-6 py-3 text-sm font-medium"
+              >
+                {wedding.rsvp.label}
+              </a>
+            )}
           </div>
         </div>
       </div>

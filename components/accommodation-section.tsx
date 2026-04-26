@@ -21,14 +21,16 @@ export function AccommodationSection({
             description="A couple of nearby options for guests travelling in for the celebration."
           />
         </div>
-        <div className="grid gap-5">
-          {wedding.accommodation.map((hotel) => (
-            <article
-              key={hotel.name}
-              className="section-shell rounded-[1.75rem] p-6 sm:p-8"
-            >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
+        <div className="section-shell rounded-[1.75rem] p-6 sm:p-8">
+          <div className="space-y-4">
+            {wedding.accommodation.map((hotel, index) => (
+              <article
+                key={hotel.name}
+                className={`flex flex-col gap-4 py-1 sm:flex-row sm:items-start sm:justify-between ${
+                  index !== wedding.accommodation.length - 1 ? "border-b border-[var(--border)] pb-4" : ""
+                }`}
+              >
+                <div className="min-w-0">
                   <h3 className="text-2xl">{hotel.name}</h3>
                   <p className="prose-copy mt-2">{hotel.note}</p>
                 </div>
@@ -37,14 +39,14 @@ export function AccommodationSection({
                     href={hotel.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="accent-outline rounded-full px-5 py-3 text-sm font-medium"
+                    className="accent-outline shrink-0 rounded-full px-5 py-3 text-sm font-medium"
                   >
                     View hotel
                   </a>
                 ) : null}
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

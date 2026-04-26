@@ -19,6 +19,7 @@ type WeddingSitePageProps = {
   weddingData: WeddingData;
   mode?: SiteMode;
   conciergeApiPath?: string;
+  demoMode?: boolean;
 };
 
 export function WeddingSitePage({
@@ -27,7 +28,8 @@ export function WeddingSitePage({
   activeTheme,
   weddingData,
   mode = "scroll",
-  conciergeApiPath
+  conciergeApiPath,
+  demoMode = false
 }: WeddingSitePageProps) {
   return (
     <main data-theme={activeTheme.id} style={activeTheme.style}>
@@ -38,6 +40,8 @@ export function WeddingSitePage({
         siteBasePath={siteBasePath}
         allowModeToggle={false}
         weddingData={weddingData}
+        returnHref={demoMode ? "/" : undefined}
+        returnLabel={demoMode ? "Return to Home" : undefined}
       />
       <HeroSection themeId={activeTheme.id} weddingData={weddingData} />
       <FAQSection
@@ -48,9 +52,9 @@ export function WeddingSitePage({
       <ScheduleSection weddingData={weddingData} />
       <TravelSection weddingData={weddingData} />
       <AccommodationSection weddingData={weddingData} />
-      <RSVPSection weddingData={weddingData} />
+      <RSVPSection weddingData={weddingData} demoMode={demoMode} />
       <GalleryRegistrySection weddingData={weddingData} />
-      <SiteFooter weddingData={weddingData} />
+      <SiteFooter weddingData={weddingData} demoMode={demoMode} />
     </main>
   );
 }

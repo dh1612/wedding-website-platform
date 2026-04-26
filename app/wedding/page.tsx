@@ -19,6 +19,7 @@ export default async function WeddingPage({ searchParams }: WeddingPageProps) {
       siteBasePath="/wedding"
       activeTheme={activeTheme}
       weddingData={wedding}
+      demoMode
     />
   );
 }

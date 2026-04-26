@@ -20,10 +20,10 @@ const packageCards = [
     id: "smart",
     name: "Smart",
     price: "EUR395",
-    summary: "Adds copy polish and a more refined first version with less back-and-forth.",
+    summary: "A more polished first version, shaped faster with support behind the scenes.",
     points: [
       "Everything in Basic",
-      "AI-assisted wording polish",
+      "AI-supported first draft",
       "More finished first version",
       "Optional concierge touches"
     ]
@@ -64,13 +64,13 @@ const emotionalPoints = [
 
 const trustPoints = [
   "Done-for-you service",
-  "AI support with a real human",
+  "Real support from first draft to final review",
   "Private review before guests see anything"
 ];
 
 const supportPoints = [
   "A real person checks the first version before it goes anywhere live.",
-  "AI can help polish wording, but couples still interact with a human.",
+  "The first draft can be shaped faster behind the scenes, while the service still feels personal.",
   "Changes, questions, and final touches are handled with support, not guesswork."
 ];
 
@@ -185,7 +185,7 @@ export default function MarketingHomePage() {
             </Link>
             <Link
               href={exampleHref}
-              className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45] md:border md:border-[#d8cfc5] md:bg-white md:text-[#4e453f] md:hover:bg-[#faf7f2]"
+              className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
               View Example
             </Link>
@@ -198,8 +198,8 @@ export default function MarketingHomePage() {
             <p className="text-sm leading-6 text-[#184b38]">
               No payment needed to get your first version started.
             </p>
-            <p className="text-sm leading-6 text-[#184b38]">
-              Most couples choose Smart for AI-assisted wording polish.
+            <p className="text-sm leading-6 text-[#5f564e]">
+              Most couples choose Smart for a more finished first version with less back-and-forth.
             </p>
           </div>
 
@@ -240,16 +240,17 @@ export default function MarketingHomePage() {
                   }}
                 />
               </div>
-              <div className="rounded-[1.7rem] border border-white/12 bg-white/92 p-6 shadow-[0_20px_60px_rgba(17,28,23,0.18)]">
-                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Smart package highlight</p>
-                <p className="mt-3 text-2xl leading-tight">
-                  AI-assisted wording polish for a more finished first version.
-                </p>
-                <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  Couples can send rough notes. Smart uses AI to help shape clearer wording, then a
-                  real person checks the first version before it is sent for review.
-                </p>
-              </div>
+                <div className="rounded-[1.7rem] border border-white/12 bg-white/92 p-6 shadow-[0_20px_60px_rgba(17,28,23,0.18)]">
+                  <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Smart package highlight</p>
+                  <p className="mt-3 text-2xl leading-tight">
+                  A more polished first version, prepared faster behind the scenes.
+                  </p>
+                  <p className="mt-3 text-base leading-7 text-[#5f564e]">
+                  Couples can send rough notes. Smart helps shape those into something more
+                  refined, then a real person checks the first version before it is sent for
+                  review.
+                  </p>
+                </div>
             </div>
           </div>
         </div>

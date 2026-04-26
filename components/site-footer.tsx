@@ -3,17 +3,24 @@ import { getWeddingData } from "@/lib/wedding-data";
 
 type SiteFooterProps = {
   weddingData?: WeddingData;
+  demoMode?: boolean;
 };
 
-export function SiteFooter({ weddingData }: SiteFooterProps) {
+export function SiteFooter({ weddingData, demoMode = false }: SiteFooterProps) {
   const wedding = weddingData ?? getWeddingData();
 
   return (
     <footer className="mx-auto w-full max-w-6xl px-6 py-10 lg:px-8 lg:py-14">
       <div className="section-shell rounded-[2rem] p-8 text-center sm:p-10">
         <p className="eyebrow">Contact</p>
-        <p className="mt-4 text-2xl">{wedding.contact.email}</p>
-        <p className="prose-copy mt-4">{wedding.contact.note}</p>
+        <p className="mt-4 break-all text-xl sm:text-2xl">
+          {demoMode ? "yourwedding@example.com" : wedding.contact.email}
+        </p>
+        <p className="prose-copy mt-4">
+          {demoMode
+            ? "In the finished version, this area can point guests to the couple's preferred contact route for travel questions, updates, or RSVP support."
+            : wedding.contact.note}
+        </p>
       </div>
     </footer>
   );

@@ -21,6 +21,8 @@ type SiteHeaderProps = {
   allowModeToggle?: boolean;
   weddingData?: WeddingData;
   adminNavItemsOverride?: Array<{ label: string; path: string }>;
+  returnHref?: string;
+  returnLabel?: string;
 };
 
 export function SiteHeader({
@@ -32,7 +34,9 @@ export function SiteHeader({
   siteBasePath = "/templates",
   allowModeToggle = true,
   weddingData,
-  adminNavItemsOverride
+  adminNavItemsOverride,
+  returnHref,
+  returnLabel = "Return to Home"
 }: SiteHeaderProps) {
   const wedding = weddingData ?? getWeddingData();
   const adminNavItems =
@@ -110,13 +114,26 @@ export function SiteHeader({
           <div className="rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-4 py-2 text-sm font-medium text-[var(--accent-strong)]">
             {portalType === "operator" ? "Admin Area" : "Couple Area"}
           </div>
-        ) : allowModeToggle ? (
-          <LayoutToggle
-            currentPath={currentPath}
-            mode={mode}
-            themeId={themeId}
-            siteBasePath={siteBasePath}
-          />
+        ) : null}
+        {!adminView ? (
+          <div className="flex items-center gap-2">
+            {returnHref ? (
+              <Link
+                href={returnHref}
+                className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--accent-soft)]"
+              >
+                {returnLabel}
+              </Link>
+            ) : null}
+            {allowModeToggle ? (
+              <LayoutToggle
+                currentPath={currentPath}
+                mode={mode}
+                themeId={themeId}
+                siteBasePath={siteBasePath}
+              />
+            ) : null}
+          </div>
         ) : null}
       </div>
     </header>
