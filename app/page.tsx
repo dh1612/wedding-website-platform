@@ -181,12 +181,7 @@ export default function MarketingHomePage() {
               We build your wedding website for you
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website, with an optional private couple area for RSVPs, planning notes, key dates, and seating.
-            </p>
-            <p className="max-w-2xl text-base leading-7 text-[#486159]">
-              AI can help shape the first version, but every couple still has a real person
-              behind the service to guide changes, review details, and get everything ready to
-              share.
+              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website, with an optional private couple area for RSVPs, planning notes, key dates, and seating. You select. We build.
             </p>
           </div>
 
@@ -207,29 +202,15 @@ export default function MarketingHomePage() {
 
           <div className="space-y-1">
             <p className="text-sm leading-6 text-[#6d655d]">
-              Takes ~2 minutes to get your first version started.
+              Takes ~2 minutes to get your first version started, provide basic information, receive a beautiful wedding website.
             </p>
             <p className="text-sm leading-6 text-[#184b38]">
-              No payment needed to get your first version started.
+              No payment needed to complete builder and see website preview.
             </p>
-            <p className="text-sm leading-6 text-[#5f564e]">
-              Most couples choose Smart for a more finished first version with less back-and-forth.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {trustPoints.map((point) => (
-              <span
-                key={point}
-                className="rounded-full border border-black/8 bg-white/80 px-4 py-2 text-sm text-[#4e453f]"
-              >
-                {point}
-              </span>
-            ))}
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
-            This is not a DIY builder. We prepare the first version for you. You review, we refine, then you go live.
+            This is not a DIY builder. You provide information you want guests to see, we do the rest in a seamless fashion. Removing the stress from wedding websites.
           </div>
         </div>
 
@@ -255,14 +236,13 @@ export default function MarketingHomePage() {
                 />
               </div>
                 <div className="rounded-[1.4rem] border border-white/12 bg-white/92 p-5 shadow-[0_20px_60px_rgba(17,28,23,0.18)] sm:rounded-[1.7rem] sm:p-6">
-                  <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Smart package highlight</p>
+                  <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Premium package highlight</p>
                   <p className="mt-3 text-2xl leading-tight">
-                  A more polished first version, prepared faster behind the scenes.
+                  The wedding website plus the private planning side, handled properly.
                   </p>
                   <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  Couples can send rough notes. Smart helps shape those into something more
-                  refined, then a real person checks the first version before it is sent for
-                  review.
+                  Premium gives couples the public wedding website plus a calmer private area for
+                  RSVPs, notes, key dates, seating, and a guided walkthrough call.
                   </p>
                 </div>
             </div>
@@ -288,18 +268,12 @@ export default function MarketingHomePage() {
                 Premium includes a 1-hour video walkthrough, so the couple can be shown exactly how
                 to use the private planning area rather than being left to figure it out alone.
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="pt-1">
                 <Link
-                  href={exampleHref}
+                  href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white"
                 >
-                  View Full Guest Website
-                </Link>
-                <Link
-                  href="/couple-area"
-                  className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
-                >
-                  View Premium Couple Area Demo
+                  Build Your Preview Now
                 </Link>
               </div>
             </div>
@@ -380,23 +354,6 @@ export default function MarketingHomePage() {
                   Includes a guided 1-hour video call to walk through the premium area together.
                 </div>
               </Link>
-
-              <div className="rounded-[2rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)]">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                  Human support
-                </p>
-                <h3 className="mt-3 text-3xl">AI helps. A real person still handles the service.</h3>
-                <div className="mt-4 space-y-3">
-                  {supportPoints.map((point) => (
-                    <div
-                      key={point}
-                      className="rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#4e453f]"
-                    >
-                      {point}
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </div>
