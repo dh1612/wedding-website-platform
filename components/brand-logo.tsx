@@ -15,7 +15,7 @@ function MonogramMark({ mono = false }: { mono?: boolean }) {
     <svg
       aria-hidden="true"
       viewBox="0 0 96 96"
-      className="h-12 w-12 shrink-0"
+      className="h-10 w-10 shrink-0 sm:h-12 sm:w-12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -50,7 +50,7 @@ function MonogramMark({ mono = false }: { mono?: boolean }) {
 
 export function BrandLogo({
   href = "/",
-  subtitle = "Done-for-you wedding websites",
+  subtitle = "Beautiful wedding websites, built for you",
   className = "",
   mono = false
 }: BrandLogoProps) {
@@ -61,7 +61,9 @@ export function BrandLogo({
         <p className="text-[11px] uppercase tracking-[0.34em] text-[#8b6e56]">
           knotlesswed.ie
         </p>
-        <p className="mt-1 text-lg font-semibold text-[#1f1d1a]">{subtitle}</p>
+        <p className="mt-1 text-base font-semibold leading-tight text-[#1f1d1a] sm:text-lg">
+          {subtitle}
+        </p>
       </div>
     </Link>
   );

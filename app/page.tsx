@@ -153,13 +153,13 @@ export default function MarketingHomePage() {
         </div>
       </header>
 
-      <section className="mx-auto grid w-full max-w-6xl gap-10 px-6 pb-10 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-16">
+      <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-8 lg:pt-16">
         <div className="space-y-7">
           <div className="space-y-5">
-            <div className="pb-1">
-              <BrandLogo subtitle="Done-for-you wedding websites" className="pointer-events-none" />
-            </div>
-            <h1 className="max-w-3xl text-5xl leading-none sm:text-6xl lg:text-7xl">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+              Beautiful wedding websites, built for you
+            </p>
+            <h1 className="max-w-3xl text-[3.35rem] leading-none sm:text-6xl lg:text-7xl">
               We build your wedding website for you
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
@@ -215,11 +215,11 @@ export default function MarketingHomePage() {
           </div>
         </div>
 
-        <div className="rounded-[2.4rem] bg-[#184b38] p-5 shadow-[0_24px_80px_rgba(18,39,31,0.2)]">
+        <div className="rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.2)] sm:rounded-[2.4rem] sm:p-5">
           <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
-            <div className="overflow-hidden rounded-[2rem] border border-white/16 bg-white/10">
+            <div className="overflow-hidden rounded-[1.6rem] border border-white/16 bg-white/10 sm:rounded-[2rem]">
               <div
-                className="h-[380px] w-full bg-cover bg-center sm:h-[500px]"
+                className="h-[300px] w-full bg-cover bg-center sm:h-[500px]"
                 style={{
                   backgroundImage:
                     "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
@@ -227,16 +227,16 @@ export default function MarketingHomePage() {
               />
             </div>
             <div className="grid gap-4">
-              <div className="overflow-hidden rounded-[1.7rem] border border-white/16 bg-white/10">
+              <div className="overflow-hidden rounded-[1.4rem] border border-white/16 bg-white/10 sm:rounded-[1.7rem]">
                 <div
-                  className="h-[220px] w-full bg-cover bg-center sm:h-[280px]"
+                  className="h-[180px] w-full bg-cover bg-center sm:h-[280px]"
                   style={{
                     backgroundImage:
                       "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
                   }}
                 />
               </div>
-                <div className="rounded-[1.7rem] border border-white/12 bg-white/92 p-6 shadow-[0_20px_60px_rgba(17,28,23,0.18)]">
+                <div className="rounded-[1.4rem] border border-white/12 bg-white/92 p-5 shadow-[0_20px_60px_rgba(17,28,23,0.18)] sm:rounded-[1.7rem] sm:p-6">
                   <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Smart package highlight</p>
                   <p className="mt-3 text-2xl leading-tight">
                   A more polished first version, prepared faster behind the scenes.
