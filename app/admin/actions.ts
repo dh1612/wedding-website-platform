@@ -1,7 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createWeddingDraft } from "@/lib/production-repositories";
+import {
+  createWeddingDraft,
+  deleteWeddingDraftBySlug
+} from "@/lib/production-repositories";
 
 function slugify(input: string) {
   return input
@@ -27,6 +30,18 @@ export async function createWeddingDraftAction(formData: FormData) {
     title,
     eventDate: date ? new Date(date) : undefined
   });
+
+  redirect("/admin");
+}
+
+export async function deleteWeddingDraftAction(formData: FormData) {
+  const slug = String(formData.get("slug") || "").trim();
+
+  if (!slug) {
+    redirect("/admin");
+  }
+
+  await deleteWeddingDraftBySlug(slug);
 
   redirect("/admin");
 }

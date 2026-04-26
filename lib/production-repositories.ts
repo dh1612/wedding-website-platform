@@ -104,6 +104,26 @@ export async function updateWeddingStatus(input: {
   });
 }
 
+export async function deleteWeddingDraftBySlug(slug: string) {
+  const wedding = await prisma.wedding.findUnique({
+    where: { slug },
+    select: {
+      id: true,
+      status: true
+    }
+  });
+
+  if (!wedding || wedding.status !== "draft") {
+    return false;
+  }
+
+  await prisma.wedding.delete({
+    where: { id: wedding.id }
+  });
+
+  return true;
+}
+
 export async function ensurePortalWedding() {
   const weddingData = getWeddingData();
   const slug = `${slugify(weddingData.couple)}-portal`;

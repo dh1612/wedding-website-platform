@@ -2,7 +2,10 @@ import Link from "next/link";
 import { LogoutButton } from "@/components/logout-button";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
-import { createWeddingDraftAction } from "@/app/admin/actions";
+import {
+  createWeddingDraftAction,
+  deleteWeddingDraftAction
+} from "@/app/admin/actions";
 import { listWeddings } from "@/lib/production-repositories";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
@@ -120,6 +123,17 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                         >
                           Live Page
                         </Link>
+                        {record.status === "draft" ? (
+                          <form action={deleteWeddingDraftAction}>
+                            <input type="hidden" name="slug" value={record.slug} />
+                            <button
+                              type="submit"
+                              className="rounded-full border border-[#b86a53]/25 bg-[#fff3ef] px-4 py-2 text-sm text-[#8a4c3a] transition hover:bg-[#fde8e2]"
+                            >
+                              Delete Draft
+                            </button>
+                          </form>
+                        ) : null}
                       </div>
                     </div>
                   </div>
