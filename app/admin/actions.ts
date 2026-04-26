@@ -17,6 +17,27 @@ function slugify(input: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function parseAccommodationLine(line: string) {
+  const parts = line
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (!parts.length) {
+    return null;
+  }
+
+  const [name, second, third] = parts;
+  const link = second?.startsWith("http://") || second?.startsWith("https://") ? second : undefined;
+  const note = link ? third : second;
+
+  return {
+    name,
+    link,
+    note: note || "Recommended for guests travelling to the wedding."
+  };
+}
+
 export async function createWeddingDraftAction(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const date = String(formData.get("eventDate") || "").trim();
@@ -106,10 +127,8 @@ export async function updateWeddingContentAction(formData: FormData) {
     .split("\n")
     .map((item) => item.trim())
     .filter(Boolean)
-    .map((line) => ({
-      name: line,
-      note: "Recommended for guests travelling to the wedding."
-    }));
+    .map(parseAccommodationLine)
+    .filter((item): item is NonNullable<ReturnType<typeof parseAccommodationLine>> => Boolean(item));
 
   const nextContent = {
     ...weddingData,

@@ -30,6 +30,9 @@ export default async function AdminWeddingEditPage({
   };
   const theme = getThemeById(weddingData.theme);
   const saved = query?.saved === "1";
+  const accommodationLines = weddingData.accommodation
+    .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
+    .join("\n");
 
   return (
     <SiteFrame
@@ -43,7 +46,7 @@ export default async function AdminWeddingEditPage({
       <PageHero
         eyebrow="Wedding Editor"
         title={`Edit ${record.title}`}
-        description="Update the wedding content, package tier, slug, and key details from one place."
+        description="Update the wedding content, switch the template, and add guest-facing details like venue and accommodation links from one place."
         themeId={theme.id}
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
@@ -198,6 +201,83 @@ export default async function AdminWeddingEditPage({
           </div>
 
           <div className="section-shell rounded-[2rem] p-8">
+            <p className="eyebrow">Venue & Guest Stay</p>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Ceremony venue</label>
+                <input
+                  name="ceremonyLocation"
+                  defaultValue={weddingData.ceremony.location}
+                  placeholder="Ceremony venue name"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Ceremony time</label>
+                <input
+                  name="ceremonyTime"
+                  defaultValue={weddingData.ceremony.time}
+                  placeholder="Ceremony time"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Ceremony address</label>
+                <input
+                  name="ceremonyAddress"
+                  defaultValue={weddingData.ceremony.address}
+                  placeholder="Ceremony address"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Reception venue</label>
+                <input
+                  name="receptionLocation"
+                  defaultValue={weddingData.reception.location}
+                  placeholder="Reception venue name"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Reception time</label>
+                <input
+                  name="receptionTime"
+                  defaultValue={weddingData.reception.time}
+                  placeholder="Reception time"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Reception address</label>
+                <input
+                  name="receptionAddress"
+                  defaultValue={weddingData.reception.address}
+                  placeholder="Reception address"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+              <p className="eyebrow">Guest Accommodation</p>
+              <h2 className="mt-3 text-2xl">Add hotels and booking links clearly</h2>
+              <p className="prose-copy mt-3">
+                Use one line per hotel in this format:
+                <span className="font-medium text-[var(--foreground)]"> Hotel name | booking link | short note</span>.
+                If you only have the hotel name for now, that is fine too.
+              </p>
+              <textarea
+                name="accommodationText"
+                defaultValue={accommodationLines}
+                rows={6}
+                placeholder="The Harbour Hotel | https://hotel-example.com | 8 minutes from the venue"
+                className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="section-shell rounded-[2rem] p-8">
             <p className="eyebrow">Story & Sections</p>
             <div className="mt-5 grid gap-4">
               <textarea
@@ -222,13 +302,6 @@ export default async function AdminWeddingEditPage({
                 className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
               />
               <textarea
-                name="accommodationText"
-                defaultValue={weddingData.accommodation.map((item) => item.name).join("\n")}
-                rows={5}
-                placeholder="Accommodation lines"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
-              <textarea
                 name="faqText"
                 defaultValue={weddingData.faq.map((item) => `${item.q} ${item.a}`).join("\n")}
                 rows={6}
@@ -241,42 +314,6 @@ export default async function AdminWeddingEditPage({
           <div className="section-shell rounded-[2rem] p-8">
             <p className="eyebrow">Key Details</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <input
-                name="ceremonyTime"
-                defaultValue={weddingData.ceremony.time}
-                placeholder="Ceremony time"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
-              <input
-                name="ceremonyLocation"
-                defaultValue={weddingData.ceremony.location}
-                placeholder="Ceremony location"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
-              <input
-                name="ceremonyAddress"
-                defaultValue={weddingData.ceremony.address}
-                placeholder="Ceremony address"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
-              <input
-                name="receptionTime"
-                defaultValue={weddingData.reception.time}
-                placeholder="Reception time"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
-              <input
-                name="receptionLocation"
-                defaultValue={weddingData.reception.location}
-                placeholder="Reception location"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
-              <input
-                name="receptionAddress"
-                defaultValue={weddingData.reception.address}
-                placeholder="Reception address"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
               <input
                 name="contactEmail"
                 defaultValue={weddingData.contact.email}
