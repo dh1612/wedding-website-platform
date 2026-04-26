@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { MockGuest, MockTable } from "@/lib/mock-wedding-ops";
 
 type SeatingPlannerProps = {
@@ -73,7 +73,19 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
   const [guestSearch, setGuestSearch] = useState("");
   const [lastSaved, setLastSaved] = useState("Not saved yet");
+  const [isCompactView, setIsCompactView] = useState(false);
   const canvasRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function updateCompactMode() {
+      setIsCompactView(window.innerWidth < 1024);
+    }
+
+    updateCompactMode();
+    window.addEventListener("resize", updateCompactMode);
+
+    return () => window.removeEventListener("resize", updateCompactMode);
+  }, []);
 
   const attendingGuests = useMemo(
     () => guests.filter((guest) => guest.status === "attending"),
@@ -230,8 +242,42 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
     setGuestSearch("");
   }
 
+  function placeTableFromPalette(tableId: string) {
+    const placedCount = plannerTables.filter((table) => table.isPlaced).length;
+    const xPositions = [22, 50, 78];
+    const yPositions = [20, 40, 60, 80];
+    const x = xPositions[placedCount % xPositions.length] ?? 50;
+    const y = yPositions[Math.floor(placedCount / xPositions.length) % yPositions.length] ?? 50;
+
+    setPlannerTables((current) =>
+      current.map((table) =>
+        table.id === tableId
+          ? {
+              ...table,
+              isPlaced: true,
+              x,
+              y
+            }
+          : table
+      )
+    );
+    setSelectedTableId(tableId);
+  }
+
   return (
     <>
+      <section className="mx-auto w-full max-w-[1900px] px-4 pt-6 lg:px-6">
+        <div className="section-shell rounded-[1.75rem] p-5 sm:p-6">
+          <p className="eyebrow">Optimised For Desktop Or Tablet</p>
+          <h2 className="mt-2 text-2xl sm:text-3xl">Best for a slower planning session with room to think</h2>
+          <p className="prose-copy mt-3">
+            For the smoothest seating planning experience, open this on a laptop or tablet when
+            you are ready to map everything out properly. Phone view still works for lighter table
+            and guest assignment, and the same planner state carries across.
+          </p>
+        </div>
+      </section>
+
       <section className="mx-auto w-full max-w-[1900px] px-4 py-8 lg:px-6 lg:py-12">
         <div className="grid gap-4 md:grid-cols-5">
           <div className="section-shell rounded-[1.5rem] p-5">
@@ -279,9 +325,20 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
                       {table.shape === "round" ? "Round table" : "Long table"} · {table.seats} seats
                     </p>
                   </div>
-                  <span className="text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
-                    Drag In
-                  </span>
+                  <div className="flex items-center gap-3">
+                    {isCompactView ? (
+                      <button
+                        type="button"
+                        onClick={() => placeTableFromPalette(table.id)}
+                        className="rounded-full border border-[var(--border)] bg-white/80 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-[var(--accent)]"
+                      >
+                        Add
+                      </button>
+                    ) : null}
+                    <span className="text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
+                      {isCompactView ? "Tap In" : "Drag In"}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -309,73 +366,124 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
               </div>
             </div>
 
-            <div
-              ref={canvasRef}
-              className="relative mt-8 min-h-[1100px] overflow-hidden rounded-[1.75rem] border border-dashed border-[var(--border)] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.04))] xl:min-h-[1220px]"
-              onDragOver={(event) => event.preventDefault()}
-              onDrop={handleCanvasDrop}
-            >
-              {!placedTables.length ? (
-                <div className="absolute inset-0 flex items-center justify-center p-12 text-center">
-                  <div className="max-w-xl rounded-[2rem] border border-[var(--border)] bg-white/70 px-8 py-10 shadow-[var(--shadow)]">
+            {isCompactView ? (
+              <div className="mt-8 space-y-4">
+                <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/75 p-5">
+                  <p className="eyebrow">Touch-Friendly Room View</p>
+                  <h3 className="mt-2 text-3xl">Placed Tables</h3>
+                  <p className="prose-copy mt-3">
+                    On phone, use the table cards below to place a table, pick it, and assign
+                    guests without dragging around the full room canvas.
+                  </p>
+                </div>
+                {placedTables.length ? (
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {placedTables.map((table) => {
+                      const seatedGuests = tableGuests(table.id);
+                      const isSelected = table.id === selectedTable?.id;
+
+                      return (
+                        <button
+                          key={table.id}
+                          type="button"
+                          onClick={() => setSelectedTableId(table.id)}
+                          className={`rounded-[1.4rem] border p-4 text-left ${
+                            isSelected
+                              ? "border-[var(--accent-strong)] bg-white shadow-[var(--shadow)]"
+                              : "border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_88%,white)]"
+                          }`}
+                        >
+                          <p className="text-xs uppercase tracking-[0.22em] text-[var(--accent)]">
+                            {table.shape === "round" ? "Round table" : "Long table"}
+                          </p>
+                          <p className="mt-2 text-2xl">{table.name}</p>
+                          <p className="mt-2 text-sm text-[var(--muted)]">
+                            {seatedGuests.length}/{table.seats} seats filled
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/75 p-6 text-center">
                     <p className="eyebrow">Start Here</p>
-                    <h3 className="mt-3 text-4xl">Drop Your First Table</h3>
-                    <p className="prose-copy mt-4 text-lg">
-                      Use the table palette on the left to drag in a top table, round tables, or room features. This planner now starts as a blank room.
+                    <h3 className="mt-3 text-3xl">Add Your First Table</h3>
+                    <p className="prose-copy mt-3">
+                      Use the palette to add tables into the planner. Desktop and tablet give the
+                      full room-building version when you are ready for a more detailed pass.
                     </p>
                   </div>
-                </div>
-              ) : null}
-
-              <div className="absolute left-[4%] top-[4%] rounded-full border border-dashed border-[var(--border)] px-4 py-2 text-xs uppercase tracking-[0.22em] text-[var(--muted)]">
-                Dance Floor
+                )}
               </div>
-
-              {placedTables.map((table) => {
-                const seatedGuests = tableGuests(table.id);
-                const isSelected = table.id === selectedTable?.id;
-
-                return (
-                  <div
-                    key={table.id}
-                    draggable
-                    onClick={() => setSelectedTableId(table.id)}
-                    onDragStart={(event) => handleTableDragStart(event, table.id)}
-                    onDragOver={(event) => event.preventDefault()}
-                    onDrop={(event) => handleTableDrop(event, table.id)}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-move border p-4 shadow-[var(--shadow)] backdrop-blur ${
-                      table.shape === "round"
-                        ? "h-48 w-48 rounded-full"
-                        : "h-[8.5rem] w-[17rem] rounded-[1.75rem]"
-                    } ${
-                      isSelected
-                        ? "border-[var(--accent-strong)] ring-4 ring-[var(--accent)]/25"
-                        : "border-[var(--border)]"
-                    } bg-[color:color-mix(in_srgb,var(--surface)_90%,white)]/98`}
-                    style={{
-                      left: `${table.x}%`,
-                      top: `${table.y}%`,
-                      transform: `translate(-50%, -50%) rotate(${table.rotation}deg)`
-                    }}
-                  >
-                    <div className="flex h-full flex-col items-center justify-center text-center">
-                      <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
-                        {table.name === "Band" || table.name === "Dessert Station"
-                          ? "Feature"
-                          : "Table"}
-                      </p>
-                      <p className="mt-1 text-[2rem] font-medium leading-none">{table.name}</p>
-                      <p className="mt-2 text-sm text-[var(--muted)]">
-                        {seatedGuests.length}/{table.seats} seats filled
-                      </p>
-                      <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[var(--accent)]">
-                        Click To Edit
+            ) : (
+              <div
+                ref={canvasRef}
+                className="relative mt-8 min-h-[1100px] overflow-hidden rounded-[1.75rem] border border-dashed border-[var(--border)] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.04))] xl:min-h-[1220px]"
+                onDragOver={(event) => event.preventDefault()}
+                onDrop={handleCanvasDrop}
+              >
+                {!placedTables.length ? (
+                  <div className="absolute inset-0 flex items-center justify-center p-12 text-center">
+                    <div className="max-w-xl rounded-[2rem] border border-[var(--border)] bg-white/70 px-8 py-10 shadow-[var(--shadow)]">
+                      <p className="eyebrow">Start Here</p>
+                      <h3 className="mt-3 text-4xl">Drop Your First Table</h3>
+                      <p className="prose-copy mt-4 text-lg">
+                        Use the table palette on the left to drag in a top table, round tables, or room features. This planner now starts as a blank room.
                       </p>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                ) : null}
+
+                <div className="absolute left-[4%] top-[4%] rounded-full border border-dashed border-[var(--border)] px-4 py-2 text-xs uppercase tracking-[0.22em] text-[var(--muted)]">
+                  Dance Floor
+                </div>
+
+                {placedTables.map((table) => {
+                  const seatedGuests = tableGuests(table.id);
+                  const isSelected = table.id === selectedTable?.id;
+
+                  return (
+                    <div
+                      key={table.id}
+                      draggable
+                      onClick={() => setSelectedTableId(table.id)}
+                      onDragStart={(event) => handleTableDragStart(event, table.id)}
+                      onDragOver={(event) => event.preventDefault()}
+                      onDrop={(event) => handleTableDrop(event, table.id)}
+                      className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-move border p-4 shadow-[var(--shadow)] backdrop-blur ${
+                        table.shape === "round"
+                          ? "h-48 w-48 rounded-full"
+                          : "h-[8.5rem] w-[17rem] rounded-[1.75rem]"
+                      } ${
+                        isSelected
+                          ? "border-[var(--accent-strong)] ring-4 ring-[var(--accent)]/25"
+                          : "border-[var(--border)]"
+                      } bg-[color:color-mix(in_srgb,var(--surface)_90%,white)]/98`}
+                      style={{
+                        left: `${table.x}%`,
+                        top: `${table.y}%`,
+                        transform: `translate(-50%, -50%) rotate(${table.rotation}deg)`
+                      }}
+                    >
+                      <div className="flex h-full flex-col items-center justify-center text-center">
+                        <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
+                          {table.name === "Band" || table.name === "Dessert Station"
+                            ? "Feature"
+                            : "Table"}
+                        </p>
+                        <p className="mt-1 text-[2rem] font-medium leading-none">{table.name}</p>
+                        <p className="mt-2 text-sm text-[var(--muted)]">
+                          {seatedGuests.length}/{table.seats} seats filled
+                        </p>
+                        <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[var(--accent)]">
+                          Click To Edit
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -439,57 +547,89 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
                   </div>
                 </div>
 
-                <div className="mt-8 flex min-h-[720px] items-center justify-center overflow-hidden rounded-[1.75rem] border border-[var(--border)] bg-[radial-gradient(circle,rgba(255,255,255,0.2),transparent_55%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(0,0,0,0.04))] p-8">
+                <div className="mt-8 flex min-h-[420px] items-center justify-center overflow-hidden rounded-[1.75rem] border border-[var(--border)] bg-[radial-gradient(circle,rgba(255,255,255,0.2),transparent_55%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(0,0,0,0.04))] p-6 sm:min-h-[720px] sm:p-8">
                   {selectedTable ? (
-                    <div className="relative h-[560px] w-[560px]">
-                      {selectedTable.shape === "round" ? (
-                        <div className="absolute left-1/2 top-1/2 flex h-56 w-56 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,white)] shadow-[var(--shadow)]">
-                          <div className="text-center">
-                            <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
-                              Table
-                            </p>
-                            <p className="mt-2 text-4xl">{selectedTable.name}</p>
-                            <p className="mt-2 text-sm text-[var(--muted)]">
-                              Build this table seat by seat
-                            </p>
-                          </div>
+                    isCompactView ? (
+                      <div className="w-full max-w-xl space-y-4">
+                        <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/90 p-5 text-center shadow-[var(--shadow)]">
+                          <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
+                            {selectedTable.shape === "round" ? "Round table" : "Long table"}
+                          </p>
+                          <p className="mt-2 text-3xl">{selectedTable.name}</p>
+                          <p className="mt-2 text-sm text-[var(--muted)]">
+                            {selectedGuests.length}/{selectedTable.seats} guests assigned
+                          </p>
                         </div>
-                      ) : (
-                        <div className="absolute left-1/2 top-1/2 flex h-36 w-96 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[2rem] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,white)] shadow-[var(--shadow)]">
-                          <div className="text-center">
-                            <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
-                              Table
-                            </p>
-                            <p className="mt-2 text-4xl">{selectedTable.name}</p>
-                            <p className="mt-2 text-sm text-[var(--muted)]">
-                              Build this table seat by seat
-                            </p>
-                          </div>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {selectedGuests.slice(0, selectedTable.seats).map((guest, index) => (
+                            <div
+                              key={guest.id}
+                              className="rounded-[1rem] border border-[var(--border)] bg-white/92 px-4 py-3 text-sm shadow-sm"
+                            >
+                              <p className="text-[10px] uppercase tracking-[0.18em] text-[var(--accent)]">
+                                Seat {index + 1}
+                              </p>
+                              <p className="mt-1 font-medium">{guest.name}</p>
+                            </div>
+                          ))}
+                          {!selectedGuests.length ? (
+                            <div className="rounded-[1rem] border border-[var(--border)] bg-white/80 px-4 py-3 text-sm text-[var(--muted)] sm:col-span-2">
+                              No guests assigned yet. Add people from the search panel below.
+                            </div>
+                          ) : null}
                         </div>
-                      )}
-
-                      {selectedGuests.slice(0, selectedTable.seats).map((guest, index) => {
-                        const pos = seatPosition(index, selectedTable.seats, 205);
-
-                        return (
-                          <div
-                            key={guest.id}
-                            draggable
-                            onDragStart={(event) => handleGuestDragStart(event, guest.id)}
-                            className="absolute z-10 flex h-16 w-28 -translate-x-1/2 -translate-y-1/2 cursor-grab flex-col items-center justify-center rounded-[1rem] border border-[var(--border)] bg-white/96 px-2 text-center shadow-sm active:cursor-grabbing"
-                            style={pos}
-                            title={guest.name}
-                          >
-                            <span className="text-[10px] uppercase tracking-[0.18em] text-[var(--accent)]">
-                              Seat
-                            </span>
-                            <span className="mt-1 text-xs font-medium leading-tight">
-                              {guest.name}
-                            </span>
+                      </div>
+                    ) : (
+                      <div className="relative h-[560px] w-[560px]">
+                        {selectedTable.shape === "round" ? (
+                          <div className="absolute left-1/2 top-1/2 flex h-56 w-56 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,white)] shadow-[var(--shadow)]">
+                            <div className="text-center">
+                              <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
+                                Table
+                              </p>
+                              <p className="mt-2 text-4xl">{selectedTable.name}</p>
+                              <p className="mt-2 text-sm text-[var(--muted)]">
+                                Build this table seat by seat
+                              </p>
+                            </div>
                           </div>
-                        );
-                      })}
-                    </div>
+                        ) : (
+                          <div className="absolute left-1/2 top-1/2 flex h-36 w-96 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[2rem] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,white)] shadow-[var(--shadow)]">
+                            <div className="text-center">
+                              <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
+                                Table
+                              </p>
+                              <p className="mt-2 text-4xl">{selectedTable.name}</p>
+                              <p className="mt-2 text-sm text-[var(--muted)]">
+                                Build this table seat by seat
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedGuests.slice(0, selectedTable.seats).map((guest, index) => {
+                          const pos = seatPosition(index, selectedTable.seats, 205);
+
+                          return (
+                            <div
+                              key={guest.id}
+                              draggable
+                              onDragStart={(event) => handleGuestDragStart(event, guest.id)}
+                              className="absolute z-10 flex h-16 w-28 -translate-x-1/2 -translate-y-1/2 cursor-grab flex-col items-center justify-center rounded-[1rem] border border-[var(--border)] bg-white/96 px-2 text-center shadow-sm active:cursor-grabbing"
+                              style={pos}
+                              title={guest.name}
+                            >
+                              <span className="text-[10px] uppercase tracking-[0.18em] text-[var(--accent)]">
+                                Seat
+                              </span>
+                              <span className="mt-1 text-xs font-medium leading-tight">
+                                {guest.name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )
                   ) : (
                     <div className="max-w-lg text-center">
                       <p className="eyebrow">No Table Selected</p>
