@@ -4,9 +4,10 @@ import { SectionHeading } from "@/components/section-heading";
 
 type StorySectionProps = {
   weddingData?: WeddingData;
+  previewMode?: boolean;
 };
 
-export function StorySection({ weddingData }: StorySectionProps) {
+export function StorySection({ weddingData, previewMode = false }: StorySectionProps) {
   const wedding = weddingData ?? getWeddingData();
 
   return (
@@ -15,6 +16,12 @@ export function StorySection({ weddingData }: StorySectionProps) {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeading eyebrow="Our Story" title={wedding.story.heading} />
           <div className="space-y-5">
+            {previewMode ? (
+              <div className="rounded-[1.2rem] border border-[var(--border)] bg-[var(--accent-soft)] px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+                This is sample story wording for review. The couple can replace it with their own
+                version before the site goes live.
+              </div>
+            ) : null}
             {wedding.story.paragraphs.map((paragraph) => (
               <p key={paragraph} className="prose-copy text-lg">
                 {paragraph}

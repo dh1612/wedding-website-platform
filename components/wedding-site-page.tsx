@@ -20,6 +20,7 @@ type WeddingSitePageProps = {
   mode?: SiteMode;
   conciergeApiPath?: string;
   demoMode?: boolean;
+  previewMode?: boolean;
 };
 
 export function WeddingSitePage({
@@ -29,7 +30,8 @@ export function WeddingSitePage({
   weddingData,
   mode = "scroll",
   conciergeApiPath,
-  demoMode = false
+  demoMode = false,
+  previewMode = false
 }: WeddingSitePageProps) {
   return (
     <main data-theme={activeTheme.id} style={activeTheme.style}>
@@ -43,12 +45,20 @@ export function WeddingSitePage({
         returnHref={demoMode ? "/" : undefined}
         returnLabel={demoMode ? "Return to Home" : undefined}
       />
-      <HeroSection themeId={activeTheme.id} weddingData={weddingData} />
+      {previewMode ? (
+        <section className="mx-auto w-full max-w-6xl px-6 pt-6 lg:px-8">
+          <div className="rounded-[1.5rem] border border-[var(--border)] bg-[var(--accent-soft)] px-6 py-5 text-sm leading-7 text-[var(--foreground)]">
+            This is a private draft preview. Sample wording and details can be edited before the
+            couple makes the site live for guests.
+          </div>
+        </section>
+      ) : null}
+      <HeroSection themeId={activeTheme.id} weddingData={weddingData} previewMode={previewMode} />
       <FAQSection
         weddingData={weddingData}
         conciergeApiPath={conciergeApiPath}
       />
-      <StorySection weddingData={weddingData} />
+      <StorySection weddingData={weddingData} previewMode={previewMode} />
       <ScheduleSection weddingData={weddingData} />
       <TravelSection weddingData={weddingData} />
       <AccommodationSection weddingData={weddingData} />

@@ -55,7 +55,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 {weddingRecord.title}
               </h1>
               <p className="mt-2 text-sm text-white/75">
-                This page is just for review. When you are happy with everything, make it live and we will use the public website link for guests.
+                This page is just for review. When the couple is happy with everything, they should click the button below to make the website live. That will publish the guest-facing website link.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -70,7 +70,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 <input type="hidden" name="slug" value={slug} />
                 <input type="hidden" name="status" value="live" />
                 <button className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#17313c]">
-                  Make It Live
+                  Make It Live And Generate Guest Link
                 </button>
               </form>
               <Link
@@ -94,7 +94,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 </Link>
               ) : (
                 <div className="rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm text-white/72">
-                  Public website link appears after you make it live
+                  Guest website link appears after the couple clicks make it live
                 </div>
               )}
             </div>
@@ -107,6 +107,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
         activeTheme={activeTheme}
         weddingData={weddingData}
         conciergeApiPath={`/api/ask/${slug}`}
+        previewMode
       />
     </>
   );

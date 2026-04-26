@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { getThemeById } from "@/lib/themes";
+import { formatDisplayDate } from "@/lib/utils";
 import { getWeddingData } from "@/lib/wedding-data";
 import type { WeddingData } from "@/types/wedding";
 
 type HeroSectionProps = {
   themeId: string;
   weddingData?: WeddingData;
+  previewMode?: boolean;
 };
 
 function SharedActions() {
@@ -27,11 +29,20 @@ function SharedActions() {
   );
 }
 
-export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
+function PreviewNote() {
+  return (
+    <div className="rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+      Sample wording is shown here for review. The couple can change all text before the site goes live.
+    </div>
+  );
+}
+
+export function HeroSection({ themeId, weddingData, previewMode = false }: HeroSectionProps) {
   const wedding = weddingData ?? getWeddingData();
   const theme = getThemeById(themeId);
   const heroImage = theme.heroImage;
   const detailImage = theme.detailImage;
+  const displayDate = formatDisplayDate(wedding.date);
 
   if (theme.heroLayout === "full-bleed") {
     return (
@@ -59,7 +70,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
                 {wedding.couple}
               </h1>
               <div className="mt-5 space-y-2 text-base uppercase tracking-[0.24em] text-white/74 sm:text-lg">
-                <p>{wedding.date}</p>
+                <p>{displayDate}</p>
                 <p>{wedding.locationSummary}</p>
               </div>
               <p className="mt-6 max-w-xl text-base leading-8 text-white/82 sm:text-lg">
@@ -68,6 +79,11 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
               <p className="mt-4 max-w-xl text-base leading-7 text-white/76">
                 {wedding.announcement}
               </p>
+              {previewMode ? (
+                <div className="mt-4 rounded-[1.2rem] border border-white/18 bg-white/12 px-5 py-4 text-sm leading-6 text-white/84">
+                  Sample wording is shown here for review. The couple can change all text before the site goes live.
+                </div>
+              ) : null}
               <div className="mt-8">
                 <SharedActions />
               </div>
@@ -93,7 +109,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
                 {wedding.couple}
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                <p>{wedding.date}</p>
+                <p>{displayDate}</p>
                 <p>{wedding.locationSummary}</p>
               </div>
             </div>
@@ -103,6 +119,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
             <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
               {wedding.announcement}
             </p>
+            {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
         </div>
@@ -140,15 +157,25 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
                   {wedding.couple}
                 </h1>
                 <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                  <p>{wedding.date}</p>
+                  <p>{displayDate}</p>
                   <p>{wedding.locationSummary}</p>
                 </div>
               </div>
               <div className="space-y-5">
+                <div className="rounded-[1.6rem] border border-[var(--border)] bg-white/84 p-6 shadow-[var(--shadow)]">
+                  <p className="eyebrow">{wedding.ceremony.title}</p>
+                  <h3 className="mt-3 text-3xl">{wedding.ceremony.location}</h3>
+                  <div className="mt-4 space-y-2 text-base leading-7 text-[var(--muted)]">
+                    <p>{displayDate}</p>
+                    <p>{wedding.ceremony.time}</p>
+                    <p>{wedding.ceremony.address}</p>
+                  </div>
+                </div>
                 <p className="text-lg leading-8 text-[var(--muted)]">{wedding.tagline}</p>
                 <p className="text-base leading-7 text-[var(--muted)]">
                   {wedding.announcement}
                 </p>
+                {previewMode ? <PreviewNote /> : null}
                 <SharedActions />
               </div>
             </div>
@@ -174,7 +201,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
                 {wedding.couple}
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                <p>{wedding.date}</p>
+                <p>{displayDate}</p>
                 <p>{wedding.locationSummary}</p>
               </div>
             </div>
@@ -184,6 +211,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
             <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
               {wedding.announcement}
             </p>
+            {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
         </div>
@@ -233,7 +261,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
                 {wedding.couple}
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                <p>{wedding.date}</p>
+                <p>{displayDate}</p>
                 <p>{wedding.locationSummary}</p>
               </div>
             </div>
@@ -243,6 +271,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
             <p className="mx-auto max-w-2xl text-base leading-7 text-white/78">
               {wedding.announcement}
             </p>
+            {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
         </div>
@@ -266,12 +295,17 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
                 {wedding.couple}
               </h1>
               <div className="space-y-3 text-base uppercase tracking-[0.28em] text-white/80 sm:text-lg">
-                <p>{wedding.date}</p>
+                <p>{displayDate}</p>
                 <p>{wedding.locationSummary}</p>
               </div>
               <p className="mx-auto max-w-2xl text-base leading-8 text-white/78 sm:text-lg">
                 {wedding.tagline}
               </p>
+              {previewMode ? (
+                <div className="mx-auto max-w-2xl rounded-[1.2rem] border border-white/18 bg-white/10 px-5 py-4 text-sm leading-6 text-white/84 backdrop-blur">
+                  Sample wording is shown here for review. The couple can change all text before the site goes live.
+                </div>
+              ) : null}
               <div className="flex flex-col items-center justify-center gap-3 pt-3 sm:flex-row">
                 <a
                   href="#rsvp"
@@ -307,7 +341,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
               {wedding.couple}
             </h1>
             <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-              <p>{wedding.date}</p>
+              <p>{displayDate}</p>
               <p>{wedding.locationSummary}</p>
             </div>
           </div>
@@ -317,6 +351,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
           <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
             {wedding.announcement}
           </p>
+          {previewMode ? <PreviewNote /> : null}
           <SharedActions />
         </div>
       </div>
