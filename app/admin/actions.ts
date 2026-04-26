@@ -185,5 +185,5 @@ export async function updateWeddingContentAction(formData: FormData) {
     status: (String(formData.get("status") || existing.status) as "draft" | "approved" | "live")
   });
 
-  redirect(`/admin/weddings/${nextSlug}`);
+  redirect(`/admin/weddings/${nextSlug}?saved=1`);
 }

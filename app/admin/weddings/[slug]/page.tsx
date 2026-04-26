@@ -9,12 +9,15 @@ import { coerceWeddingData } from "@/lib/wedding-data";
 
 type AdminWeddingEditPageProps = {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ saved?: string }>;
 };
 
 export default async function AdminWeddingEditPage({
-  params
+  params,
+  searchParams
 }: AdminWeddingEditPageProps) {
   const { slug } = await params;
+  const query = searchParams ? await searchParams : undefined;
   const record = await getWeddingRecordForAdmin(slug);
 
   if (!record?.contentJson) {
@@ -26,6 +29,7 @@ export default async function AdminWeddingEditPage({
     packageTier?: "basic" | "smart" | "premium";
   };
   const theme = getThemeById(weddingData.theme);
+  const saved = query?.saved === "1";
 
   return (
     <SiteFrame
@@ -54,6 +58,12 @@ export default async function AdminWeddingEditPage({
             Open Couple Portal
           </Link>
         </div>
+
+        {saved ? (
+          <div className="mb-6 rounded-[1.3rem] border border-[#184b38]/14 bg-[#f6fbf8] px-5 py-4 text-sm leading-6 text-[#486159]">
+            Wedding updated successfully. The latest version is now saved.
+          </div>
+        ) : null}
 
         <form action={updateWeddingContentAction} className="space-y-8">
           <input type="hidden" name="currentSlug" value={record.slug} />
@@ -120,6 +130,45 @@ export default async function AdminWeddingEditPage({
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="mt-5 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+              <p className="eyebrow">Design Template</p>
+              <h2 className="mt-3 text-2xl">Switch the website look if the couple changes their mind</h2>
+              <p className="prose-copy mt-3">
+                Choose a different design direction here and save. The wedding will keep its
+                content, but the guest-facing website will render in the newly selected template.
+              </p>
+              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {weddingThemes.map((item) => {
+                  const isActive = item.id === weddingData.theme;
+
+                  return (
+                    <label
+                      key={item.id}
+                      className={`overflow-hidden rounded-[1.4rem] border cursor-pointer ${
+                        isActive
+                          ? "border-[#184b38] bg-[#184b38] text-white"
+                          : "border-[var(--border)] bg-[#faf7f2] text-[var(--foreground)]"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="theme"
+                        value={item.id}
+                        defaultChecked={isActive}
+                        className="sr-only"
+                      />
+                      <div className="h-24 w-full" style={item.previewStyle} />
+                      <div className="p-4">
+                        <p className="text-lg font-medium">{item.name}</p>
+                        <p className={`mt-2 text-sm leading-6 ${isActive ? "text-white/78" : "text-[#6d655d]"}`}>
+                          {item.label}. {item.description}
+                        </p>
+                      </div>
+                    </label>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
