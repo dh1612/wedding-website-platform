@@ -35,6 +35,10 @@ export default async function GetStartedPage({
           <p className="max-w-3xl text-base leading-7 text-[#5f564e]">
             Fill in what is ready, we prepare the first version for you, then you review and we refine it before it goes live.
           </p>
+          <p className="max-w-3xl text-base leading-7 text-[#486159]">
+            AI can help shape wording where needed, but there is always a real person behind the
+            service to check the first version and help with changes.
+          </p>
           <p className="max-w-3xl text-sm leading-6 text-[#184b38]">
             No payment needed to get your first version started.
           </p>

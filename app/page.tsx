@@ -62,6 +62,18 @@ const emotionalPoints = [
   "Everything handled for you"
 ];
 
+const trustPoints = [
+  "Done-for-you service",
+  "AI support with a real human",
+  "Private review before guests see anything"
+];
+
+const supportPoints = [
+  "A real person checks the first version before it goes anywhere live.",
+  "AI can help polish wording, but couples still interact with a human.",
+  "Changes, questions, and final touches are handled with support, not guesswork."
+];
+
 const featuredThemes = weddingThemes.slice(0, 3);
 
 const portalPreviewCards = [
@@ -153,6 +165,11 @@ export default function MarketingHomePage() {
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
               No DIY builder. No complicated setup. Just a beautiful, ready-to-share website.
             </p>
+            <p className="max-w-2xl text-base leading-7 text-[#486159]">
+              AI can help shape the first version, but every couple still has a real person
+              behind the service to guide changes, review details, and get everything ready to
+              share.
+            </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -180,6 +197,17 @@ export default function MarketingHomePage() {
             <p className="text-sm leading-6 text-[#184b38]">
               Most couples choose Smart for AI-assisted wording polish.
             </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            {trustPoints.map((point) => (
+              <span
+                key={point}
+                className="rounded-full border border-black/8 bg-white/80 px-4 py-2 text-sm text-[#4e453f]"
+              >
+                {point}
+              </span>
+            ))}
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
@@ -214,7 +242,8 @@ export default function MarketingHomePage() {
                   AI-assisted wording polish for a more finished first version.
                 </p>
                 <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  Couples can send rough notes. The Smart package helps turn that into cleaner website copy with less back-and-forth.
+                  Couples can send rough notes. Smart uses AI to help shape clearer wording, then a
+                  real person checks the first version before it is sent for review.
                 </p>
               </div>
             </div>
@@ -233,7 +262,8 @@ export default function MarketingHomePage() {
                 See what your wedding website could look like
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-                The quickest way to understand the service is to see the kind of website and private couple area a couple would actually receive.
+                The quickest way to understand the service is to see the kind of website, support,
+                and private couple area a couple would actually receive.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -312,6 +342,23 @@ export default function MarketingHomePage() {
                   ))}
                 </div>
               </Link>
+
+              <div className="rounded-[2rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)]">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                  Human support
+                </p>
+                <h3 className="mt-3 text-3xl">AI helps. A real person still handles the service.</h3>
+                <div className="mt-4 space-y-3">
+                  {supportPoints.map((point) => (
+                    <div
+                      key={point}
+                      className="rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#4e453f]"
+                    >
+                      {point}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -324,7 +371,11 @@ export default function MarketingHomePage() {
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Pricing & Features</p>
               <h2 className="text-4xl leading-none sm:text-5xl">Choose the level of support</h2>
               <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-                The website is always done for the couple. The higher packages add AI polish and the private planning area.
+                The website is always done for the couple. The higher packages add AI polish,
+                premium planning support, and a stronger human-guided service around it.
+              </p>
+              <p className="text-sm leading-6 text-[#184b38]">
+                Done-for-you service. Not a DIY builder.
               </p>
             </div>
             <Link
@@ -352,6 +403,10 @@ export default function MarketingHomePage() {
                 <p className={`mt-4 text-3xl ${index === 2 ? "text-[#f0e6d8]" : "text-[#184b38]"}`}>{pkg.price}</p>
                 <p className={`mt-5 text-base leading-7 ${index === 2 ? "text-white/82" : "text-[#5f564e]"}`}>
                   {pkg.summary}
+                </p>
+                <p className={`mt-3 text-sm leading-6 ${index === 2 ? "text-white/72" : "text-[#486159]"}`}>
+                  Every package includes a real person reviewing the first version before it is
+                  shared for feedback.
                 </p>
                 <div className="mt-6 space-y-3">
                   {pkg.points.map((point) => (
@@ -393,7 +448,7 @@ export default function MarketingHomePage() {
             </div>
 
             <div className="rounded-[1.5rem] border border-black/6 bg-[#fdfaf6] p-6">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Why It Feels Easier</p>
+              <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Why Couples Choose This</p>
               <div className="mt-4 space-y-3">
                 {[...reassurancePoints, ...emotionalPoints].map((item) => (
                   <div key={item} className="rounded-[1rem] border border-black/6 bg-white/80 px-4 py-3 text-sm leading-6 text-[#2d241f]">

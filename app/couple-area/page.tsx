@@ -23,6 +23,12 @@ const featureCards = [
   }
 ];
 
+const supportCards = [
+  "A real person can help shape the couple area around the wedding, not just hand over software.",
+  "Premium makes more sense for couples who want support with changes, reminders, and planning details.",
+  "The planning side stays private and calm, while the public website stays guest-ready."
+];
+
 export default function CoupleAreaPage() {
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
@@ -35,6 +41,10 @@ export default function CoupleAreaPage() {
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
               Premium is not just a website. It adds a private space for RSVPs, planning dates, checklist items, and seating decisions in one calmer place.
+            </p>
+            <p className="max-w-2xl text-base leading-7 text-[#486159]">
+              It also adds a more hands-on service. AI can help with wording and structure, but
+              Premium is where real support matters most when plans shift and details get busy.
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4">
@@ -52,6 +62,16 @@ export default function CoupleAreaPage() {
             </div>
             <div className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4 text-sm leading-7 text-[#6f665e]">
               This is a read-only preview of the couple experience. It shows the value of the private area without opening the live planning tools to the public.
+            </div>
+            <div className="grid gap-3">
+              {supportCards.map((item) => (
+                <div
+                  key={item}
+                  className="rounded-[1rem] border border-black/6 bg-white/80 px-4 py-3 text-sm leading-6 text-[#4e453f]"
+                >
+                  {item}
+                </div>
+              ))}
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
@@ -218,10 +238,12 @@ export default function CoupleAreaPage() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-6 lg:px-8 lg:pb-24">
         <div className="rounded-[2.2rem] bg-[#184b38] p-8 text-white shadow-[0_26px_80px_rgba(18,39,31,0.24)] sm:p-10 lg:flex lg:items-end lg:justify-between lg:p-14">
           <div className="max-w-2xl space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#d8c6a7]">How It Fits</p>
-            <h2 className="text-4xl leading-none sm:text-5xl">The website stays front and centre. The planning space comes after.</h2>
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#d8c6a7]">Premium Support</p>
+            <h2 className="text-4xl leading-none sm:text-5xl">The website stays front and centre. Real support stays behind it.</h2>
             <p className="text-lg leading-8 text-white/82">
-              This is why the main homepage focuses on the wedding website first. The couple area is an extra layer of value, not the first thing a bride needs to understand.
+              This is where the Premium package earns its place. The website stays guest-facing and
+              elegant, while the couple gets a calmer private space and a real person helping when
+              the details start moving quickly.
             </p>
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-0">

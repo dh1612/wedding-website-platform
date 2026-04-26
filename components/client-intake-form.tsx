@@ -220,6 +220,10 @@ export function ClientIntakeForm({
         <div className="mt-6 rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-base leading-7 text-[#486159]">
           Send us rough details — we&apos;ll turn it into a polished wedding website.
         </div>
+        <div className="mt-4 rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
+          AI can help shape wording, but a real person still checks the first version and helps with
+          changes before anything goes live.
+        </div>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4 text-sm leading-6 text-[#6f665e]">
