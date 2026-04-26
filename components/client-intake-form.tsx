@@ -251,14 +251,14 @@ export function ClientIntakeForm({
               Create Your Website
             </p>
             <h2 className="mt-2 text-3xl sm:text-4xl">The important bits first</h2>
+            <p className="mt-4 text-base font-medium leading-7 text-[#486159]">
+              Send us rough details — we&apos;ll turn it into a polished wedding website.
+            </p>
             <p className="mt-4 text-base leading-7 text-[#5f564e]">
               Most couples complete this in under 2 minutes.
             </p>
             <p className="mt-2 text-sm leading-6 text-[#184b38]">
               Rough answers are perfect — we&apos;ll polish everything.
-            </p>
-            <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-              We prepare a limited number of sites each week to keep quality high.
             </p>
             <p className="mt-2 text-sm leading-6 text-[#486159]">
               Progress is saved while you move around, so nothing already typed should disappear.
@@ -278,9 +278,6 @@ export function ClientIntakeForm({
           </button>
         </div>
 
-        <div className="mt-6 rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-base leading-7 text-[#486159]">
-          Send us rough details — we&apos;ll turn it into a polished wedding website.
-        </div>
         <div className="mt-4 rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
           AI can help shape wording, but a real person still checks the first version and helps with
           changes before anything goes live.
@@ -317,7 +314,7 @@ export function ClientIntakeForm({
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
               <h3 className="mt-2 text-2xl">The only essentials</h3>
               <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                Only names and email are needed to get the first version started.
+                That&apos;s all we need to create your first version. You can add or change anything later.
               </p>
             </div>
             <div className="grid gap-3 md:grid-cols-2">
@@ -326,7 +323,7 @@ export function ClientIntakeForm({
                   ref={coupleInputRef}
                   value={values.couple}
                   onChange={(event) => updateField("couple", event.target.value)}
-                  placeholder="Couple names *"
+                  placeholder="Your names"
                   aria-invalid={hasMissingCouple}
                   className={`w-full rounded-[1rem] border bg-white px-4 py-3 text-sm text-[#1f1d1a] ${
                     hasMissingCouple ? "border-[#b86a53] ring-2 ring-[#b86a53]/15" : "border-black/8"
@@ -341,7 +338,7 @@ export function ClientIntakeForm({
                   ref={emailInputRef}
                   value={values.email}
                   onChange={(event) => updateField("email", event.target.value)}
-                  placeholder="Contact email *"
+                  placeholder="Your email (we’ll send your preview here)"
                   aria-invalid={hasMissingEmail}
                   className={`w-full rounded-[1rem] border bg-white px-4 py-3 text-sm text-[#1f1d1a] ${
                     hasMissingEmail ? "border-[#b86a53] ring-2 ring-[#b86a53]/15" : "border-black/8"
@@ -351,18 +348,29 @@ export function ClientIntakeForm({
                   <p className="text-sm leading-6 text-[#8a4c3a]">Add an email so the first version can be shared back.</p>
                 ) : null}
               </div>
-              <input
-                type="date"
-                value={values.date}
-                onChange={(event) => updateField("date", event.target.value)}
-                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-              />
-              <input
-                value={values.locationSummary}
-                onChange={(event) => updateField("locationSummary", event.target.value)}
-                placeholder="General location"
-                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-              />
+              <label className="space-y-2">
+                <span className="text-xs font-medium uppercase tracking-[0.24em] text-[#9a7d64]">
+                  Wedding date (optional)
+                </span>
+                <input
+                  type="date"
+                  value={values.date}
+                  onChange={(event) => updateField("date", event.target.value)}
+                  aria-label="Wedding date (optional)"
+                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+                />
+              </label>
+              <label className="space-y-2">
+                <span className="text-xs font-medium uppercase tracking-[0.24em] text-[#9a7d64]">
+                  Location (optional)
+                </span>
+                <input
+                  value={values.locationSummary}
+                  onChange={(event) => updateField("locationSummary", event.target.value)}
+                  placeholder="General location"
+                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+                />
+              </label>
             </div>
           </div>
 
