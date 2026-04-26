@@ -44,35 +44,11 @@ const packageCards = [
 ];
 
 const flowSteps = [
-  "Choose a package",
+  "Choose your package",
   "Share your details",
-  "We prepare your first version",
+  "We build your first version",
   "You review privately",
-  "We refine it and go live"
-];
-
-const reassurancePoints = [
-  "We prepare everything for you",
-  "You review before it goes live",
-  "No setup, no tech, no stress"
-];
-
-const emotionalPoints = [
-  "No late nights building pages",
-  "No chasing guests for info",
-  "Everything handled for you"
-];
-
-const trustPoints = [
-  "Done-for-you service",
-  "Real support from first draft to final review",
-  "Private review before guests see anything"
-];
-
-const supportPoints = [
-  "A real person checks the first version before it goes anywhere live.",
-  "The first draft can be shaped faster behind the scenes, while the service still feels personal.",
-  "Changes, questions, and final touches are handled with support, not guesswork."
+  "We refine and go live"
 ];
 
 const featuredThemes = weddingThemes.slice(0, 3);
@@ -116,7 +92,7 @@ export default function MarketingHomePage() {
               href={exampleHref}
               className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
             >
-              View Guest Website Example
+              View Example Website
             </Link>
             <Link
               href="/couple-area"
@@ -131,7 +107,7 @@ export default function MarketingHomePage() {
               href="/get-started"
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
             >
-              Start Your Website
+              Get My Website Started
             </Link>
           </nav>
 
@@ -145,7 +121,7 @@ export default function MarketingHomePage() {
                   href={exampleHref}
                   className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
                 >
-                  View Guest Website Example
+                  View Example Website
                 </Link>
                 <Link
                   href="/couple-area"
@@ -163,7 +139,7 @@ export default function MarketingHomePage() {
                   href="/get-started"
                   className="mt-2 inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-3 text-sm font-medium text-white"
                 >
-                  Start Your Website
+                  Get My Website Started
                 </Link>
               </div>
             </div>
@@ -178,10 +154,14 @@ export default function MarketingHomePage() {
               Beautiful wedding websites, built for you
             </p>
             <h1 className="max-w-3xl text-[3.35rem] leading-none sm:text-6xl lg:text-7xl">
-              We build your website so you don&apos;t have to. You tell us what your guests need to know, we do the rest.
+              Skip the stress of building a wedding website.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website, with an optional private couple area that can manage RSVPS, calendar, key dates, interactive seating plan. You select. We build. Completely driven by you and your needs.
+              We build it for you. Just tell us what your guests need to know — we handle the rest.
+            </p>
+            <p className="max-w-2xl text-base leading-7 text-[#5f564e] sm:text-lg">
+              No DIY. No setup. No back and forth. Get a beautiful, ready-to-share wedding website
+              in minutes.
             </p>
           </div>
 
@@ -190,27 +170,25 @@ export default function MarketingHomePage() {
               href="/get-started"
               className="hidden items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45] md:inline-flex"
             >
-              Start Your Website
+              Get My Website Started
             </Link>
             <Link
               href={exampleHref}
               className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
-              View Guest Website Example
+              View Example Website
             </Link>
           </div>
 
-          <div className="space-y-1">
-            <p className="text-sm leading-6 text-[#6d655d]">
-              Takes ~2 minutes to get your first version started, provide basic information, receive a beautiful wedding website.
-            </p>
-            <p className="text-sm leading-6 text-[#184b38]">
-              No payment needed to complete builder and see website preview.
-            </p>
+          <div className="space-y-2">
+            <p className="text-sm leading-6 text-[#6d655d]">• Takes ~2 minutes to get started</p>
+            <p className="text-sm leading-6 text-[#6d655d]">• No payment required upfront</p>
+            <p className="text-sm leading-6 text-[#6d655d]">• Private review before anything is shared</p>
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
-            Weddings can be stressful but creating a website doesn&apos;t need to be, we will do the work, you tell us what your guests need to know. Removing the stress from wedding websites.
+            Weddings are stressful enough. Your website shouldn&apos;t be. We take care of
+            everything — so you don&apos;t have to.
           </div>
         </div>
 
@@ -258,7 +236,7 @@ export default function MarketingHomePage() {
                 Real Example
               </p>
               <h2 className="text-4xl leading-none sm:text-5xl">
-                See what your wedding website could look like
+                See exactly what you&apos;ll get
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
                 The quickest way to understand the service is to see the kind of website, support,
@@ -297,7 +275,7 @@ export default function MarketingHomePage() {
                   <p className="mt-3 text-base leading-7 text-[#5f564e]">
                     A guest-facing site with hero, schedule, travel details, story, and RSVP flow already styled and ready to explore.
                   </p>
-                  <p className="mt-5 text-sm font-medium text-[#184b38]">View guest website example</p>
+                  <p className="mt-5 text-sm font-medium text-[#184b38]">View Example Website</p>
                 </div>
               </Link>
 
@@ -366,18 +344,15 @@ export default function MarketingHomePage() {
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Pricing & Features</p>
               <h2 className="text-4xl leading-none sm:text-5xl">Choose the level of support</h2>
               <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-                The website is always done for the couple. The higher packages add AI polish,
-                premium planning support, and a stronger human-guided service around it.
-              </p>
-              <p className="text-sm leading-6 text-[#184b38]">
-                Done-for-you service. Not a DIY builder.
+                The website is always built for you. Higher packages add more support and planning
+                tools.
               </p>
             </div>
             <Link
               href="/brochure"
               className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
-              View Pricing & Features
+              View Example Website
             </Link>
           </div>
 
@@ -422,7 +397,7 @@ export default function MarketingHomePage() {
                         : "bg-[#184b38] text-white hover:bg-[#215b45]"
                     }`}
                   >
-                    Start With {pkg.name}
+                    Get My Website Started
                   </Link>
                   <Link
                     href={`/packages/${pkg.id}`}
@@ -442,6 +417,7 @@ export default function MarketingHomePage() {
           <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1fr_0.95fr]">
             <div className="rounded-[1.5rem] border border-black/6 bg-[#fdfaf6] p-6">
               <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">How It Works</p>
+              <p className="mt-2 text-sm leading-6 text-[#184b38]">No setup. No tools. No stress.</p>
               <div className="mt-4 space-y-3">
                 {flowSteps.map((title, index) => (
                   <div key={title} className="flex gap-3">
@@ -455,13 +431,9 @@ export default function MarketingHomePage() {
             </div>
 
             <div className="rounded-[1.5rem] border border-black/6 bg-[#fdfaf6] p-6">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Why Couples Choose This</p>
-              <div className="mt-4 space-y-3">
-                {[...reassurancePoints, ...emotionalPoints].map((item) => (
-                  <div key={item} className="rounded-[1rem] border border-black/6 bg-white/80 px-4 py-3 text-sm leading-6 text-[#2d241f]">
-                    {item}
-                  </div>
-                ))}
+              <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Done-For-You</p>
+              <div className="mt-4 rounded-[1rem] border border-black/6 bg-white/80 px-4 py-4 text-sm leading-7 text-[#2d241f]">
+                You tell us what your guests need. We handle everything else.
               </div>
             </div>
 
@@ -492,7 +464,7 @@ export default function MarketingHomePage() {
           href="/get-started"
           className="inline-flex w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-3.5 text-sm font-medium text-white"
         >
-          Start Your Website
+          Get My Website Started
         </Link>
       </div>
     </main>

@@ -29,36 +29,32 @@ export default async function GetStartedPage({
             Start Your Website
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            We build your wedding website for you
+            Skip the stress of building a wedding website.
           </h1>
           <p className="text-lg leading-8 text-[#5f564e]">
-            No DIY builder. No complicated setup. Just a beautiful, ready-to-share website.
+            We build it for you. Just tell us what your guests need to know — we handle the rest.
           </p>
           <p className="max-w-3xl text-base leading-7 text-[#5f564e]">
-            Fill in what is ready, we prepare the first version for you, then you review and we refine it before it goes live.
+            No DIY. No setup. No back and forth. Get a beautiful, ready-to-share wedding website
+            in minutes.
           </p>
-          <p className="max-w-3xl text-base leading-7 text-[#486159]">
-            AI can help shape wording where needed, but there is always a real person behind the
-            service to check the first version and help with changes.
-          </p>
-          <p className="max-w-3xl text-sm leading-6 text-[#184b38]">
-            No payment needed to get your first version started.
-          </p>
-          <p className="max-w-3xl text-base leading-7 text-[#486159]">
-            Send us rough details — we&apos;ll turn it into a polished wedding website.
-          </p>
+          <div className="space-y-2 text-sm leading-6 text-[#6d655d]">
+            <p>• Most couples complete this in under 2 minutes</p>
+            <p>• No payment required upfront</p>
+            <p>• Private review before anything is shared</p>
+          </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
               href="#builder"
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white"
             >
-              Go To Builder
+              Get My Website Started
             </a>
             <Link
-              href="/brochure"
+              href="/wedding?theme=aegean-romance"
               className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-6 py-3 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
-              View Pricing & Features
+              View Example Website
             </Link>
           </div>
         </div>

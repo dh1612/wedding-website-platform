@@ -32,7 +32,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
               href="/#example"
               className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
             >
-              View Guest Website Example
+              View Example Website
             </Link>
             <Link
               href="/brochure#packages"
@@ -44,7 +44,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
               href={`/get-started?package=${offer.id}`}
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
             >
-              Start {offer.name}
+              Get My Website Started
             </Link>
           </nav>
         </div>
@@ -65,7 +65,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                   href={`/get-started?package=${offer.id}`}
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
                 >
-                  Start {offer.name}
+                  Get My Website Started
                 </Link>
                 {isPremium ? (
                   <Link
@@ -79,7 +79,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                     href={isSmart ? "/wedding?theme=aegean-romance#faq" : "/wedding?theme=aegean-romance"}
                     className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                   >
-                    {isSmart ? "View AI Guest Website Example" : "View Guest Website Example"}
+                    View Example Website
                   </Link>
                 )}
               </div>
@@ -165,7 +165,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                     href="/wedding?theme=aegean-romance#faq"
                     className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
                   >
-                    View Full AI Example
+                    View Example Website
                   </Link>
                 </div>
                 <div className="rounded-[1.7rem] border border-[#184b38]/12 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">

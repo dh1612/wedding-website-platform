@@ -44,7 +44,7 @@ export default function BrochurePage() {
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-2.5 text-sm font-medium text-white"
               style={{ color: "#ffffff", backgroundColor: "#184b38" }}
             >
-              Start Your Website
+              Get My Website Started
             </Link>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function BrochurePage() {
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white"
                   style={{ color: "#ffffff", backgroundColor: "#184b38" }}
                 >
-                  Start Your Website
+                  Get My Website Started
                 </Link>
                 <Link
                   href="/"
