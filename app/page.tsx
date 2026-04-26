@@ -276,7 +276,7 @@ export default function MarketingHomePage() {
                   href="/couple-area"
                   className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                 >
-                  See Couple Area Preview
+                  Premium Package Area Preview
                 </Link>
               </div>
             </div>
