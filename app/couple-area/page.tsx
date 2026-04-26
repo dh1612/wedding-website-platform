@@ -46,6 +46,10 @@ export default function CoupleAreaPage() {
               It also adds a more hands-on service. AI can help with wording and structure, but
               Premium is where real support matters most when plans shift and details get busy.
             </p>
+            <div className="rounded-[1.4rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-sm leading-7 text-[#486159]">
+              Premium includes a 1-hour walkthrough call so the couple can be guided through RSVPs,
+              checklist items, key dates, and the planning area properly.
+            </div>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4">
                 <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">RSVPs</p>
@@ -110,6 +114,10 @@ export default function CoupleAreaPage() {
                 <div className="rounded-[1.2rem] bg-white/10 p-4">
                   <p className="text-sm font-medium">Seating plan view</p>
                   <p className="mt-2 text-sm text-white/78">Think through groups and table choices more visually.</p>
+                </div>
+                <div className="rounded-[1.2rem] bg-white/10 p-4 md:col-span-2">
+                  <p className="text-sm font-medium">1-hour premium walkthrough</p>
+                  <p className="mt-2 text-sm text-white/78">A guided video call to help the couple get comfortable with the planning area and use it well from the start.</p>
                 </div>
               </div>
             </div>

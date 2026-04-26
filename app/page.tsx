@@ -32,12 +32,12 @@ const packageCards = [
     id: "premium",
     name: "Premium",
     price: "EUR645",
-    summary: "Includes the website plus the private couple area and planning support.",
+    summary: "Includes the website, the private planning area, and a guided premium handover.",
     points: [
       "Everything in Smart",
       "Private couple area",
       "Checklist, RSVP and planning tools",
-      "Higher-touch delivery"
+      "1-hour walkthrough call"
     ]
   }
 ];
@@ -80,22 +80,26 @@ const portalPreviewCards = [
   {
     label: "Checklist",
     title: "A calm task list for the final details",
-    tone: "soft"
+    tone: "soft",
+    detail: "Tasks, notes, and reminders"
   },
   {
     label: "RSVP View",
     title: "Guest replies that stay easy to read",
-    tone: "white"
+    tone: "white",
+    detail: "Attending, pending, declined"
   },
   {
     label: "Key Dates",
     title: "Important deadlines in one timeline",
-    tone: "dark"
+    tone: "dark",
+    detail: "Payments, reminders, wedding week"
   },
   {
     label: "Seating Plan",
     title: "A clearer way to think through tables",
-    tone: "soft"
+    tone: "soft",
+    detail: "Desktop-first planning view"
   }
 ];
 
@@ -318,6 +322,10 @@ export default function MarketingHomePage() {
                     Premium
                   </span>
                 </div>
+                <p className="mt-4 text-base leading-7 text-[#5f564e]">
+                  Premium adds the private planning area plus a 1-hour walkthrough call, so the
+                  couple is not left to figure the features out alone.
+                </p>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {portalPreviewCards.map((card) => (
                     <div
@@ -338,8 +346,18 @@ export default function MarketingHomePage() {
                         {card.label}
                       </p>
                       <p className="mt-3 text-lg leading-tight">{card.title}</p>
+                      <p
+                        className={`mt-2 text-sm leading-6 ${
+                          card.tone === "dark" ? "text-white/78" : "text-[#6b625a]"
+                        }`}
+                      >
+                        {card.detail}
+                      </p>
                     </div>
                   ))}
+                </div>
+                <div className="mt-4 rounded-[1.1rem] border border-black/6 bg-white px-4 py-3 text-sm leading-6 text-[#4e453f]">
+                  Includes a guided 1-hour video call to walk through the premium area together.
                 </div>
               </Link>
 
