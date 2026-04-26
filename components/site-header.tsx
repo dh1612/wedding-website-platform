@@ -43,6 +43,15 @@ export function SiteHeader({
     adminNavItemsOverride ??
     (portalType === "operator" ? operatorNavItems : portalNavItems);
 
+  const activeNavStyle = {
+    backgroundColor: "var(--accent-strong)",
+    color: "var(--accent-contrast)"
+  };
+
+  const inactiveNavStyle = {
+    color: "var(--muted)"
+  };
+
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_84%,white)]/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-8">
@@ -71,11 +80,13 @@ export function SiteHeader({
                     <Link
                       key={item.path}
                       href={item.path.includes("#") ? item.path : `${item.path}?theme=${themeId}`}
+                      data-active={isActive ? "true" : "false"}
                       className={
                         isActive
-                          ? "rounded-full bg-[var(--accent-strong)] px-4 py-2 font-medium text-[var(--accent-contrast)]"
-                          : "rounded-full px-4 py-2 text-[var(--muted)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
+                          ? "rounded-full px-4 py-2 font-medium"
+                          : "rounded-full px-4 py-2 transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
                       }
+                      style={isActive ? activeNavStyle : inactiveNavStyle}
                     >
                       {item.label}
                     </Link>
@@ -89,11 +100,13 @@ export function SiteHeader({
                     <Link
                       key={item.path}
                       href={buildModeHref(item.path, themeId, "pages")}
+                      data-active={isActive ? "true" : "false"}
                       className={
                         isActive
-                          ? "rounded-full bg-[var(--accent-strong)] px-4 py-2 font-medium text-[var(--accent-contrast)]"
-                          : "rounded-full px-4 py-2 text-[var(--muted)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
+                          ? "rounded-full px-4 py-2 font-medium"
+                          : "rounded-full px-4 py-2 transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
                       }
+                      style={isActive ? activeNavStyle : inactiveNavStyle}
                     >
                       {item.label}
                     </Link>

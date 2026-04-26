@@ -275,6 +275,52 @@ export default async function AdminWeddingEditPage({
                 className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
               />
             </div>
+
+            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-[#fbfcfb] p-5">
+              <p className="eyebrow">Guest-Facing Preview Summary</p>
+              <h2 className="mt-3 text-2xl">How this section currently reads on the website</h2>
+              <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                <div className="rounded-[1.25rem] border border-[var(--border)] bg-white p-5">
+                  <p className="eyebrow">Venue Details</p>
+                  <div className="mt-3 space-y-4 text-sm leading-6 text-[#41564e]">
+                    <div>
+                      <p className="font-medium text-[#1c2622]">Ceremony</p>
+                      <p>{weddingData.ceremony.location}</p>
+                      <p>{weddingData.ceremony.time}</p>
+                      <p>{weddingData.ceremony.address}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-[#1c2622]">Reception</p>
+                      <p>{weddingData.reception.location}</p>
+                      <p>{weddingData.reception.time}</p>
+                      <p>{weddingData.reception.address}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-[1.25rem] border border-[var(--border)] bg-white p-5">
+                  <p className="eyebrow">Accommodation</p>
+                  <div className="mt-3 space-y-4">
+                    {weddingData.accommodation.length ? (
+                      weddingData.accommodation.map((item) => (
+                        <div key={`${item.name}-${item.link ?? "hotel"}`} className="border-b border-[var(--border)] pb-4 last:border-b-0 last:pb-0">
+                          <p className="font-medium text-[#1c2622]">{item.name}</p>
+                          <p className="mt-1 text-sm leading-6 text-[#41564e]">{item.note}</p>
+                          {item.link ? (
+                            <p className="mt-2 text-sm text-[#0f5a43]">Guest button: View hotel</p>
+                          ) : (
+                            <p className="mt-2 text-sm text-[#6e7e78]">No hotel link added yet</p>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm leading-6 text-[#6e7e78]">
+                        No guest accommodation has been added yet.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="section-shell rounded-[2rem] p-8">
