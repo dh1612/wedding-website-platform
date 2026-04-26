@@ -94,7 +94,7 @@ export default function CoupleAreaPage() {
         <div className="grid gap-8 lg:grid-cols-[0.98fr_1.02fr] lg:items-start">
           <div className="space-y-6">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              Premium Package Area
+              Premium Package Demo
             </p>
             <h1 className="text-5xl leading-none sm:text-6xl">
               The supported planning side of the wedding experience
@@ -103,6 +103,10 @@ export default function CoupleAreaPage() {
               Premium adds a private planning area for RSVPs, checklist notes, key dates, and
               table planning, with real support behind it.
             </p>
+            <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
+              This is a read-only demo preview. It is there to show the layout and value of the
+              private area, not to let visitors edit live planning tools.
+            </div>
 
             <div className="rounded-[1.7rem] border border-[#184b38]/14 bg-[#184b38] p-6 text-white shadow-[0_22px_70px_rgba(18,39,31,0.22)]">
               <p className="text-[11px] uppercase tracking-[0.32em] text-[#d8c6a7]">
@@ -129,7 +133,7 @@ export default function CoupleAreaPage() {
                 href="/wedding?theme=aegean-romance"
                 className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
               >
-                View Public Example
+                View Public Website Example
               </Link>
             </div>
           </div>

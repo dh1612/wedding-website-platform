@@ -19,6 +19,9 @@ export default async function PackagePage({ params }: PackagePageProps) {
     notFound();
   }
 
+  const isSmart = offer.id === "smart";
+  const isPremium = offer.id === "premium";
+
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
       <header className="sticky top-0 z-30 border-b border-black/5 bg-white/90 backdrop-blur">
@@ -64,12 +67,21 @@ export default async function PackagePage({ params }: PackagePageProps) {
                 >
                   Start {offer.name}
                 </Link>
-                <Link
-                  href="/wedding?theme=aegean-romance"
-                  className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
-                >
-                  View Public Example
-                </Link>
+                {isPremium ? (
+                  <Link
+                    href="/couple-area"
+                    className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+                  >
+                    View Full Premium Demo
+                  </Link>
+                ) : (
+                  <Link
+                    href={isSmart ? "/wedding?theme=aegean-romance#faq" : "/wedding?theme=aegean-romance"}
+                    className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+                  >
+                    {isSmart ? "View AI Example" : "View Public Example"}
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -133,6 +145,123 @@ export default async function PackagePage({ params }: PackagePageProps) {
               </article>
             ))}
           </div>
+
+          {isSmart ? (
+            <div className="mt-10 rounded-[2rem] border border-[#184b38]/12 bg-[#f6fbf8] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+                <div className="space-y-4">
+                  <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+                    AI Concierge Preview
+                  </p>
+                  <h3 className="text-4xl leading-none sm:text-5xl">
+                    The standout feature here is smarter guest support
+                  </h3>
+                  <p className="text-lg leading-8 text-[#5f564e]">
+                    Smart brings the AI-assisted guest experience much closer to the front. It helps
+                    answer common guest questions quickly, while the website itself still feels
+                    clean and polished.
+                  </p>
+                  <Link
+                    href="/wedding?theme=aegean-romance#faq"
+                    className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
+                  >
+                    View Full AI Example
+                  </Link>
+                </div>
+                <div className="rounded-[1.7rem] border border-[#184b38]/12 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                  <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                    Ask the concierge
+                  </p>
+                  <div className="mt-5 space-y-4">
+                    <div className="rounded-[1.1rem] bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#4e453f]">
+                      What time does the ceremony start and is transport provided afterwards?
+                    </div>
+                    <div className="rounded-[1.1rem] bg-[#184b38] px-4 py-4 text-sm leading-6 text-white/88">
+                      The ceremony begins at 2:00 PM. Coaches leave the church at 3:30 PM and
+                      travel directly to the reception venue.
+                    </div>
+                    <div className="rounded-[1.1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
+                      A guest gets a quick answer without having to message the couple directly.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {isPremium ? (
+            <div className="mt-10 rounded-[2rem] border border-[#184b38]/12 bg-[#f6fbf8] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+                <div className="space-y-4">
+                  <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+                    Premium Demo
+                  </p>
+                  <h3 className="text-4xl leading-none sm:text-5xl">
+                    A read-only look inside the private couple area
+                  </h3>
+                  <p className="text-lg leading-8 text-[#5f564e]">
+                    This is where the visual sell matters. The demo shows the checklist, RSVP
+                    overview, key dates and seating-plan layout in a read-only format, so couples
+                    can understand the value without needing to click around or edit anything.
+                  </p>
+                  <p className="text-base leading-7 text-[#184b38]">
+                    It is purely a demo view. No edits, no drag-and-drop, just a clearer sense of
+                    what Premium actually gives them.
+                  </p>
+                  <Link
+                    href="/couple-area"
+                    className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
+                  >
+                    View Full Premium Demo
+                  </Link>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Checklist</p>
+                    <div className="mt-4 space-y-3">
+                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">
+                        Confirm final guest list
+                      </div>
+                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">
+                        Share wedding-week timings
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">RSVP overview</p>
+                    <div className="mt-4 grid grid-cols-3 gap-2">
+                      <div className="rounded-[1rem] bg-[#edf6f2] p-3 text-center">
+                        <p className="text-[10px] uppercase tracking-[0.18em] text-[#3e6b59]">Yes</p>
+                        <p className="mt-2 text-2xl text-[#184b38]">82</p>
+                      </div>
+                      <div className="rounded-[1rem] bg-[#faf7f2] p-3 text-center">
+                        <p className="text-[10px] uppercase tracking-[0.18em] text-[#9a7d64]">Pending</p>
+                        <p className="mt-2 text-2xl text-[#4e453f]">26</p>
+                      </div>
+                      <div className="rounded-[1rem] bg-[#faf7f2] p-3 text-center">
+                        <p className="text-[10px] uppercase tracking-[0.18em] text-[#9a7d64]">No</p>
+                        <p className="mt-2 text-2xl text-[#4e453f]">9</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Key dates</p>
+                    <div className="mt-4 space-y-3">
+                      <div className="rounded-[1rem] bg-[#184b38] px-4 py-3 text-sm text-white">RSVP reminder</div>
+                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">Final payments</div>
+                    </div>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Seating plan</p>
+                    <div className="mt-4 grid gap-2">
+                      <div className="rounded-[1rem] bg-[#184b38] px-4 py-3 text-sm text-white">Top Table</div>
+                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">Family Table</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
