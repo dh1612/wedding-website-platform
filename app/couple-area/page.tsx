@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 
 const featureCards = [
   {
@@ -36,12 +37,7 @@ export default function CoupleAreaPage() {
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
       <header className="sticky top-0 z-30 border-b border-black/5 bg-white/90 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.34em] text-[#8b6e56]">
-              knotlesswed.ie
-            </p>
-            <p className="mt-1 text-lg font-semibold">Done-for-you wedding websites</p>
-          </div>
+          <BrandLogo />
 
           <nav className="hidden items-center gap-2 md:flex">
             <Link

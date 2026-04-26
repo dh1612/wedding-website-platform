@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { ClientIntakeForm } from "@/components/client-intake-form";
 import type { IntakePackage } from "@/lib/intake";
 
@@ -23,6 +24,7 @@ export default async function GetStartedPage({
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
       <section className="mx-auto w-full max-w-6xl px-6 pt-14 lg:px-8">
         <div className="max-w-3xl space-y-5">
+          <BrandLogo subtitle="Start your website" />
           <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
             Start Your Website
           </p>

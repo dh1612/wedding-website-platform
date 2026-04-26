@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { weddingThemes } from "@/lib/themes";
 
 const brochureThemes = weddingThemes.slice(0, 3);
@@ -41,12 +42,7 @@ export default function BrochurePage() {
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
       <header className="sticky top-0 z-30 border-b border-black/5 bg-white/88 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.34em] text-[#8b6e56]">
-              Digital Brochure
-            </p>
-            <p className="mt-1 text-lg font-semibold">A visual walkthrough of the service</p>
-          </div>
+          <BrandLogo subtitle="Digital brochure" />
           <div className="hidden items-center gap-2 md:flex">
             <a href="#overview" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Overview

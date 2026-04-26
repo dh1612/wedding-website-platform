@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { weddingThemes } from "@/lib/themes";
 
 const exampleHref = "/wedding?theme=aegean-romance";
@@ -108,12 +109,7 @@ export default function MarketingHomePage() {
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] pb-24 text-[#1f1d1a] md:pb-0">
       <header className="sticky top-0 z-30 border-b border-black/5 bg-white/90 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.34em] text-[#8b6e56]">
-              knotlesswed.ie
-            </p>
-            <p className="mt-1 text-lg font-semibold">Done-for-you wedding websites</p>
-          </div>
+          <BrandLogo />
 
           <nav className="hidden items-center gap-2 md:flex">
             <a href="#example" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
@@ -160,9 +156,9 @@ export default function MarketingHomePage() {
       <section className="mx-auto grid w-full max-w-6xl gap-10 px-6 pb-10 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-16">
         <div className="space-y-7">
           <div className="space-y-5">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              knotlesswed.ie
-            </p>
+            <div className="pb-1">
+              <BrandLogo subtitle="Done-for-you wedding websites" className="pointer-events-none" />
+            </div>
             <h1 className="max-w-3xl text-5xl leading-none sm:text-6xl lg:text-7xl">
               We build your wedding website for you
             </h1>
