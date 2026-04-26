@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   intakePackages,
   type IntakePackage,
@@ -54,6 +54,7 @@ function isLikelyImageUrl(value: string) {
 export function ClientIntakeForm({
   initialPackage = "smart"
 }: ClientIntakeFormProps) {
+  const feedbackRef = useRef<HTMLDivElement | null>(null);
   const [values, setValues] = useState<IntakeSubmission>({
     ...defaultValues,
     packageTier: initialPackage
@@ -100,6 +101,14 @@ export function ClientIntakeForm({
 
     return () => window.clearTimeout(timer);
   }, [showSubmissionFeedback, submissionStepIndex, result]);
+
+  useEffect(() => {
+    if ((!showSubmissionFeedback && !result) || !feedbackRef.current) return;
+
+    window.setTimeout(() => {
+      feedbackRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  }, [showSubmissionFeedback, result]);
 
   const missingBasics = useMemo(() => {
     const missing: string[] = [];
@@ -182,7 +191,7 @@ export function ClientIntakeForm({
       "Selected Style";
 
     setShowSubmissionFeedback(true);
-    setStatusMessage(data.message);
+    setStatusMessage("");
     window.localStorage.removeItem(STORAGE_KEY);
 
     window.setTimeout(() => {
@@ -222,10 +231,13 @@ export function ClientIntakeForm({
             </p>
             <h2 className="mt-2 text-3xl sm:text-4xl">The important bits first</h2>
             <p className="mt-4 text-base leading-7 text-[#5f564e]">
-              Takes 2 minutes. Fill in what you have. Rough notes are perfect.
+              Most couples complete this in under 2 minutes.
             </p>
             <p className="mt-2 text-sm leading-6 text-[#184b38]">
               Rough answers are perfect — we&apos;ll polish everything.
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+              We prepare a limited number of sites each week to keep quality high.
             </p>
             <p className="mt-2 text-sm leading-6 text-[#486159]">
               Progress is saved while you move around, so nothing already typed should disappear.
@@ -492,11 +504,14 @@ export function ClientIntakeForm({
           </details>
 
           {showSubmissionFeedback && !result ? (
-            <div className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
+            <div ref={feedbackRef} className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">
                 Preparing your website
               </p>
               <h3 className="mt-3 text-3xl">Your wedding website is being prepared 🎉</h3>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-[#486159]">
+                We&apos;ll send your first version shortly for review.
+              </p>
               <div className="mt-5 space-y-3">
                 {submissionSteps.map((step, index) => {
                   const isActive = index <= submissionStepIndex;
@@ -519,14 +534,16 @@ export function ClientIntakeForm({
           ) : null}
 
           {result ? (
-            <div className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
+            <div ref={feedbackRef} className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">
                 First version started
               </p>
               <h3 className="mt-3 text-3xl">Thank you</h3>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[#486159]">
-                The details have been received and the first version is now being prepared for review.
-                A private review link will be shared once everything has been checked and prepared properly.
+                Your wedding website is being prepared 🎉 We&apos;ll send your first version shortly for review.
+              </p>
+              <p className="mt-5 text-[12px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                This is what your guests will see
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -568,7 +585,7 @@ export function ClientIntakeForm({
         </div>
       </div>
 
-      {!result ? (
+      {!result && !showSubmissionFeedback ? (
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/6 bg-white/95 p-4 shadow-[0_-12px_30px_rgba(52,35,24,0.1)] backdrop-blur md:hidden">
           <button
             type="button"
