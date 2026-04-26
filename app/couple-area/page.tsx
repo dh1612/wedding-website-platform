@@ -38,7 +38,7 @@ export default function CoupleAreaPage() {
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
           <div>
             <p className="text-[11px] uppercase tracking-[0.34em] text-[#8b6e56]">
-              David&apos;s Wedding Solutions
+              knotlesswed.ie
             </p>
             <p className="mt-1 text-lg font-semibold">Done-for-you wedding websites</p>
           </div>

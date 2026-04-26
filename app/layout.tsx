@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "David's Wedding Solutions",
-  description: "Done-for-you wedding websites powered by guided intake, polished templates, and a draft-to-live workflow."
+  title: "knotlesswed.ie",
+  description: "Done-for-you wedding websites with real human support, polished templates, and a guided draft-to-live workflow."
 };
 
 export default function RootLayout({
