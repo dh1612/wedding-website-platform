@@ -529,26 +529,40 @@ export function ClientIntakeForm({
             </div>
             <div className="grid gap-3 md:grid-cols-3">
               {intakePackages.map((pkg) => (
-                <button
+                <div
                   key={pkg.id}
-                  type="button"
-                  onClick={() => updateField("packageTier", pkg.id)}
-                  className={`rounded-[1.35rem] border p-4 text-left ${
+                  className={`rounded-[1.35rem] border p-4 ${
                     values.packageTier === pkg.id
                       ? "border-[#184b38] bg-[#184b38] text-white"
                       : "border-black/6 bg-[#faf7f2]"
                   }`}
                 >
-                  <p className="text-sm font-medium">{pkg.name}</p>
-                  <p className="mt-2 text-2xl">{pkg.price}</p>
-                  <p
-                    className={`mt-3 text-sm leading-6 ${
-                      values.packageTier === pkg.id ? "text-white/78" : "text-[#6d655d]"
+                  <button
+                    type="button"
+                    onClick={() => updateField("packageTier", pkg.id)}
+                    className="w-full text-left"
+                  >
+                    <p className="text-sm font-medium">{pkg.name}</p>
+                    <p className="mt-2 text-2xl">{pkg.price}</p>
+                    <p
+                      className={`mt-3 text-sm leading-6 ${
+                        values.packageTier === pkg.id ? "text-white/78" : "text-[#6d655d]"
+                      }`}
+                    >
+                      {pkg.summary}
+                    </p>
+                  </button>
+                  <Link
+                    href={`/packages/${pkg.id}`}
+                    className={`mt-4 inline-flex rounded-full border px-4 py-2 text-sm font-medium transition ${
+                      values.packageTier === pkg.id
+                        ? "border-white/18 bg-white text-[#184b38] hover:bg-[#f7f2ea]"
+                        : "border-[#d8cfc5] bg-white text-[#4e453f] hover:bg-[#ffffff]"
                     }`}
                   >
-                    {pkg.summary}
-                  </p>
-                </button>
+                    See more
+                  </Link>
+                </div>
               ))}
             </div>
           </div>

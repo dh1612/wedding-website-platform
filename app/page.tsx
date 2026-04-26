@@ -437,16 +437,28 @@ export default function MarketingHomePage() {
                     </div>
                   ))}
                 </div>
-                <Link
-                  href={`/get-started?package=${pkg.id}`}
-                  className={`mt-7 inline-flex rounded-full px-5 py-3 text-sm font-medium transition ${
-                    index === 2
-                      ? "bg-white text-[#184b38] hover:bg-[#f3ece2]"
-                      : "bg-[#184b38] text-white hover:bg-[#215b45]"
-                  }`}
-                >
-                  Start With {pkg.name}
-                </Link>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <Link
+                    href={`/get-started?package=${pkg.id}`}
+                    className={`inline-flex rounded-full px-5 py-3 text-sm font-medium transition ${
+                      index === 2
+                        ? "bg-white text-[#184b38] hover:bg-[#f3ece2]"
+                        : "bg-[#184b38] text-white hover:bg-[#215b45]"
+                    }`}
+                  >
+                    Start With {pkg.name}
+                  </Link>
+                  <Link
+                    href={`/packages/${pkg.id}`}
+                    className={`inline-flex rounded-full border px-5 py-3 text-sm font-medium transition ${
+                      index === 2
+                        ? "border-white/18 bg-transparent text-white hover:bg-white/8"
+                        : "border-[#d8cfc5] bg-white text-[#4e453f] hover:bg-[#faf7f2]"
+                    }`}
+                  >
+                    See more
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
