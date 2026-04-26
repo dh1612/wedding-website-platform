@@ -269,6 +269,10 @@ export default function MarketingHomePage() {
                 The quickest way to understand the service is to see the kind of website, support,
                 and private couple area a couple would actually receive.
               </p>
+              <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-sm leading-7 text-[#486159]">
+                Premium includes a 1-hour video walkthrough, so the couple can be shown exactly how
+                to use the private planning area rather than being left to figure it out alone.
+              </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href={exampleHref}
