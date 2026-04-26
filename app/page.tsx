@@ -112,9 +112,18 @@ export default function MarketingHomePage() {
           <BrandLogo />
 
           <nav className="hidden items-center gap-2 md:flex">
-            <a href="#example" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
-              View Example
-            </a>
+            <Link
+              href={exampleHref}
+              className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
+            >
+              View Guest Website
+            </Link>
+            <Link
+              href="/couple-area"
+              className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
+            >
+              View Couple Area
+            </Link>
             <a href="#packages" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Packages
             </a>
@@ -132,9 +141,18 @@ export default function MarketingHomePage() {
             </summary>
             <div className="absolute right-0 top-[calc(100%+0.75rem)] w-72 rounded-[1.5rem] border border-black/6 bg-white p-4 shadow-[0_20px_50px_rgba(52,35,24,0.12)]">
               <div className="flex flex-col gap-2">
-                <a href="#example" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
-                  View Example
-                </a>
+                <Link
+                  href={exampleHref}
+                  className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
+                >
+                  View Guest Website
+                </Link>
+                <Link
+                  href="/couple-area"
+                  className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
+                >
+                  View Couple Area
+                </Link>
                 <a href="#how-it-works" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
                   How It Works
                 </a>
