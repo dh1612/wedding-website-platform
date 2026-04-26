@@ -68,10 +68,11 @@ export function SiteHeader({
               : wedding.couple}
           </p>
         </Link>
-        <div className="hidden flex-1 items-center justify-center md:flex">
-          <nav className="flex flex-wrap items-center justify-center gap-2 text-sm">
-            {adminView
-              ? adminNavItems.map((item) => {
+        {adminNavItems.length ? (
+          <div className="hidden flex-1 items-center justify-center md:flex">
+            <nav className="flex flex-wrap items-center justify-center gap-2 text-sm">
+              {adminView
+                ? adminNavItems.map((item) => {
                   const isActive =
                     item.path === currentPath ||
                     (item.path.includes("#") && currentPath === item.path.split("#")[0]);
@@ -92,37 +93,40 @@ export function SiteHeader({
                     </Link>
                   );
                 })
-              : mode === "pages"
-              ? pageNavItems.map((item) => {
-                  const isActive = item.path === currentPath;
+                : mode === "pages"
+                ? pageNavItems.map((item) => {
+                    const isActive = item.path === currentPath;
 
-                  return (
-                    <Link
-                      key={item.path}
-                      href={buildModeHref(item.path, themeId, "pages")}
-                      data-active={isActive ? "true" : "false"}
-                      className={
-                        isActive
-                          ? "rounded-full px-4 py-2 font-medium"
-                          : "rounded-full px-4 py-2 transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
-                      }
-                      style={isActive ? activeNavStyle : inactiveNavStyle}
+                    return (
+                      <Link
+                        key={item.path}
+                        href={buildModeHref(item.path, themeId, "pages")}
+                        data-active={isActive ? "true" : "false"}
+                        className={
+                          isActive
+                            ? "rounded-full px-4 py-2 font-medium"
+                            : "rounded-full px-4 py-2 transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
+                        }
+                        style={isActive ? activeNavStyle : inactiveNavStyle}
+                      >
+                        {item.label}
+                      </Link>
+                    );
+                  })
+                : scrollNavItems.map((item) => (
+                    <a
+                      key={item.href}
+                      href={buildModeHref(siteBasePath, themeId, "scroll") + item.href}
+                      className="rounded-full px-4 py-2 text-[var(--muted)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
                     >
                       {item.label}
-                    </Link>
-                  );
-                })
-              : scrollNavItems.map((item) => (
-                  <a
-                    key={item.href}
-                    href={buildModeHref(siteBasePath, themeId, "scroll") + item.href}
-                    className="rounded-full px-4 py-2 text-[var(--muted)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--accent-strong)]"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-          </nav>
-        </div>
+                    </a>
+                  ))}
+            </nav>
+          </div>
+        ) : (
+          <div className="hidden flex-1 md:block" />
+        )}
         {adminView ? (
           <div className="rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-4 py-2 text-sm font-medium text-[var(--accent-strong)]">
             {portalType === "operator" ? "Admin Area" : "Couple Area"}
