@@ -14,6 +14,7 @@ type SiteFrameProps = {
   portalType?: "couple" | "operator";
   adminNavItemsOverride?: Array<{ label: string; path: string }>;
   weddingData?: WeddingData;
+  showFooter?: boolean;
 };
 
 export function SiteFrame({
@@ -25,7 +26,8 @@ export function SiteFrame({
   adminView = false,
   portalType = "couple",
   adminNavItemsOverride,
-  weddingData
+  weddingData,
+  showFooter = true
 }: SiteFrameProps) {
   return (
     <main data-theme={themeId} data-admin={adminView ? "true" : "false"} style={themeStyle}>
@@ -39,7 +41,7 @@ export function SiteFrame({
         weddingData={weddingData}
       />
       {children}
-      <SiteFooter />
+      {showFooter ? <SiteFooter weddingData={weddingData} /> : null}
     </main>
   );
 }
