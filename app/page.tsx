@@ -178,10 +178,10 @@ export default function MarketingHomePage() {
               Beautiful wedding websites, built for you
             </p>
             <h1 className="max-w-3xl text-[3.35rem] leading-none sm:text-6xl lg:text-7xl">
-              We build your wedding website for you
+              We build your website so you don&apos;t have to. You tell us what your guests need to know, we do the rest.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website, with an optional private couple area for RSVPs, planning notes, key dates, and seating. You select. We build.
+              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website, with an optional private couple area that can manage RSVPS, calendar, key dates, interactive seating plan. You select. We build. Completely driven by you and your needs.
             </p>
           </div>
 
@@ -210,7 +210,7 @@ export default function MarketingHomePage() {
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
-            This is not a DIY builder. You provide information you want guests to see, we do the rest in a seamless fashion. Removing the stress from wedding websites.
+            Weddings can be stressful but creating a website doesn&apos;t need to be, we will do the work, you tell us what your guests need to know. Removing the stress from wedding websites.
           </div>
         </div>
 
@@ -273,7 +273,7 @@ export default function MarketingHomePage() {
                   href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white"
                 >
-                  Build Your Preview Now
+                  Let us build your website
                 </Link>
               </div>
             </div>
