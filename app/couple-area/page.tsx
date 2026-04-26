@@ -241,21 +241,63 @@ export default function CoupleAreaPage() {
               <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Screen 4</p>
               <h3 className="mt-3 text-2xl">Seating plan view</h3>
               <div className="mt-5 rounded-[1.3rem] border border-[#d8cfc5] bg-white p-5">
-                <div className="grid gap-4 md:grid-cols-3">
-                  {[
-                    { name: "Top Table", guests: "6 seats", tone: "bg-[#184b38] text-white border-[#184b38]" },
-                    { name: "Family Table", guests: "8 seats", tone: "bg-[#faf7f2] text-[#241f1b] border-[#e8ddd0]" },
-                    { name: "Friends Table", guests: "10 seats", tone: "bg-[#faf7f2] text-[#241f1b] border-[#e8ddd0]" }
-                  ].map((table) => (
-                    <div
-                      key={table.name}
-                      className={`rounded-[1.2rem] border p-5 ${table.tone}`}
-                    >
-                      <p className="text-[11px] uppercase tracking-[0.24em] opacity-80">Table</p>
-                      <p className="mt-3 text-xl">{table.name}</p>
-                      <p className="mt-2 text-sm opacity-80">{table.guests}</p>
+                <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+                  <div className="rounded-[1.2rem] border border-[#e8ddd0] bg-[#faf7f2] p-4">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">
+                      Guest cards
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {["Emma +1", "Groom's Aunt", "College Friends", "Bridesmaids", "Family of 4"].map(
+                        (guest) => (
+                          <span
+                            key={guest}
+                            className="rounded-full border border-[#d8cfc5] bg-white px-3 py-2 text-xs font-medium text-[#4e453f] shadow-[0_8px_20px_rgba(52,35,24,0.06)]"
+                          >
+                            {guest}
+                          </span>
+                        )
+                      )}
                     </div>
-                  ))}
+                    <div className="mt-4 rounded-[1rem] border border-dashed border-[#c7b8aa] bg-white/80 px-4 py-3 text-sm text-[#6f665e]">
+                      Drag guests onto tables to try different layouts.
+                    </div>
+                  </div>
+
+                  <div className="relative min-h-[320px] overflow-hidden rounded-[1.5rem] border border-[#e8ddd0] bg-[radial-gradient(circle_at_center,_rgba(24,75,56,0.06),_transparent_58%),linear-gradient(180deg,#fbf8f4_0%,#f4ede4_100%)] p-5">
+                    <div className="absolute right-4 top-4 rounded-full bg-white px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-[#9a7d64] shadow-[0_8px_20px_rgba(52,35,24,0.08)]">
+                      Drag + drop demo
+                    </div>
+                    <div className="absolute left-[12%] top-[16%] w-[32%] rounded-[1.2rem] border border-[#184b38] bg-[#184b38] p-4 text-white shadow-[0_16px_30px_rgba(24,75,56,0.2)]">
+                      <p className="text-[11px] uppercase tracking-[0.24em] text-white/70">Top Table</p>
+                      <p className="mt-2 text-xl">6 seats</p>
+                      <p className="mt-3 text-xs text-white/72">Couple, parents, best man, maid of honour</p>
+                    </div>
+                    <div className="absolute left-[54%] top-[20%] flex h-28 w-28 items-center justify-center rounded-full border border-[#e8ddd0] bg-white text-center shadow-[0_14px_28px_rgba(52,35,24,0.08)]">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a7d64]">Table 1</p>
+                        <p className="mt-2 text-sm text-[#184b38]">Family</p>
+                      </div>
+                    </div>
+                    <div className="absolute left-[24%] top-[58%] flex h-28 w-28 items-center justify-center rounded-full border border-[#e8ddd0] bg-white text-center shadow-[0_14px_28px_rgba(52,35,24,0.08)]">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a7d64]">Table 2</p>
+                        <p className="mt-2 text-sm text-[#184b38]">Friends</p>
+                      </div>
+                    </div>
+                    <div className="absolute left-[62%] top-[60%] flex h-28 w-28 items-center justify-center rounded-full border border-[#e8ddd0] bg-white text-center shadow-[0_14px_28px_rgba(52,35,24,0.08)]">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a7d64]">Table 3</p>
+                        <p className="mt-2 text-sm text-[#184b38]">Work</p>
+                      </div>
+                    </div>
+                    <div className="absolute left-[47%] top-[44%] rounded-full bg-[#184b38] px-3 py-2 text-xs font-medium text-white shadow-[0_12px_24px_rgba(24,75,56,0.22)]">
+                      Emma +1
+                    </div>
+                    <div className="absolute left-[39%] top-[49%] text-2xl text-[#9a7d64]">↗</div>
+                    <div className="absolute bottom-4 left-4 rounded-[1rem] border border-[#e8ddd0] bg-white/92 px-4 py-3 text-sm text-[#6f665e] shadow-[0_10px_24px_rgba(52,35,24,0.06)]">
+                      Guests and tables can be rearranged visually in the full planner.
+                    </div>
+                  </div>
                 </div>
                 <div className="mt-4 rounded-[1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3">
                   <p className="text-sm font-medium text-[#184b38]">A visual starting point for table planning</p>
