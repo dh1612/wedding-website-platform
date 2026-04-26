@@ -106,7 +106,7 @@ export function HeroSection({ themeId, weddingData }: HeroSectionProps) {
             <SharedActions />
           </div>
         </div>
-        <div className="relative min-h-[520px]">
+        <div className="relative min-h-[520px] overflow-hidden">
           <div className="absolute inset-y-0 right-0 w-[88%] rounded-[2rem] border border-[var(--border)] bg-[var(--accent-soft)] shadow-[var(--shadow)]" />
           <div className="absolute left-0 top-8 h-[86%] w-[82%] overflow-hidden rounded-[2rem] border border-white/40 bg-white p-3 shadow-[var(--shadow)]">
             <div className="relative h-full w-full overflow-hidden rounded-[1.4rem]">
