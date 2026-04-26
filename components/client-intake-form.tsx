@@ -55,6 +55,10 @@ export function ClientIntakeForm({
   initialPackage = "smart"
 }: ClientIntakeFormProps) {
   const feedbackRef = useRef<HTMLDivElement | null>(null);
+  const statusRef = useRef<HTMLDivElement | null>(null);
+  const basicsRef = useRef<HTMLDivElement | null>(null);
+  const coupleInputRef = useRef<HTMLInputElement | null>(null);
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
   const [values, setValues] = useState<IntakeSubmission>({
     ...defaultValues,
     packageTier: initialPackage
@@ -110,12 +114,16 @@ export function ClientIntakeForm({
     }, 120);
   }, [showSubmissionFeedback, result]);
 
+  const hasMissingCouple = !values.couple.trim();
+  const hasMissingEmail = !values.email.trim();
+  const hasMissingBasics = hasMissingCouple || hasMissingEmail;
+
   const missingBasics = useMemo(() => {
     const missing: string[] = [];
-    if (!values.couple.trim()) missing.push("couple names");
-    if (!values.email.trim()) missing.push("contact email");
+    if (hasMissingCouple) missing.push("couple names");
+    if (hasMissingEmail) missing.push("contact email");
     return missing;
-  }, [values.couple, values.email]);
+  }, [hasMissingCouple, hasMissingEmail]);
 
   const selectedTheme = useMemo(
     () =>
@@ -148,6 +156,16 @@ export function ClientIntakeForm({
   async function submitIntake() {
     if (missingBasics.length > 0) {
       setStatusMessage(`Please add: ${missingBasics.join(", ")}.`);
+      window.setTimeout(() => {
+        basicsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (hasMissingCouple) {
+          coupleInputRef.current?.focus();
+          return;
+        }
+        if (hasMissingEmail) {
+          emailInputRef.current?.focus();
+        }
+      }, 120);
       return;
     }
 
@@ -181,6 +199,9 @@ export function ClientIntakeForm({
         errorBody?.error ||
           "We could not save your details just yet. Please check the essentials and try again."
       );
+      window.setTimeout(() => {
+        statusRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
       return;
     }
 
@@ -277,44 +298,21 @@ export function ClientIntakeForm({
         </div>
 
         {statusMessage && !result ? (
-          <div className="mt-6 rounded-[1.2rem] border border-[#b86a53]/18 bg-[#fff3ef] px-4 py-3 text-sm leading-6 text-[#8a4c3a]">
+          <div
+            ref={statusRef}
+            className="mt-6 rounded-[1.2rem] border border-[#b86a53]/18 bg-[#fff3ef] px-4 py-3 text-sm leading-6 text-[#8a4c3a]"
+          >
             {statusMessage}
           </div>
         ) : null}
 
         <div className="mt-7 space-y-5">
-          <div className="space-y-3">
-            <div>
-              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Package selection</p>
-              <h3 className="mt-2 text-2xl">Choose the support level</h3>
-            </div>
-            <div className="grid gap-3 md:grid-cols-3">
-              {intakePackages.map((pkg) => (
-                <button
-                  key={pkg.id}
-                  type="button"
-                  onClick={() => updateField("packageTier", pkg.id)}
-                  className={`rounded-[1.35rem] border p-4 text-left ${
-                    values.packageTier === pkg.id
-                      ? "border-[#184b38] bg-[#184b38] text-white"
-                      : "border-black/6 bg-[#faf7f2]"
-                  }`}
-                >
-                  <p className="text-sm font-medium">{pkg.name}</p>
-                  <p className="mt-2 text-2xl">{pkg.price}</p>
-                  <p
-                    className={`mt-3 text-sm leading-6 ${
-                      values.packageTier === pkg.id ? "text-white/78" : "text-[#6d655d]"
-                    }`}
-                  >
-                    {pkg.summary}
-                  </p>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-3">
+          <div
+            ref={basicsRef}
+            className={`space-y-3 rounded-[1.35rem] p-1 ${
+              hasMissingBasics ? "ring-2 ring-[#b86a53]/45" : ""
+            }`}
+          >
             <div>
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Couple basics</p>
               <h3 className="mt-2 text-2xl">The only essentials</h3>
@@ -323,18 +321,36 @@ export function ClientIntakeForm({
               </p>
             </div>
             <div className="grid gap-3 md:grid-cols-2">
-              <input
-                value={values.couple}
-                onChange={(event) => updateField("couple", event.target.value)}
-                placeholder="Couple names"
-                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-              />
-              <input
-                value={values.email}
-                onChange={(event) => updateField("email", event.target.value)}
-                placeholder="Contact email"
-                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-              />
+              <div className="space-y-2">
+                <input
+                  ref={coupleInputRef}
+                  value={values.couple}
+                  onChange={(event) => updateField("couple", event.target.value)}
+                  placeholder="Couple names *"
+                  aria-invalid={hasMissingCouple}
+                  className={`w-full rounded-[1rem] border bg-white px-4 py-3 text-sm text-[#1f1d1a] ${
+                    hasMissingCouple ? "border-[#b86a53] ring-2 ring-[#b86a53]/15" : "border-black/8"
+                  }`}
+                />
+                {hasMissingCouple ? (
+                  <p className="text-sm leading-6 text-[#8a4c3a]">Add the couple names to get started.</p>
+                ) : null}
+              </div>
+              <div className="space-y-2">
+                <input
+                  ref={emailInputRef}
+                  value={values.email}
+                  onChange={(event) => updateField("email", event.target.value)}
+                  placeholder="Contact email *"
+                  aria-invalid={hasMissingEmail}
+                  className={`w-full rounded-[1rem] border bg-white px-4 py-3 text-sm text-[#1f1d1a] ${
+                    hasMissingEmail ? "border-[#b86a53] ring-2 ring-[#b86a53]/15" : "border-black/8"
+                  }`}
+                />
+                {hasMissingEmail ? (
+                  <p className="text-sm leading-6 text-[#8a4c3a]">Add an email so the first version can be shared back.</p>
+                ) : null}
+              </div>
               <input
                 type="date"
                 value={values.date}
@@ -502,6 +518,40 @@ export function ClientIntakeForm({
               />
             </div>
           </details>
+
+          <div className="space-y-3">
+            <div>
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Pricing and support</p>
+              <h3 className="mt-2 text-2xl">Choose the support level last</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                Once the basics are in, choose the level of support that feels right.
+              </p>
+            </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              {intakePackages.map((pkg) => (
+                <button
+                  key={pkg.id}
+                  type="button"
+                  onClick={() => updateField("packageTier", pkg.id)}
+                  className={`rounded-[1.35rem] border p-4 text-left ${
+                    values.packageTier === pkg.id
+                      ? "border-[#184b38] bg-[#184b38] text-white"
+                      : "border-black/6 bg-[#faf7f2]"
+                  }`}
+                >
+                  <p className="text-sm font-medium">{pkg.name}</p>
+                  <p className="mt-2 text-2xl">{pkg.price}</p>
+                  <p
+                    className={`mt-3 text-sm leading-6 ${
+                      values.packageTier === pkg.id ? "text-white/78" : "text-[#6d655d]"
+                    }`}
+                  >
+                    {pkg.summary}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </div>
 
           {showSubmissionFeedback && !result ? (
             <div ref={feedbackRef} className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
