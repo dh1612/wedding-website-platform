@@ -69,6 +69,22 @@ export async function getWeddingSiteBySlug(slug: string) {
   });
 }
 
+export async function getWeddingRecordForAdmin(slug: string) {
+  return prisma.wedding.findUnique({
+    where: { slug },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      status: true,
+      eventDate: true,
+      timezone: true,
+      contentJson: true,
+      plannerSettingsJson: true
+    }
+  });
+}
+
 export async function createWeddingDraft(input: {
   slug: string;
   title: string;
@@ -99,6 +115,29 @@ export async function updateWeddingStatus(input: {
   return prisma.wedding.update({
     where: { slug: input.slug },
     data: {
+      status: input.status
+    }
+  });
+}
+
+export async function updateWeddingBySlug(input: {
+  currentSlug: string;
+  slug: string;
+  title: string;
+  eventDate?: Date;
+  contentJson?: unknown;
+  plannerSettingsJson?: unknown;
+  status?: "draft" | "approved" | "live";
+}) {
+  return prisma.wedding.update({
+    where: { slug: input.currentSlug },
+    data: {
+      slug: input.slug,
+      title: input.title,
+      eventDate: input.eventDate,
+      contentJson: input.contentJson as Prisma.InputJsonValue | undefined,
+      plannerSettingsJson:
+        input.plannerSettingsJson as Prisma.InputJsonValue | undefined,
       status: input.status
     }
   });

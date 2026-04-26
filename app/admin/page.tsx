@@ -106,6 +106,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       </div>
                       <div className="flex gap-3">
                         <Link
+                          href={`/admin/weddings/${record.slug}`}
+                          className="accent-panel rounded-full px-4 py-2 text-sm"
+                        >
+                          Edit Wedding
+                        </Link>
+                        <Link
                           href={`/preview/${record.slug}`}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >

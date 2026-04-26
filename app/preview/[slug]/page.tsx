@@ -79,6 +79,12 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
               >
                 Open Couple Portal
               </Link>
+              <Link
+                href={`/admin/weddings/${slug}`}
+                className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
+              >
+                Edit Wedding
+              </Link>
               {weddingRecord.status === "live" ? (
                 <Link
                   href={`/site/${slug}`}

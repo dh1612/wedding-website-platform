@@ -59,6 +59,30 @@ function slugify(input: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function buildCoupleSlugBase(couple: string) {
+  const parts = couple
+    .split(/\s+(?:and|&)\s+/i)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  const firstNames = parts
+    .map((part) => part.split(/\s+/)[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(slugify)
+    .filter(Boolean);
+
+  if (firstNames.length === 2) {
+    return `${firstNames[0]}-and-${firstNames[1]}`;
+  }
+
+  if (firstNames.length === 1) {
+    return firstNames[0];
+  }
+
+  return slugify(couple);
+}
+
 function formatSentence(value: string) {
   const trimmed = value.trim();
   if (!trimmed) {
@@ -311,8 +335,9 @@ export async function buildWeddingDataFromIntake(
 }
 
 export function buildWeddingSlug(couple: string, date: string) {
-  const datePart = date ? date.slice(0, 10) : "wedding";
-  return `${slugify(couple)}-${slugify(datePart)}-${Math.random()
+  const yearPart = date ? date.slice(0, 4) : "";
+  const base = buildCoupleSlugBase(couple);
+  return `${base}${yearPart ? `-${slugify(yearPart)}` : ""}-${Math.random()
     .toString(36)
-    .slice(2, 7)}`;
+    .slice(2, 5)}`;
 }
