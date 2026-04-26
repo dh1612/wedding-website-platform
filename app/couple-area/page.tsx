@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
+import { MarketingFooter } from "@/components/marketing-footer";
 
 const featureCards = [
   {
@@ -326,6 +327,7 @@ export default function CoupleAreaPage() {
           </div>
         </div>
       </section>
+      <MarketingFooter />
     </main>
   );
 }

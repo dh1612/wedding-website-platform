@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BrandLogo } from "@/components/brand-logo";
+import { MarketingFooter } from "@/components/marketing-footer";
 import { packageOffers } from "@/lib/package-offers";
 
 type PackagePageProps = {
@@ -279,6 +280,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
           </div>
         </div>
       </section>
+      <MarketingFooter />
     </main>
   );
 }

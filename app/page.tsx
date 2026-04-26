@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
+import { MarketingFooter } from "@/components/marketing-footer";
 import { weddingThemes } from "@/lib/themes";
 
 const exampleHref = "/wedding?theme=aegean-romance";
@@ -496,6 +497,7 @@ export default function MarketingHomePage() {
           Get My Website Started
         </Link>
       </div>
+      <MarketingFooter />
     </main>
   );
 }

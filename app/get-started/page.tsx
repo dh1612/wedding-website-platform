@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { ClientIntakeForm } from "@/components/client-intake-form";
+import { MarketingFooter } from "@/components/marketing-footer";
 import type { IntakePackage } from "@/lib/intake";
 
 type GetStartedPageProps = {
@@ -62,6 +63,7 @@ export default async function GetStartedPage({
       <div id="builder">
         <ClientIntakeForm initialPackage={packageTier} />
       </div>
+      <MarketingFooter />
     </main>
   );
 }

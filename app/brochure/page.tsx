@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
+import { MarketingFooter } from "@/components/marketing-footer";
 import { packageOffers } from "@/lib/package-offers";
 import { weddingThemes } from "@/lib/themes";
 
@@ -209,6 +210,7 @@ export default function BrochurePage() {
           </div>
         </div>
       </section>
+      <MarketingFooter />
     </main>
   );
 }
