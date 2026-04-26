@@ -181,7 +181,7 @@ export default function MarketingHomePage() {
               We build your wedding website for you
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website.
+              No DIY builder. No complicated setup. Just a beautiful, ready-to-share website, with an optional private couple area for RSVPs, planning notes, key dates, and seating.
             </p>
             <p className="max-w-2xl text-base leading-7 text-[#486159]">
               AI can help shape the first version, but every couple still has a real person
