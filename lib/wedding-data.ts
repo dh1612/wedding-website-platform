@@ -97,6 +97,17 @@ export function coerceWeddingData(input: unknown): WeddingData {
       note: source.contact?.note ?? fallback.contact.note
     },
     aiConciergeEnabled:
-      source.aiConciergeEnabled ?? fallback.aiConciergeEnabled
+      source.aiConciergeEnabled ?? fallback.aiConciergeEnabled,
+    sectionVisibility: {
+      schedule: source.sectionVisibility?.schedule ?? true,
+      travel: source.sectionVisibility?.travel ?? true,
+      accommodation: source.sectionVisibility?.accommodation ?? true,
+      story: source.sectionVisibility?.story ?? true,
+      gallery: source.sectionVisibility?.gallery ?? true,
+      registry: source.sectionVisibility?.registry ?? true,
+      rsvp: source.sectionVisibility?.rsvp ?? true,
+      faq: source.sectionVisibility?.faq ?? true,
+      aiConcierge: source.sectionVisibility?.aiConcierge ?? true
+    }
   };
 }

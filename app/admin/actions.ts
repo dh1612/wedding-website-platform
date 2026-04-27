@@ -177,7 +177,18 @@ export async function updateWeddingContentAction(formData: FormData) {
       ...weddingData.rsvp,
       deadline: String(formData.get("rsvpDeadline") || "").trim() || weddingData.rsvp.deadline
     },
-    aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic"
+    aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic",
+    sectionVisibility: {
+      schedule: formData.has("showSchedule"),
+      travel: formData.has("showTravel"),
+      accommodation: formData.has("showAccommodation"),
+      story: formData.has("showStory"),
+      gallery: formData.has("showGallery"),
+      registry: formData.has("showRegistry"),
+      rsvp: formData.has("showRsvp"),
+      faq: formData.has("showFaq"),
+      aiConcierge: formData.has("showAiConcierge")
+    }
   };
 
   const nextPlannerSettings = {

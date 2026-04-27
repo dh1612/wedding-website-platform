@@ -73,4 +73,15 @@ export type WeddingData = {
     note: string;
   };
   aiConciergeEnabled: boolean;
+  sectionVisibility?: {
+    schedule: boolean;
+    travel: boolean;
+    accommodation: boolean;
+    story: boolean;
+    gallery: boolean;
+    registry: boolean;
+    rsvp: boolean;
+    faq: boolean;
+    aiConcierge: boolean;
+  };
 };

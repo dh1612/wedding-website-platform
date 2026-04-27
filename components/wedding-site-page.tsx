@@ -6,7 +6,6 @@ import { RSVPSection } from "@/components/rsvp-section";
 import { ScheduleSection } from "@/components/schedule-section";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { StorySection } from "@/components/story-section";
 import { TravelSection } from "@/components/travel-section";
 import type { SiteMode } from "@/lib/site-navigation";
 import type { ThemeDefinition } from "@/lib/themes";
@@ -54,16 +53,23 @@ export function WeddingSitePage({
         </section>
       ) : null}
       <HeroSection themeId={activeTheme.id} weddingData={weddingData} previewMode={previewMode} />
+      {(weddingData.sectionVisibility?.travel ?? true) ? (
+        <TravelSection weddingData={weddingData} />
+      ) : null}
+      {(weddingData.sectionVisibility?.accommodation ?? true) ? (
+        <AccommodationSection weddingData={weddingData} />
+      ) : null}
+      <GalleryRegistrySection weddingData={weddingData} />
+      {(weddingData.sectionVisibility?.schedule ?? true) ? (
+        <ScheduleSection weddingData={weddingData} />
+      ) : null}
+      {(weddingData.sectionVisibility?.rsvp ?? true) ? (
+        <RSVPSection weddingData={weddingData} demoMode={demoMode} />
+      ) : null}
       <FAQSection
         weddingData={weddingData}
         conciergeApiPath={conciergeApiPath}
       />
-      <StorySection weddingData={weddingData} previewMode={previewMode} />
-      <ScheduleSection weddingData={weddingData} />
-      <TravelSection weddingData={weddingData} />
-      <AccommodationSection weddingData={weddingData} />
-      <RSVPSection weddingData={weddingData} demoMode={demoMode} />
-      <GalleryRegistrySection weddingData={weddingData} />
       <SiteFooter weddingData={weddingData} demoMode={demoMode} />
     </main>
   );

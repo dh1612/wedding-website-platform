@@ -34,6 +34,18 @@ export default async function AdminWeddingEditPage({
   const accommodationLines = weddingData.accommodation
     .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
     .join("\n");
+  const visibility = weddingData.sectionVisibility;
+  const sectionToggles = [
+    { name: "showTravel", label: "Venue & Travel", checked: visibility?.travel ?? true },
+    { name: "showAccommodation", label: "Accommodation", checked: visibility?.accommodation ?? true },
+    { name: "showStory", label: "Story copy", checked: visibility?.story ?? true },
+    { name: "showGallery", label: "Gallery images", checked: visibility?.gallery ?? true },
+    { name: "showSchedule", label: "Schedule", checked: visibility?.schedule ?? true },
+    { name: "showRsvp", label: "RSVP section", checked: visibility?.rsvp ?? true },
+    { name: "showAiConcierge", label: "AI concierge", checked: visibility?.aiConcierge ?? true },
+    { name: "showFaq", label: "FAQ", checked: visibility?.faq ?? true },
+    { name: "showRegistry", label: "Registry", checked: visibility?.registry ?? true }
+  ] as const;
 
   return (
     <SiteFrame
@@ -363,6 +375,29 @@ export default async function AdminWeddingEditPage({
                 placeholder="FAQ lines"
                 className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
               />
+            </div>
+            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+              <p className="eyebrow">Section Visibility</p>
+              <h2 className="mt-3 text-2xl">Hide anything the couple does not need</h2>
+              <p className="prose-copy mt-3">
+                Untick any section you do not want shown on the live website for this wedding.
+              </p>
+              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {sectionToggles.map(({ name, label, checked }) => (
+                  <label
+                    key={name}
+                    className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]"
+                  >
+                    <input
+                      type="checkbox"
+                      name={name}
+                      defaultChecked={Boolean(checked)}
+                      className="h-4 w-4"
+                    />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
 
