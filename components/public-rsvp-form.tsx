@@ -8,6 +8,18 @@ type MealChoice = "beef" | "fish" | "vegetarian" | "vegan" | "kids" | "custom";
 type PublicRSVPFormProps = {
   apiPath: string;
   previewMode?: boolean;
+  formConfig?: {
+    title?: string;
+    intro?: string;
+    attendingLabel?: string;
+    declinedLabel?: string;
+    submitLabel?: string;
+    enableGuestCount?: boolean;
+    enableMealChoice?: boolean;
+    enableDietaryNotes?: boolean;
+    enableSongRequest?: boolean;
+    enableMessageToCouple?: boolean;
+  };
 };
 
 const initialForm = {
@@ -23,7 +35,8 @@ const initialForm = {
 
 export function PublicRSVPForm({
   apiPath,
-  previewMode = false
+  previewMode = false,
+  formConfig
 }: PublicRSVPFormProps) {
   const [form, setForm] = useState(initialForm);
   const [submitting, setSubmitting] = useState(false);
@@ -31,6 +44,20 @@ export function PublicRSVPForm({
   const [successMessage, setSuccessMessage] = useState("");
 
   const isAttending = form.attendance === "attending";
+  const settings = {
+    title: formConfig?.title ?? "Let Us Know If You Can Make It",
+    intro:
+      formConfig?.intro ??
+      "Share your reply here, including any dietary requirements or extra notes the couple should know.",
+    attendingLabel: formConfig?.attendingLabel ?? "Yes, I'll be there",
+    declinedLabel: formConfig?.declinedLabel ?? "Sorry, I can't make it",
+    submitLabel: formConfig?.submitLabel ?? "Send RSVP",
+    enableGuestCount: formConfig?.enableGuestCount ?? true,
+    enableMealChoice: formConfig?.enableMealChoice ?? true,
+    enableDietaryNotes: formConfig?.enableDietaryNotes ?? true,
+    enableSongRequest: formConfig?.enableSongRequest ?? true,
+    enableMessageToCouple: formConfig?.enableMessageToCouple ?? true
+  };
 
   function updateField<Key extends keyof typeof initialForm>(
     key: Key,
@@ -92,6 +119,11 @@ export function PublicRSVPForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      <div>
+        <h3 className="text-2xl font-medium text-[var(--foreground)]">{settings.title}</h3>
+        <p className="prose-copy mt-2">{settings.intro}</p>
+      </div>
+
       {previewMode ? (
         <div className="rounded-[1.1rem] border border-[var(--border)] bg-white/70 px-4 py-3 text-sm leading-6 text-[var(--muted)]">
           Preview testing is live here. Submissions save into this wedding&apos;s RSVP list so you
@@ -144,7 +176,7 @@ export function PublicRSVPForm({
               checked={form.attendance === "attending"}
               onChange={() => updateField("attendance", "attending")}
             />
-            <span className="text-sm text-[var(--foreground)]">Yes, I&apos;ll be there</span>
+            <span className="text-sm text-[var(--foreground)]">{settings.attendingLabel}</span>
           </label>
           <label className="accent-panel flex items-center gap-3 rounded-[1rem] px-4 py-3">
             <input
@@ -153,85 +185,97 @@ export function PublicRSVPForm({
               checked={form.attendance === "declined"}
               onChange={() => updateField("attendance", "declined")}
             />
-            <span className="text-sm text-[var(--foreground)]">Sorry, I can&apos;t make it</span>
+            <span className="text-sm text-[var(--foreground)]">{settings.declinedLabel}</span>
           </label>
         </div>
       </fieldset>
 
-      {isAttending ? (
+      {isAttending && (settings.enableGuestCount || settings.enableMealChoice) ? (
         <div className="grid gap-4 md:grid-cols-2">
-          <label className="space-y-2">
-            <span className="text-sm font-medium text-[var(--foreground)]">How many are attending?</span>
-            <select
-              value={form.attendingCount}
-              onChange={(event) => updateField("attendingCount", event.target.value)}
-              className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-            >
-              {[1, 2, 3, 4].map((count) => (
-                <option key={count} value={String(count)}>
-                  {count}
-                </option>
-              ))}
-            </select>
-          </label>
+          {settings.enableGuestCount ? (
+            <label className="space-y-2">
+              <span className="text-sm font-medium text-[var(--foreground)]">How many are attending?</span>
+              <select
+                value={form.attendingCount}
+                onChange={(event) => updateField("attendingCount", event.target.value)}
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+              >
+                {[1, 2, 3, 4].map((count) => (
+                  <option key={count} value={String(count)}>
+                    {count}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : null}
 
-          <label className="space-y-2">
-            <span className="text-sm font-medium text-[var(--foreground)]">Meal choice</span>
-            <select
-              value={form.mealChoice}
-              onChange={(event) => updateField("mealChoice", event.target.value as MealChoice)}
-              className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-            >
-              <option value="beef">Beef</option>
-              <option value="fish">Fish</option>
-              <option value="vegetarian">Vegetarian</option>
-              <option value="vegan">Vegan</option>
-              <option value="kids">Kids meal</option>
-              <option value="custom">Custom / let us know below</option>
-            </select>
-          </label>
+          {settings.enableMealChoice ? (
+            <label className="space-y-2">
+              <span className="text-sm font-medium text-[var(--foreground)]">Meal choice</span>
+              <select
+                value={form.mealChoice}
+                onChange={(event) => updateField("mealChoice", event.target.value as MealChoice)}
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+              >
+                <option value="beef">Beef</option>
+                <option value="fish">Fish</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="kids">Kids meal</option>
+                <option value="custom">Custom / let us know below</option>
+              </select>
+            </label>
+          ) : null}
         </div>
       ) : null}
 
-      <label className="space-y-2">
-        <span className="text-sm font-medium text-[var(--foreground)]">Dietary requirements</span>
-        <textarea
-          value={form.dietaryNotes}
-          onChange={(event) => updateField("dietaryNotes", event.target.value)}
-          placeholder="Allergies, preferences, or anything the couple should know"
-          rows={4}
-          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-        />
-      </label>
-
-      <div className="grid gap-4 md:grid-cols-2">
+      {settings.enableDietaryNotes ? (
         <label className="space-y-2">
-          <span className="text-sm font-medium text-[var(--foreground)]">Song request</span>
-          <input
-            value={form.songRequest}
-            onChange={(event) => updateField("songRequest", event.target.value)}
-            placeholder="A song that should make the dance floor"
+          <span className="text-sm font-medium text-[var(--foreground)]">Dietary requirements</span>
+          <textarea
+            value={form.dietaryNotes}
+            onChange={(event) => updateField("dietaryNotes", event.target.value)}
+            placeholder="Allergies, preferences, or anything the couple should know"
+            rows={4}
             className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
           />
         </label>
+      ) : null}
 
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-[var(--foreground)]">Message to the couple</span>
-          <input
-            value={form.messageToCouple}
-            onChange={(event) => updateField("messageToCouple", event.target.value)}
-            placeholder="Optional note"
-            className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-          />
-        </label>
-      </div>
+      {settings.enableSongRequest || settings.enableMessageToCouple ? (
+        <div className="grid gap-4 md:grid-cols-2">
+          {settings.enableSongRequest ? (
+            <label className="space-y-2">
+              <span className="text-sm font-medium text-[var(--foreground)]">Song request</span>
+              <input
+                value={form.songRequest}
+                onChange={(event) => updateField("songRequest", event.target.value)}
+                placeholder="A song that should make the dance floor"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+              />
+            </label>
+          ) : null}
+
+          {settings.enableMessageToCouple ? (
+            <label className="space-y-2">
+              <span className="text-sm font-medium text-[var(--foreground)]">Message to the couple</span>
+              <input
+                value={form.messageToCouple}
+                onChange={(event) => updateField("messageToCouple", event.target.value)}
+                placeholder="Optional note"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+              />
+            </label>
+          ) : null}
+        </div>
+      ) : null}
 
       <button
         type="submit"
         disabled={submitting}
         className="accent-button inline-flex rounded-full px-6 py-3 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {submitting ? "Sending RSVP..." : "Send RSVP"}
+        {submitting ? "Sending RSVP..." : settings.submitLabel}
       </button>
     </form>
   );

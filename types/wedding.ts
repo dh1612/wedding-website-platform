@@ -58,6 +58,18 @@ export type WeddingData = {
     description: string;
     url: string;
     deadline: string;
+    form?: {
+      title: string;
+      intro: string;
+      attendingLabel: string;
+      declinedLabel: string;
+      submitLabel: string;
+      enableGuestCount: boolean;
+      enableMealChoice: boolean;
+      enableDietaryNotes: boolean;
+      enableSongRequest: boolean;
+      enableMessageToCouple: boolean;
+    };
   };
   gallery: {
     heading: string;

@@ -78,7 +78,31 @@ export function coerceWeddingData(input: unknown): WeddingData {
       label: source.rsvp?.label ?? fallback.rsvp.label,
       description: source.rsvp?.description ?? fallback.rsvp.description,
       url: source.rsvp?.url ?? fallback.rsvp.url,
-      deadline: source.rsvp?.deadline ?? fallback.rsvp.deadline
+      deadline: source.rsvp?.deadline ?? fallback.rsvp.deadline,
+      form: {
+        title:
+          source.rsvp?.form?.title ??
+          "Let Us Know If You Can Make It",
+        intro:
+          source.rsvp?.form?.intro ??
+          "Share your reply here, including any dietary requirements or extra notes the couple should know.",
+        attendingLabel:
+          source.rsvp?.form?.attendingLabel ?? "Yes, I'll be there",
+        declinedLabel:
+          source.rsvp?.form?.declinedLabel ?? "Sorry, I can't make it",
+        submitLabel:
+          source.rsvp?.form?.submitLabel ?? "Send RSVP",
+        enableGuestCount:
+          source.rsvp?.form?.enableGuestCount ?? true,
+        enableMealChoice:
+          source.rsvp?.form?.enableMealChoice ?? true,
+        enableDietaryNotes:
+          source.rsvp?.form?.enableDietaryNotes ?? true,
+        enableSongRequest:
+          source.rsvp?.form?.enableSongRequest ?? true,
+        enableMessageToCouple:
+          source.rsvp?.form?.enableMessageToCouple ?? true
+      }
     },
     gallery: {
       heading: source.gallery?.heading ?? fallback.gallery.heading,

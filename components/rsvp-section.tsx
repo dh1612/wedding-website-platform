@@ -44,7 +44,11 @@ export function RSVPSection({
             </p>
             {showInteractiveForm && rsvpApiPath ? (
               <div className="mt-6">
-                <PublicRSVPForm apiPath={rsvpApiPath} previewMode={previewMode} />
+                <PublicRSVPForm
+                  apiPath={rsvpApiPath}
+                  previewMode={previewMode}
+                  formConfig={wedding.rsvp.form}
+                />
               </div>
             ) : demoMode ? (
               <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/65 px-5 py-4 text-sm leading-6 text-[var(--muted)]">

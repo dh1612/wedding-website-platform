@@ -30,6 +30,7 @@ export function AdminWeddingEditor({
     .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
     .join("\n");
   const visibility = weddingData.sectionVisibility;
+  const rsvpForm = weddingData.rsvp.form;
   const sectionToggles = [
     { name: "showTravel", label: "Venue & Travel", checked: visibility?.travel ?? true },
     { name: "showAccommodation", label: "Accommodation", checked: visibility?.accommodation ?? true },
@@ -267,6 +268,74 @@ export function AdminWeddingEditor({
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <input name="contactEmail" defaultValue={weddingData.contact.email} placeholder="Contact email" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="rsvpDeadline" defaultValue={weddingData.rsvp.deadline} placeholder="RSVP deadline" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+            </div>
+          </div>
+
+          <div className="section-shell rounded-[2rem] p-8">
+            <p className="eyebrow">RSVP Form</p>
+            <h2 className="mt-3 text-2xl">Control what guests are asked</h2>
+            <p className="prose-copy mt-3">
+              These settings shape the guest-facing RSVP form for this wedding without needing a database migration.
+            </p>
+            <div className="mt-5 grid gap-4">
+              <input
+                name="rsvpFormTitle"
+                defaultValue={rsvpForm?.title ?? ""}
+                placeholder="RSVP form title"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <textarea
+                name="rsvpFormIntro"
+                defaultValue={rsvpForm?.intro ?? ""}
+                rows={3}
+                placeholder="Short RSVP intro"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  name="rsvpAttendingLabel"
+                  defaultValue={rsvpForm?.attendingLabel ?? ""}
+                  placeholder="Attending option label"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="rsvpDeclinedLabel"
+                  defaultValue={rsvpForm?.declinedLabel ?? ""}
+                  placeholder="Declined option label"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <input
+                name="rsvpSubmitLabel"
+                defaultValue={rsvpForm?.submitLabel ?? ""}
+                placeholder="Submit button label"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+            </div>
+            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+              <p className="eyebrow">Standard Questions</p>
+              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {[
+                  { name: "rsvpEnableGuestCount", label: "Guest count", checked: rsvpForm?.enableGuestCount ?? true },
+                  { name: "rsvpEnableMealChoice", label: "Meal choice", checked: rsvpForm?.enableMealChoice ?? true },
+                  { name: "rsvpEnableDietaryNotes", label: "Dietary requirements", checked: rsvpForm?.enableDietaryNotes ?? true },
+                  { name: "rsvpEnableSongRequest", label: "Song request", checked: rsvpForm?.enableSongRequest ?? true },
+                  { name: "rsvpEnableMessageToCouple", label: "Message to the couple", checked: rsvpForm?.enableMessageToCouple ?? true }
+                ].map((item) => (
+                  <label
+                    key={item.name}
+                    className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]"
+                  >
+                    <input
+                      type="checkbox"
+                      name={item.name}
+                      defaultChecked={item.checked}
+                      className="h-4 w-4"
+                    />
+                    <span>{item.label}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
 

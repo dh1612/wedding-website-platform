@@ -175,7 +175,35 @@ export async function updateWeddingContentAction(formData: FormData) {
     },
     rsvp: {
       ...weddingData.rsvp,
-      deadline: String(formData.get("rsvpDeadline") || "").trim() || weddingData.rsvp.deadline
+      deadline: String(formData.get("rsvpDeadline") || "").trim() || weddingData.rsvp.deadline,
+      form: {
+        ...weddingData.rsvp.form,
+        title:
+          String(formData.get("rsvpFormTitle") || "").trim() ||
+          weddingData.rsvp.form?.title ||
+          "Let Us Know If You Can Make It",
+        intro:
+          String(formData.get("rsvpFormIntro") || "").trim() ||
+          weddingData.rsvp.form?.intro ||
+          "Share your reply here, including any dietary requirements or extra notes the couple should know.",
+        attendingLabel:
+          String(formData.get("rsvpAttendingLabel") || "").trim() ||
+          weddingData.rsvp.form?.attendingLabel ||
+          "Yes, I'll be there",
+        declinedLabel:
+          String(formData.get("rsvpDeclinedLabel") || "").trim() ||
+          weddingData.rsvp.form?.declinedLabel ||
+          "Sorry, I can't make it",
+        submitLabel:
+          String(formData.get("rsvpSubmitLabel") || "").trim() ||
+          weddingData.rsvp.form?.submitLabel ||
+          "Send RSVP",
+        enableGuestCount: formData.has("rsvpEnableGuestCount"),
+        enableMealChoice: formData.has("rsvpEnableMealChoice"),
+        enableDietaryNotes: formData.has("rsvpEnableDietaryNotes"),
+        enableSongRequest: formData.has("rsvpEnableSongRequest"),
+        enableMessageToCouple: formData.has("rsvpEnableMessageToCouple")
+      }
     },
     aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic",
     sectionVisibility: {
