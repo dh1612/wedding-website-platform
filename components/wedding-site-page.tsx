@@ -18,6 +18,7 @@ type WeddingSitePageProps = {
   weddingData: WeddingData;
   mode?: SiteMode;
   conciergeApiPath?: string;
+  rsvpApiPath?: string;
   demoMode?: boolean;
   previewMode?: boolean;
 };
@@ -29,6 +30,7 @@ export function WeddingSitePage({
   weddingData,
   mode = "scroll",
   conciergeApiPath,
+  rsvpApiPath,
   demoMode = false,
   previewMode = false
 }: WeddingSitePageProps) {
@@ -64,7 +66,12 @@ export function WeddingSitePage({
         <ScheduleSection weddingData={weddingData} />
       ) : null}
       {(weddingData.sectionVisibility?.rsvp ?? true) ? (
-        <RSVPSection weddingData={weddingData} demoMode={demoMode} />
+        <RSVPSection
+          weddingData={weddingData}
+          demoMode={demoMode}
+          previewMode={previewMode}
+          rsvpApiPath={rsvpApiPath}
+        />
       ) : null}
       <FAQSection
         weddingData={weddingData}
