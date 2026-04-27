@@ -46,7 +46,8 @@ export const operatorNavItems = [
 export function buildOperatorWeddingNavItems(slug: string) {
   return [
     { label: "Dashboard", path: "/admin" },
-    { label: "Edit Wedding", path: `/admin/weddings/${slug}` },
+    { label: "Workspace", path: `/admin/weddings/${slug}` },
+    { label: "Edit Wedding", path: `/admin/weddings/${slug}/edit` },
     { label: "Preview", path: `/preview/${slug}` },
     { label: "Portal", path: `/couple-portal/${slug}` },
     { label: "RSVPs", path: `/rsvp-dashboard/${slug}` },

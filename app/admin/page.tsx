@@ -114,6 +114,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           Open Wedding Workspace
                         </Link>
                         <Link
+                          href={`/admin/weddings/${record.slug}/edit`}
+                          className="accent-panel rounded-full px-4 py-2 text-sm"
+                        >
+                          Edit Website
+                        </Link>
+                        <Link
                           href={`/preview/${record.slug}`}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >
