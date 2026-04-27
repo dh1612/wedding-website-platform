@@ -2,9 +2,11 @@ import { redirect } from "next/navigation";
 import { PageHero } from "@/components/page-hero";
 import { SeatingPlanner } from "@/components/seating-planner";
 import { SiteFrame } from "@/components/site-frame";
-import { mockGuests, sampleTables } from "@/lib/mock-wedding-ops";
 import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
-import { getWeddingSiteBySlug } from "@/lib/production-repositories";
+import {
+  getWeddingSiteBySlug,
+  listPortalGuests
+} from "@/lib/production-repositories";
 import { getThemeById } from "@/lib/themes";
 import { coerceWeddingData } from "@/lib/wedding-data";
 
@@ -26,6 +28,7 @@ export default async function PlanYourTablesBySlugPage({
 
   const weddingData = coerceWeddingData(weddingRecord.contentJson);
   const theme = getThemeById(weddingData.theme);
+  const guests = await listPortalGuests(weddingRecord.id);
 
   return (
     <SiteFrame
@@ -42,10 +45,10 @@ export default async function PlanYourTablesBySlugPage({
       <PageHero
         eyebrow="Plan Your Tables"
         title="Seating Planner Preview"
-        description="A private seating workspace for this wedding. The room builder is still using preview data, but the portal link is now tied to the correct couple."
+        description="A private seating workspace for this wedding. The guest list now comes from this wedding record, so you are only seeing guests tied to this couple."
         themeId={theme.id}
       />
-      <SeatingPlanner guests={mockGuests} tables={sampleTables} />
+      <SeatingPlanner guests={guests} tables={[]} />
     </SiteFrame>
   );
 }

@@ -1,11 +1,34 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { MockGuest, MockTable } from "@/lib/mock-wedding-ops";
 
 type SeatingPlannerProps = {
-  guests: MockGuest[];
-  tables: MockTable[];
+  guests: PlannerGuest[];
+  tables: PlannerTableInput[];
+};
+
+type PlannerGuest = {
+  id: string;
+  name: string;
+  household: string;
+  status: "attending" | "declined" | "pending";
+  side: string;
+  meal: string;
+  dietary: string;
+  partySize: number;
+  note?: string;
+  tableId?: string;
+};
+
+type PlannerTableInput = {
+  id: string;
+  name: string;
+  x?: number;
+  y?: number;
+  seats: number;
+  shape: "round" | "long";
+  rotation?: number;
+  guests?: string[];
 };
 
 type DragGuestPayload = {
@@ -20,7 +43,11 @@ type DragTablePayload = {
 
 type DragPayload = DragGuestPayload | DragTablePayload;
 
-type PlannerTable = MockTable & {
+type PlannerTable = PlannerTableInput & {
+  x: number;
+  y: number;
+  rotation: number;
+  guests: string[];
   isPlaced: boolean;
 };
 
