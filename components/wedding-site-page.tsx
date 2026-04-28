@@ -61,7 +61,6 @@ export function WeddingSitePage({
       {(weddingData.sectionVisibility?.accommodation ?? true) ? (
         <AccommodationSection weddingData={weddingData} />
       ) : null}
-      <GalleryRegistrySection weddingData={weddingData} />
       {(weddingData.sectionVisibility?.schedule ?? true) ? (
         <ScheduleSection weddingData={weddingData} />
       ) : null}
@@ -73,6 +72,7 @@ export function WeddingSitePage({
           rsvpApiPath={rsvpApiPath}
         />
       ) : null}
+      <GalleryRegistrySection weddingData={weddingData} />
       <FAQSection
         weddingData={weddingData}
         conciergeApiPath={conciergeApiPath}

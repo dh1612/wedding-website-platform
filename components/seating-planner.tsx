@@ -291,6 +291,21 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
     setSelectedTableId(tableId);
   }
 
+  function renameSelectedTable(name: string) {
+    if (!selectedTable) return;
+
+    setPlannerTables((current) =>
+      current.map((table) =>
+        table.id === selectedTable.id
+          ? {
+              ...table,
+              name
+            }
+          : table
+      )
+    );
+  }
+
   return (
     <>
       <section className="mx-auto w-full max-w-[1900px] px-4 pt-6 lg:px-6">
@@ -338,7 +353,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
             <p className="prose-copy mt-3">
               Start with a blank canvas. Drag tables and features into the room, then click one to assign guests.
             </p>
-            <div className="mt-6 grid gap-3">
+            <div className="mt-6 grid max-h-[28rem] gap-3 overflow-y-auto pr-1">
               {unplacedTables.map((table) => (
                 <div
                   key={table.id}
@@ -527,7 +542,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
             <p className="prose-copy mt-2">
               Keep the room blank until you are ready, then drag guests onto a selected table or add them from search.
             </p>
-            <div className="mt-6 grid gap-3">
+            <div className="mt-6 grid max-h-[26rem] gap-3 overflow-y-auto pr-1">
               {unassignedGuests.slice(0, 18).map((guest) => (
                 <div
                   key={guest.id}
@@ -573,6 +588,31 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
                     </p>
                   </div>
                 </div>
+
+                {selectedTable ? (
+                  <div className="mt-5 grid gap-4 md:grid-cols-[1fr_180px_160px]">
+                    <label className="block">
+                      <span className="text-sm font-medium text-[var(--foreground)]">Table name</span>
+                      <input
+                        value={selectedTable.name}
+                        onChange={(event) => renameSelectedTable(event.target.value)}
+                        className="mt-2 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                      />
+                    </label>
+                    <div>
+                      <span className="text-sm font-medium text-[var(--foreground)]">Shape</span>
+                      <div className="mt-2 rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]">
+                        {selectedTable.shape === "round" ? "Round" : "Long"}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-[var(--foreground)]">Seats</span>
+                      <div className="mt-2 rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]">
+                        {selectedTable.seats}
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div className="mt-8 flex min-h-[420px] items-center justify-center overflow-hidden rounded-[1.75rem] border border-[var(--border)] bg-[radial-gradient(circle,rgba(255,255,255,0.2),transparent_55%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(0,0,0,0.04))] p-6 sm:min-h-[720px] sm:p-8">
                   {selectedTable ? (
@@ -685,7 +725,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
                       className="mt-3 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none disabled:cursor-not-allowed disabled:opacity-60"
                     />
                   </label>
-                  <div className="mt-4 grid gap-3">
+                  <div className="mt-4 grid max-h-[16rem] gap-3 overflow-y-auto pr-1">
                     {selectedTable
                       ? guestSearchResults.map((guest) => (
                           <button
@@ -710,7 +750,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
 
                 <div className="mt-6">
                   <p className="eyebrow">Assigned Guests</p>
-                  <div className="mt-4 grid gap-3">
+                  <div className="mt-4 grid max-h-[20rem] gap-3 overflow-y-auto pr-1">
                     {selectedGuests.length ? (
                       selectedGuests.map((guest) => (
                         <div

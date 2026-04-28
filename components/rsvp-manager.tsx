@@ -8,12 +8,15 @@ type PortalGuest = {
   id: string;
   name: string;
   household: string;
+  email?: string;
   status: RSVPStatus;
   side: string;
   meal: "beef" | "fish" | "vegetarian" | "vegan" | "kids" | "custom";
   dietary: string;
   partySize: number;
   note: string;
+  songRequest?: string;
+  messageToCouple?: string;
 };
 
 type RSVPManagerProps = {
@@ -52,7 +55,9 @@ export function RSVPManager({
       const matchesSearch =
         guest.name.toLowerCase().includes(search.toLowerCase()) ||
         guest.household.toLowerCase().includes(search.toLowerCase()) ||
-        (guest.note ?? "").toLowerCase().includes(search.toLowerCase());
+        (guest.note ?? "").toLowerCase().includes(search.toLowerCase()) ||
+        (guest.songRequest ?? "").toLowerCase().includes(search.toLowerCase()) ||
+        (guest.messageToCouple ?? "").toLowerCase().includes(search.toLowerCase());
 
       const matchesStatus =
         statusFilter === "all" ? true : guest.status === statusFilter;
@@ -75,7 +80,7 @@ export function RSVPManager({
   }, [guestList]);
 
   const highlightedGuests = guestList
-    .filter((guest) => guest.dietary || guest.note)
+    .filter((guest) => guest.dietary || guest.note || guest.songRequest || guest.messageToCouple)
     .slice(0, 8);
 
   async function addGuest() {
@@ -195,6 +200,7 @@ export function RSVPManager({
                     <th className="px-4 py-3 font-medium">Status</th>
                     <th className="px-4 py-3 font-medium">Meal</th>
                     <th className="px-4 py-3 font-medium">Dietary</th>
+                    <th className="px-4 py-3 font-medium">Notes</th>
                     <th className="px-4 py-3 font-medium">Action</th>
                   </tr>
                 </thead>
@@ -220,6 +226,13 @@ export function RSVPManager({
                           : guest.meal.charAt(0).toUpperCase() + guest.meal.slice(1)}
                       </td>
                       <td className="px-4 py-4">{guest.dietary || "None"}</td>
+                      <td className="px-4 py-4">
+                        <div className="space-y-1 text-xs text-[var(--muted)]">
+                          {guest.songRequest ? <p>Song: {guest.songRequest}</p> : null}
+                          {guest.messageToCouple ? <p>Message: {guest.messageToCouple}</p> : null}
+                          {!guest.songRequest && !guest.messageToCouple ? <p>None</p> : null}
+                        </div>
+                      </td>
                       <td className="px-4 py-4">
                         <button
                           onClick={() => removeGuest(guest.id)}
@@ -321,6 +334,12 @@ export function RSVPManager({
                       {guest.dietary || "Guest note"}
                       {guest.note ? ` · ${guest.note}` : ""}
                     </p>
+                    {guest.songRequest ? (
+                      <p className="mt-1 text-sm text-[var(--muted)]">Song request: {guest.songRequest}</p>
+                    ) : null}
+                    {guest.messageToCouple ? (
+                      <p className="mt-1 text-sm text-[var(--muted)]">Message: {guest.messageToCouple}</p>
+                    ) : null}
                   </div>
                 ))}
               </div>

@@ -414,12 +414,15 @@ export async function listPortalGuests(weddingId: string) {
       id: guest.id,
       name: guest.invitationName,
       household: guest.householdKey ?? "Guest List",
+      email: guest.email ?? "",
       status: response?.status ?? "pending",
       side: guest.side,
       meal: response?.mealChoice ?? guest.defaultMeal ?? "custom",
       dietary: response?.dietaryNotes ?? guest.dietaryNotes ?? "",
       partySize: response?.attendingCount ?? 1,
-      note: guest.notes ?? ""
+      note: guest.notes ?? "",
+      songRequest: response?.songRequest ?? "",
+      messageToCouple: response?.messageToCouple ?? ""
     };
   });
 }
