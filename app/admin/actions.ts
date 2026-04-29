@@ -300,6 +300,8 @@ export async function updateWeddingContentAction(formData: FormData) {
         locationOverviewTitleRichText || weddingData.travel.locationOverviewTitleHtml,
       locationOverviewHtml:
         locationOverviewRichText || weddingData.travel.locationOverviewHtml,
+      sneakPeekImage:
+        String(formData.get("travelSneakPeekImage") || "").trim() || weddingData.travel.sneakPeekImage,
       transport:
         stripHtml(travelTransportRichText) || weddingData.travel.transport,
       transportHtml:

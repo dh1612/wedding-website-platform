@@ -357,6 +357,18 @@ export function AdminWeddingEditor({
                 />
               </div>
               <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Sneak peek venue image</label>
+                <input
+                  name="travelSneakPeekImage"
+                  defaultValue={weddingData.travel.sneakPeekImage ?? ""}
+                  placeholder="https://..."
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <p className="text-sm leading-6 text-[var(--muted)]">
+                  This powers the interactive door reveal card in the venue section. You can swap the sample image here any time.
+                </p>
+              </div>
+              <div className="space-y-2 md:col-span-2">
                 <RichTextEditorField
                   name="ceremonyDescription"
                   label="Ceremony description"

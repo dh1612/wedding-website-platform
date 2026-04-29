@@ -2,6 +2,7 @@ import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
 import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
+import { VenueSneakPeek } from "@/components/venue-sneak-peek";
 
 type TravelSectionProps = {
   weddingData?: WeddingData;
@@ -43,6 +44,11 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                 {wedding.travel.locationOverviewHtml ? (
                   <RichTextContent html={wedding.travel.locationOverviewHtml} className="mt-4" />
                 ) : null}
+              </article>
+            ) : null}
+            {wedding.travel.sneakPeekImage ? (
+              <article className="sm:col-span-2">
+                <VenueSneakPeek imageUrl={wedding.travel.sneakPeekImage} />
               </article>
             ) : null}
             {showCeremony ? (

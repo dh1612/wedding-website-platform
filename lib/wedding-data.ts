@@ -148,6 +148,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.travel?.locationOverviewHtml === "string" && source.travel.locationOverviewHtml.trim()
           ? source.travel.locationOverviewHtml
           : undefined,
+      sneakPeekImage:
+        typeof source.travel?.sneakPeekImage === "string" && isValidRemoteImageUrl(source.travel.sneakPeekImage)
+          ? source.travel.sneakPeekImage
+          : "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80",
       transport: source.travel?.transport ?? fallback.travel.transport,
       transportHtml:
         typeof source.travel?.transportHtml === "string" && source.travel.transportHtml.trim()

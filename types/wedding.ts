@@ -25,6 +25,7 @@ export type TravelInfo = {
   locationOverviewTitle?: string;
   locationOverviewTitleHtml?: string;
   locationOverviewHtml?: string;
+  sneakPeekImage?: string;
   transport: string;
   transportHtml?: string;
   parking: string;
