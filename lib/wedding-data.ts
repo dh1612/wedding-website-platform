@@ -1,5 +1,5 @@
 import weddingData from "@/data/weddingData.json";
-import type { WeddingData } from "@/types/wedding";
+import type { RSVPFormQuestion, WeddingData } from "@/types/wedding";
 
 const defaultWeddingData = weddingData as WeddingData;
 
@@ -23,6 +23,39 @@ function coerceImageList(input: unknown, fallback: string[]) {
 
   const validImages = input.filter(isValidRemoteImageUrl);
   return validImages.length ? validImages : fallback;
+}
+
+function coerceCustomQuestions(input: unknown): RSVPFormQuestion[] {
+  if (!Array.isArray(input)) {
+    return [];
+  }
+
+  const mapped = input.map<RSVPFormQuestion | null>((item, index) => {
+      const source = item as Partial<RSVPFormQuestion>;
+      const label = typeof source.label === "string" ? source.label.trim() : "";
+      if (!label) return null;
+
+      const type =
+        source.type === "long" || source.type === "yesno" || source.type === "short"
+          ? source.type
+          : "short";
+
+      return {
+        id:
+          typeof source.id === "string" && source.id.trim()
+            ? source.id
+            : `custom-question-${index + 1}`,
+        label,
+        type,
+        required: Boolean(source.required),
+        placeholder:
+          typeof source.placeholder === "string" && source.placeholder.trim()
+            ? source.placeholder.trim()
+            : undefined
+      };
+    });
+
+  return mapped.filter((item): item is RSVPFormQuestion => item !== null);
 }
 
 export function getWeddingData(): WeddingData {
@@ -101,7 +134,8 @@ export function coerceWeddingData(input: unknown): WeddingData {
         enableSongRequest:
           source.rsvp?.form?.enableSongRequest ?? true,
         enableMessageToCouple:
-          source.rsvp?.form?.enableMessageToCouple ?? true
+          source.rsvp?.form?.enableMessageToCouple ?? true,
+        customQuestions: coerceCustomQuestions(source.rsvp?.form?.customQuestions)
       }
     },
     gallery: {

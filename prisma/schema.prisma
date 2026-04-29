@@ -117,6 +117,7 @@ model RSVPResponse {
   dietaryNotes      String?
   songRequest       String?
   messageToCouple   String?
+  customAnswersJson Json?
   submittedAt       DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
 

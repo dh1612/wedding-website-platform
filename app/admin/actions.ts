@@ -38,6 +38,45 @@ function parseAccommodationLine(line: string) {
   };
 }
 
+function buildCustomQuestionId(label: string, index: number) {
+  const slug = slugify(label).slice(0, 40);
+  return slug ? `custom-${slug}` : `custom-question-${index + 1}`;
+}
+
+function parseCustomQuestionLine(line: string, index: number) {
+  const parts = line
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (!parts.length) {
+    return null;
+  }
+
+  const [label, typePart, requiredPart, ...placeholderParts] = parts;
+
+  if (!label) {
+    return null;
+  }
+
+  const type =
+    typePart === "long" || typePart === "yesno" || typePart === "short"
+      ? typePart
+      : "short";
+
+  const requirement = requiredPart?.toLowerCase();
+  const required = requirement === "required";
+  const placeholder = placeholderParts.join(" | ").trim() || undefined;
+
+  return {
+    id: buildCustomQuestionId(label, index),
+    label,
+    type,
+    required,
+    placeholder
+  };
+}
+
 export async function createWeddingDraftAction(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const date = String(formData.get("eventDate") || "").trim();
@@ -130,6 +169,13 @@ export async function updateWeddingContentAction(formData: FormData) {
     .map(parseAccommodationLine)
     .filter((item): item is NonNullable<ReturnType<typeof parseAccommodationLine>> => Boolean(item));
 
+  const customQuestions = String(formData.get("rsvpCustomQuestions") || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map(parseCustomQuestionLine)
+    .filter((item): item is NonNullable<ReturnType<typeof parseCustomQuestionLine>> => Boolean(item));
+
   const nextContent = {
     ...weddingData,
     couple: String(formData.get("couple") || "").trim() || weddingData.couple,
@@ -202,7 +248,8 @@ export async function updateWeddingContentAction(formData: FormData) {
         enableMealChoice: formData.has("rsvpEnableMealChoice"),
         enableDietaryNotes: formData.has("rsvpEnableDietaryNotes"),
         enableSongRequest: formData.has("rsvpEnableSongRequest"),
-        enableMessageToCouple: formData.has("rsvpEnableMessageToCouple")
+        enableMessageToCouple: formData.has("rsvpEnableMessageToCouple"),
+        customQuestions
       }
     },
     aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic",

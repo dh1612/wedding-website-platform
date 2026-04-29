@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { RSVPFormQuestion } from "@/types/wedding";
 
 type RSVPStatus = "attending" | "declined";
 type MealChoice = "beef" | "fish" | "vegetarian" | "vegan" | "kids" | "custom";
@@ -19,6 +20,7 @@ type PublicRSVPFormProps = {
     enableDietaryNotes?: boolean;
     enableSongRequest?: boolean;
     enableMessageToCouple?: boolean;
+    customQuestions?: RSVPFormQuestion[];
   };
 };
 
@@ -42,6 +44,7 @@ export function PublicRSVPForm({
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [customAnswers, setCustomAnswers] = useState<Record<string, string>>({});
 
   const isAttending = form.attendance === "attending";
   const settings = {
@@ -56,7 +59,8 @@ export function PublicRSVPForm({
     enableMealChoice: formConfig?.enableMealChoice ?? true,
     enableDietaryNotes: formConfig?.enableDietaryNotes ?? true,
     enableSongRequest: formConfig?.enableSongRequest ?? true,
-    enableMessageToCouple: formConfig?.enableMessageToCouple ?? true
+    enableMessageToCouple: formConfig?.enableMessageToCouple ?? true,
+    customQuestions: formConfig?.customQuestions ?? []
   };
 
   function updateField<Key extends keyof typeof initialForm>(
@@ -73,6 +77,15 @@ export function PublicRSVPForm({
 
     if (!form.fullName.trim() || !form.email.trim()) {
       setErrorMessage("Please add your name and email before sending the RSVP.");
+      return;
+    }
+
+    const missingCustomQuestion = settings.customQuestions.find(
+      (question) => question.required && !customAnswers[question.id]?.trim()
+    );
+
+    if (missingCustomQuestion) {
+      setErrorMessage(`Please answer: ${missingCustomQuestion.label}`);
       return;
     }
 
@@ -93,7 +106,8 @@ export function PublicRSVPForm({
           meal: isAttending ? form.mealChoice : undefined,
           dietary: form.dietaryNotes.trim() || undefined,
           songRequest: form.songRequest.trim() || undefined,
-          messageToCouple: form.messageToCouple.trim() || undefined
+          messageToCouple: form.messageToCouple.trim() || undefined,
+          customAnswers
         })
       });
 
@@ -110,6 +124,7 @@ export function PublicRSVPForm({
           : "Thank you. Your reply has been saved."
       );
       setForm(initialForm);
+      setCustomAnswers({});
     } catch {
       setErrorMessage("The RSVP could not be sent just yet.");
     } finally {
@@ -267,6 +282,60 @@ export function PublicRSVPForm({
               />
             </label>
           ) : null}
+        </div>
+      ) : null}
+
+      {settings.customQuestions.length ? (
+        <div className="space-y-4">
+          {settings.customQuestions.map((question) => (
+            <label key={question.id} className="space-y-2">
+              <span className="text-sm font-medium text-[var(--foreground)]">
+                {question.label}
+                {question.required ? " *" : ""}
+              </span>
+              {question.type === "long" ? (
+                <textarea
+                  value={customAnswers[question.id] ?? ""}
+                  onChange={(event) =>
+                    setCustomAnswers((current) => ({
+                      ...current,
+                      [question.id]: event.target.value
+                    }))
+                  }
+                  rows={4}
+                  placeholder={question.placeholder ?? "Type your answer here"}
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                />
+              ) : question.type === "yesno" ? (
+                <select
+                  value={customAnswers[question.id] ?? ""}
+                  onChange={(event) =>
+                    setCustomAnswers((current) => ({
+                      ...current,
+                      [question.id]: event.target.value
+                    }))
+                  }
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                >
+                  <option value="">Select an answer</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              ) : (
+                <input
+                  value={customAnswers[question.id] ?? ""}
+                  onChange={(event) =>
+                    setCustomAnswers((current) => ({
+                      ...current,
+                      [question.id]: event.target.value
+                    }))
+                  }
+                  placeholder={question.placeholder ?? "Type your answer here"}
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                />
+              )}
+            </label>
+          ))}
         </div>
       ) : null}
 

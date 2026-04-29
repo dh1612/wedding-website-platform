@@ -35,6 +35,14 @@ export type ScheduleItem = {
   details: string;
 };
 
+export type RSVPFormQuestion = {
+  id: string;
+  label: string;
+  type: "short" | "long" | "yesno";
+  required: boolean;
+  placeholder?: string;
+};
+
 export type WeddingData = {
   couple: string;
   date: string;
@@ -69,6 +77,7 @@ export type WeddingData = {
       enableDietaryNotes: boolean;
       enableSongRequest: boolean;
       enableMessageToCouple: boolean;
+      customQuestions?: RSVPFormQuestion[];
     };
   };
   gallery: {

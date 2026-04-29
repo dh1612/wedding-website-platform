@@ -31,6 +31,18 @@ export function AdminWeddingEditor({
     .join("\n");
   const visibility = weddingData.sectionVisibility;
   const rsvpForm = weddingData.rsvp.form;
+  const customQuestionLines = (rsvpForm?.customQuestions ?? [])
+    .map((question) =>
+      [
+        question.label,
+        question.type,
+        question.required ? "required" : "optional",
+        question.placeholder ?? ""
+      ]
+        .filter(Boolean)
+        .join(" | ")
+    )
+    .join("\n");
   const sectionToggles = [
     { name: "showTravel", label: "Venue & Travel", checked: visibility?.travel ?? true },
     { name: "showAccommodation", label: "Accommodation", checked: visibility?.accommodation ?? true },
@@ -336,6 +348,24 @@ export function AdminWeddingEditor({
                   </label>
                 ))}
               </div>
+            </div>
+            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+              <p className="eyebrow">Custom Questions</p>
+              <h3 className="mt-3 text-xl">Add wedding-specific questions when a couple needs them</h3>
+              <p className="prose-copy mt-3">
+                Add one question per line in this format:
+                <span className="font-medium text-[var(--foreground)]">
+                  {" "}Question label | short/long/yesno | required/optional | placeholder
+                </span>.
+                The placeholder is optional. Delete a line to remove that question from the form.
+              </p>
+              <textarea
+                name="rsvpCustomQuestions"
+                defaultValue={customQuestionLines}
+                rows={7}
+                placeholder={`Do you need a coach seat? | yesno | optional\nWill you stay for brunch? | yesno | required\nAny accessibility notes? | long | optional | Share anything helpful here`}
+                className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+              />
             </div>
           </div>
 
