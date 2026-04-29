@@ -237,6 +237,7 @@ export async function saveRSVPResponse(input: {
   dietaryNotes?: string;
   songRequest?: string;
   messageToCouple?: string;
+  customAnswersJson?: unknown;
 }) {
   return prisma.rSVPResponse.upsert({
     where: {
@@ -251,7 +252,8 @@ export async function saveRSVPResponse(input: {
       mealChoice: input.mealChoice,
       dietaryNotes: input.dietaryNotes,
       songRequest: input.songRequest,
-      messageToCouple: input.messageToCouple
+      messageToCouple: input.messageToCouple,
+      customAnswersJson: input.customAnswersJson as Prisma.InputJsonValue | undefined
     },
     create: {
       weddingId: input.weddingId,
@@ -261,7 +263,8 @@ export async function saveRSVPResponse(input: {
       mealChoice: input.mealChoice,
       dietaryNotes: input.dietaryNotes,
       songRequest: input.songRequest,
-      messageToCouple: input.messageToCouple
+      messageToCouple: input.messageToCouple,
+      customAnswersJson: input.customAnswersJson as Prisma.InputJsonValue | undefined
     }
   });
 }
@@ -422,7 +425,9 @@ export async function listPortalGuests(weddingId: string) {
       partySize: response?.attendingCount ?? 1,
       note: guest.notes ?? "",
       songRequest: response?.songRequest ?? "",
-      messageToCouple: response?.messageToCouple ?? ""
+      messageToCouple: response?.messageToCouple ?? "",
+      customAnswers:
+        (response?.customAnswersJson as Record<string, string> | null | undefined) ?? {}
     };
   });
 }

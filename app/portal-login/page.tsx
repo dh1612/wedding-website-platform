@@ -1,4 +1,5 @@
 import { PortalLoginForm } from "@/components/portal-login-form";
+import { getRequiredPortalScope } from "@/lib/portal-auth";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
 
@@ -16,6 +17,10 @@ export default async function PortalLoginPage({
   const params = searchParams ? await searchParams : undefined;
   const theme = getThemeById(params?.theme ?? wedding.theme);
   const next = params?.next || "/couple-portal";
+  const requiredScope = getRequiredPortalScope(next);
+  const portalCopy = requiredScope?.startsWith("wedding:")
+    ? "Enter the private password for this wedding. Couples can have their own portal password, separate from operator access."
+    : "Enter the operator password to open the private admin and backend areas.";
 
   return (
     <main data-theme={theme.id} data-admin="true" style={theme.style}>
@@ -26,7 +31,7 @@ export default async function PortalLoginPage({
               <p className="eyebrow">Private Access</p>
               <h1 className="section-title">Private Couple Area</h1>
               <p className="prose-copy text-lg">
-                This keeps the couple-only planning pages private. Later, this can become a dedicated login for each wedding.
+                {portalCopy}
               </p>
             </div>
             <div className="space-y-5 rounded-[1.5rem] border border-[var(--border)] bg-white/70 p-6">

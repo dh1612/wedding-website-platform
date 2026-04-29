@@ -17,6 +17,7 @@ export async function POST(request: Request) {
     dietary?: string;
     songRequest?: string;
     messageToCouple?: string;
+    customAnswers?: Record<string, string>;
   };
 
   const name = body.name?.trim();
@@ -50,7 +51,8 @@ export async function POST(request: Request) {
     mealChoice: body.meal ?? "beef",
     dietaryNotes: body.dietary?.trim() || undefined,
     songRequest: body.songRequest?.trim() || undefined,
-    messageToCouple: body.messageToCouple?.trim() || undefined
+    messageToCouple: body.messageToCouple?.trim() || undefined,
+    customAnswersJson: body.customAnswers
   });
 
   return NextResponse.json({
@@ -62,6 +64,9 @@ export async function POST(request: Request) {
     meal: response.mealChoice ?? guest.defaultMeal ?? "custom",
     dietary: response.dietaryNotes ?? guest.dietaryNotes ?? "",
     partySize: response.attendingCount,
-    note: guest.notes ?? ""
+    note: guest.notes ?? "",
+    songRequest: response.songRequest ?? "",
+    messageToCouple: response.messageToCouple ?? "",
+    customAnswers: (response.customAnswersJson as Record<string, string> | null | undefined) ?? {}
   });
 }

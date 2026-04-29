@@ -24,6 +24,7 @@ export function AdminWeddingEditor({
   const weddingData = coerceWeddingData(record.contentJson);
   const plannerSettings = (record.plannerSettingsJson ?? {}) as {
     packageTier?: "basic" | "smart" | "premium";
+    portalPassword?: string;
   };
   const theme = getThemeById(weddingData.theme);
   const accommodationLines = weddingData.accommodation
@@ -280,6 +281,21 @@ export function AdminWeddingEditor({
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <input name="contactEmail" defaultValue={weddingData.contact.email} placeholder="Contact email" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="rsvpDeadline" defaultValue={weddingData.rsvp.deadline} placeholder="RSVP deadline" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+            </div>
+            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+              <p className="eyebrow">Portal Access</p>
+              <h2 className="mt-3 text-2xl">Set or reset the couple’s portal password</h2>
+              <p className="prose-copy mt-3">
+                Save a wedding-specific password here if you want this couple to have their own
+                private portal access. If you leave it blank, the shared default portal password is
+                used instead.
+              </p>
+              <input
+                name="portalPassword"
+                defaultValue={plannerSettings.portalPassword ?? ""}
+                placeholder="Private portal password for this wedding"
+                className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
             </div>
           </div>
 

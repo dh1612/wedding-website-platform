@@ -107,7 +107,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
         activeTheme={activeTheme}
         weddingData={weddingData}
         conciergeApiPath={`/api/ask/${slug}`}
-        rsvpApiPath={`/api/portal/${slug}/guests`}
+        rsvpApiPath={`/api/rsvp/${slug}`}
         previewMode
       />
     </>

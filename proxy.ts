@@ -1,30 +1,37 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createPortalSessionToken, getPortalCookieName } from "@/lib/portal-auth";
+import {
+  getPortalCookieName,
+  getRequiredPortalScope,
+  isPortalScopeAllowed,
+  readPortalSessionScope
+} from "@/lib/portal-auth";
 
-const protectedPrefixes = [
-  "/couple-portal",
-  "/rsvp-dashboard",
-  "/plan-your-tables",
-  "/production",
-  "/admin",
-  "/api/portal"
-];
+function isProtectedPath(pathname: string) {
+  if (pathname.startsWith("/api/rsvp/")) {
+    return false;
+  }
+
+  if (/^\/api\/portal\/[^/]+\/guests$/.test(pathname)) {
+    return false;
+  }
+
+  return Boolean(getRequiredPortalScope(pathname));
+}
 
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-  const isProtected = protectedPrefixes.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
-  );
+  const requiredScope = getRequiredPortalScope(pathname);
+  const isProtected = isProtectedPath(pathname);
 
   if (!isProtected) {
     return NextResponse.next();
   }
 
   const cookie = request.cookies.get(getPortalCookieName())?.value;
-  const expected = await createPortalSessionToken();
+  const sessionScope = await readPortalSessionScope(cookie);
 
-  if (cookie === expected) {
+  if (isPortalScopeAllowed(sessionScope, requiredScope)) {
     return NextResponse.next();
   }
 

@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import {
   createPortalSessionToken,
+  getDefaultCouplePortalPassword,
   getPortalCookieName,
-  getPortalPassword
+  getOperatorPortalPassword,
+  getRequiredPortalScope
 } from "@/lib/portal-auth";
+import { getWeddingRecordForAdmin } from "@/lib/production-repositories";
 
 export async function POST(request: Request) {
   const body = (await request.json()) as {
@@ -11,7 +14,29 @@ export async function POST(request: Request) {
     next?: string;
   };
 
-  if (body.password !== getPortalPassword()) {
+  const password = body.password?.trim() ?? "";
+  const nextPath = body.next || "/couple-portal";
+  const requiredScope = getRequiredPortalScope(nextPath);
+  let grantedScope = requiredScope ?? "admin";
+
+  if (password === getOperatorPortalPassword()) {
+    grantedScope = "admin";
+  } else if (requiredScope?.startsWith("wedding:")) {
+    const slug = requiredScope.replace(/^wedding:/, "");
+    const wedding = await getWeddingRecordForAdmin(slug);
+    const plannerSettings = (wedding?.plannerSettingsJson ?? {}) as {
+      portalPassword?: string;
+    };
+    const weddingPassword =
+      plannerSettings.portalPassword?.trim() || getDefaultCouplePortalPassword();
+
+    if (password !== weddingPassword) {
+      return NextResponse.json(
+        { error: "That password is not correct." },
+        { status: 401 }
+      );
+    }
+  } else {
     return NextResponse.json(
       { error: "That password is not correct." },
       { status: 401 }
@@ -20,12 +45,12 @@ export async function POST(request: Request) {
 
   const response = NextResponse.json({
     ok: true,
-    next: body.next || "/couple-portal"
+    next: nextPath
   });
 
   response.cookies.set({
     name: getPortalCookieName(),
-    value: await createPortalSessionToken(),
+    value: await createPortalSessionToken(grantedScope),
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",

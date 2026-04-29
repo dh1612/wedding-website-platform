@@ -127,6 +127,7 @@ export async function updateWeddingContentAction(formData: FormData) {
   const weddingData = coerceWeddingData(existing.contentJson);
   const plannerSettings = (existing.plannerSettingsJson ?? {}) as {
     packageTier?: "basic" | "smart" | "premium";
+    portalPassword?: string;
     intake?: Record<string, unknown>;
   };
 
@@ -269,6 +270,7 @@ export async function updateWeddingContentAction(formData: FormData) {
   const nextPlannerSettings = {
     ...plannerSettings,
     packageTier: String(formData.get("packageTier") || "").trim() || plannerSettings.packageTier,
+    portalPassword: String(formData.get("portalPassword") || "").trim(),
     intake: {
       ...(plannerSettings.intake ?? {}),
       couple: nextContent.couple,
