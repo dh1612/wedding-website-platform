@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getThemeById } from "@/lib/themes";
+import { RichTextContent } from "@/components/rich-text-content";
 import { formatDisplayDate } from "@/lib/utils";
 import { getWeddingData } from "@/lib/wedding-data";
 import type { WeddingData } from "@/types/wedding";
@@ -35,6 +36,22 @@ function PreviewNote() {
       Sample wording is shown here for review. The couple can change all text before the site goes live.
     </div>
   );
+}
+
+function AnnouncementCopy({
+  html,
+  text,
+  className
+}: {
+  html?: string;
+  text: string;
+  className: string;
+}) {
+  if (html) {
+    return <RichTextContent html={html} className={className} />;
+  }
+
+  return <p className={className}>{text}</p>;
 }
 
 export function HeroSection({ themeId, weddingData, previewMode = false }: HeroSectionProps) {
@@ -76,9 +93,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               <p className="mt-6 max-w-xl text-base leading-8 text-white/82 sm:text-lg">
                 {wedding.tagline}
               </p>
-              <p className="mt-4 max-w-xl text-base leading-7 text-white/76">
-                {wedding.announcement}
-              </p>
+              <AnnouncementCopy
+                html={wedding.announcementHtml}
+                text={wedding.announcement}
+                className="mt-4 max-w-xl text-base leading-7 text-white/76"
+              />
               {previewMode ? (
                 <div className="mt-4 rounded-[1.2rem] border border-white/18 bg-white/12 px-5 py-4 text-sm leading-6 text-white/84">
                   Sample wording is shown here for review. The couple can change all text before the site goes live.
@@ -116,9 +135,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
               {wedding.tagline}
             </p>
-            <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
-              {wedding.announcement}
-            </p>
+            <AnnouncementCopy
+              html={wedding.announcementHtml}
+              text={wedding.announcement}
+              className="max-w-xl text-base leading-7 text-[var(--muted)]"
+            />
             {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
@@ -172,9 +193,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                   </div>
                 </div>
                 <p className="text-lg leading-8 text-[var(--muted)]">{wedding.tagline}</p>
-                <p className="text-base leading-7 text-[var(--muted)]">
-                  {wedding.announcement}
-                </p>
+                <AnnouncementCopy
+                  html={wedding.announcementHtml}
+                  text={wedding.announcement}
+                  className="text-base leading-7 text-[var(--muted)]"
+                />
                 {previewMode ? <PreviewNote /> : null}
                 <SharedActions />
               </div>
@@ -208,9 +231,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
               {wedding.tagline}
             </p>
-            <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
-              {wedding.announcement}
-            </p>
+            <AnnouncementCopy
+              html={wedding.announcementHtml}
+              text={wedding.announcement}
+              className="max-w-xl text-base leading-7 text-[var(--muted)]"
+            />
             {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
@@ -268,9 +293,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
               {wedding.tagline}
             </p>
-            <p className="mx-auto max-w-2xl text-base leading-7 text-white/78">
-              {wedding.announcement}
-            </p>
+            <AnnouncementCopy
+              html={wedding.announcementHtml}
+              text={wedding.announcement}
+              className="mx-auto max-w-2xl text-base leading-7 text-white/78"
+            />
             {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
@@ -348,9 +375,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
             {wedding.tagline}
           </p>
-          <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
-            {wedding.announcement}
-          </p>
+          <AnnouncementCopy
+            html={wedding.announcementHtml}
+            text={wedding.announcement}
+            className="max-w-xl text-base leading-7 text-[var(--muted)]"
+          />
           {previewMode ? <PreviewNote /> : null}
           <SharedActions />
         </div>

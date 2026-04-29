@@ -73,11 +73,19 @@ export function coerceWeddingData(input: unknown): WeddingData {
     locationSummary: source.locationSummary ?? fallback.locationSummary,
     tagline: source.tagline ?? fallback.tagline,
     announcement: source.announcement ?? fallback.announcement,
+    announcementHtml:
+      typeof source.announcementHtml === "string" && source.announcementHtml.trim()
+        ? source.announcementHtml
+        : undefined,
     heroImage: isValidRemoteImageUrl(source.heroImage)
       ? source.heroImage
       : fallback.heroImage,
     story: {
       heading: source.story?.heading ?? fallback.story.heading,
+      html:
+        typeof source.story?.html === "string" && source.story.html.trim()
+          ? source.story.html
+          : undefined,
       paragraphs:
         source.story?.paragraphs?.length ? source.story.paragraphs : fallback.story.paragraphs
     },

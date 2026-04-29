@@ -50,10 +50,12 @@ export type WeddingData = {
   locationSummary: string;
   tagline: string;
   announcement: string;
+  announcementHtml?: string;
   heroImage: string;
   story: {
     heading: string;
     paragraphs: string[];
+    html?: string;
   };
   ceremony: WeddingEvent;
   reception: WeddingEvent;

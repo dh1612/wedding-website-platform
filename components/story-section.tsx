@@ -1,5 +1,6 @@
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
 
 type StorySectionProps = {
@@ -22,11 +23,15 @@ export function StorySection({ weddingData, previewMode = false }: StorySectionP
                 version before the site goes live.
               </div>
             ) : null}
-            {wedding.story.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="prose-copy text-lg">
-                {paragraph}
-              </p>
-            ))}
+            {wedding.story.html ? (
+              <RichTextContent html={wedding.story.html} className="text-lg leading-8" />
+            ) : (
+              wedding.story.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="prose-copy text-lg">
+                  {paragraph}
+                </p>
+              ))
+            )}
           </div>
         </div>
       </div>

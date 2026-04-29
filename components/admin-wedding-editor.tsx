@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { updateWeddingContentAction } from "@/app/admin/actions";
 import { PageHero } from "@/components/page-hero";
+import { RichTextEditorField } from "@/components/rich-text-editor-field";
 import { SiteFrame } from "@/components/site-frame";
 import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import { getThemeById, weddingThemes } from "@/lib/themes";
@@ -21,6 +22,19 @@ export function AdminWeddingEditor({
   record,
   saved = false
 }: AdminWeddingEditorProps) {
+  function escapeHtml(value: string) {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function paragraphHtml(paragraphs: string[]) {
+    return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
+  }
+
   const weddingData = coerceWeddingData(record.contentJson);
   const plannerSettings = (record.plannerSettingsJson ?? {}) as {
     packageTier?: "basic" | "smart" | "premium";
@@ -44,6 +58,12 @@ export function AdminWeddingEditor({
         .join(" | ")
     )
     .join("\n");
+  const announcementHtml = weddingData.announcementHtml
+    ? weddingData.announcementHtml
+    : `<p>${escapeHtml(weddingData.announcement)}</p>`;
+  const storyHtml = weddingData.story.html
+    ? weddingData.story.html
+    : paragraphHtml(weddingData.story.paragraphs);
   const sectionToggles = [
     { name: "showTravel", label: "Venue & Travel", checked: visibility?.travel ?? true },
     { name: "showAccommodation", label: "Accommodation", checked: visibility?.accommodation ?? true },
@@ -161,7 +181,13 @@ export function AdminWeddingEditor({
             <p className="eyebrow">Hero Copy</p>
             <div className="mt-5 grid gap-4">
               <input name="tagline" defaultValue={weddingData.tagline} placeholder="Tagline" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-              <textarea name="announcement" defaultValue={weddingData.announcement} rows={3} placeholder="Announcement / intro copy" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              <RichTextEditorField
+                name="announcementRichText"
+                label="Announcement / intro copy"
+                description="Use the toolbar to add bold, italics, headings, lists, quotes, or a different font treatment."
+                defaultValue={announcementHtml}
+                minHeightClassName="min-h-[150px]"
+              />
               <input name="heroImage" defaultValue={weddingData.heroImage} placeholder="Hero image URL" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
             </div>
           </div>
@@ -254,7 +280,13 @@ export function AdminWeddingEditor({
           <div className="section-shell rounded-[2rem] p-8">
             <p className="eyebrow">Story & Sections</p>
             <div className="mt-5 grid gap-4">
-              <textarea name="storyParagraphs" defaultValue={weddingData.story.paragraphs.join("\n\n")} rows={8} placeholder="Story paragraphs" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              <RichTextEditorField
+                name="storyRichText"
+                label="Story copy"
+                description="Format the story as needed for this couple. This is ideal for emphasis, elegant headings, and italic details."
+                defaultValue={storyHtml}
+                minHeightClassName="min-h-[240px]"
+              />
               <textarea name="scheduleText" defaultValue={weddingData.schedule.map((item) => `${item.time} - ${item.title}`).join("\n")} rows={6} placeholder="Schedule lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <textarea name="travelText" defaultValue={weddingData.travel.transport} rows={4} placeholder="Travel text" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <textarea name="faqText" defaultValue={weddingData.faq.map((item) => `${item.q} ${item.a}`).join("\n")} rows={6} placeholder="FAQ lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />

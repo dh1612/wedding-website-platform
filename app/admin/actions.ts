@@ -38,6 +38,15 @@ function parseAccommodationLine(line: string) {
   };
 }
 
+function stripHtml(value: string) {
+  return value
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 function buildCustomQuestionId(label: string, index: number) {
   const slug = slugify(label).slice(0, 40);
   return slug ? `custom-${slug}` : `custom-question-${index + 1}`;
@@ -135,6 +144,13 @@ export async function updateWeddingContentAction(formData: FormData) {
     .split("\n")
     .map((item) => item.trim())
     .filter(Boolean);
+  const storyRichText = String(formData.get("storyRichText") || "").trim();
+  const storyRichTextParagraphs = stripHtml(storyRichText)
+    .split("\n\n")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  const announcementRichText = String(formData.get("announcementRichText") || "").trim();
 
   const scheduleItems = String(formData.get("scheduleText") || "")
     .split("\n")
@@ -185,12 +201,18 @@ export async function updateWeddingContentAction(formData: FormData) {
     locationSummary:
       String(formData.get("locationSummary") || "").trim() || weddingData.locationSummary,
     tagline: String(formData.get("tagline") || "").trim() || weddingData.tagline,
-    announcement:
-      String(formData.get("announcement") || "").trim() || weddingData.announcement,
+    announcement: stripHtml(announcementRichText) || weddingData.announcement,
+    announcementHtml: announcementRichText || weddingData.announcementHtml,
     heroImage: String(formData.get("heroImage") || "").trim() || weddingData.heroImage,
     story: {
       ...weddingData.story,
-      paragraphs: storyParagraphs.length ? storyParagraphs : weddingData.story.paragraphs
+      paragraphs:
+        storyRichTextParagraphs.length
+          ? storyRichTextParagraphs
+          : storyParagraphs.length
+            ? storyParagraphs
+            : weddingData.story.paragraphs,
+      html: storyRichText || weddingData.story.html
     },
     ceremony: {
       ...weddingData.ceremony,

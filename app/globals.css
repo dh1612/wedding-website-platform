@@ -176,6 +176,48 @@ main[data-theme="christmas-candlelight"] [data-theme-stars] {
   line-height: 1.7;
 }
 
+.rich-text-content {
+  font-family: var(--font-body);
+}
+
+.rich-text-content p {
+  margin: 0;
+}
+
+.rich-text-content h2,
+.rich-text-content h3 {
+  margin: 0 0 0.35rem;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  line-height: 1.1;
+}
+
+.rich-text-content h2 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.rich-text-content h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+}
+
+.rich-text-content ul,
+.rich-text-content ol {
+  margin: 0;
+  padding-left: 1.3rem;
+}
+
+.rich-text-content li {
+  margin: 0.25rem 0;
+}
+
+.rich-text-content blockquote {
+  margin: 0;
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--foreground);
+}
+
 .hero-shell {
   position: relative;
 }

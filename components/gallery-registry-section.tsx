@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
 
 type GalleryRegistrySectionProps = {
@@ -34,11 +35,15 @@ export function GalleryRegistrySection({
                       description="A few favourite moments and a little of the story behind the day."
                     />
                     <div className="space-y-4">
-                      {wedding.story.paragraphs.map((paragraph) => (
-                        <p key={paragraph} className="prose-copy text-lg">
-                          {paragraph}
-                        </p>
-                      ))}
+                      {wedding.story.html ? (
+                        <RichTextContent html={wedding.story.html} className="text-lg leading-8" />
+                      ) : (
+                        wedding.story.paragraphs.map((paragraph) => (
+                          <p key={paragraph} className="prose-copy text-lg">
+                            {paragraph}
+                          </p>
+                        ))
+                      )}
                     </div>
                   </>
                 ) : (
