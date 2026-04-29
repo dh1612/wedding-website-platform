@@ -86,6 +86,15 @@ function parseCustomQuestionLine(line: string, index: number) {
   };
 }
 
+function isValidRemoteImageUrl(value: string) {
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export async function createWeddingDraftAction(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const date = String(formData.get("eventDate") || "").trim();
@@ -151,6 +160,13 @@ export async function updateWeddingContentAction(formData: FormData) {
     .filter(Boolean);
 
   const announcementRichText = String(formData.get("announcementRichText") || "").trim();
+  const travelDescriptionRichText = String(formData.get("travelDescription") || "").trim();
+  const ceremonyDescriptionRichText = String(formData.get("ceremonyDescription") || "").trim();
+  const receptionDescriptionRichText = String(formData.get("receptionDescription") || "").trim();
+  const travelTransportRichText = String(formData.get("travelTransport") || "").trim();
+  const travelParkingRichText = String(formData.get("travelParking") || "").trim();
+  const travelDirectionsRichText = String(formData.get("travelDirections") || "").trim();
+  const rsvpFormIntroRichText = String(formData.get("rsvpFormIntro") || "").trim();
 
   const scheduleItems = String(formData.get("scheduleText") || "")
     .split("\n")
@@ -192,6 +208,11 @@ export async function updateWeddingContentAction(formData: FormData) {
     .filter(Boolean)
     .map(parseCustomQuestionLine)
     .filter((item): item is NonNullable<ReturnType<typeof parseCustomQuestionLine>> => Boolean(item));
+  const galleryImages = String(formData.get("galleryImages") || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .filter(isValidRemoteImageUrl);
 
   const nextContent = {
     ...weddingData,
@@ -214,6 +235,10 @@ export async function updateWeddingContentAction(formData: FormData) {
             : weddingData.story.paragraphs,
       html: storyRichText || weddingData.story.html
     },
+    gallery: {
+      ...weddingData.gallery,
+      images: galleryImages.length ? galleryImages : weddingData.gallery.images
+    },
     ceremony: {
       ...weddingData.ceremony,
       time: String(formData.get("ceremonyTime") || "").trim() || weddingData.ceremony.time,
@@ -222,8 +247,9 @@ export async function updateWeddingContentAction(formData: FormData) {
       address:
         String(formData.get("ceremonyAddress") || "").trim() || weddingData.ceremony.address,
       description:
-        String(formData.get("ceremonyDescription") || "").trim() ||
-        weddingData.ceremony.description
+        stripHtml(ceremonyDescriptionRichText) || weddingData.ceremony.description,
+      descriptionHtml:
+        ceremonyDescriptionRichText || weddingData.ceremony.descriptionHtml
     },
     reception: {
       ...weddingData.reception,
@@ -233,8 +259,9 @@ export async function updateWeddingContentAction(formData: FormData) {
       address:
         String(formData.get("receptionAddress") || "").trim() || weddingData.reception.address,
       description:
-        String(formData.get("receptionDescription") || "").trim() ||
-        weddingData.reception.description
+        stripHtml(receptionDescriptionRichText) || weddingData.reception.description,
+      descriptionHtml:
+        receptionDescriptionRichText || weddingData.reception.descriptionHtml
     },
     schedule: scheduleItems.length ? scheduleItems : weddingData.schedule,
     travel: {
@@ -242,15 +269,21 @@ export async function updateWeddingContentAction(formData: FormData) {
       heading:
         String(formData.get("travelHeading") || "").trim() || weddingData.travel.heading,
       description:
-        String(formData.get("travelDescription") || "").trim() ||
-        weddingData.travel.description,
+        stripHtml(travelDescriptionRichText) || weddingData.travel.description,
+      descriptionHtml:
+        travelDescriptionRichText || weddingData.travel.descriptionHtml,
       transport:
-        String(formData.get("travelTransport") || formData.get("travelText") || "").trim() ||
-        weddingData.travel.transport,
+        stripHtml(travelTransportRichText) || weddingData.travel.transport,
+      transportHtml:
+        travelTransportRichText || weddingData.travel.transportHtml,
       parking:
-        String(formData.get("travelParking") || "").trim() || weddingData.travel.parking,
+        stripHtml(travelParkingRichText) || weddingData.travel.parking,
+      parkingHtml:
+        travelParkingRichText || weddingData.travel.parkingHtml,
       directions:
-        String(formData.get("travelDirections") || "").trim() || weddingData.travel.directions,
+        stripHtml(travelDirectionsRichText) || weddingData.travel.directions,
+      directionsHtml:
+        travelDirectionsRichText || weddingData.travel.directionsHtml,
       mapLink:
         String(formData.get("travelMapLink") || "").trim() || weddingData.travel.mapLink
     },
@@ -270,9 +303,11 @@ export async function updateWeddingContentAction(formData: FormData) {
           weddingData.rsvp.form?.title ||
           "Let Us Know If You Can Make It",
         intro:
-          String(formData.get("rsvpFormIntro") || "").trim() ||
+          stripHtml(rsvpFormIntroRichText) ||
           weddingData.rsvp.form?.intro ||
           "Share your reply here, including any dietary requirements or extra notes the couple should know.",
+        introHtml:
+          rsvpFormIntroRichText || weddingData.rsvp.form?.introHtml,
         attendingLabel:
           String(formData.get("rsvpAttendingLabel") || "").trim() ||
           weddingData.rsvp.form?.attendingLabel ||

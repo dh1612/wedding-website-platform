@@ -95,7 +95,11 @@ export function coerceWeddingData(input: unknown): WeddingData {
       location: source.ceremony?.location ?? fallback.ceremony.location,
       address: source.ceremony?.address ?? fallback.ceremony.address,
       description:
-        source.ceremony?.description ?? fallback.ceremony.description
+        source.ceremony?.description ?? fallback.ceremony.description,
+      descriptionHtml:
+        typeof source.ceremony?.descriptionHtml === "string" && source.ceremony.descriptionHtml.trim()
+          ? source.ceremony.descriptionHtml
+          : undefined
     },
     reception: {
       title: source.reception?.title ?? fallback.reception.title,
@@ -103,7 +107,11 @@ export function coerceWeddingData(input: unknown): WeddingData {
       location: source.reception?.location ?? fallback.reception.location,
       address: source.reception?.address ?? fallback.reception.address,
       description:
-        source.reception?.description ?? fallback.reception.description
+        source.reception?.description ?? fallback.reception.description,
+      descriptionHtml:
+        typeof source.reception?.descriptionHtml === "string" && source.reception.descriptionHtml.trim()
+          ? source.reception.descriptionHtml
+          : undefined
     },
     schedule: source.schedule?.length ? source.schedule : fallback.schedule,
     travel: {
@@ -111,9 +119,25 @@ export function coerceWeddingData(input: unknown): WeddingData {
       description:
         source.travel?.description ??
         "Key locations and practical notes for the ceremony and celebrations.",
+      descriptionHtml:
+        typeof source.travel?.descriptionHtml === "string" && source.travel.descriptionHtml.trim()
+          ? source.travel.descriptionHtml
+          : undefined,
       transport: source.travel?.transport ?? fallback.travel.transport,
+      transportHtml:
+        typeof source.travel?.transportHtml === "string" && source.travel.transportHtml.trim()
+          ? source.travel.transportHtml
+          : undefined,
       parking: source.travel?.parking ?? fallback.travel.parking,
+      parkingHtml:
+        typeof source.travel?.parkingHtml === "string" && source.travel.parkingHtml.trim()
+          ? source.travel.parkingHtml
+          : undefined,
       directions: source.travel?.directions ?? fallback.travel.directions,
+      directionsHtml:
+        typeof source.travel?.directionsHtml === "string" && source.travel.directionsHtml.trim()
+          ? source.travel.directionsHtml
+          : undefined,
       mapLink: source.travel?.mapLink ?? fallback.travel.mapLink
     },
     accommodation:
@@ -131,6 +155,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
         intro:
           source.rsvp?.form?.intro ??
           "Share your reply here, including any dietary requirements or extra notes the couple should know.",
+        introHtml:
+          typeof source.rsvp?.form?.introHtml === "string" && source.rsvp.form.introHtml.trim()
+            ? source.rsvp.form.introHtml
+            : undefined,
         attendingLabel:
           source.rsvp?.form?.attendingLabel ?? "Yes, I'll be there",
         declinedLabel:

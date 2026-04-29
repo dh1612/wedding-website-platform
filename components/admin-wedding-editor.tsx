@@ -35,6 +35,18 @@ export function AdminWeddingEditor({
     return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
   }
 
+  function simpleTextHtml(value: string | undefined) {
+    const trimmed = (value ?? "").trim();
+    if (!trimmed) {
+      return "";
+    }
+
+    return trimmed
+      .split(/\n{2,}/)
+      .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`)
+      .join("");
+  }
+
   const weddingData = coerceWeddingData(record.contentJson);
   const plannerSettings = (record.plannerSettingsJson ?? {}) as {
     packageTier?: "basic" | "smart" | "premium";
@@ -44,6 +56,7 @@ export function AdminWeddingEditor({
   const accommodationLines = weddingData.accommodation
     .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
     .join("\n");
+  const galleryImageLines = weddingData.gallery.images.join("\n");
   const visibility = weddingData.sectionVisibility;
   const rsvpForm = weddingData.rsvp.form;
   const customQuestionLines = (rsvpForm?.customQuestions ?? [])
@@ -64,6 +77,27 @@ export function AdminWeddingEditor({
   const storyHtml = weddingData.story.html
     ? weddingData.story.html
     : paragraphHtml(weddingData.story.paragraphs);
+  const travelDescriptionHtml = weddingData.travel.descriptionHtml
+    ? weddingData.travel.descriptionHtml
+    : simpleTextHtml(weddingData.travel.description);
+  const ceremonyDescriptionHtml = weddingData.ceremony.descriptionHtml
+    ? weddingData.ceremony.descriptionHtml
+    : simpleTextHtml(weddingData.ceremony.description);
+  const receptionDescriptionHtml = weddingData.reception.descriptionHtml
+    ? weddingData.reception.descriptionHtml
+    : simpleTextHtml(weddingData.reception.description);
+  const travelTransportHtml = weddingData.travel.transportHtml
+    ? weddingData.travel.transportHtml
+    : simpleTextHtml(weddingData.travel.transport);
+  const travelParkingHtml = weddingData.travel.parkingHtml
+    ? weddingData.travel.parkingHtml
+    : simpleTextHtml(weddingData.travel.parking);
+  const travelDirectionsHtml = weddingData.travel.directionsHtml
+    ? weddingData.travel.directionsHtml
+    : simpleTextHtml(weddingData.travel.directions);
+  const rsvpIntroHtml = weddingData.rsvp.form?.introHtml
+    ? weddingData.rsvp.form.introHtml
+    : simpleTextHtml(rsvpForm?.intro ?? "");
   const sectionToggles = [
     { name: "showLocationSummary", label: "Hero location summary", checked: visibility?.locationSummary ?? true },
     { name: "showTagline", label: "Hero tagline", checked: visibility?.tagline ?? true },
@@ -149,13 +183,9 @@ export function AdminWeddingEditor({
                 <option value="approved">Approved</option>
                 <option value="live">Live</option>
               </select>
-              <select name="theme" defaultValue={weddingData.theme} className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none">
-                {weddingThemes.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
+              <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
+                Current template: <span className="font-medium">{theme.name}</span>
+              </div>
             </div>
             <div className="mt-5 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
               <p className="eyebrow">Design Template</p>
@@ -195,7 +225,37 @@ export function AdminWeddingEditor({
                 defaultValue={announcementHtml}
                 minHeightClassName="min-h-[150px]"
               />
-              <input name="heroImage" defaultValue={weddingData.heroImage} placeholder="Hero image URL" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+            </div>
+          </div>
+
+          <div className="section-shell rounded-[2rem] p-8">
+            <p className="eyebrow">Images</p>
+            <div className="mt-5 grid gap-4">
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Hero Image</p>
+                <p className="prose-copy mt-3">
+                  This is the main image used at the top of the website. Paste a direct image URL here to override the default theme image.
+                </p>
+                <input
+                  name="heroImage"
+                  defaultValue={weddingData.heroImage}
+                  placeholder="https://..."
+                  className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Gallery Images</p>
+                <p className="prose-copy mt-3">
+                  Add one image URL per line for the gallery and story moments section. Remove a line to hide an image.
+                </p>
+                <textarea
+                  name="galleryImages"
+                  defaultValue={galleryImageLines}
+                  rows={7}
+                  placeholder={`https://...\nhttps://...\nhttps://...`}
+                  className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                />
+              </div>
             </div>
           </div>
 
@@ -208,7 +268,13 @@ export function AdminWeddingEditor({
               </div>
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Section intro</label>
-                <textarea name="travelDescription" defaultValue={weddingData.travel.description} rows={3} placeholder="Key locations and practical notes for the ceremony and celebrations." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+                <RichTextEditorField
+                  name="travelDescription"
+                  label="Section intro"
+                  description="Format the venue and travel intro exactly how you want guests to read it."
+                  defaultValue={travelDescriptionHtml}
+                  minHeightClassName="min-h-[160px]"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#2f473f]">Ceremony venue</label>
@@ -223,8 +289,13 @@ export function AdminWeddingEditor({
                 <input name="ceremonyAddress" defaultValue={weddingData.ceremony.address} placeholder="Ceremony address" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               </div>
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-[#2f473f]">Ceremony description</label>
-                <textarea name="ceremonyDescription" defaultValue={weddingData.ceremony.description ?? ""} rows={2} placeholder="Optional ceremony note for guests" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+                <RichTextEditorField
+                  name="ceremonyDescription"
+                  label="Ceremony description"
+                  description="Add guest-facing ceremony notes with emphasis, italics, or gentle formatting."
+                  defaultValue={ceremonyDescriptionHtml}
+                  minHeightClassName="min-h-[150px]"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#2f473f]">Reception venue</label>
@@ -239,20 +310,40 @@ export function AdminWeddingEditor({
                 <input name="receptionAddress" defaultValue={weddingData.reception.address} placeholder="Reception address" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               </div>
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-[#2f473f]">Reception description</label>
-                <textarea name="receptionDescription" defaultValue={weddingData.reception.description ?? ""} rows={2} placeholder="Optional reception note for guests" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+                <RichTextEditorField
+                  name="receptionDescription"
+                  label="Reception description"
+                  description="Use this for dinner, dancing, transfers, or any reception-specific notes."
+                  defaultValue={receptionDescriptionHtml}
+                  minHeightClassName="min-h-[150px]"
+                />
               </div>
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-[#2f473f]">Transport</label>
-                <textarea name="travelTransport" defaultValue={weddingData.travel.transport} rows={3} placeholder="How guests should travel to the venue" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+                <RichTextEditorField
+                  name="travelTransport"
+                  label="Transport"
+                  description="Format travel guidance clearly if couples want ferries, shuttles, taxis, or transfer details."
+                  defaultValue={travelTransportHtml}
+                  minHeightClassName="min-h-[160px]"
+                />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-[#2f473f]">Parking</label>
-                <textarea name="travelParking" defaultValue={weddingData.travel.parking} rows={3} placeholder="Parking details" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+                <RichTextEditorField
+                  name="travelParking"
+                  label="Parking"
+                  description="Useful for valet, street parking, or arrival instructions."
+                  defaultValue={travelParkingHtml}
+                  minHeightClassName="min-h-[150px]"
+                />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-[#2f473f]">Directions</label>
-                <textarea name="travelDirections" defaultValue={weddingData.travel.directions} rows={3} placeholder="Directions for guests" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+                <RichTextEditorField
+                  name="travelDirections"
+                  label="Directions"
+                  description="Use this for step-by-step directions or arrival tips guests should not miss."
+                  defaultValue={travelDirectionsHtml}
+                  minHeightClassName="min-h-[150px]"
+                />
               </div>
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Map link</label>
@@ -327,7 +418,6 @@ export function AdminWeddingEditor({
                 minHeightClassName="min-h-[240px]"
               />
               <textarea name="scheduleText" defaultValue={weddingData.schedule.map((item) => `${item.time} - ${item.title}`).join("\n")} rows={6} placeholder="Schedule lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-              <textarea name="travelText" defaultValue={weddingData.travel.transport} rows={4} placeholder="Travel text" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <textarea name="faqText" defaultValue={weddingData.faq.map((item) => `${item.q} ${item.a}`).join("\n")} rows={6} placeholder="FAQ lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
             </div>
             <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
@@ -383,12 +473,12 @@ export function AdminWeddingEditor({
                 placeholder="RSVP form title"
                 className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
               />
-              <textarea
+              <RichTextEditorField
                 name="rsvpFormIntro"
-                defaultValue={rsvpForm?.intro ?? ""}
-                rows={3}
-                placeholder="Short RSVP intro"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                label="RSVP intro"
+                description="This is the copy guests see before answering the RSVP form."
+                defaultValue={rsvpIntroHtml}
+                minHeightClassName="min-h-[150px]"
               />
               <div className="grid gap-4 md:grid-cols-2">
                 <input

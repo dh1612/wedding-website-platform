@@ -12,6 +12,7 @@ type PublicRSVPFormProps = {
   formConfig?: {
     title?: string;
     intro?: string;
+    introHtml?: string;
     attendingLabel?: string;
     declinedLabel?: string;
     submitLabel?: string;
@@ -52,6 +53,7 @@ export function PublicRSVPForm({
     intro:
       formConfig?.intro ??
       "Share your reply here, including any dietary requirements or extra notes the couple should know.",
+    introHtml: formConfig?.introHtml,
     attendingLabel: formConfig?.attendingLabel ?? "Yes, I'll be there",
     declinedLabel: formConfig?.declinedLabel ?? "Sorry, I can't make it",
     submitLabel: formConfig?.submitLabel ?? "Send RSVP",
@@ -136,7 +138,14 @@ export function PublicRSVPForm({
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <h3 className="text-2xl font-medium text-[var(--foreground)]">{settings.title}</h3>
-        <p className="prose-copy mt-2">{settings.intro}</p>
+        {settings.introHtml ? (
+          <div
+            className="rich-text-content prose-copy mt-2"
+            dangerouslySetInnerHTML={{ __html: settings.introHtml }}
+          />
+        ) : (
+          <p className="prose-copy mt-2">{settings.intro}</p>
+        )}
       </div>
 
       {previewMode ? (

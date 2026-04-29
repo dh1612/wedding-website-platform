@@ -4,6 +4,7 @@ export type WeddingEvent = {
   location: string;
   address?: string;
   description?: string;
+  descriptionHtml?: string;
 };
 
 export type FAQItem = {
@@ -19,9 +20,13 @@ export type LinkItem = {
 export type TravelInfo = {
   heading: string;
   description: string;
+  descriptionHtml?: string;
   transport: string;
+  transportHtml?: string;
   parking: string;
+  parkingHtml?: string;
   directions: string;
+  directionsHtml?: string;
   mapLink: string;
 };
 
@@ -73,6 +78,7 @@ export type WeddingData = {
     form?: {
       title: string;
       intro: string;
+      introHtml?: string;
       attendingLabel: string;
       declinedLabel: string;
       submitLabel: string;
