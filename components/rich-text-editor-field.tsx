@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 type RichTextEditorFieldProps = {
   name: string;
@@ -51,6 +51,8 @@ export function RichTextEditorField({
   minHeightClassName = "min-h-[180px]"
 }: RichTextEditorFieldProps) {
   const editorId = useId();
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const savedRangeRef = useRef<Range | null>(null);
   const [html, setHtml] = useState(defaultValue);
   const [activeFormats, setActiveFormats] = useState({
     bold: false,
@@ -92,12 +94,49 @@ export function RichTextEditorField({
     setActiveFont(matchedFont);
   }
 
+  function saveSelection() {
+    const editor = editorRef.current;
+    const selection = document.getSelection();
+
+    if (!editor || !selection || selection.rangeCount === 0) {
+      return;
+    }
+
+    const range = selection.getRangeAt(0);
+    if (!editor.contains(range.commonAncestorContainer)) {
+      return;
+    }
+
+    savedRangeRef.current = range.cloneRange();
+  }
+
+  function restoreSelection() {
+    const editor = editorRef.current;
+    const savedRange = savedRangeRef.current;
+
+    if (!editor || !savedRange) {
+      return false;
+    }
+
+    const selection = document.getSelection();
+    if (!selection) {
+      return false;
+    }
+
+    editor.focus();
+    selection.removeAllRanges();
+    selection.addRange(savedRange);
+    return true;
+  }
+
   function withSelection(action: () => void) {
+    restoreSelection();
     action();
-    const editor = document.getElementById(editorId);
-    if (editor instanceof HTMLDivElement) {
+    const editor = editorRef.current;
+    if (editor) {
       setHtml(editor.innerHTML);
       editor.focus();
+      saveSelection();
       refreshToolbarState();
     }
   }
@@ -110,14 +149,19 @@ export function RichTextEditorField({
 
   useEffect(() => {
     setHtml(defaultValue);
+
+    const editor = editorRef.current;
+    if (editor && editor.innerHTML !== defaultValue) {
+      editor.innerHTML = defaultValue;
+    }
   }, [defaultValue]);
 
   useEffect(() => {
     function handleSelectionChange() {
-      const editor = document.getElementById(editorId);
+      const editor = editorRef.current;
       const selection = document.getSelection();
 
-      if (!(editor instanceof HTMLDivElement) || !selection?.anchorNode) {
+      if (!editor || !selection?.anchorNode) {
         return;
       }
 
@@ -125,6 +169,7 @@ export function RichTextEditorField({
         return;
       }
 
+      saveSelection();
       refreshToolbarState();
     }
 
@@ -154,7 +199,6 @@ export function RichTextEditorField({
           <ToolbarButton label="Quote" active={activeFormats.quote} onClick={() => applyCommand("formatBlock", "blockquote")} />
           <select
             value={activeFont}
-            onMouseDown={(event) => event.preventDefault()}
             onChange={(event) => {
               if (!event.target.value) return;
               applyCommand("fontName", event.target.value);
@@ -176,17 +220,27 @@ export function RichTextEditorField({
 
         <div
           id={editorId}
+          ref={editorRef}
           contentEditable
           suppressContentEditableWarning
           onInput={(event) => {
             setHtml(event.currentTarget.innerHTML);
+            saveSelection();
             refreshToolbarState();
           }}
-          onKeyUp={refreshToolbarState}
-          onMouseUp={refreshToolbarState}
-          onFocus={refreshToolbarState}
+          onKeyUp={() => {
+            saveSelection();
+            refreshToolbarState();
+          }}
+          onMouseUp={() => {
+            saveSelection();
+            refreshToolbarState();
+          }}
+          onFocus={() => {
+            saveSelection();
+            refreshToolbarState();
+          }}
           className={`w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-7 text-[var(--foreground)] outline-none ${minHeightClassName}`}
-          dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
 
