@@ -29,6 +29,7 @@ function ToolbarButton({
   return (
     <button
       type="button"
+      onMouseDown={(event) => event.preventDefault()}
       onClick={onClick}
       aria-pressed={active}
       className={`rounded-full border px-3 py-2 text-xs font-medium transition ${
@@ -108,6 +109,10 @@ export function RichTextEditorField({
   }
 
   useEffect(() => {
+    setHtml(defaultValue);
+  }, [defaultValue]);
+
+  useEffect(() => {
     function handleSelectionChange() {
       const editor = document.getElementById(editorId);
       const selection = document.getSelection();
@@ -149,6 +154,7 @@ export function RichTextEditorField({
           <ToolbarButton label="Quote" active={activeFormats.quote} onClick={() => applyCommand("formatBlock", "blockquote")} />
           <select
             value={activeFont}
+            onMouseDown={(event) => event.preventDefault()}
             onChange={(event) => {
               if (!event.target.value) return;
               applyCommand("fontName", event.target.value);
@@ -180,7 +186,7 @@ export function RichTextEditorField({
           onMouseUp={refreshToolbarState}
           onFocus={refreshToolbarState}
           className={`w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-7 text-[var(--foreground)] outline-none ${minHeightClassName}`}
-          dangerouslySetInnerHTML={{ __html: defaultValue }}
+          dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
 
