@@ -19,8 +19,12 @@ export type LinkItem = {
 
 export type TravelInfo = {
   heading: string;
+  headingHtml?: string;
   description: string;
   descriptionHtml?: string;
+  locationOverviewTitle?: string;
+  locationOverviewTitleHtml?: string;
+  locationOverviewHtml?: string;
   transport: string;
   transportHtml?: string;
   parking: string;
@@ -55,12 +59,15 @@ export type WeddingData = {
   date: string;
   theme: string;
   locationSummary: string;
+  locationSummaryHtml?: string;
   tagline: string;
+  taglineHtml?: string;
   announcement: string;
   announcementHtml?: string;
   heroImage: string;
   story: {
     heading: string;
+    headingHtml?: string;
     paragraphs: string[];
     html?: string;
   };
@@ -92,7 +99,9 @@ export type WeddingData = {
   };
   gallery: {
     heading: string;
+    headingHtml?: string;
     description: string;
+    descriptionHtml?: string;
     images: string[];
   };
   registry: {

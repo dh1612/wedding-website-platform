@@ -71,7 +71,15 @@ export function coerceWeddingData(input: unknown): WeddingData {
     date: source.date ?? fallback.date,
     theme: source.theme ?? fallback.theme,
     locationSummary: source.locationSummary ?? fallback.locationSummary,
+    locationSummaryHtml:
+      typeof source.locationSummaryHtml === "string" && source.locationSummaryHtml.trim()
+        ? source.locationSummaryHtml
+        : undefined,
     tagline: source.tagline ?? fallback.tagline,
+    taglineHtml:
+      typeof source.taglineHtml === "string" && source.taglineHtml.trim()
+        ? source.taglineHtml
+        : undefined,
     announcement: source.announcement ?? fallback.announcement,
     announcementHtml:
       typeof source.announcementHtml === "string" && source.announcementHtml.trim()
@@ -82,6 +90,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
       : fallback.heroImage,
     story: {
       heading: source.story?.heading ?? fallback.story.heading,
+      headingHtml:
+        typeof source.story?.headingHtml === "string" && source.story.headingHtml.trim()
+          ? source.story.headingHtml
+          : undefined,
       html:
         typeof source.story?.html === "string" && source.story.html.trim()
           ? source.story.html
@@ -116,12 +128,25 @@ export function coerceWeddingData(input: unknown): WeddingData {
     schedule: source.schedule?.length ? source.schedule : fallback.schedule,
     travel: {
       heading: source.travel?.heading ?? "Where To Go",
+      headingHtml:
+        typeof source.travel?.headingHtml === "string" && source.travel.headingHtml.trim()
+          ? source.travel.headingHtml
+          : undefined,
       description:
         source.travel?.description ??
         "Key locations and practical notes for the ceremony and celebrations.",
       descriptionHtml:
         typeof source.travel?.descriptionHtml === "string" && source.travel.descriptionHtml.trim()
           ? source.travel.descriptionHtml
+          : undefined,
+      locationOverviewTitle: source.travel?.locationOverviewTitle ?? "",
+      locationOverviewTitleHtml:
+        typeof source.travel?.locationOverviewTitleHtml === "string" && source.travel.locationOverviewTitleHtml.trim()
+          ? source.travel.locationOverviewTitleHtml
+          : undefined,
+      locationOverviewHtml:
+        typeof source.travel?.locationOverviewHtml === "string" && source.travel.locationOverviewHtml.trim()
+          ? source.travel.locationOverviewHtml
           : undefined,
       transport: source.travel?.transport ?? fallback.travel.transport,
       transportHtml:
@@ -180,7 +205,15 @@ export function coerceWeddingData(input: unknown): WeddingData {
     },
     gallery: {
       heading: source.gallery?.heading ?? fallback.gallery.heading,
+      headingHtml:
+        typeof source.gallery?.headingHtml === "string" && source.gallery.headingHtml.trim()
+          ? source.gallery.headingHtml
+          : undefined,
       description: source.gallery?.description ?? fallback.gallery.description,
+      descriptionHtml:
+        typeof source.gallery?.descriptionHtml === "string" && source.gallery.descriptionHtml.trim()
+          ? source.gallery.descriptionHtml
+          : undefined,
       images: coerceImageList(source.gallery?.images, fallback.gallery.images)
     },
     registry: {

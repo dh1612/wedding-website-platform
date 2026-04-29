@@ -154,13 +154,21 @@ export async function updateWeddingContentAction(formData: FormData) {
     .map((item) => item.trim())
     .filter(Boolean);
   const storyRichText = String(formData.get("storyRichText") || "").trim();
+  const storyHeadingRichText = String(formData.get("storyHeading") || "").trim();
+  const galleryHeadingRichText = String(formData.get("galleryHeading") || "").trim();
+  const galleryDescriptionRichText = String(formData.get("galleryDescription") || "").trim();
   const storyRichTextParagraphs = stripHtml(storyRichText)
     .split("\n\n")
     .map((item) => item.trim())
     .filter(Boolean);
 
   const announcementRichText = String(formData.get("announcementRichText") || "").trim();
+  const locationSummaryRichText = String(formData.get("locationSummary") || "").trim();
+  const taglineRichText = String(formData.get("tagline") || "").trim();
+  const travelHeadingRichText = String(formData.get("travelHeading") || "").trim();
   const travelDescriptionRichText = String(formData.get("travelDescription") || "").trim();
+  const locationOverviewTitleRichText = String(formData.get("locationOverviewTitle") || "").trim();
+  const locationOverviewRichText = String(formData.get("locationOverview") || "").trim();
   const ceremonyDescriptionRichText = String(formData.get("ceremonyDescription") || "").trim();
   const receptionDescriptionRichText = String(formData.get("receptionDescription") || "").trim();
   const travelTransportRichText = String(formData.get("travelTransport") || "").trim();
@@ -220,13 +228,19 @@ export async function updateWeddingContentAction(formData: FormData) {
     date: String(formData.get("date") || "").trim() || weddingData.date,
     theme: String(formData.get("theme") || "").trim() || weddingData.theme,
     locationSummary:
-      String(formData.get("locationSummary") || "").trim() || weddingData.locationSummary,
-    tagline: String(formData.get("tagline") || "").trim() || weddingData.tagline,
+      stripHtml(locationSummaryRichText) || weddingData.locationSummary,
+    locationSummaryHtml:
+      locationSummaryRichText || weddingData.locationSummaryHtml,
+    tagline: stripHtml(taglineRichText) || weddingData.tagline,
+    taglineHtml:
+      taglineRichText || weddingData.taglineHtml,
     announcement: stripHtml(announcementRichText) || weddingData.announcement,
     announcementHtml: announcementRichText || weddingData.announcementHtml,
     heroImage: String(formData.get("heroImage") || "").trim() || weddingData.heroImage,
     story: {
       ...weddingData.story,
+      heading: stripHtml(storyHeadingRichText) || weddingData.story.heading,
+      headingHtml: storyHeadingRichText || weddingData.story.headingHtml,
       paragraphs:
         storyRichTextParagraphs.length
           ? storyRichTextParagraphs
@@ -237,6 +251,12 @@ export async function updateWeddingContentAction(formData: FormData) {
     },
     gallery: {
       ...weddingData.gallery,
+      heading: stripHtml(galleryHeadingRichText) || weddingData.gallery.heading,
+      headingHtml: galleryHeadingRichText || weddingData.gallery.headingHtml,
+      description:
+        stripHtml(galleryDescriptionRichText) || weddingData.gallery.description,
+      descriptionHtml:
+        galleryDescriptionRichText || weddingData.gallery.descriptionHtml,
       images: galleryImages.length ? galleryImages : weddingData.gallery.images
     },
     ceremony: {
@@ -267,11 +287,19 @@ export async function updateWeddingContentAction(formData: FormData) {
     travel: {
       ...weddingData.travel,
       heading:
-        String(formData.get("travelHeading") || "").trim() || weddingData.travel.heading,
+        stripHtml(travelHeadingRichText) || weddingData.travel.heading,
+      headingHtml:
+        travelHeadingRichText || weddingData.travel.headingHtml,
       description:
         stripHtml(travelDescriptionRichText) || weddingData.travel.description,
       descriptionHtml:
         travelDescriptionRichText || weddingData.travel.descriptionHtml,
+      locationOverviewTitle:
+        stripHtml(locationOverviewTitleRichText) || weddingData.travel.locationOverviewTitle,
+      locationOverviewTitleHtml:
+        locationOverviewTitleRichText || weddingData.travel.locationOverviewTitleHtml,
+      locationOverviewHtml:
+        locationOverviewRichText || weddingData.travel.locationOverviewHtml,
       transport:
         stripHtml(travelTransportRichText) || weddingData.travel.transport,
       transportHtml:

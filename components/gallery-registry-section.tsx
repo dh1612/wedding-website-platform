@@ -32,6 +32,7 @@ export function GalleryRegistrySection({
                     <SectionHeading
                       eyebrow="Our Story"
                       title={wedding.story.heading}
+                      titleHtml={wedding.story.headingHtml}
                       description="A few favourite moments and a little of the story behind the day."
                     />
                     <div className="space-y-4">
@@ -50,7 +51,9 @@ export function GalleryRegistrySection({
                   <SectionHeading
                     eyebrow="Gallery"
                     title={wedding.gallery.heading}
+                    titleHtml={wedding.gallery.headingHtml}
                     description={wedding.gallery.description}
+                    descriptionHtml={wedding.gallery.descriptionHtml}
                   />
                 )}
               </div>

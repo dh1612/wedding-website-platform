@@ -24,14 +24,27 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
       <div className="section-shell rounded-[2rem] p-8 sm:p-10 lg:p-14">
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="max-w-2xl space-y-4">
-            <SectionHeading eyebrow="Venue & Travel" title={wedding.travel.heading} />
-            {wedding.travel.descriptionHtml ? (
-              <RichTextContent html={wedding.travel.descriptionHtml} className="text-lg" />
-            ) : wedding.travel.description ? (
-              <p className="prose-copy text-lg">{wedding.travel.description}</p>
-            ) : null}
+            <SectionHeading
+              eyebrow="Venue & Travel"
+              title={wedding.travel.heading}
+              titleHtml={wedding.travel.headingHtml}
+              description={wedding.travel.description}
+              descriptionHtml={wedding.travel.descriptionHtml}
+            />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
+            {wedding.travel.locationOverviewTitle || wedding.travel.locationOverviewHtml ? (
+              <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
+                <SectionHeading
+                  eyebrow="About The Location"
+                  title={wedding.travel.locationOverviewTitle || "About the area"}
+                  titleHtml={wedding.travel.locationOverviewTitleHtml}
+                />
+                {wedding.travel.locationOverviewHtml ? (
+                  <RichTextContent html={wedding.travel.locationOverviewHtml} className="mt-4" />
+                ) : null}
+              </article>
+            ) : null}
             {showCeremony ? (
               <article className="accent-panel rounded-[1.5rem] p-6">
                 <p className="eyebrow">Ceremony</p>

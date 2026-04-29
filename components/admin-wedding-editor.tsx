@@ -77,9 +77,27 @@ export function AdminWeddingEditor({
   const storyHtml = weddingData.story.html
     ? weddingData.story.html
     : paragraphHtml(weddingData.story.paragraphs);
+  const locationSummaryHtml = weddingData.locationSummaryHtml
+    ? weddingData.locationSummaryHtml
+    : simpleTextHtml(weddingData.locationSummary);
+  const taglineHtml = weddingData.taglineHtml
+    ? weddingData.taglineHtml
+    : simpleTextHtml(weddingData.tagline);
+  const storyHeadingHtml = weddingData.story.headingHtml
+    ? weddingData.story.headingHtml
+    : simpleTextHtml(weddingData.story.heading);
   const travelDescriptionHtml = weddingData.travel.descriptionHtml
     ? weddingData.travel.descriptionHtml
     : simpleTextHtml(weddingData.travel.description);
+  const travelHeadingHtml = weddingData.travel.headingHtml
+    ? weddingData.travel.headingHtml
+    : simpleTextHtml(weddingData.travel.heading);
+  const locationOverviewTitleHtml = weddingData.travel.locationOverviewTitleHtml
+    ? weddingData.travel.locationOverviewTitleHtml
+    : simpleTextHtml(weddingData.travel.locationOverviewTitle);
+  const locationOverviewHtml = weddingData.travel.locationOverviewHtml
+    ? weddingData.travel.locationOverviewHtml
+    : simpleTextHtml("");
   const ceremonyDescriptionHtml = weddingData.ceremony.descriptionHtml
     ? weddingData.ceremony.descriptionHtml
     : simpleTextHtml(weddingData.ceremony.description);
@@ -98,10 +116,13 @@ export function AdminWeddingEditor({
   const rsvpIntroHtml = weddingData.rsvp.form?.introHtml
     ? weddingData.rsvp.form.introHtml
     : simpleTextHtml(rsvpForm?.intro ?? "");
+  const galleryHeadingHtml = weddingData.gallery.headingHtml
+    ? weddingData.gallery.headingHtml
+    : simpleTextHtml(weddingData.gallery.heading);
+  const galleryDescriptionHtml = weddingData.gallery.descriptionHtml
+    ? weddingData.gallery.descriptionHtml
+    : simpleTextHtml(weddingData.gallery.description);
   const sectionToggles = [
-    { name: "showLocationSummary", label: "Hero location summary", checked: visibility?.locationSummary ?? true },
-    { name: "showTagline", label: "Hero tagline", checked: visibility?.tagline ?? true },
-    { name: "showAnnouncement", label: "Hero announcement copy", checked: visibility?.announcement ?? true },
     { name: "showTravel", label: "Venue & Travel", checked: visibility?.travel ?? true },
     { name: "showCeremonyCard", label: "Ceremony card", checked: visibility?.ceremonyCard ?? true },
     { name: "showReceptionCard", label: "Reception card", checked: visibility?.receptionCard ?? true },
@@ -172,7 +193,6 @@ export function AdminWeddingEditor({
               <input name="slug" defaultValue={record.slug} placeholder="Slug" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="couple" defaultValue={weddingData.couple} placeholder="Couple names" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="date" type="date" defaultValue={weddingData.date} className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-              <input name="locationSummary" defaultValue={weddingData.locationSummary} placeholder="Location summary" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <select name="packageTier" defaultValue={plannerSettings.packageTier ?? "smart"} className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none">
                 <option value="basic">Basic</option>
                 <option value="smart">Smart</option>
@@ -186,6 +206,10 @@ export function AdminWeddingEditor({
               <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
                 Current template: <span className="font-medium">{theme.name}</span>
               </div>
+              <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
+                <input type="checkbox" name="showLocationSummary" defaultChecked={visibility?.locationSummary ?? true} className="h-4 w-4" />
+                <span>Show location summary on the website</span>
+              </label>
             </div>
             <div className="mt-5 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
               <p className="eyebrow">Design Template</p>
@@ -217,7 +241,28 @@ export function AdminWeddingEditor({
           <div className="section-shell rounded-[2rem] p-8">
             <p className="eyebrow">Hero Copy</p>
             <div className="mt-5 grid gap-4">
-              <input name="tagline" defaultValue={weddingData.tagline} placeholder="Tagline" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              <RichTextEditorField
+                name="locationSummary"
+                label="Location summary"
+                description="This is the short location line shown with the date near the top of the site."
+                defaultValue={locationSummaryHtml}
+                minHeightClassName="min-h-[110px]"
+              />
+              <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
+                <input type="checkbox" name="showTagline" defaultChecked={visibility?.tagline ?? true} className="h-4 w-4" />
+                <span>Show tagline on the website</span>
+              </label>
+              <RichTextEditorField
+                name="tagline"
+                label="Tagline"
+                description="Format the main supporting line under the couple names if you want more emphasis or italics."
+                defaultValue={taglineHtml}
+                minHeightClassName="min-h-[120px]"
+              />
+              <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
+                <input type="checkbox" name="showAnnouncement" defaultChecked={visibility?.announcement ?? true} className="h-4 w-4" />
+                <span>Show announcement / intro copy on the website</span>
+              </label>
               <RichTextEditorField
                 name="announcementRichText"
                 label="Announcement / intro copy"
@@ -263,8 +308,13 @@ export function AdminWeddingEditor({
             <p className="eyebrow">Venue & Guest Stay</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-[#2f473f]">Section title</label>
-                <input name="travelHeading" defaultValue={weddingData.travel.heading} placeholder="Where To Go" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+                <RichTextEditorField
+                  name="travelHeading"
+                  label="Section title"
+                  description="This is the main title for the venue and travel section."
+                  defaultValue={travelHeadingHtml}
+                  minHeightClassName="min-h-[110px]"
+                />
               </div>
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Section intro</label>
@@ -287,6 +337,24 @@ export function AdminWeddingEditor({
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Ceremony address</label>
                 <input name="ceremonyAddress" defaultValue={weddingData.ceremony.address} placeholder="Ceremony address" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <RichTextEditorField
+                  name="locationOverviewTitle"
+                  label="About the location title"
+                  description="Use this for an area note like About Chania or About Santorini."
+                  defaultValue={locationOverviewTitleHtml}
+                  minHeightClassName="min-h-[100px]"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <RichTextEditorField
+                  name="locationOverview"
+                  label="About the location copy"
+                  description="A short destination note for the couple's city, island, or venue area."
+                  defaultValue={weddingData.travel.locationOverviewHtml ?? ""}
+                  minHeightClassName="min-h-[150px]"
+                />
               </div>
               <div className="space-y-2 md:col-span-2">
                 <RichTextEditorField
@@ -411,11 +479,32 @@ export function AdminWeddingEditor({
             <p className="eyebrow">Story & Sections</p>
             <div className="mt-5 grid gap-4">
               <RichTextEditorField
+                name="storyHeading"
+                label="Story heading"
+                description="Use this if you want to style the Our Story heading differently."
+                defaultValue={storyHeadingHtml}
+                minHeightClassName="min-h-[100px]"
+              />
+              <RichTextEditorField
                 name="storyRichText"
                 label="Story copy"
                 description="Format the story as needed for this couple. This is ideal for emphasis, elegant headings, and italic details."
                 defaultValue={storyHtml}
                 minHeightClassName="min-h-[240px]"
+              />
+              <RichTextEditorField
+                name="galleryHeading"
+                label="Gallery heading"
+                description="This is the title shown above the gallery when that section appears."
+                defaultValue={galleryHeadingHtml}
+                minHeightClassName="min-h-[100px]"
+              />
+              <RichTextEditorField
+                name="galleryDescription"
+                label="Gallery intro"
+                description="Optional intro text for the gallery and favourite moments section."
+                defaultValue={galleryDescriptionHtml}
+                minHeightClassName="min-h-[140px]"
               />
               <textarea name="scheduleText" defaultValue={weddingData.schedule.map((item) => `${item.time} - ${item.title}`).join("\n")} rows={6} placeholder="Schedule lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <textarea name="faqText" defaultValue={weddingData.faq.map((item) => `${item.q} ${item.a}`).join("\n")} rows={6} placeholder="FAQ lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />

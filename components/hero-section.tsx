@@ -54,6 +54,22 @@ function AnnouncementCopy({
   return <p className={className}>{text}</p>;
 }
 
+function InlineCopy({
+  html,
+  text,
+  className
+}: {
+  html?: string;
+  text: string;
+  className: string;
+}) {
+  if (html) {
+    return <div className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+  }
+
+  return <div className={className}>{text}</div>;
+}
+
 export function HeroSection({ themeId, weddingData, previewMode = false }: HeroSectionProps) {
   const wedding = weddingData ?? getWeddingData();
   const theme = getThemeById(themeId);
@@ -92,12 +108,20 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="mt-5 space-y-2 text-base uppercase tracking-[0.24em] text-white/74 sm:text-lg">
                 <p>{displayDate}</p>
-                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
+                {showLocationSummary ? (
+                  <InlineCopy
+                    html={wedding.locationSummaryHtml}
+                    text={wedding.locationSummary}
+                    className=""
+                  />
+                ) : null}
               </div>
               {showTagline ? (
-                <p className="mt-6 max-w-xl text-base leading-8 text-white/82 sm:text-lg">
-                  {wedding.tagline}
-                </p>
+                <InlineCopy
+                  html={wedding.taglineHtml}
+                  text={wedding.tagline}
+                  className="mt-6 max-w-xl text-base leading-8 text-white/82 sm:text-lg"
+                />
               ) : null}
               {showAnnouncement ? (
                 <AnnouncementCopy
@@ -137,13 +161,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                 <p>{displayDate}</p>
-                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
+                {showLocationSummary ? (
+                  <InlineCopy
+                    html={wedding.locationSummaryHtml}
+                    text={wedding.locationSummary}
+                    className=""
+                  />
+                ) : null}
               </div>
             </div>
             {showTagline ? (
-              <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-                {wedding.tagline}
-              </p>
+              <InlineCopy
+                html={wedding.taglineHtml}
+                text={wedding.tagline}
+                className="max-w-xl text-lg leading-8 text-[var(--muted)]"
+              />
             ) : null}
             {showAnnouncement ? (
               <AnnouncementCopy
@@ -191,7 +223,13 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 </h1>
                 <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                   <p>{displayDate}</p>
-                  {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
+                  {showLocationSummary ? (
+                    <InlineCopy
+                      html={wedding.locationSummaryHtml}
+                      text={wedding.locationSummary}
+                      className=""
+                    />
+                  ) : null}
                 </div>
               </div>
               <div className="space-y-5">
@@ -205,7 +243,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                   </div>
                 </div>
                 {showTagline ? (
-                  <p className="text-lg leading-8 text-[var(--muted)]">{wedding.tagline}</p>
+                  <InlineCopy
+                    html={wedding.taglineHtml}
+                    text={wedding.tagline}
+                    className="text-lg leading-8 text-[var(--muted)]"
+                  />
                 ) : null}
                 {showAnnouncement ? (
                   <AnnouncementCopy
@@ -241,13 +283,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                 <p>{displayDate}</p>
-                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
+                {showLocationSummary ? (
+                  <InlineCopy
+                    html={wedding.locationSummaryHtml}
+                    text={wedding.locationSummary}
+                    className=""
+                  />
+                ) : null}
               </div>
             </div>
             {showTagline ? (
-              <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-                {wedding.tagline}
-              </p>
+              <InlineCopy
+                html={wedding.taglineHtml}
+                text={wedding.tagline}
+                className="max-w-xl text-lg leading-8 text-[var(--muted)]"
+              />
             ) : null}
             {showAnnouncement ? (
               <AnnouncementCopy
@@ -307,13 +357,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                 <p>{displayDate}</p>
-                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
+                {showLocationSummary ? (
+                  <InlineCopy
+                    html={wedding.locationSummaryHtml}
+                    text={wedding.locationSummary}
+                    className=""
+                  />
+                ) : null}
               </div>
             </div>
             {showTagline ? (
-              <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-                {wedding.tagline}
-              </p>
+              <InlineCopy
+                html={wedding.taglineHtml}
+                text={wedding.tagline}
+                className="max-w-xl text-lg leading-8 text-[var(--muted)]"
+              />
             ) : null}
             {showAnnouncement ? (
               <AnnouncementCopy
@@ -347,12 +405,20 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-3 text-base uppercase tracking-[0.28em] text-white/80 sm:text-lg">
                 <p>{displayDate}</p>
-                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
+                {showLocationSummary ? (
+                  <InlineCopy
+                    html={wedding.locationSummaryHtml}
+                    text={wedding.locationSummary}
+                    className=""
+                  />
+                ) : null}
               </div>
               {showTagline ? (
-                <p className="mx-auto max-w-2xl text-base leading-8 text-white/78 sm:text-lg">
-                  {wedding.tagline}
-                </p>
+                <InlineCopy
+                  html={wedding.taglineHtml}
+                  text={wedding.tagline}
+                  className="mx-auto max-w-2xl text-base leading-8 text-white/78 sm:text-lg"
+                />
               ) : null}
               {showAnnouncement ? (
                 <AnnouncementCopy
@@ -402,13 +468,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             </h1>
             <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
               <p>{displayDate}</p>
-              {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
+              {showLocationSummary ? (
+                <InlineCopy
+                  html={wedding.locationSummaryHtml}
+                  text={wedding.locationSummary}
+                  className=""
+                />
+              ) : null}
             </div>
           </div>
           {showTagline ? (
-            <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-              {wedding.tagline}
-            </p>
+            <InlineCopy
+              html={wedding.taglineHtml}
+              text={wedding.tagline}
+              className="max-w-xl text-lg leading-8 text-[var(--muted)]"
+            />
           ) : null}
           {showAnnouncement ? (
             <AnnouncementCopy
