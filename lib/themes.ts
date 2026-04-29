@@ -67,6 +67,46 @@ function createThemeStyle(vars: ThemeVars): CSSProperties {
 
 export const weddingThemes: ThemeDefinition[] = [
   {
+    id: "champagne-aegean",
+    name: "Champagne Aegean",
+    label: "Summer in Greece",
+    description: "A champagne-and-neutral destination look with rich golden outlines, warm light, and a polished island-summer feel.",
+    season: "Summer / Greece / destination",
+    previewStyle: {
+      backgroundImage:
+        "linear-gradient(180deg, rgba(82,58,28,0.14), rgba(82,58,28,0.08)), url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1600&q=80')",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    },
+    style: createThemeStyle({
+      background: "#f7f0e4",
+      foreground: "#2f2418",
+      surface: "rgba(255, 250, 242, 0.84)",
+      surfaceStrong: "#fffaf1",
+      border: "rgba(164, 123, 58, 0.34)",
+      accent: "#b88d4a",
+      accentSoft: "rgba(184, 141, 74, 0.16)",
+      accentStrong: "#8b6328",
+      accentContrast: "#fff9ef",
+      muted: "#6f5c46",
+      gold: "#d7b06a",
+      shadow: "0 26px 74px rgba(104, 70, 25, 0.14)",
+      pageGradient:
+        "radial-gradient(circle at 12% 0%, rgba(255,255,255,0.9), transparent 24%), radial-gradient(circle at 84% 18%, rgba(215,176,106,0.28), transparent 22%), linear-gradient(180deg, #fff9f0 0%, #f7f0e4 48%, #eddcc2 100%)",
+      cardGlow:
+        "linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,244,226,0.08))",
+      heroGlow:
+        "radial-gradient(circle at top right, rgba(215,176,106,0.28), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.18), transparent)",
+      fontBody: "Georgia, 'Times New Roman', serif",
+      fontDisplay: "Didot, 'Bodoni MT', serif"
+    }),
+    heroImage:
+      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1600&q=80",
+    detailImage:
+      "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80",
+    heroLayout: "split"
+  },
+  {
     id: "soft-blush",
     name: "Manor House Romance",
     label: "Grand and understated",

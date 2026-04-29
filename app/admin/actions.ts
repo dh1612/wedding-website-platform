@@ -220,7 +220,10 @@ export async function updateWeddingContentAction(formData: FormData) {
       location:
         String(formData.get("ceremonyLocation") || "").trim() || weddingData.ceremony.location,
       address:
-        String(formData.get("ceremonyAddress") || "").trim() || weddingData.ceremony.address
+        String(formData.get("ceremonyAddress") || "").trim() || weddingData.ceremony.address,
+      description:
+        String(formData.get("ceremonyDescription") || "").trim() ||
+        weddingData.ceremony.description
     },
     reception: {
       ...weddingData.reception,
@@ -228,13 +231,28 @@ export async function updateWeddingContentAction(formData: FormData) {
       location:
         String(formData.get("receptionLocation") || "").trim() || weddingData.reception.location,
       address:
-        String(formData.get("receptionAddress") || "").trim() || weddingData.reception.address
+        String(formData.get("receptionAddress") || "").trim() || weddingData.reception.address,
+      description:
+        String(formData.get("receptionDescription") || "").trim() ||
+        weddingData.reception.description
     },
     schedule: scheduleItems.length ? scheduleItems : weddingData.schedule,
     travel: {
       ...weddingData.travel,
+      heading:
+        String(formData.get("travelHeading") || "").trim() || weddingData.travel.heading,
+      description:
+        String(formData.get("travelDescription") || "").trim() ||
+        weddingData.travel.description,
       transport:
-        String(formData.get("travelText") || "").trim() || weddingData.travel.transport
+        String(formData.get("travelTransport") || formData.get("travelText") || "").trim() ||
+        weddingData.travel.transport,
+      parking:
+        String(formData.get("travelParking") || "").trim() || weddingData.travel.parking,
+      directions:
+        String(formData.get("travelDirections") || "").trim() || weddingData.travel.directions,
+      mapLink:
+        String(formData.get("travelMapLink") || "").trim() || weddingData.travel.mapLink
     },
     accommodation: accommodationItems.length ? accommodationItems : weddingData.accommodation,
     faq: faqItems.length ? faqItems : weddingData.faq,
@@ -277,8 +295,15 @@ export async function updateWeddingContentAction(formData: FormData) {
     },
     aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic",
     sectionVisibility: {
+      locationSummary: formData.has("showLocationSummary"),
+      tagline: formData.has("showTagline"),
+      announcement: formData.has("showAnnouncement"),
       schedule: formData.has("showSchedule"),
       travel: formData.has("showTravel"),
+      ceremonyCard: formData.has("showCeremonyCard"),
+      receptionCard: formData.has("showReceptionCard"),
+      transportCard: formData.has("showTransportCard"),
+      directionsCard: formData.has("showDirectionsCard"),
       accommodation: formData.has("showAccommodation"),
       story: formData.has("showStory"),
       gallery: formData.has("showGallery"),

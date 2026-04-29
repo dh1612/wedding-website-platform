@@ -65,7 +65,14 @@ export function AdminWeddingEditor({
     ? weddingData.story.html
     : paragraphHtml(weddingData.story.paragraphs);
   const sectionToggles = [
+    { name: "showLocationSummary", label: "Hero location summary", checked: visibility?.locationSummary ?? true },
+    { name: "showTagline", label: "Hero tagline", checked: visibility?.tagline ?? true },
+    { name: "showAnnouncement", label: "Hero announcement copy", checked: visibility?.announcement ?? true },
     { name: "showTravel", label: "Venue & Travel", checked: visibility?.travel ?? true },
+    { name: "showCeremonyCard", label: "Ceremony card", checked: visibility?.ceremonyCard ?? true },
+    { name: "showReceptionCard", label: "Reception card", checked: visibility?.receptionCard ?? true },
+    { name: "showTransportCard", label: "Transport card", checked: visibility?.transportCard ?? true },
+    { name: "showDirectionsCard", label: "Parking & directions card", checked: visibility?.directionsCard ?? true },
     { name: "showAccommodation", label: "Accommodation", checked: visibility?.accommodation ?? true },
     { name: "showStory", label: "Story copy", checked: visibility?.story ?? true },
     { name: "showGallery", label: "Gallery images", checked: visibility?.gallery ?? true },
@@ -195,6 +202,14 @@ export function AdminWeddingEditor({
           <div className="section-shell rounded-[2rem] p-8">
             <p className="eyebrow">Venue & Guest Stay</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Section title</label>
+                <input name="travelHeading" defaultValue={weddingData.travel.heading} placeholder="Where To Go" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Section intro</label>
+                <textarea name="travelDescription" defaultValue={weddingData.travel.description} rows={3} placeholder="Key locations and practical notes for the ceremony and celebrations." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#2f473f]">Ceremony venue</label>
                 <input name="ceremonyLocation" defaultValue={weddingData.ceremony.location} placeholder="Ceremony venue name" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
@@ -207,6 +222,10 @@ export function AdminWeddingEditor({
                 <label className="text-sm font-medium text-[#2f473f]">Ceremony address</label>
                 <input name="ceremonyAddress" defaultValue={weddingData.ceremony.address} placeholder="Ceremony address" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Ceremony description</label>
+                <textarea name="ceremonyDescription" defaultValue={weddingData.ceremony.description ?? ""} rows={2} placeholder="Optional ceremony note for guests" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#2f473f]">Reception venue</label>
                 <input name="receptionLocation" defaultValue={weddingData.reception.location} placeholder="Reception venue name" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
@@ -218,6 +237,26 @@ export function AdminWeddingEditor({
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Reception address</label>
                 <input name="receptionAddress" defaultValue={weddingData.reception.address} placeholder="Reception address" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Reception description</label>
+                <textarea name="receptionDescription" defaultValue={weddingData.reception.description ?? ""} rows={2} placeholder="Optional reception note for guests" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Transport</label>
+                <textarea name="travelTransport" defaultValue={weddingData.travel.transport} rows={3} placeholder="How guests should travel to the venue" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Parking</label>
+                <textarea name="travelParking" defaultValue={weddingData.travel.parking} rows={3} placeholder="Parking details" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Directions</label>
+                <textarea name="travelDirections" defaultValue={weddingData.travel.directions} rows={3} placeholder="Directions for guests" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Map link</label>
+                <input name="travelMapLink" defaultValue={weddingData.travel.mapLink} placeholder="https://maps.google.com/..." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               </div>
             </div>
 

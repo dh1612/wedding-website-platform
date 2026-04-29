@@ -1,7 +1,7 @@
 import weddingData from "@/data/weddingData.json";
 import type { RSVPFormQuestion, WeddingData } from "@/types/wedding";
 
-const defaultWeddingData = weddingData as WeddingData;
+const defaultWeddingData = weddingData as unknown as WeddingData;
 
 function isValidRemoteImageUrl(value: unknown): value is string {
   if (typeof value !== "string" || !value.trim()) {
@@ -107,6 +107,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
     },
     schedule: source.schedule?.length ? source.schedule : fallback.schedule,
     travel: {
+      heading: source.travel?.heading ?? "Where To Go",
+      description:
+        source.travel?.description ??
+        "Key locations and practical notes for the ceremony and celebrations.",
       transport: source.travel?.transport ?? fallback.travel.transport,
       parking: source.travel?.parking ?? fallback.travel.parking,
       directions: source.travel?.directions ?? fallback.travel.directions,
@@ -165,8 +169,15 @@ export function coerceWeddingData(input: unknown): WeddingData {
     aiConciergeEnabled:
       source.aiConciergeEnabled ?? fallback.aiConciergeEnabled,
     sectionVisibility: {
+      locationSummary: source.sectionVisibility?.locationSummary ?? true,
+      tagline: source.sectionVisibility?.tagline ?? true,
+      announcement: source.sectionVisibility?.announcement ?? true,
       schedule: source.sectionVisibility?.schedule ?? true,
       travel: source.sectionVisibility?.travel ?? true,
+      ceremonyCard: source.sectionVisibility?.ceremonyCard ?? true,
+      receptionCard: source.sectionVisibility?.receptionCard ?? true,
+      transportCard: source.sectionVisibility?.transportCard ?? true,
+      directionsCard: source.sectionVisibility?.directionsCard ?? true,
       accommodation: source.sectionVisibility?.accommodation ?? true,
       story: source.sectionVisibility?.story ?? true,
       gallery: source.sectionVisibility?.gallery ?? true,

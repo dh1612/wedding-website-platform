@@ -17,6 +17,8 @@ export type LinkItem = {
 };
 
 export type TravelInfo = {
+  heading: string;
+  description: string;
   transport: string;
   parking: string;
   directions: string;
@@ -97,8 +99,15 @@ export type WeddingData = {
   };
   aiConciergeEnabled: boolean;
   sectionVisibility?: {
+    locationSummary: boolean;
+    tagline: boolean;
+    announcement: boolean;
     schedule: boolean;
     travel: boolean;
+    ceremonyCard: boolean;
+    receptionCard: boolean;
+    transportCard: boolean;
+    directionsCard: boolean;
     accommodation: boolean;
     story: boolean;
     gallery: boolean;

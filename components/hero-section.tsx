@@ -60,6 +60,10 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
   const heroImage = theme.heroImage;
   const detailImage = theme.detailImage;
   const displayDate = formatDisplayDate(wedding.date);
+  const visibility = wedding.sectionVisibility;
+  const showLocationSummary = visibility?.locationSummary ?? true;
+  const showTagline = visibility?.tagline ?? true;
+  const showAnnouncement = visibility?.announcement ?? true;
 
   if (theme.heroLayout === "full-bleed") {
     return (
@@ -88,16 +92,20 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="mt-5 space-y-2 text-base uppercase tracking-[0.24em] text-white/74 sm:text-lg">
                 <p>{displayDate}</p>
-                <p>{wedding.locationSummary}</p>
+                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
               </div>
-              <p className="mt-6 max-w-xl text-base leading-8 text-white/82 sm:text-lg">
-                {wedding.tagline}
-              </p>
-              <AnnouncementCopy
-                html={wedding.announcementHtml}
-                text={wedding.announcement}
-                className="mt-4 max-w-xl text-base leading-7 text-white/76"
-              />
+              {showTagline ? (
+                <p className="mt-6 max-w-xl text-base leading-8 text-white/82 sm:text-lg">
+                  {wedding.tagline}
+                </p>
+              ) : null}
+              {showAnnouncement ? (
+                <AnnouncementCopy
+                  html={wedding.announcementHtml}
+                  text={wedding.announcement}
+                  className="mt-4 max-w-xl text-base leading-7 text-white/76"
+                />
+              ) : null}
               {previewMode ? (
                 <div className="mt-4 rounded-[1.2rem] border border-white/18 bg-white/12 px-5 py-4 text-sm leading-6 text-white/84">
                   Sample wording is shown here for review. The couple can change all text before the site goes live.
@@ -129,17 +137,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                 <p>{displayDate}</p>
-                <p>{wedding.locationSummary}</p>
+                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
               </div>
             </div>
-            <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-              {wedding.tagline}
-            </p>
-            <AnnouncementCopy
-              html={wedding.announcementHtml}
-              text={wedding.announcement}
-              className="max-w-xl text-base leading-7 text-[var(--muted)]"
-            />
+            {showTagline ? (
+              <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
+                {wedding.tagline}
+              </p>
+            ) : null}
+            {showAnnouncement ? (
+              <AnnouncementCopy
+                html={wedding.announcementHtml}
+                text={wedding.announcement}
+                className="max-w-xl text-base leading-7 text-[var(--muted)]"
+              />
+            ) : null}
             {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
@@ -179,7 +191,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 </h1>
                 <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                   <p>{displayDate}</p>
-                  <p>{wedding.locationSummary}</p>
+                  {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
                 </div>
               </div>
               <div className="space-y-5">
@@ -192,12 +204,16 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                     <p>{wedding.ceremony.address}</p>
                   </div>
                 </div>
-                <p className="text-lg leading-8 text-[var(--muted)]">{wedding.tagline}</p>
-                <AnnouncementCopy
-                  html={wedding.announcementHtml}
-                  text={wedding.announcement}
-                  className="text-base leading-7 text-[var(--muted)]"
-                />
+                {showTagline ? (
+                  <p className="text-lg leading-8 text-[var(--muted)]">{wedding.tagline}</p>
+                ) : null}
+                {showAnnouncement ? (
+                  <AnnouncementCopy
+                    html={wedding.announcementHtml}
+                    text={wedding.announcement}
+                    className="text-base leading-7 text-[var(--muted)]"
+                  />
+                ) : null}
                 {previewMode ? <PreviewNote /> : null}
                 <SharedActions />
               </div>
@@ -225,17 +241,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                 <p>{displayDate}</p>
-                <p>{wedding.locationSummary}</p>
+                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
               </div>
             </div>
-            <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-              {wedding.tagline}
-            </p>
-            <AnnouncementCopy
-              html={wedding.announcementHtml}
-              text={wedding.announcement}
-              className="max-w-xl text-base leading-7 text-[var(--muted)]"
-            />
+            {showTagline ? (
+              <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
+                {wedding.tagline}
+              </p>
+            ) : null}
+            {showAnnouncement ? (
+              <AnnouncementCopy
+                html={wedding.announcementHtml}
+                text={wedding.announcement}
+                className="max-w-xl text-base leading-7 text-[var(--muted)]"
+              />
+            ) : null}
             {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
@@ -287,17 +307,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
                 <p>{displayDate}</p>
-                <p>{wedding.locationSummary}</p>
+                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
               </div>
             </div>
-            <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-              {wedding.tagline}
-            </p>
-            <AnnouncementCopy
-              html={wedding.announcementHtml}
-              text={wedding.announcement}
-              className="mx-auto max-w-2xl text-base leading-7 text-white/78"
-            />
+            {showTagline ? (
+              <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
+                {wedding.tagline}
+              </p>
+            ) : null}
+            {showAnnouncement ? (
+              <AnnouncementCopy
+                html={wedding.announcementHtml}
+                text={wedding.announcement}
+                className="mx-auto max-w-2xl text-base leading-7 text-white/78"
+              />
+            ) : null}
             {previewMode ? <PreviewNote /> : null}
             <SharedActions />
           </div>
@@ -323,11 +347,20 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               </h1>
               <div className="space-y-3 text-base uppercase tracking-[0.28em] text-white/80 sm:text-lg">
                 <p>{displayDate}</p>
-                <p>{wedding.locationSummary}</p>
+                {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
               </div>
-              <p className="mx-auto max-w-2xl text-base leading-8 text-white/78 sm:text-lg">
-                {wedding.tagline}
-              </p>
+              {showTagline ? (
+                <p className="mx-auto max-w-2xl text-base leading-8 text-white/78 sm:text-lg">
+                  {wedding.tagline}
+                </p>
+              ) : null}
+              {showAnnouncement ? (
+                <AnnouncementCopy
+                  html={wedding.announcementHtml}
+                  text={wedding.announcement}
+                  className="mx-auto max-w-2xl text-base leading-7 text-white/78"
+                />
+              ) : null}
               {previewMode ? (
                 <div className="mx-auto max-w-2xl rounded-[1.2rem] border border-white/18 bg-white/10 px-5 py-4 text-sm leading-6 text-white/84 backdrop-blur">
                   Sample wording is shown here for review. The couple can change all text before the site goes live.
@@ -369,17 +402,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             </h1>
             <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
               <p>{displayDate}</p>
-              <p>{wedding.locationSummary}</p>
+              {showLocationSummary ? <p>{wedding.locationSummary}</p> : null}
             </div>
           </div>
-          <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-            {wedding.tagline}
-          </p>
-          <AnnouncementCopy
-            html={wedding.announcementHtml}
-            text={wedding.announcement}
-            className="max-w-xl text-base leading-7 text-[var(--muted)]"
-          />
+          {showTagline ? (
+            <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
+              {wedding.tagline}
+            </p>
+          ) : null}
+          {showAnnouncement ? (
+            <AnnouncementCopy
+              html={wedding.announcementHtml}
+              text={wedding.announcement}
+              className="max-w-xl text-base leading-7 text-[var(--muted)]"
+            />
+          ) : null}
           {previewMode ? <PreviewNote /> : null}
           <SharedActions />
         </div>
