@@ -79,25 +79,25 @@ export const weddingThemes: ThemeDefinition[] = [
       backgroundPosition: "center"
     },
     style: createThemeStyle({
-      background: "#f7f0e4",
-      foreground: "#2f2418",
-      surface: "rgba(255, 250, 242, 0.84)",
-      surfaceStrong: "#fffaf1",
-      border: "rgba(164, 123, 58, 0.34)",
-      accent: "#b88d4a",
-      accentSoft: "rgba(184, 141, 74, 0.16)",
-      accentStrong: "#8b6328",
-      accentContrast: "#fff9ef",
-      muted: "#6f5c46",
-      gold: "#d7b06a",
-      shadow: "0 26px 74px rgba(104, 70, 25, 0.14)",
+      background: "#f8f1e7",
+      foreground: "#241b16",
+      surface: "rgba(255, 249, 241, 0.9)",
+      surfaceStrong: "#fffaf4",
+      border: "rgba(190, 149, 86, 0.48)",
+      accent: "#c19858",
+      accentSoft: "rgba(193, 152, 88, 0.14)",
+      accentStrong: "#8a6536",
+      accentContrast: "#fffaf2",
+      muted: "#3f3228",
+      gold: "#ddb97b",
+      shadow: "0 26px 76px rgba(110, 73, 24, 0.12)",
       pageGradient:
-        "radial-gradient(circle at 12% 0%, rgba(255,255,255,0.9), transparent 24%), radial-gradient(circle at 84% 18%, rgba(215,176,106,0.28), transparent 22%), linear-gradient(180deg, #fff9f0 0%, #f7f0e4 48%, #eddcc2 100%)",
+        "radial-gradient(circle at 12% 0%, rgba(255,255,255,0.92), transparent 24%), radial-gradient(circle at 84% 18%, rgba(221,185,123,0.24), transparent 22%), linear-gradient(180deg, #fffaf3 0%, #f8f1e7 48%, #efdfc7 100%)",
       cardGlow:
-        "linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,244,226,0.08))",
+        "linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,244,226,0.1))",
       heroGlow:
-        "radial-gradient(circle at top right, rgba(215,176,106,0.28), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.18), transparent)",
-      fontBody: "Georgia, 'Times New Roman', serif",
+        "radial-gradient(circle at top right, rgba(221,185,123,0.26), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.18), transparent)",
+      fontBody: "'Palatino Linotype', Palatino, serif",
       fontDisplay: "Didot, 'Bodoni MT', serif"
     }),
     heroImage:
