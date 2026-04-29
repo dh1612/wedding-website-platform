@@ -218,68 +218,6 @@ main[data-theme="christmas-candlelight"] [data-theme-stars] {
   color: var(--foreground);
 }
 
-main[data-theme="champagne-aegean"] .section-shell {
-  background: linear-gradient(180deg, rgba(255, 251, 246, 0.96), rgba(250, 240, 225, 0.9));
-  border-color: rgba(190, 149, 86, 0.5);
-  box-shadow:
-    0 28px 82px rgba(114, 79, 29, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.52);
-}
-
-main[data-theme="champagne-aegean"] .accent-panel {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.32), transparent),
-    rgba(255, 246, 234, 0.76);
-  border-color: rgba(190, 149, 86, 0.42);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48);
-}
-
-main[data-theme="champagne-aegean"] .section-title,
-main[data-theme="champagne-aegean"] h2,
-main[data-theme="champagne-aegean"] h3,
-main[data-theme="champagne-aegean"] p,
-main[data-theme="champagne-aegean"] summary {
-  color: var(--foreground);
-}
-
-main[data-theme="champagne-aegean"] .eyebrow {
-  color: var(--gold);
-}
-
-main[data-theme="champagne-aegean"] .prose-copy,
-main[data-theme="champagne-aegean"] .rich-text-content,
-main[data-theme="champagne-aegean"] .rich-text-content p,
-main[data-theme="champagne-aegean"] .rich-text-content li {
-  color: var(--foreground);
-  font-style: italic;
-}
-
-main[data-theme="champagne-aegean"] .rich-text-content h2,
-main[data-theme="champagne-aegean"] .rich-text-content h3 {
-  color: var(--foreground);
-  font-style: italic;
-}
-
-main[data-theme="champagne-aegean"] .rich-text-content strong,
-main[data-theme="champagne-aegean"] .rich-text-content em {
-  color: var(--foreground);
-}
-
-main[data-theme="champagne-aegean"] .accent-outline {
-  border-color: rgba(190, 149, 86, 0.42);
-  background: rgba(255, 250, 243, 0.82);
-  color: var(--accent-strong);
-}
-
-main[data-theme="champagne-aegean"] .accent-button {
-  background: var(--accent-strong);
-  color: var(--accent-contrast);
-}
-
-main[data-theme="champagne-aegean"] .accent-button:hover {
-  background: var(--accent);
-}
-
 .hero-shell {
   position: relative;
 }
