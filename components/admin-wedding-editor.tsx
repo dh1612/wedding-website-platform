@@ -59,6 +59,21 @@ function EditorAccordionSection({
   );
 }
 
+type SectionToggleProps = {
+  name: string;
+  label: string;
+  checked: boolean;
+};
+
+function SectionToggle({ name, label, checked }: SectionToggleProps) {
+  return (
+    <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
+      <input type="checkbox" name={name} defaultChecked={checked} className="h-4 w-4" />
+      <span>{label}</span>
+    </label>
+  );
+}
+
 export function AdminWeddingEditor({
   record,
   saved = false,
@@ -167,21 +182,6 @@ export function AdminWeddingEditor({
   const galleryDescriptionHtml = weddingData.gallery.descriptionHtml
     ? weddingData.gallery.descriptionHtml
     : simpleTextHtml(weddingData.gallery.description);
-  const sectionToggles = [
-    { name: "showTravel", label: "Venue & Travel", checked: visibility?.travel ?? true },
-    { name: "showCeremonyCard", label: "Ceremony card", checked: visibility?.ceremonyCard ?? true },
-    { name: "showReceptionCard", label: "Reception card", checked: visibility?.receptionCard ?? true },
-    { name: "showTransportCard", label: "Transport card", checked: visibility?.transportCard ?? true },
-    { name: "showDirectionsCard", label: "Parking & directions card", checked: visibility?.directionsCard ?? true },
-    { name: "showAccommodation", label: "Accommodation", checked: visibility?.accommodation ?? true },
-    { name: "showStory", label: "Story copy", checked: visibility?.story ?? true },
-    { name: "showGallery", label: "Gallery images", checked: visibility?.gallery ?? true },
-    { name: "showSchedule", label: "Schedule", checked: visibility?.schedule ?? true },
-    { name: "showRsvp", label: "RSVP section", checked: visibility?.rsvp ?? true },
-    { name: "showAiConcierge", label: "AI concierge", checked: visibility?.aiConcierge ?? true },
-    { name: "showFaq", label: "FAQ", checked: visibility?.faq ?? true },
-    { name: "showRegistry", label: "Registry", checked: visibility?.registry ?? true }
-  ] as const;
   const editorSections = [
     { id: "core-setup", label: "Core setup" },
     { id: "hero-copy", label: "Hero" },
@@ -324,6 +324,23 @@ export function AdminWeddingEditor({
             description="Edit the top-of-page location line, tagline, and introduction without touching the rest of the site."
           >
             <div className="grid gap-4">
+              <div className="grid gap-3 md:grid-cols-2">
+                <SectionToggle
+                  name="showLocationSummary"
+                  label="Show location summary on the website"
+                  checked={visibility?.locationSummary ?? true}
+                />
+                <SectionToggle
+                  name="showTagline"
+                  label="Show tagline on the website"
+                  checked={visibility?.tagline ?? true}
+                />
+                <SectionToggle
+                  name="showAnnouncement"
+                  label="Show announcement / intro copy"
+                  checked={visibility?.announcement ?? true}
+                />
+              </div>
               <RichTextEditorField
                 name="locationSummary"
                 label="Location summary"
@@ -331,10 +348,6 @@ export function AdminWeddingEditor({
                 defaultValue={locationSummaryHtml}
                 minHeightClassName="min-h-[110px]"
               />
-              <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
-                <input type="checkbox" name="showTagline" defaultChecked={visibility?.tagline ?? true} className="h-4 w-4" />
-                <span>Show tagline on the website</span>
-              </label>
               <RichTextEditorField
                 name="tagline"
                 label="Tagline"
@@ -342,10 +355,6 @@ export function AdminWeddingEditor({
                 defaultValue={taglineHtml}
                 minHeightClassName="min-h-[120px]"
               />
-              <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
-                <input type="checkbox" name="showAnnouncement" defaultChecked={visibility?.announcement ?? true} className="h-4 w-4" />
-                <span>Show announcement / intro copy on the website</span>
-              </label>
               <RichTextEditorField
                 name="announcementRichText"
                 label="Announcement / intro copy"
@@ -411,6 +420,38 @@ export function AdminWeddingEditor({
             description="This is the practical planning section: ceremony, reception, travel notes, area details, maps, and accommodation."
           >
             <div className="grid gap-4 md:grid-cols-2">
+              <div className="md:col-span-2 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                <SectionToggle
+                  name="showTravel"
+                  label="Show venue & travel section"
+                  checked={visibility?.travel ?? true}
+                />
+                <SectionToggle
+                  name="showCeremonyCard"
+                  label="Show ceremony card"
+                  checked={visibility?.ceremonyCard ?? true}
+                />
+                <SectionToggle
+                  name="showReceptionCard"
+                  label="Show reception card"
+                  checked={visibility?.receptionCard ?? true}
+                />
+                <SectionToggle
+                  name="showTransportCard"
+                  label="Show transport card"
+                  checked={visibility?.transportCard ?? true}
+                />
+                <SectionToggle
+                  name="showDirectionsCard"
+                  label="Show parking & directions card"
+                  checked={visibility?.directionsCard ?? true}
+                />
+                <SectionToggle
+                  name="showAccommodation"
+                  label="Show accommodation"
+                  checked={visibility?.accommodation ?? true}
+                />
+              </div>
               <div className="space-y-2 md:col-span-2">
                 <RichTextEditorField
                   name="travelHeading"
@@ -636,6 +677,38 @@ export function AdminWeddingEditor({
             description="Edit the couple story, gallery introduction, timeline content, FAQs, and visibility settings in one place."
           >
             <div className="grid gap-4">
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                <SectionToggle
+                  name="showStory"
+                  label="Show story copy"
+                  checked={visibility?.story ?? true}
+                />
+                <SectionToggle
+                  name="showGallery"
+                  label="Show gallery images"
+                  checked={visibility?.gallery ?? true}
+                />
+                <SectionToggle
+                  name="showSchedule"
+                  label="Show schedule"
+                  checked={visibility?.schedule ?? true}
+                />
+                <SectionToggle
+                  name="showAiConcierge"
+                  label="Show AI concierge"
+                  checked={visibility?.aiConcierge ?? true}
+                />
+                <SectionToggle
+                  name="showFaq"
+                  label="Show FAQ"
+                  checked={visibility?.faq ?? true}
+                />
+                <SectionToggle
+                  name="showRegistry"
+                  label="Show registry"
+                  checked={visibility?.registry ?? true}
+                />
+              </div>
               <RichTextEditorField
                 name="storyHeading"
                 label="Story heading"
@@ -666,21 +739,6 @@ export function AdminWeddingEditor({
               />
               <textarea name="scheduleText" defaultValue={weddingData.schedule.map((item) => `${item.time} - ${item.title}`).join("\n")} rows={6} placeholder="Schedule lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <textarea name="faqText" defaultValue={weddingData.faq.map((item) => `${item.q} ${item.a}`).join("\n")} rows={6} placeholder="FAQ lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-            </div>
-            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
-              <p className="eyebrow">Section Visibility</p>
-              <h2 className="mt-3 text-2xl">Hide anything the couple does not need</h2>
-              <p className="prose-copy mt-3">
-                Untick any section you do not want shown on the live website for this wedding.
-              </p>
-              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {sectionToggles.map(({ name, label, checked }) => (
-                  <label key={name} className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
-                    <input type="checkbox" name={name} defaultChecked={Boolean(checked)} className="h-4 w-4" />
-                    <span>{label}</span>
-                  </label>
-                ))}
-              </div>
             </div>
           </EditorAccordionSection>
 
@@ -718,6 +776,11 @@ export function AdminWeddingEditor({
             description="Shape the guest-facing RSVP form for this wedding without needing a database migration."
           >
             <div className="grid gap-4">
+              <SectionToggle
+                name="showRsvp"
+                label="Show RSVP section"
+                checked={visibility?.rsvp ?? true}
+              />
               <input
                 name="rsvpFormTitle"
                 defaultValue={rsvpForm?.title ?? ""}
