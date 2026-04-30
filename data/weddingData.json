@@ -61,6 +61,28 @@
     }
   ],
   "travel": {
+    "heading": "Venue & Travel",
+    "description": "Everything guests need to find the venue, get around easily, and settle into the wedding weekend without over-planning.",
+    "relaxedNote": "Greek weddings often run on a more relaxed rhythm, so please give yourself a little breathing room and enjoy the island pace rather than rushing from place to place.",
+    "mapSpots": [
+      {
+        "label": "Airport",
+        "detail": "Santorini Airport for arrivals, transfers, and taxi pickup."
+      },
+      {
+        "label": "Venue",
+        "detail": "Santorini Gem for the ceremony, drinks, dinner, and dancing.",
+        "href": "https://maps.google.com/?q=Santorini+Gem+Pyrgos+Santorini"
+      },
+      {
+        "label": "Suggested Hotels",
+        "detail": "Fira and nearby areas are the easiest bases for transport and dining."
+      },
+      {
+        "label": "Old Town",
+        "detail": "Pyrgos village and the surrounding lanes are perfect for a slow wander before or after the wedding."
+      }
+    ],
     "transport": "We recommend arranging transfers or taxis in advance, as Santorini can be busy around wedding season.",
     "parking": "Limited parking is available near the venue, so shared transport is encouraged where possible.",
     "directions": "Pyrgos is centrally located on the island and around 15 minutes by car from Fira and nearby accommodation areas.",

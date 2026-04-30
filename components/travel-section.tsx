@@ -15,8 +15,12 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
   const showReception = visibility?.receptionCard ?? true;
   const showTransport = visibility?.transportCard ?? true;
   const showDirections = visibility?.directionsCard ?? true;
+  const showMapUtility =
+    Boolean(wedding.travel.mapLink) ||
+    Boolean(wedding.travel.relaxedNote) ||
+    Boolean(wedding.travel.mapSpots?.length);
 
-  if (!showCeremony && !showReception && !showTransport && !showDirections) {
+  if (!showCeremony && !showReception && !showTransport && !showDirections && !showMapUtility) {
     return null;
   }
 
@@ -49,6 +53,58 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
             {wedding.travel.sneakPeekImage ? (
               <article className="sm:col-span-2">
                 <VenueSneakPeek imageUrl={wedding.travel.sneakPeekImage} />
+              </article>
+            ) : null}
+            {showMapUtility ? (
+              <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
+                <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+                  <div className="space-y-4">
+                    <p className="eyebrow">Map & Area</p>
+                    <h3 className="text-2xl">Useful locations at a glance</h3>
+                    <p className="prose-copy">
+                      A quick guide to the places guests are most likely to need before and during the wedding weekend.
+                    </p>
+                    {wedding.travel.mapLink ? (
+                      <a
+                        href={wedding.travel.mapLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="accent-outline inline-flex rounded-full px-5 py-3 text-sm font-medium"
+                      >
+                        Open map
+                      </a>
+                    ) : null}
+                    {wedding.travel.relaxedNote ? (
+                      <div className="rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+                        <strong className="text-[var(--foreground)]">Relaxed itinerary note:</strong>{" "}
+                        {wedding.travel.relaxedNote}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {(wedding.travel.mapSpots ?? []).map((spot) => (
+                      <div
+                        key={`${spot.label}-${spot.detail}`}
+                        className="rounded-[1.2rem] border border-[var(--border)] bg-white/78 p-5"
+                      >
+                        <p className="eyebrow">{spot.label}</p>
+                        <p className="mt-3 text-base leading-7 text-[var(--foreground)]">
+                          {spot.detail}
+                        </p>
+                        {spot.href ? (
+                          <a
+                            href={spot.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="mt-4 inline-flex text-sm font-medium text-[var(--accent-strong)]"
+                          >
+                            Open in maps
+                          </a>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </article>
             ) : null}
             {showCeremony ? (

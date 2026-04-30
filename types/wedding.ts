@@ -17,6 +17,12 @@ export type LinkItem = {
   href: string;
 };
 
+export type MapSpot = {
+  label: string;
+  detail: string;
+  href?: string;
+};
+
 export type TravelInfo = {
   heading: string;
   headingHtml?: string;
@@ -26,6 +32,8 @@ export type TravelInfo = {
   locationOverviewTitleHtml?: string;
   locationOverviewHtml?: string;
   sneakPeekImage?: string;
+  relaxedNote?: string;
+  mapSpots?: MapSpot[];
   transport: string;
   transportHtml?: string;
   parking: string;

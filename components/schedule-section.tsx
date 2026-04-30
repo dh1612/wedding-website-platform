@@ -14,15 +14,21 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
       <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <SectionHeading
-            eyebrow="Schedule"
-            title="The Day At A Glance"
-            description="A simple timeline so guests can quickly understand where to be and when."
+            eyebrow="Weekend Timeline"
+            title="What’s Happening And When"
+            description="A clear outline of the celebration so guests can settle in, enjoy the weekend, and know where they need to be."
           />
+          <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+            A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time.
+          </div>
         </div>
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
-          <div className="space-y-6">
+          <div className="grid gap-4 sm:grid-cols-2">
             {wedding.schedule.map((item, index) => (
-              <div key={`${item.time}-${item.title}`} className="grid gap-3 border-b border-[var(--border)] pb-6 last:border-none last:pb-0 sm:grid-cols-[120px_1fr]">
+              <article
+                key={`${item.time}-${item.title}`}
+                className="accent-panel rounded-[1.3rem] p-5"
+              >
                 <div>
                   <div className="accent-panel inline-flex rounded-full px-3 py-1 text-sm uppercase tracking-[0.25em] text-[var(--accent-strong)]">
                     Stop {index + 1}
@@ -31,11 +37,9 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
                     {item.time}
                   </p>
                 </div>
-                <div>
-                  <h3 className="text-2xl">{item.title}</h3>
-                  <p className="prose-copy mt-2">{item.details}</p>
-                </div>
-              </div>
+                <h3 className="mt-4 text-2xl">{item.title}</h3>
+                <p className="prose-copy mt-2">{item.details}</p>
+              </article>
             ))}
           </div>
         </div>

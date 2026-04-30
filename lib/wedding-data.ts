@@ -1,5 +1,5 @@
 import weddingData from "@/data/weddingData.json";
-import type { RSVPFormQuestion, WeddingData } from "@/types/wedding";
+import type { MapSpot, RSVPFormQuestion, WeddingData } from "@/types/wedding";
 
 const defaultWeddingData = weddingData as unknown as WeddingData;
 
@@ -56,6 +56,35 @@ function coerceCustomQuestions(input: unknown): RSVPFormQuestion[] {
     });
 
   return mapped.filter((item): item is RSVPFormQuestion => item !== null);
+}
+
+function coerceMapSpots(input: unknown, fallback: MapSpot[]) {
+  if (!Array.isArray(input)) {
+    return fallback;
+  }
+
+  const mapped = input
+    .map<MapSpot | null>((item) => {
+      const source = item as Partial<MapSpot>;
+      const label = typeof source.label === "string" ? source.label.trim() : "";
+      const detail = typeof source.detail === "string" ? source.detail.trim() : "";
+
+      if (!label || !detail) {
+        return null;
+      }
+
+      return {
+        label,
+        detail,
+        href:
+          typeof source.href === "string" && source.href.trim()
+            ? source.href.trim()
+            : undefined
+      };
+    })
+    .filter((item): item is MapSpot => item !== null);
+
+  return mapped.length ? mapped : fallback;
 }
 
 export function getWeddingData(): WeddingData {
@@ -152,6 +181,11 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.travel?.sneakPeekImage === "string" && isValidRemoteImageUrl(source.travel.sneakPeekImage)
           ? source.travel.sneakPeekImage
           : "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80",
+      relaxedNote:
+        typeof source.travel?.relaxedNote === "string" && source.travel.relaxedNote.trim()
+          ? source.travel.relaxedNote
+          : fallback.travel.relaxedNote,
+      mapSpots: coerceMapSpots(source.travel?.mapSpots, fallback.travel.mapSpots ?? []),
       transport: source.travel?.transport ?? fallback.travel.transport,
       transportHtml:
         typeof source.travel?.transportHtml === "string" && source.travel.transportHtml.trim()
