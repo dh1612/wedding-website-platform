@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 
 type PortalLoginFormProps = {
   next: string;
+  requireEmail?: boolean;
 };
 
-export function PortalLoginForm({ next }: PortalLoginFormProps) {
+export function PortalLoginForm({ next, requireEmail = false }: PortalLoginFormProps) {
   const router = useRouter();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +26,7 @@ export function PortalLoginForm({ next }: PortalLoginFormProps) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ password, next })
+        body: JSON.stringify({ email, password, next })
       });
 
       if (!response.ok) {
@@ -48,9 +50,22 @@ export function PortalLoginForm({ next }: PortalLoginFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {requireEmail ? (
+        <label className="block space-y-2">
+          <span className="text-sm font-medium text-[var(--foreground)]">
+            Email address
+          </span>
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className="w-full rounded-[1rem] border border-[var(--border)] bg-white/85 px-4 py-3 text-[var(--foreground)] outline-none"
+          />
+        </label>
+      ) : null}
       <label className="block space-y-2">
         <span className="text-sm font-medium text-[var(--foreground)]">
-          Enter password
+          Password
         </span>
         <input
           type="password"

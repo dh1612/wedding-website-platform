@@ -2,12 +2,14 @@
 
 import { put } from "@vercel/blob";
 import { redirect } from "next/navigation";
+import { hashPassword } from "@/lib/passwords";
 import { coerceWeddingData } from "@/lib/wedding-data";
 import {
   createWeddingDraft,
   deleteWeddingDraftBySlug,
   getWeddingRecordForAdmin,
-  updateWeddingBySlug
+  updateWeddingBySlug,
+  upsertWeddingPortalUser
 } from "@/lib/production-repositories";
 
 function slugify(input: string) {
@@ -209,6 +211,8 @@ export async function updateWeddingContentAction(formData: FormData) {
     portalPassword?: string;
     intake?: Record<string, unknown>;
   };
+  const portalUserEmail = String(formData.get("portalUserEmail") || "").trim().toLowerCase();
+  const portalUserPassword = String(formData.get("portalUserPassword") || "").trim();
 
   const storyParagraphs = String(formData.get("storyParagraphs") || "")
     .split("\n")
@@ -507,7 +511,6 @@ export async function updateWeddingContentAction(formData: FormData) {
   const nextPlannerSettings = {
     ...plannerSettings,
     packageTier: String(formData.get("packageTier") || "").trim() || plannerSettings.packageTier,
-    portalPassword: String(formData.get("portalPassword") || "").trim(),
     intake: {
       ...(plannerSettings.intake ?? {}),
       couple: nextContent.couple,
@@ -528,6 +531,16 @@ export async function updateWeddingContentAction(formData: FormData) {
     plannerSettingsJson: nextPlannerSettings,
     status: (String(formData.get("status") || existing.status) as "draft" | "approved" | "live")
   });
+
+  if (existing.id && portalUserEmail) {
+    const passwordHash = portalUserPassword ? await hashPassword(portalUserPassword) : undefined;
+
+    await upsertWeddingPortalUser({
+      weddingId: existing.id,
+      email: portalUserEmail,
+      passwordHash
+    });
+  }
 
   redirect(`/admin/weddings/${nextSlug}/edit?saved=1`);
 }

@@ -14,6 +14,12 @@ type AdminWeddingEditorProps = {
     status: "draft" | "approved" | "live";
     contentJson: unknown;
     plannerSettingsJson: unknown;
+    adminUsers?: Array<{
+      id: string;
+      email: string;
+      role: "owner" | "planner";
+      createdAt: Date;
+    }>;
   };
   saved?: boolean;
   error?: string;
@@ -107,8 +113,8 @@ export function AdminWeddingEditor({
   const weddingData = coerceWeddingData(record.contentJson);
   const plannerSettings = (record.plannerSettingsJson ?? {}) as {
     packageTier?: "basic" | "smart" | "premium";
-    portalPassword?: string;
   };
+  const portalUser = record.adminUsers?.[0] ?? null;
   const theme = getThemeById(weddingData.theme);
   const accommodationLines = weddingData.accommodation
     .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
@@ -746,7 +752,7 @@ export function AdminWeddingEditor({
             id="key-details"
             eyebrow="Key Details"
             title="Contact details and private access"
-            description="Set the contact email, RSVP deadline, and the couple’s portal password for this wedding."
+            description="Set the contact email, RSVP deadline, and the couple’s private portal login for this wedding."
           >
             <div className="grid gap-4 md:grid-cols-2">
               <input name="contactEmail" defaultValue={weddingData.contact.email} placeholder="Contact email" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
@@ -754,16 +760,30 @@ export function AdminWeddingEditor({
             </div>
             <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
               <p className="eyebrow">Portal Access</p>
-              <h2 className="mt-3 text-2xl">Set or reset the couple’s portal password</h2>
+              <h2 className="mt-3 text-2xl">Set or reset the couple’s portal login</h2>
               <p className="prose-copy mt-3">
-                Save a wedding-specific password here if you want this couple to have their own
-                private portal access. If you leave it blank, the shared default portal password is
-                used instead.
+                Give each couple their own email and password for the private portal. Leave the
+                password blank if you only want to change the email and keep the current password.
               </p>
+              {portalUser ? (
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+                  Current couple login: <span className="font-medium text-[var(--foreground)]">{portalUser.email}</span>
+                </p>
+              ) : (
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+                  No dedicated couple portal account has been created for this wedding yet.
+                </p>
+              )}
               <input
-                name="portalPassword"
-                defaultValue={plannerSettings.portalPassword ?? ""}
-                placeholder="Private portal password for this wedding"
+                name="portalUserEmail"
+                defaultValue={portalUser?.email ?? ""}
+                placeholder="couple@example.com"
+                className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <input
+                name="portalUserPassword"
+                type="password"
+                placeholder={portalUser ? "Leave blank to keep the current password" : "Create a private portal password"}
                 className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
               />
             </div>

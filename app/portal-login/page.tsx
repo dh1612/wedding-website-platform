@@ -18,8 +18,9 @@ export default async function PortalLoginPage({
   const theme = getThemeById(params?.theme ?? wedding.theme);
   const next = sanitisePortalNextPath(params?.next);
   const requiredScope = getRequiredPortalScope(next);
+  const requireEmail = Boolean(requiredScope?.startsWith("wedding:"));
   const portalCopy = requiredScope?.startsWith("wedding:")
-    ? "Enter the private password for this wedding. Couples can have their own portal password, separate from operator access."
+    ? "Enter the couple portal email and password for this wedding. This access is separate from the operator backend."
     : "Enter the operator password to open the private admin and backend areas.";
 
   return (
@@ -41,7 +42,7 @@ export default async function PortalLoginPage({
                 </p>
                 <p className="mt-2 break-all text-sm">{next}</p>
               </div>
-              <PortalLoginForm next={next} />
+              <PortalLoginForm next={next} requireEmail={requireEmail} />
             </div>
           </div>
         </div>

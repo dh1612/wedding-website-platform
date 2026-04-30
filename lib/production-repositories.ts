@@ -80,9 +80,46 @@ export async function getWeddingRecordForAdmin(slug: string) {
       eventDate: true,
       timezone: true,
       contentJson: true,
-      plannerSettingsJson: true
+      plannerSettingsJson: true,
+      adminUsers: {
+        orderBy: {
+          createdAt: "asc"
+        },
+        select: {
+          id: true,
+          email: true,
+          role: true,
+          createdAt: true
+        }
+      }
     }
   });
+}
+
+export async function getWeddingPortalUserBySlug(slug: string) {
+  const wedding = await prisma.wedding.findUnique({
+    where: { slug },
+    select: {
+      id: true,
+      adminUsers: {
+        orderBy: {
+          createdAt: "asc"
+        },
+        take: 1,
+        select: {
+          id: true,
+          email: true,
+          passwordHash: true,
+          role: true
+        }
+      }
+    }
+  });
+
+  return {
+    weddingId: wedding?.id ?? null,
+    user: wedding?.adminUsers[0] ?? null
+  };
 }
 
 export async function createWeddingDraft(input: {
@@ -139,6 +176,40 @@ export async function updateWeddingBySlug(input: {
       plannerSettingsJson:
         input.plannerSettingsJson as Prisma.InputJsonValue | undefined,
       status: input.status
+    }
+  });
+}
+
+export async function upsertWeddingPortalUser(input: {
+  weddingId: string;
+  email: string;
+  passwordHash?: string;
+}) {
+  const existing = await prisma.weddingAdminUser.findFirst({
+    where: { weddingId: input.weddingId },
+    select: { id: true }
+  });
+
+  if (!existing) {
+    if (!input.passwordHash) {
+      return null;
+    }
+
+    return prisma.weddingAdminUser.create({
+      data: {
+        weddingId: input.weddingId,
+        email: input.email,
+        passwordHash: input.passwordHash,
+        role: "owner"
+      }
+    });
+  }
+
+  return prisma.weddingAdminUser.update({
+    where: { id: existing.id },
+    data: {
+      email: input.email,
+      ...(input.passwordHash ? { passwordHash: input.passwordHash } : {})
     }
   });
 }
