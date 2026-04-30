@@ -9,6 +9,7 @@ type VenueSneakPeekProps = {
 
 export function VenueSneakPeek({ imageUrl }: VenueSneakPeekProps) {
   const [open, setOpen] = useState(false);
+  const toggleOpen = () => setOpen((current) => !current);
 
   return (
     <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/80 p-4 shadow-[var(--shadow)]">
@@ -19,14 +20,19 @@ export function VenueSneakPeek({ imageUrl }: VenueSneakPeekProps) {
         </div>
         <button
           type="button"
-          onClick={() => setOpen((current) => !current)}
+          onClick={toggleOpen}
           className="accent-button rounded-full px-4 py-2 text-sm font-medium"
         >
           {open ? "Close door" : "Open door"}
         </button>
       </div>
 
-      <div className="relative overflow-hidden rounded-[1.4rem] border border-[var(--border)] bg-[#ede3d1]">
+      <button
+        type="button"
+        onClick={toggleOpen}
+        aria-label={open ? "Close venue sneak peek" : "Open venue sneak peek"}
+        className="relative block w-full overflow-hidden rounded-[1.4rem] border border-[var(--border)] bg-[#ede3d1] text-left"
+      >
         <div className="relative aspect-[16/10]">
           <Image
             src={imageUrl}
@@ -70,7 +76,7 @@ export function VenueSneakPeek({ imageUrl }: VenueSneakPeekProps) {
             </div>
           ) : null}
         </div>
-      </div>
+      </button>
     </div>
   );
 }
