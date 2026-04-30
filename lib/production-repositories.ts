@@ -437,3 +437,142 @@ export async function deleteGuest(id: string) {
     where: { id }
   });
 }
+
+export async function deleteGuestForWedding(input: {
+  id: string;
+  weddingId: string;
+}) {
+  const guest = await prisma.guest.findFirst({
+    where: {
+      id: input.id,
+      weddingId: input.weddingId
+    },
+    select: { id: true }
+  });
+
+  if (!guest) {
+    return null;
+  }
+
+  await prisma.guest.delete({
+    where: { id: guest.id }
+  });
+
+  return guest;
+}
+
+export async function updateChecklistItemForWedding(input: {
+  id: string;
+  weddingId: string;
+  title?: string;
+  category?: string;
+  completed?: boolean;
+  notes?: string | null;
+  dueDate?: Date | null;
+  sortOrder?: number;
+}) {
+  const existing = await prisma.checklistItem.findFirst({
+    where: {
+      id: input.id,
+      weddingId: input.weddingId
+    },
+    select: { id: true }
+  });
+
+  if (!existing) {
+    return null;
+  }
+
+  return prisma.checklistItem.update({
+    where: { id: existing.id },
+    data: {
+      title: input.title,
+      category: input.category,
+      completed: input.completed,
+      notes: input.notes,
+      dueDate: input.dueDate,
+      sortOrder: input.sortOrder
+    }
+  });
+}
+
+export async function deleteChecklistItemForWedding(input: {
+  id: string;
+  weddingId: string;
+}) {
+  const existing = await prisma.checklistItem.findFirst({
+    where: {
+      id: input.id,
+      weddingId: input.weddingId
+    },
+    select: { id: true }
+  });
+
+  if (!existing) {
+    return null;
+  }
+
+  await prisma.checklistItem.delete({
+    where: { id: existing.id }
+  });
+
+  return existing;
+}
+
+export async function updateCalendarItemForWedding(input: {
+  id: string;
+  weddingId: string;
+  title?: string;
+  category?: string;
+  startDate?: Date;
+  endDate?: Date;
+  notes?: string | null;
+  sortOrder?: number;
+}) {
+  const existing = await prisma.calendarItem.findFirst({
+    where: {
+      id: input.id,
+      weddingId: input.weddingId
+    },
+    select: { id: true }
+  });
+
+  if (!existing) {
+    return null;
+  }
+
+  return prisma.calendarItem.update({
+    where: { id: existing.id },
+    data: {
+      title: input.title,
+      category: input.category,
+      startDate: input.startDate,
+      endDate: input.endDate,
+      notes: input.notes,
+      sortOrder: input.sortOrder
+    }
+  });
+}
+
+export async function deleteCalendarItemForWedding(input: {
+  id: string;
+  weddingId: string;
+}) {
+  const existing = await prisma.calendarItem.findFirst({
+    where: {
+      id: input.id,
+      weddingId: input.weddingId
+    },
+    select: { id: true }
+  });
+
+  if (!existing) {
+    return null;
+  }
+
+  await prisma.calendarItem.delete({
+    where: { id: existing.id }
+  });
+
+  return existing;
+}

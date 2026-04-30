@@ -11,6 +11,23 @@ type Context = {
   }>;
 };
 
+function clampText(value: string | undefined, maxLength: number) {
+  return value?.trim().slice(0, maxLength) || undefined;
+}
+
+function sanitizeCustomAnswers(value: Record<string, string> | undefined) {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+
+  const entries = Object.entries(value)
+    .slice(0, 20)
+    .map(([key, answer]) => [key.trim().slice(0, 80), String(answer).trim().slice(0, 500)] as const)
+    .filter(([key, answer]) => key && answer);
+
+  return entries.length ? Object.fromEntries(entries) : undefined;
+}
+
 export async function POST(request: Request, context: Context) {
   const { slug } = await context.params;
   const wedding = await getWeddingSiteBySlug(slug);
@@ -33,10 +50,11 @@ export async function POST(request: Request, context: Context) {
     customAnswers?: Record<string, string>;
   };
 
-  const name = body.name?.trim();
-  const household = body.household?.trim() || name;
+  const name = clampText(body.name, 120);
+  const household = clampText(body.household, 120) || name;
+  const email = clampText(body.email, 160);
 
-  if (!name || !body.email?.trim()) {
+  if (!name || !email) {
     return NextResponse.json(
       { error: "Name and email are required." },
       { status: 400 }
@@ -47,11 +65,11 @@ export async function POST(request: Request, context: Context) {
     weddingId: wedding.id,
     invitationName: name,
     householdKey: household,
-    email: body.email.trim(),
-    phone: body.phone?.trim() || undefined,
+    email,
+    phone: clampText(body.phone, 40),
     side: "friends",
     defaultMeal: body.meal ?? "beef",
-    dietaryNotes: body.dietary?.trim() || undefined
+    dietaryNotes: clampText(body.dietary, 1000)
   });
 
   const response = await saveRSVPResponse({
@@ -61,10 +79,10 @@ export async function POST(request: Request, context: Context) {
     attendingCount:
       body.status === "declined" ? 0 : Math.max(1, Number(body.attendingCount) || 1),
     mealChoice: body.meal ?? "beef",
-    dietaryNotes: body.dietary?.trim() || undefined,
-    songRequest: body.songRequest?.trim() || undefined,
-    messageToCouple: body.messageToCouple?.trim() || undefined,
-    customAnswersJson: body.customAnswers
+    dietaryNotes: clampText(body.dietary, 1000),
+    songRequest: clampText(body.songRequest, 200),
+    messageToCouple: clampText(body.messageToCouple, 2000),
+    customAnswersJson: sanitizeCustomAnswers(body.customAnswers)
   });
 
   return NextResponse.json({

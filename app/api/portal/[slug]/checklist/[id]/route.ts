@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import {
-  deleteChecklistItem,
-  updateChecklistItem
+  deleteChecklistItemForWedding,
+  getWeddingSiteBySlug,
+  updateChecklistItemForWedding
 } from "@/lib/production-repositories";
 
 type Context = {
@@ -12,7 +13,13 @@ type Context = {
 };
 
 export async function PATCH(request: Request, context: Context) {
-  const { id } = await context.params;
+  const { slug, id } = await context.params;
+  const wedding = await getWeddingSiteBySlug(slug);
+
+  if (!wedding?.id) {
+    return NextResponse.json({ error: "Wedding not found." }, { status: 404 });
+  }
+
   const body = (await request.json()) as {
     title?: string;
     category?: string;
@@ -20,8 +27,9 @@ export async function PATCH(request: Request, context: Context) {
     notes?: string;
   };
 
-  const item = await updateChecklistItem({
+  const item = await updateChecklistItemForWedding({
     id,
+    weddingId: wedding.id,
     title: body.title?.trim(),
     category: body.category?.trim(),
     completed: body.completed,
@@ -30,6 +38,10 @@ export async function PATCH(request: Request, context: Context) {
         ? body.notes.trim() || null
         : undefined
   });
+
+  if (!item) {
+    return NextResponse.json({ error: "Checklist item not found." }, { status: 404 });
+  }
 
   return NextResponse.json({
     id: item.id,
@@ -41,7 +53,21 @@ export async function PATCH(request: Request, context: Context) {
 }
 
 export async function DELETE(_request: Request, context: Context) {
-  const { id } = await context.params;
-  await deleteChecklistItem(id);
+  const { slug, id } = await context.params;
+  const wedding = await getWeddingSiteBySlug(slug);
+
+  if (!wedding?.id) {
+    return NextResponse.json({ error: "Wedding not found." }, { status: 404 });
+  }
+
+  const item = await deleteChecklistItemForWedding({
+    id,
+    weddingId: wedding.id
+  });
+
+  if (!item) {
+    return NextResponse.json({ error: "Checklist item not found." }, { status: 404 });
+  }
+
   return NextResponse.json({ ok: true });
 }

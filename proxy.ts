@@ -12,10 +12,6 @@ function isProtectedPath(pathname: string) {
     return false;
   }
 
-  if (/^\/api\/portal\/[^/]+\/guests$/.test(pathname)) {
-    return false;
-  }
-
   return Boolean(getRequiredPortalScope(pathname));
 }
 

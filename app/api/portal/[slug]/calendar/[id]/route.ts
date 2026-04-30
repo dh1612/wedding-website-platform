@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import {
-  deleteCalendarItem,
-  updateCalendarItem
+  deleteCalendarItemForWedding,
+  getWeddingSiteBySlug,
+  updateCalendarItemForWedding
 } from "@/lib/production-repositories";
 
 type Context = {
@@ -21,7 +22,13 @@ function parseInputDate(value?: string) {
 }
 
 export async function PATCH(request: Request, context: Context) {
-  const { id } = await context.params;
+  const { slug, id } = await context.params;
+  const wedding = await getWeddingSiteBySlug(slug);
+
+  if (!wedding?.id) {
+    return NextResponse.json({ error: "Wedding not found." }, { status: 404 });
+  }
+
   const body = (await request.json()) as {
     title?: string;
     category?: string;
@@ -30,8 +37,9 @@ export async function PATCH(request: Request, context: Context) {
     notes?: string;
   };
 
-  const item = await updateCalendarItem({
+  const item = await updateCalendarItemForWedding({
     id,
+    weddingId: wedding.id,
     title: body.title?.trim(),
     category: body.category?.trim(),
     startDate: parseInputDate(body.startDate),
@@ -41,6 +49,10 @@ export async function PATCH(request: Request, context: Context) {
         ? body.notes.trim() || null
         : undefined
   });
+
+  if (!item) {
+    return NextResponse.json({ error: "Calendar item not found." }, { status: 404 });
+  }
 
   return NextResponse.json({
     id: item.id,
@@ -53,7 +65,21 @@ export async function PATCH(request: Request, context: Context) {
 }
 
 export async function DELETE(_request: Request, context: Context) {
-  const { id } = await context.params;
-  await deleteCalendarItem(id);
+  const { slug, id } = await context.params;
+  const wedding = await getWeddingSiteBySlug(slug);
+
+  if (!wedding?.id) {
+    return NextResponse.json({ error: "Wedding not found." }, { status: 404 });
+  }
+
+  const item = await deleteCalendarItemForWedding({
+    id,
+    weddingId: wedding.id
+  });
+
+  if (!item) {
+    return NextResponse.json({ error: "Calendar item not found." }, { status: 404 });
+  }
+
   return NextResponse.json({ ok: true });
 }

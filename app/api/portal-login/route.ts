@@ -4,7 +4,8 @@ import {
   getDefaultCouplePortalPassword,
   getPortalCookieName,
   getOperatorPortalPassword,
-  getRequiredPortalScope
+  getRequiredPortalScope,
+  sanitisePortalNextPath
 } from "@/lib/portal-auth";
 import { getWeddingRecordForAdmin } from "@/lib/production-repositories";
 
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
   };
 
   const password = body.password?.trim() ?? "";
-  const nextPath = body.next || "/couple-portal";
+  const nextPath = sanitisePortalNextPath(body.next);
   const requiredScope = getRequiredPortalScope(nextPath);
   let grantedScope = requiredScope ?? "admin";
 

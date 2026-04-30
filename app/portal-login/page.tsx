@@ -1,5 +1,5 @@
 import { PortalLoginForm } from "@/components/portal-login-form";
-import { getRequiredPortalScope } from "@/lib/portal-auth";
+import { getRequiredPortalScope, sanitisePortalNextPath } from "@/lib/portal-auth";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
 
@@ -16,7 +16,7 @@ export default async function PortalLoginPage({
   const wedding = getWeddingData();
   const params = searchParams ? await searchParams : undefined;
   const theme = getThemeById(params?.theme ?? wedding.theme);
-  const next = params?.next || "/couple-portal";
+  const next = sanitisePortalNextPath(params?.next);
   const requiredScope = getRequiredPortalScope(next);
   const portalCopy = requiredScope?.startsWith("wedding:")
     ? "Enter the private password for this wedding. Couples can have their own portal password, separate from operator access."

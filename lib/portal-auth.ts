@@ -18,6 +18,22 @@ export function getPortalSecret() {
   return process.env.PORTAL_SESSION_SECRET ?? getOperatorPortalPassword();
 }
 
+export function sanitisePortalNextPath(value?: string | null) {
+  const fallback = "/couple-portal";
+
+  if (!value) {
+    return fallback;
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed.startsWith("/") || trimmed.startsWith("//")) {
+    return fallback;
+  }
+
+  return trimmed;
+}
+
 function normalisePathname(pathname: string) {
   return pathname.split("?")[0].replace(/\/+$/, "") || "/";
 }
