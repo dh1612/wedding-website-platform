@@ -1,5 +1,6 @@
 "use server";
 
+import { put } from "@vercel/blob";
 import { redirect } from "next/navigation";
 import { coerceWeddingData } from "@/lib/wedding-data";
 import {
@@ -93,6 +94,47 @@ function isValidRemoteImageUrl(value: string) {
   } catch {
     return false;
   }
+}
+
+function sanitizeFilenamePart(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9.-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getFileExtension(filename: string) {
+  const parts = filename.split(".");
+  return parts.length > 1 ? sanitizeFilenamePart(parts.at(-1) || "") : "jpg";
+}
+
+async function uploadImageFile({
+  file,
+  weddingSlug,
+  folder,
+  fallbackLabel
+}: {
+  file: File | null;
+  weddingSlug: string;
+  folder: string;
+  fallbackLabel: string;
+}) {
+  if (!file || file.size === 0) {
+    return null;
+  }
+
+  const extension = getFileExtension(file.name);
+  const timestamp = Date.now();
+  const safeSlug = sanitizeFilenamePart(weddingSlug) || "wedding";
+  const pathname = `weddings/${safeSlug}/${folder}/${fallbackLabel}-${timestamp}.${extension}`;
+
+  const uploaded = await put(pathname, file, {
+    access: "public",
+    addRandomSuffix: true
+  });
+
+  return uploaded.url;
 }
 
 export async function createWeddingDraftAction(formData: FormData) {
@@ -222,6 +264,52 @@ export async function updateWeddingContentAction(formData: FormData) {
     .filter(Boolean)
     .filter(isValidRemoteImageUrl);
 
+  let uploadedHeroImage: string | null = null;
+  let uploadedSneakPeekImage: string | null = null;
+  let uploadedGalleryImages: string[] = [];
+
+  try {
+    uploadedHeroImage = await uploadImageFile({
+      file: formData.get("heroImageFile") as File | null,
+      weddingSlug: nextSlug,
+      folder: "hero",
+      fallbackLabel: "hero"
+    });
+
+    uploadedSneakPeekImage = await uploadImageFile({
+      file: formData.get("travelSneakPeekImageFile") as File | null,
+      weddingSlug: nextSlug,
+      folder: "venue",
+      fallbackLabel: "sneak-peek"
+    });
+
+    const galleryFileUploads = await Promise.all(
+      formData
+        .getAll("galleryImageFiles")
+        .filter((entry): entry is File => entry instanceof File && entry.size > 0)
+        .map((file, index) =>
+          uploadImageFile({
+            file,
+            weddingSlug: nextSlug,
+            folder: "gallery",
+            fallbackLabel: `gallery-${index + 1}`
+          })
+        )
+    );
+
+    uploadedGalleryImages = galleryFileUploads.filter(
+      (value): value is string => Boolean(value)
+    );
+  } catch (error) {
+    console.error("Image upload failed", error);
+    redirect(`/admin/weddings/${currentSlug}/edit?error=upload`);
+  }
+
+  const mergedGalleryImages =
+    uploadedGalleryImages.length || galleryImages.length
+      ? [...uploadedGalleryImages, ...galleryImages]
+      : weddingData.gallery.images;
+
   const nextContent = {
     ...weddingData,
     couple: String(formData.get("couple") || "").trim() || weddingData.couple,
@@ -236,7 +324,10 @@ export async function updateWeddingContentAction(formData: FormData) {
       taglineRichText || weddingData.taglineHtml,
     announcement: stripHtml(announcementRichText) || weddingData.announcement,
     announcementHtml: announcementRichText || weddingData.announcementHtml,
-    heroImage: String(formData.get("heroImage") || "").trim() || weddingData.heroImage,
+    heroImage:
+      uploadedHeroImage ||
+      String(formData.get("heroImage") || "").trim() ||
+      weddingData.heroImage,
     story: {
       ...weddingData.story,
       heading: stripHtml(storyHeadingRichText) || weddingData.story.heading,
@@ -257,7 +348,7 @@ export async function updateWeddingContentAction(formData: FormData) {
         stripHtml(galleryDescriptionRichText) || weddingData.gallery.description,
       descriptionHtml:
         galleryDescriptionRichText || weddingData.gallery.descriptionHtml,
-      images: galleryImages.length ? galleryImages : weddingData.gallery.images
+      images: mergedGalleryImages,
     },
     ceremony: {
       ...weddingData.ceremony,
@@ -301,7 +392,9 @@ export async function updateWeddingContentAction(formData: FormData) {
       locationOverviewHtml:
         locationOverviewRichText || weddingData.travel.locationOverviewHtml,
       sneakPeekImage:
-        String(formData.get("travelSneakPeekImage") || "").trim() || weddingData.travel.sneakPeekImage,
+        uploadedSneakPeekImage ||
+        String(formData.get("travelSneakPeekImage") || "").trim() ||
+        weddingData.travel.sneakPeekImage,
       transport:
         stripHtml(travelTransportRichText) || weddingData.travel.transport,
       transportHtml:

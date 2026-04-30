@@ -16,11 +16,13 @@ type AdminWeddingEditorProps = {
     plannerSettingsJson: unknown;
   };
   saved?: boolean;
+  error?: string;
 };
 
 export function AdminWeddingEditor({
   record,
-  saved = false
+  saved = false,
+  error
 }: AdminWeddingEditorProps) {
   function escapeHtml(value: string) {
     return value
@@ -183,7 +185,13 @@ export function AdminWeddingEditor({
           </div>
         ) : null}
 
-        <form action={updateWeddingContentAction} className="space-y-8">
+        {error === "upload" ? (
+          <div className="mb-6 rounded-[1.3rem] border border-[#9a5f45]/20 bg-[#fff6f1] px-5 py-4 text-sm leading-6 text-[#7d4c37]">
+            Image upload failed. Please check that Blob storage is configured in Vercel, then try again.
+          </div>
+        ) : null}
+
+        <form action={updateWeddingContentAction} className="space-y-8" encType="multipart/form-data">
           <input type="hidden" name="currentSlug" value={record.slug} />
 
           <div className="section-shell rounded-[2rem] p-8">
@@ -279,8 +287,14 @@ export function AdminWeddingEditor({
               <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
                 <p className="eyebrow">Hero Image</p>
                 <p className="prose-copy mt-3">
-                  This is the main image used at the top of the website. Paste a direct image URL here to override the default theme image.
+                  Upload a JPG or PNG directly, or paste a direct image URL if you prefer. A new upload will override the URL field.
                 </p>
+                <input
+                  name="heroImageFile"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/avif"
+                  className="mt-4 block w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+                />
                 <input
                   name="heroImage"
                   defaultValue={weddingData.heroImage}
@@ -291,8 +305,15 @@ export function AdminWeddingEditor({
               <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
                 <p className="eyebrow">Gallery Images</p>
                 <p className="prose-copy mt-3">
-                  Add one image URL per line for the gallery and story moments section. Remove a line to hide an image.
+                  Upload one or more gallery images here, or keep using one image URL per line. Uploaded images are added to the gallery in the order selected.
                 </p>
+                <input
+                  name="galleryImageFiles"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/avif"
+                  multiple
+                  className="mt-4 block w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+                />
                 <textarea
                   name="galleryImages"
                   defaultValue={galleryImageLines}
@@ -359,13 +380,19 @@ export function AdminWeddingEditor({
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Sneak peek venue image</label>
                 <input
+                  name="travelSneakPeekImageFile"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/avif"
+                  className="w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+                />
+                <input
                   name="travelSneakPeekImage"
                   defaultValue={weddingData.travel.sneakPeekImage ?? ""}
                   placeholder="https://..."
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                 />
                 <p className="text-sm leading-6 text-[var(--muted)]">
-                  This powers the interactive door reveal card in the venue section. You can swap the sample image here any time.
+                  This powers the interactive door reveal card in the venue section. Uploading a new image will override the URL field.
                 </p>
               </div>
               <div className="space-y-2 md:col-span-2">
