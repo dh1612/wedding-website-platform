@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { plainTextToHtml, sanitizeRichTextHtml } from "@/lib/rich-text";
 
 type RichTextEditorFieldProps = {
   name: string;
@@ -9,13 +10,6 @@ type RichTextEditorFieldProps = {
   description?: string;
   minHeightClassName?: string;
 };
-
-const fontOptions = [
-  { label: "Classic serif", value: "Georgia" },
-  { label: "Modern serif", value: "\"Times New Roman\"" },
-  { label: "Clean sans", value: "Arial" },
-  { label: "Monospace", value: "\"Courier New\"" }
-] as const;
 
 function ToolbarButton({
   label,
@@ -63,7 +57,6 @@ export function RichTextEditorField({
     headingSmall: false,
     quote: false
   });
-  const [activeFont, setActiveFont] = useState("");
 
   function refreshToolbarState() {
     if (typeof document === "undefined") {
@@ -87,11 +80,6 @@ export function RichTextEditorField({
     nextFormats.quote = block.includes("blockquote");
 
     setActiveFormats(nextFormats);
-
-    const fontName = document.queryCommandValue("fontName")?.replaceAll('"', "") ?? "";
-    const matchedFont =
-      fontOptions.find((option) => fontName.toLowerCase().includes(option.value.replaceAll('"', "").toLowerCase()))?.value ?? "";
-    setActiveFont(matchedFont);
   }
 
   function saveSelection() {
@@ -134,7 +122,9 @@ export function RichTextEditorField({
     action();
     const editor = editorRef.current;
     if (editor) {
-      setHtml(editor.innerHTML);
+      const nextHtml = sanitizeRichTextHtml(editor.innerHTML);
+      editor.innerHTML = nextHtml;
+      setHtml(nextHtml);
       editor.focus();
       saveSelection();
       refreshToolbarState();
@@ -147,12 +137,28 @@ export function RichTextEditorField({
     });
   }
 
+  function insertCallout(style: "ivory" | "gold") {
+    withSelection(() => {
+      const selection = document.getSelection();
+      const selectedText = selection?.toString().trim() ?? "";
+      const html = selectedText
+        ? `<div class="editor-callout editor-callout-${style}"><p>${selectedText
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")}</p></div>`
+        : `<div class="editor-callout editor-callout-${style}"><p>Callout text</p></div>`;
+
+      document.execCommand("insertHTML", false, html);
+    });
+  }
+
   useEffect(() => {
-    setHtml(defaultValue);
+    const sanitizedDefault = sanitizeRichTextHtml(defaultValue);
+    setHtml(sanitizedDefault);
 
     const editor = editorRef.current;
-    if (editor && editor.innerHTML !== defaultValue) {
-      editor.innerHTML = defaultValue;
+    if (editor && editor.innerHTML !== sanitizedDefault) {
+      editor.innerHTML = sanitizedDefault;
     }
   }, [defaultValue]);
 
@@ -197,25 +203,8 @@ export function RichTextEditorField({
           <ToolbarButton label="Large heading" active={activeFormats.headingLarge} onClick={() => applyCommand("formatBlock", "h2")} />
           <ToolbarButton label="Small heading" active={activeFormats.headingSmall} onClick={() => applyCommand("formatBlock", "h3")} />
           <ToolbarButton label="Quote" active={activeFormats.quote} onClick={() => applyCommand("formatBlock", "blockquote")} />
-          <select
-            value={activeFont}
-            onChange={(event) => {
-              if (!event.target.value) return;
-              applyCommand("fontName", event.target.value);
-            }}
-            className={`rounded-full border px-3 py-2 text-xs font-medium ${
-              activeFont
-                ? "border-[#184b38] bg-[#184b38] text-white"
-                : "border-[var(--border)] bg-white text-[var(--foreground)]"
-            }`}
-          >
-            <option value="">Change font</option>
-            {fontOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <ToolbarButton label="Ivory box" onClick={() => insertCallout("ivory")} />
+          <ToolbarButton label="Gold box" onClick={() => insertCallout("gold")} />
         </div>
 
         <div
@@ -223,8 +212,17 @@ export function RichTextEditorField({
           ref={editorRef}
           contentEditable
           suppressContentEditableWarning
+          onPaste={(event) => {
+            event.preventDefault();
+            const text = event.clipboardData.getData("text/plain");
+            const pastedHtml = plainTextToHtml(text);
+
+            withSelection(() => {
+              document.execCommand("insertHTML", false, pastedHtml);
+            });
+          }}
           onInput={(event) => {
-            setHtml(event.currentTarget.innerHTML);
+            setHtml(sanitizeRichTextHtml(event.currentTarget.innerHTML));
             saveSelection();
             refreshToolbarState();
           }}

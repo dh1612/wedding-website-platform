@@ -218,6 +218,28 @@ main[data-theme="christmas-candlelight"] [data-theme-stars] {
   color: var(--foreground);
 }
 
+.rich-text-content .editor-callout {
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  padding: 1rem 1.1rem;
+}
+
+.rich-text-content .editor-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text-content .editor-callout-ivory {
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--foreground);
+}
+
+.rich-text-content .editor-callout-gold {
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--gold) 50%, var(--border));
+  color: var(--foreground);
+}
+
 .hero-shell {
   position: relative;
 }
