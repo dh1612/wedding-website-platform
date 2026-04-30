@@ -73,7 +73,7 @@ function InlineCopy({
 export function HeroSection({ themeId, weddingData, previewMode = false }: HeroSectionProps) {
   const wedding = weddingData ?? getWeddingData();
   const theme = getThemeById(themeId);
-  const heroImage = theme.heroImage;
+  const heroImage = wedding.heroImage || theme.heroImage;
   const detailImage = theme.detailImage;
   const displayDate = formatDisplayDate(wedding.date);
   const visibility = wedding.sectionVisibility;
