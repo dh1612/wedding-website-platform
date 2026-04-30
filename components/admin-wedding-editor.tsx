@@ -19,6 +19,46 @@ type AdminWeddingEditorProps = {
   error?: string;
 };
 
+type EditorAccordionSectionProps = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+};
+
+function EditorAccordionSection({
+  id,
+  eyebrow,
+  title,
+  description,
+  defaultOpen = false,
+  children
+}: EditorAccordionSectionProps) {
+  return (
+    <details
+      id={id}
+      open={defaultOpen}
+      className="section-shell scroll-mt-24 rounded-[2rem] border border-[var(--border)] bg-white/90"
+    >
+      <summary className="list-none cursor-pointer p-8">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="eyebrow">{eyebrow}</p>
+            <h2 className="mt-3 text-2xl">{title}</h2>
+            <p className="prose-copy mt-3 max-w-3xl">{description}</p>
+          </div>
+          <span className="accent-outline mt-1 inline-flex h-10 min-w-10 items-center justify-center rounded-full px-3 text-sm font-medium">
+            Open
+          </span>
+        </div>
+      </summary>
+      <div className="border-t border-[var(--border)] px-8 pb-8 pt-6">{children}</div>
+    </details>
+  );
+}
+
 export function AdminWeddingEditor({
   record,
   saved = false,
@@ -220,9 +260,14 @@ export function AdminWeddingEditor({
             </div>
           </div>
 
-          <div id="core-setup" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
-            <p className="eyebrow">Core Setup</p>
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <EditorAccordionSection
+            id="core-setup"
+            eyebrow="Core Setup"
+            title="The essentials for this wedding"
+            description="Update the wedding title, slug, status, package, and overall design direction from one place."
+            defaultOpen
+          >
+            <div className="grid gap-4 md:grid-cols-2">
               <input name="title" defaultValue={record.title} placeholder="Wedding title" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="slug" defaultValue={record.slug} placeholder="Slug" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="couple" defaultValue={weddingData.couple} placeholder="Couple names" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
@@ -270,11 +315,15 @@ export function AdminWeddingEditor({
                 })}
               </div>
             </div>
-          </div>
+          </EditorAccordionSection>
 
-          <div id="hero-copy" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
-            <p className="eyebrow">Hero Copy</p>
-            <div className="mt-5 grid gap-4">
+          <EditorAccordionSection
+            id="hero-copy"
+            eyebrow="Hero Copy"
+            title="The first thing guests will read"
+            description="Edit the top-of-page location line, tagline, and introduction without touching the rest of the site."
+          >
+            <div className="grid gap-4">
               <RichTextEditorField
                 name="locationSummary"
                 label="Location summary"
@@ -305,11 +354,15 @@ export function AdminWeddingEditor({
                 minHeightClassName="min-h-[150px]"
               />
             </div>
-          </div>
+          </EditorAccordionSection>
 
-          <div id="images" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
-            <p className="eyebrow">Images</p>
-            <div className="mt-5 grid gap-4">
+          <EditorAccordionSection
+            id="images"
+            eyebrow="Images"
+            title="Swap visuals without relying on external links"
+            description="Upload the main images used across the wedding website so they stay stable and easy to manage."
+          >
+            <div className="grid gap-4">
               <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
                 <p className="eyebrow">Hero Image</p>
                 <p className="prose-copy mt-3">
@@ -349,11 +402,15 @@ export function AdminWeddingEditor({
                 />
               </div>
             </div>
-          </div>
+          </EditorAccordionSection>
 
-          <div id="venue-stay" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
-            <p className="eyebrow">Venue & Guest Stay</p>
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <EditorAccordionSection
+            id="venue-stay"
+            eyebrow="Venue & Guest Stay"
+            title="Where guests need to go and where they can stay"
+            description="This is the practical planning section: ceremony, reception, travel notes, area details, maps, and accommodation."
+          >
+            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2 md:col-span-2">
                 <RichTextEditorField
                   name="travelHeading"
@@ -570,11 +627,15 @@ export function AdminWeddingEditor({
                 </div>
               </div>
             </div>
-          </div>
+          </EditorAccordionSection>
 
-          <div id="story-sections" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
-            <p className="eyebrow">Story & Sections</p>
-            <div className="mt-5 grid gap-4">
+          <EditorAccordionSection
+            id="story-sections"
+            eyebrow="Story & Sections"
+            title="The more personal and guest-facing content"
+            description="Edit the couple story, gallery introduction, timeline content, FAQs, and visibility settings in one place."
+          >
+            <div className="grid gap-4">
               <RichTextEditorField
                 name="storyHeading"
                 label="Story heading"
@@ -621,11 +682,15 @@ export function AdminWeddingEditor({
                 ))}
               </div>
             </div>
-          </div>
+          </EditorAccordionSection>
 
-          <div id="key-details" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
-            <p className="eyebrow">Key Details</p>
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <EditorAccordionSection
+            id="key-details"
+            eyebrow="Key Details"
+            title="Contact details and private access"
+            description="Set the contact email, RSVP deadline, and the couple’s portal password for this wedding."
+          >
+            <div className="grid gap-4 md:grid-cols-2">
               <input name="contactEmail" defaultValue={weddingData.contact.email} placeholder="Contact email" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="rsvpDeadline" defaultValue={weddingData.rsvp.deadline} placeholder="RSVP deadline" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
             </div>
@@ -644,15 +709,15 @@ export function AdminWeddingEditor({
                 className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
               />
             </div>
-          </div>
+          </EditorAccordionSection>
 
-          <div id="rsvp-form" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
-            <p className="eyebrow">RSVP Form</p>
-            <h2 className="mt-3 text-2xl">Control what guests are asked</h2>
-            <p className="prose-copy mt-3">
-              These settings shape the guest-facing RSVP form for this wedding without needing a database migration.
-            </p>
-            <div className="mt-5 grid gap-4">
+          <EditorAccordionSection
+            id="rsvp-form"
+            eyebrow="RSVP Form"
+            title="Control what guests are asked"
+            description="Shape the guest-facing RSVP form for this wedding without needing a database migration."
+          >
+            <div className="grid gap-4">
               <input
                 name="rsvpFormTitle"
                 defaultValue={rsvpForm?.title ?? ""}
@@ -730,7 +795,7 @@ export function AdminWeddingEditor({
                 className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
               />
             </div>
-          </div>
+          </EditorAccordionSection>
 
           <div className="flex flex-wrap gap-3">
             <button className="accent-button rounded-full px-6 py-3 text-sm font-medium">
