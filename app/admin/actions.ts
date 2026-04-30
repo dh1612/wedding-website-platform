@@ -87,6 +87,25 @@ function parseCustomQuestionLine(line: string, index: number) {
   };
 }
 
+function parseMapSpotLine(line: string) {
+  const parts = line
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (parts.length < 2) {
+    return null;
+  }
+
+  const [label, detail, href] = parts;
+
+  return {
+    label,
+    detail,
+    href: href && isValidRemoteImageUrl(href) ? href : undefined
+  };
+}
+
 function isValidRemoteImageUrl(value: string) {
   try {
     const parsed = new URL(value);
@@ -258,6 +277,12 @@ export async function updateWeddingContentAction(formData: FormData) {
     .filter(Boolean)
     .map(parseCustomQuestionLine)
     .filter((item): item is NonNullable<ReturnType<typeof parseCustomQuestionLine>> => Boolean(item));
+  const mapSpots = String(formData.get("travelMapSpots") || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map(parseMapSpotLine)
+    .filter((item): item is NonNullable<ReturnType<typeof parseMapSpotLine>> => Boolean(item));
   const galleryImages = String(formData.get("galleryImages") || "")
     .split("\n")
     .map((item) => item.trim())
@@ -357,6 +382,8 @@ export async function updateWeddingContentAction(formData: FormData) {
         String(formData.get("ceremonyLocation") || "").trim() || weddingData.ceremony.location,
       address:
         String(formData.get("ceremonyAddress") || "").trim() || weddingData.ceremony.address,
+      mapLink:
+        String(formData.get("ceremonyMapLink") || "").trim() || weddingData.ceremony.mapLink,
       description:
         stripHtml(ceremonyDescriptionRichText) || weddingData.ceremony.description,
       descriptionHtml:
@@ -369,6 +396,8 @@ export async function updateWeddingContentAction(formData: FormData) {
         String(formData.get("receptionLocation") || "").trim() || weddingData.reception.location,
       address:
         String(formData.get("receptionAddress") || "").trim() || weddingData.reception.address,
+      mapLink:
+        String(formData.get("receptionMapLink") || "").trim() || weddingData.reception.mapLink,
       description:
         stripHtml(receptionDescriptionRichText) || weddingData.reception.description,
       descriptionHtml:
@@ -395,6 +424,9 @@ export async function updateWeddingContentAction(formData: FormData) {
         uploadedSneakPeekImage ||
         String(formData.get("travelSneakPeekImage") || "").trim() ||
         weddingData.travel.sneakPeekImage,
+      relaxedNote:
+        String(formData.get("travelRelaxedNote") || "").trim() || weddingData.travel.relaxedNote,
+      mapSpots: mapSpots.length ? mapSpots : weddingData.travel.mapSpots,
       transport:
         stripHtml(travelTransportRichText) || weddingData.travel.transport,
       transportHtml:

@@ -135,6 +135,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
       time: source.ceremony?.time ?? fallback.ceremony.time,
       location: source.ceremony?.location ?? fallback.ceremony.location,
       address: source.ceremony?.address ?? fallback.ceremony.address,
+      mapLink:
+        typeof source.ceremony?.mapLink === "string" && source.ceremony.mapLink.trim()
+          ? source.ceremony.mapLink
+          : fallback.ceremony.mapLink,
       description:
         source.ceremony?.description ?? fallback.ceremony.description,
       descriptionHtml:
@@ -147,6 +151,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
       time: source.reception?.time ?? fallback.reception.time,
       location: source.reception?.location ?? fallback.reception.location,
       address: source.reception?.address ?? fallback.reception.address,
+      mapLink:
+        typeof source.reception?.mapLink === "string" && source.reception.mapLink.trim()
+          ? source.reception.mapLink
+          : fallback.reception.mapLink,
       description:
         source.reception?.description ?? fallback.reception.description,
       descriptionHtml:

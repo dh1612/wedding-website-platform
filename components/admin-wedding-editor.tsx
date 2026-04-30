@@ -59,6 +59,9 @@ export function AdminWeddingEditor({
     .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
     .join("\n");
   const galleryImageLines = weddingData.gallery.images.join("\n");
+  const mapSpotLines = (weddingData.travel.mapSpots ?? [])
+    .map((spot) => [spot.label, spot.detail, spot.href].filter(Boolean).join(" | "))
+    .join("\n");
   const visibility = weddingData.sectionVisibility;
   const rsvpForm = weddingData.rsvp.form;
   const customQuestionLines = (rsvpForm?.customQuestions ?? [])
@@ -139,6 +142,15 @@ export function AdminWeddingEditor({
     { name: "showFaq", label: "FAQ", checked: visibility?.faq ?? true },
     { name: "showRegistry", label: "Registry", checked: visibility?.registry ?? true }
   ] as const;
+  const editorSections = [
+    { id: "core-setup", label: "Core setup" },
+    { id: "hero-copy", label: "Hero" },
+    { id: "images", label: "Images" },
+    { id: "venue-stay", label: "Venue & stay" },
+    { id: "story-sections", label: "Story & sections" },
+    { id: "key-details", label: "Key details" },
+    { id: "rsvp-form", label: "RSVP form" }
+  ] as const;
 
   return (
     <SiteFrame
@@ -194,7 +206,21 @@ export function AdminWeddingEditor({
         <form action={updateWeddingContentAction} className="space-y-8" encType="multipart/form-data">
           <input type="hidden" name="currentSlug" value={record.slug} />
 
-          <div className="section-shell rounded-[2rem] p-8">
+          <div className="sticky top-4 z-20 rounded-[1.4rem] border border-[var(--border)] bg-white/92 p-4 shadow-[var(--shadow)] backdrop-blur">
+            <div className="flex flex-wrap gap-2">
+              {editorSections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="accent-outline rounded-full px-4 py-2 text-sm font-medium"
+                >
+                  {section.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div id="core-setup" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
             <p className="eyebrow">Core Setup</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <input name="title" defaultValue={record.title} placeholder="Wedding title" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
@@ -246,7 +272,7 @@ export function AdminWeddingEditor({
             </div>
           </div>
 
-          <div className="section-shell rounded-[2rem] p-8">
+          <div id="hero-copy" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
             <p className="eyebrow">Hero Copy</p>
             <div className="mt-5 grid gap-4">
               <RichTextEditorField
@@ -281,7 +307,7 @@ export function AdminWeddingEditor({
             </div>
           </div>
 
-          <div className="section-shell rounded-[2rem] p-8">
+          <div id="images" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
             <p className="eyebrow">Images</p>
             <div className="mt-5 grid gap-4">
               <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
@@ -325,7 +351,7 @@ export function AdminWeddingEditor({
             </div>
           </div>
 
-          <div className="section-shell rounded-[2rem] p-8">
+          <div id="venue-stay" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
             <p className="eyebrow">Venue & Guest Stay</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <div className="space-y-2 md:col-span-2">
@@ -358,6 +384,10 @@ export function AdminWeddingEditor({
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Ceremony address</label>
                 <input name="ceremonyAddress" defaultValue={weddingData.ceremony.address} placeholder="Ceremony address" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Ceremony Google Maps link</label>
+                <input name="ceremonyMapLink" defaultValue={weddingData.ceremony.mapLink ?? ""} placeholder="https://maps.google.com/..." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               </div>
               <div className="space-y-2 md:col-span-2">
                 <RichTextEditorField
@@ -417,6 +447,10 @@ export function AdminWeddingEditor({
                 <input name="receptionAddress" defaultValue={weddingData.reception.address} placeholder="Reception address" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               </div>
               <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Reception Google Maps link</label>
+                <input name="receptionMapLink" defaultValue={weddingData.reception.mapLink ?? ""} placeholder="https://maps.google.com/..." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
                 <RichTextEditorField
                   name="receptionDescription"
                   label="Reception description"
@@ -455,6 +489,30 @@ export function AdminWeddingEditor({
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Map link</label>
                 <input name="travelMapLink" defaultValue={weddingData.travel.mapLink} placeholder="https://maps.google.com/..." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Relaxed itinerary note</label>
+                <textarea
+                  name="travelRelaxedNote"
+                  defaultValue={weddingData.travel.relaxedNote ?? ""}
+                  rows={3}
+                  placeholder="Greek weddings can run on a more relaxed rhythm, so leave yourself time to enjoy the island pace."
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Map & area spots</label>
+                <p className="text-sm leading-6 text-[var(--muted)]">
+                  Use one line per spot in this format:
+                  <span className="font-medium text-[var(--foreground)]"> Label | detail | Google Maps link (optional)</span>.
+                </p>
+                <textarea
+                  name="travelMapSpots"
+                  defaultValue={mapSpotLines}
+                  rows={5}
+                  placeholder={`Airport | Chania International Airport for arrivals and taxis\nVenue | En Kipo for the ceremony and celebrations | https://maps.google.com/...`}
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                />
               </div>
             </div>
 
@@ -514,7 +572,7 @@ export function AdminWeddingEditor({
             </div>
           </div>
 
-          <div className="section-shell rounded-[2rem] p-8">
+          <div id="story-sections" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
             <p className="eyebrow">Story & Sections</p>
             <div className="mt-5 grid gap-4">
               <RichTextEditorField
@@ -565,7 +623,7 @@ export function AdminWeddingEditor({
             </div>
           </div>
 
-          <div className="section-shell rounded-[2rem] p-8">
+          <div id="key-details" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
             <p className="eyebrow">Key Details</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <input name="contactEmail" defaultValue={weddingData.contact.email} placeholder="Contact email" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
@@ -588,7 +646,7 @@ export function AdminWeddingEditor({
             </div>
           </div>
 
-          <div className="section-shell rounded-[2rem] p-8">
+          <div id="rsvp-form" className="section-shell scroll-mt-24 rounded-[2rem] p-8">
             <p className="eyebrow">RSVP Form</p>
             <h2 className="mt-3 text-2xl">Control what guests are asked</h2>
             <p className="prose-copy mt-3">

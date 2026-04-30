@@ -3,6 +3,7 @@ export type WeddingEvent = {
   time: string;
   location: string;
   address?: string;
+  mapLink?: string;
   description?: string;
   descriptionHtml?: string;
 };

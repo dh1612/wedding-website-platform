@@ -19,6 +19,7 @@
     "time": "4:30 PM",
     "location": "Santorini Gem",
     "address": "Pyrgos Kallistis, Santorini, Greece",
+    "mapLink": "https://maps.google.com/?q=Santorini+Gem+Pyrgos+Santorini",
     "description": "Guests are invited to arrive from 4:00 PM to enjoy a relaxed arrival before the ceremony begins."
   },
   "reception": {
@@ -26,6 +27,7 @@
     "time": "6:00 PM",
     "location": "Santorini Gem",
     "address": "Pyrgos Kallistis, Santorini, Greece",
+    "mapLink": "https://maps.google.com/?q=Santorini+Gem+Pyrgos+Santorini",
     "description": "Drinks, dinner, sunset views, speeches, and dancing into the evening."
   },
   "schedule": [

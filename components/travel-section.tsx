@@ -121,6 +121,16 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                 ) : wedding.ceremony.description ? (
                   <p className="prose-copy mt-3">{wedding.ceremony.description}</p>
                 ) : null}
+                {wedding.ceremony.mapLink ? (
+                  <a
+                    href={wedding.ceremony.mapLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex text-sm font-medium text-[var(--accent-strong)]"
+                  >
+                    Open ceremony map
+                  </a>
+                ) : null}
               </article>
             ) : null}
             {showReception ? (
@@ -136,6 +146,16 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                   />
                 ) : wedding.reception.description ? (
                   <p className="prose-copy mt-3">{wedding.reception.description}</p>
+                ) : null}
+                {wedding.reception.mapLink ? (
+                  <a
+                    href={wedding.reception.mapLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex text-sm font-medium text-[var(--accent-strong)]"
+                  >
+                    Open reception map
+                  </a>
                 ) : null}
               </article>
             ) : null}
