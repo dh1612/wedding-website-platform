@@ -291,10 +291,6 @@ export function AdminWeddingEditor({
               <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
                 Current template: <span className="font-medium">{theme.name}</span>
               </div>
-              <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
-                <input type="checkbox" name="showLocationSummary" defaultChecked={visibility?.locationSummary ?? true} className="h-4 w-4" />
-                <span>Show location summary on the website</span>
-              </label>
             </div>
             <div className="mt-5 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
               <p className="eyebrow">Design Template</p>
@@ -332,6 +328,16 @@ export function AdminWeddingEditor({
             <div className="grid gap-4">
               <div className="grid gap-3 md:grid-cols-2">
                 <SectionToggle
+                  name="showHeroEyebrow"
+                  label="Show eyebrow label"
+                  checked={visibility?.heroEyebrow ?? true}
+                />
+                <SectionToggle
+                  name="showDate"
+                  label="Show date"
+                  checked={visibility?.date ?? true}
+                />
+                <SectionToggle
                   name="showLocationSummary"
                   label="Show location summary on the website"
                   checked={visibility?.locationSummary ?? true}
@@ -346,7 +352,23 @@ export function AdminWeddingEditor({
                   label="Show announcement / intro copy"
                   checked={visibility?.announcement ?? true}
                 />
+                <SectionToggle
+                  name="showPreviewNote"
+                  label="Show preview note"
+                  checked={visibility?.previewNote ?? true}
+                />
+                <SectionToggle
+                  name="showHeroActions"
+                  label="Show hero buttons"
+                  checked={visibility?.heroActions ?? true}
+                />
               </div>
+              <input
+                name="heroEyebrow"
+                defaultValue={weddingData.hero?.eyebrow ?? "Wedding Day"}
+                placeholder="Wedding Day"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
               <RichTextEditorField
                 name="locationSummary"
                 label="Location summary"
@@ -368,6 +390,39 @@ export function AdminWeddingEditor({
                 defaultValue={announcementHtml}
                 minHeightClassName="min-h-[150px]"
               />
+              <textarea
+                name="heroPreviewNote"
+                defaultValue={weddingData.hero?.previewNote ?? ""}
+                rows={3}
+                placeholder="Sample wording is shown here for review..."
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+              />
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  name="heroPrimaryActionLabel"
+                  defaultValue={weddingData.hero?.primaryActionLabel ?? "RSVP Details"}
+                  placeholder="Primary button label"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="heroPrimaryActionHref"
+                  defaultValue={weddingData.hero?.primaryActionHref ?? "#rsvp"}
+                  placeholder="#rsvp"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="heroSecondaryActionLabel"
+                  defaultValue={weddingData.hero?.secondaryActionLabel ?? "Wedding Details"}
+                  placeholder="Secondary button label"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="heroSecondaryActionHref"
+                  defaultValue={weddingData.hero?.secondaryActionHref ?? "#faq"}
+                  placeholder="#faq"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
             </div>
           </EditorAccordionSection>
 

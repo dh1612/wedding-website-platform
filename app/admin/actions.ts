@@ -344,6 +344,33 @@ export async function updateWeddingContentAction(formData: FormData) {
     couple: String(formData.get("couple") || "").trim() || weddingData.couple,
     date: String(formData.get("date") || "").trim() || weddingData.date,
     theme: String(formData.get("theme") || "").trim() || weddingData.theme,
+    hero: {
+      ...weddingData.hero,
+      eyebrow:
+        String(formData.get("heroEyebrow") || "").trim() ||
+        weddingData.hero?.eyebrow ||
+        "Wedding Day",
+      previewNote:
+        String(formData.get("heroPreviewNote") || "").trim() ||
+        weddingData.hero?.previewNote ||
+        "Sample wording is shown here for review. The couple can change all text before the site goes live.",
+      primaryActionLabel:
+        String(formData.get("heroPrimaryActionLabel") || "").trim() ||
+        weddingData.hero?.primaryActionLabel ||
+        "RSVP Details",
+      primaryActionHref:
+        String(formData.get("heroPrimaryActionHref") || "").trim() ||
+        weddingData.hero?.primaryActionHref ||
+        "#rsvp",
+      secondaryActionLabel:
+        String(formData.get("heroSecondaryActionLabel") || "").trim() ||
+        weddingData.hero?.secondaryActionLabel ||
+        "Wedding Details",
+      secondaryActionHref:
+        String(formData.get("heroSecondaryActionHref") || "").trim() ||
+        weddingData.hero?.secondaryActionHref ||
+        "#faq"
+    },
     locationSummary:
       stripHtml(locationSummaryRichText) || weddingData.locationSummary,
     locationSummaryHtml:
@@ -489,9 +516,13 @@ export async function updateWeddingContentAction(formData: FormData) {
     },
     aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic",
     sectionVisibility: {
+      heroEyebrow: formData.has("showHeroEyebrow"),
+      date: formData.has("showDate"),
       locationSummary: formData.has("showLocationSummary"),
       tagline: formData.has("showTagline"),
       announcement: formData.has("showAnnouncement"),
+      heroActions: formData.has("showHeroActions"),
+      previewNote: formData.has("showPreviewNote"),
       schedule: formData.has("showSchedule"),
       travel: formData.has("showTravel"),
       ceremonyCard: formData.has("showCeremonyCard"),

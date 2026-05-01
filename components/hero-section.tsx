@@ -11,29 +11,39 @@ type HeroSectionProps = {
   previewMode?: boolean;
 };
 
-function SharedActions() {
+function SharedActions({
+  primaryActionLabel,
+  primaryActionHref,
+  secondaryActionLabel,
+  secondaryActionHref
+}: {
+  primaryActionLabel: string;
+  primaryActionHref: string;
+  secondaryActionLabel: string;
+  secondaryActionHref: string;
+}) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
       <a
-        href="#rsvp"
+        href={primaryActionHref}
         className="accent-button rounded-full px-6 py-3 text-center text-sm font-medium"
       >
-        RSVP Details
+        {primaryActionLabel}
       </a>
       <a
-        href="#faq"
+        href={secondaryActionHref}
         className="accent-outline rounded-full px-6 py-3 text-center text-sm font-medium transition hover:bg-white/80"
       >
-        Wedding Details
+        {secondaryActionLabel}
       </a>
     </div>
   );
 }
 
-function PreviewNote() {
+function PreviewNote({ text }: { text: string }) {
   return (
     <div className="rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
-      Sample wording is shown here for review. The couple can change all text before the site goes live.
+      {text}
     </div>
   );
 }
@@ -77,9 +87,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
   const detailImage = theme.detailImage;
   const displayDate = formatDisplayDate(wedding.date);
   const visibility = wedding.sectionVisibility;
+  const hero = wedding.hero ?? {
+    eyebrow: "Wedding Day",
+    previewNote: "Sample wording is shown here for review. The couple can change all text before the site goes live.",
+    primaryActionLabel: "RSVP Details",
+    primaryActionHref: "#rsvp",
+    secondaryActionLabel: "Wedding Details",
+    secondaryActionHref: "#faq"
+  };
+  const showHeroEyebrow = visibility?.heroEyebrow ?? true;
+  const showDate = visibility?.date ?? true;
   const showLocationSummary = visibility?.locationSummary ?? true;
   const showTagline = visibility?.tagline ?? true;
   const showAnnouncement = visibility?.announcement ?? true;
+  const showPreviewNote = visibility?.previewNote ?? true;
+  const showHeroActions = visibility?.heroActions ?? true;
 
   if (theme.heroLayout === "full-bleed") {
     return (
@@ -100,14 +122,16 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           ) : null}
           <div className="relative flex min-h-[640px] items-end px-8 py-10 sm:px-12 lg:px-16">
             <div className="max-w-2xl rounded-[2rem] border border-white/20 bg-white/12 p-8 text-white backdrop-blur-md sm:p-10">
-              <p className="text-xs uppercase tracking-[0.34em] text-white/72">
-                Wedding Day
-              </p>
+              {showHeroEyebrow ? (
+                <p className="text-xs uppercase tracking-[0.34em] text-white/72">
+                  {hero.eyebrow}
+                </p>
+              ) : null}
               <h1 className="mt-4 text-5xl leading-none sm:text-6xl lg:text-7xl">
                 {wedding.couple}
               </h1>
               <div className="mt-5 space-y-2 text-base uppercase tracking-[0.24em] text-white/74 sm:text-lg">
-                <p>{displayDate}</p>
+                {showDate && displayDate ? <p>{displayDate}</p> : null}
                 {showLocationSummary ? (
                   <InlineCopy
                     html={wedding.locationSummaryHtml}
@@ -130,14 +154,21 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                   className="mt-4 max-w-xl text-base leading-7 text-white/76"
                 />
               ) : null}
-              {previewMode ? (
+              {previewMode && showPreviewNote ? (
                 <div className="mt-4 rounded-[1.2rem] border border-white/18 bg-white/12 px-5 py-4 text-sm leading-6 text-white/84">
-                  Sample wording is shown here for review. The couple can change all text before the site goes live.
+                  {hero.previewNote}
                 </div>
               ) : null}
-              <div className="mt-8">
-                <SharedActions />
-              </div>
+              {showHeroActions ? (
+                <div className="mt-8">
+                  <SharedActions
+                    primaryActionLabel={hero.primaryActionLabel}
+                    primaryActionHref={hero.primaryActionHref}
+                    secondaryActionLabel={hero.secondaryActionLabel}
+                    secondaryActionHref={hero.secondaryActionHref}
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -155,12 +186,12 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="absolute inset-0" style={{ background: "var(--hero-glow)" }} />
           <div className="relative space-y-8">
             <div className="space-y-4">
-              <p className="eyebrow">Wedding Day</p>
+              {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
               <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
                 {wedding.couple}
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                <p>{displayDate}</p>
+                {showDate && displayDate ? <p>{displayDate}</p> : null}
                 {showLocationSummary ? (
                   <InlineCopy
                     html={wedding.locationSummaryHtml}
@@ -184,8 +215,15 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 className="max-w-xl text-base leading-7 text-[var(--muted)]"
               />
             ) : null}
-            {previewMode ? <PreviewNote /> : null}
-            <SharedActions />
+            {previewMode && showPreviewNote ? <PreviewNote text={hero.previewNote} /> : null}
+            {showHeroActions ? (
+              <SharedActions
+                primaryActionLabel={hero.primaryActionLabel}
+                primaryActionHref={hero.primaryActionHref}
+                secondaryActionLabel={hero.secondaryActionLabel}
+                secondaryActionHref={hero.secondaryActionHref}
+              />
+            ) : null}
           </div>
         </div>
         <div className="relative min-h-[520px] overflow-hidden">
@@ -217,12 +255,12 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="section-shell -mt-14 relative mx-6 mb-6 rounded-[2rem] p-8 sm:p-10 lg:mx-8 lg:p-12">
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="space-y-5">
-                <p className="eyebrow">Wedding Day</p>
+                {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
                 <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
                   {wedding.couple}
                 </h1>
                 <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                  <p>{displayDate}</p>
+                  {showDate && displayDate ? <p>{displayDate}</p> : null}
                   {showLocationSummary ? (
                     <InlineCopy
                       html={wedding.locationSummaryHtml}
@@ -256,8 +294,15 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                     className="text-base leading-7 text-[var(--muted)]"
                   />
                 ) : null}
-                {previewMode ? <PreviewNote /> : null}
-                <SharedActions />
+                {previewMode && showPreviewNote ? <PreviewNote text={hero.previewNote} /> : null}
+                {showHeroActions ? (
+                  <SharedActions
+                    primaryActionLabel={hero.primaryActionLabel}
+                    primaryActionHref={hero.primaryActionHref}
+                    secondaryActionLabel={hero.secondaryActionLabel}
+                    secondaryActionHref={hero.secondaryActionHref}
+                  />
+                ) : null}
               </div>
             </div>
           </div>
@@ -277,12 +322,12 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="absolute right-12 top-24 h-20 w-20 rounded-full border-[10px] border-[var(--accent)]/30" />
           <div className="relative space-y-8">
             <div className="space-y-4">
-              <p className="eyebrow">Wedding Day</p>
+              {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
               <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
                 {wedding.couple}
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                <p>{displayDate}</p>
+                {showDate && displayDate ? <p>{displayDate}</p> : null}
                 {showLocationSummary ? (
                   <InlineCopy
                     html={wedding.locationSummaryHtml}
@@ -306,8 +351,15 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 className="max-w-xl text-base leading-7 text-[var(--muted)]"
               />
             ) : null}
-            {previewMode ? <PreviewNote /> : null}
-            <SharedActions />
+            {previewMode && showPreviewNote ? <PreviewNote text={hero.previewNote} /> : null}
+            {showHeroActions ? (
+              <SharedActions
+                primaryActionLabel={hero.primaryActionLabel}
+                primaryActionHref={hero.primaryActionHref}
+                secondaryActionLabel={hero.secondaryActionLabel}
+                secondaryActionHref={hero.secondaryActionHref}
+              />
+            ) : null}
           </div>
         </div>
         <div className="grid min-h-[520px] gap-5 lg:grid-rows-[1fr_0.58fr]">
@@ -351,12 +403,12 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           />
           <div className="relative space-y-8">
             <div className="space-y-4">
-              <p className="eyebrow">Wedding Day</p>
+              {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
               <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
                 {wedding.couple}
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-                <p>{displayDate}</p>
+                {showDate && displayDate ? <p>{displayDate}</p> : null}
                 {showLocationSummary ? (
                   <InlineCopy
                     html={wedding.locationSummaryHtml}
@@ -380,8 +432,15 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 className="mx-auto max-w-2xl text-base leading-7 text-white/78"
               />
             ) : null}
-            {previewMode ? <PreviewNote /> : null}
-            <SharedActions />
+            {previewMode && showPreviewNote ? <PreviewNote text={hero.previewNote} /> : null}
+            {showHeroActions ? (
+              <SharedActions
+                primaryActionLabel={hero.primaryActionLabel}
+                primaryActionHref={hero.primaryActionHref}
+                secondaryActionLabel={hero.secondaryActionLabel}
+                secondaryActionHref={hero.secondaryActionHref}
+              />
+            ) : null}
           </div>
         </div>
       </section>
@@ -398,13 +457,13 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="relative flex min-h-[620px] flex-col items-center justify-center px-8 py-16 text-center text-white sm:px-14">
             <div className="max-w-3xl space-y-7">
               <p className="text-xs uppercase tracking-[0.42em] text-white/70 sm:text-sm">
-                Wedding Day
+                {hero.eyebrow}
               </p>
               <h1 className="winter-hero-title text-6xl leading-none sm:text-7xl lg:text-[7rem]">
                 {wedding.couple}
               </h1>
               <div className="space-y-3 text-base uppercase tracking-[0.28em] text-white/80 sm:text-lg">
-                <p>{displayDate}</p>
+                {showDate && displayDate ? <p>{displayDate}</p> : null}
                 {showLocationSummary ? (
                   <InlineCopy
                     html={wedding.locationSummaryHtml}
@@ -427,25 +486,27 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                   className="mx-auto max-w-2xl text-base leading-7 text-white/78"
                 />
               ) : null}
-              {previewMode ? (
+              {previewMode && showPreviewNote ? (
                 <div className="mx-auto max-w-2xl rounded-[1.2rem] border border-white/18 bg-white/10 px-5 py-4 text-sm leading-6 text-white/84 backdrop-blur">
-                  Sample wording is shown here for review. The couple can change all text before the site goes live.
+                  {hero.previewNote}
                 </div>
               ) : null}
-              <div className="flex flex-col items-center justify-center gap-3 pt-3 sm:flex-row">
-                <a
-                  href="#rsvp"
-                  className="rounded-full border border-white/30 bg-white/12 px-6 py-3 text-sm font-medium text-white backdrop-blur transition hover:bg-white/18"
-                >
-                  RSVP Details
-                </a>
-                <a
-                  href="#faq"
-                  className="rounded-full border border-white/16 bg-black/16 px-6 py-3 text-sm font-medium text-white/88 backdrop-blur transition hover:bg-black/22"
-                >
-                  Wedding Details
-                </a>
-              </div>
+              {showHeroActions ? (
+                <div className="flex flex-col items-center justify-center gap-3 pt-3 sm:flex-row">
+                  <a
+                    href={hero.primaryActionHref}
+                    className="rounded-full border border-white/30 bg-white/12 px-6 py-3 text-sm font-medium text-white backdrop-blur transition hover:bg-white/18"
+                  >
+                    {hero.primaryActionLabel}
+                  </a>
+                  <a
+                    href={hero.secondaryActionHref}
+                    className="rounded-full border border-white/16 bg-black/16 px-6 py-3 text-sm font-medium text-white/88 backdrop-blur transition hover:bg-black/22"
+                  >
+                    {hero.secondaryActionLabel}
+                  </a>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -462,12 +523,12 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
         <div className="absolute inset-0" style={{ background: "var(--hero-glow)" }} />
         <div className="relative space-y-8">
           <div className="space-y-4">
-            <p className="eyebrow">Wedding Day</p>
+            {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
             <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
               {wedding.couple}
             </h1>
             <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
-              <p>{displayDate}</p>
+              {showDate && displayDate ? <p>{displayDate}</p> : null}
               {showLocationSummary ? (
                 <InlineCopy
                   html={wedding.locationSummaryHtml}
@@ -491,8 +552,15 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               className="max-w-xl text-base leading-7 text-[var(--muted)]"
             />
           ) : null}
-          {previewMode ? <PreviewNote /> : null}
-          <SharedActions />
+          {previewMode && showPreviewNote ? <PreviewNote text={hero.previewNote} /> : null}
+          {showHeroActions ? (
+            <SharedActions
+              primaryActionLabel={hero.primaryActionLabel}
+              primaryActionHref={hero.primaryActionHref}
+              secondaryActionLabel={hero.secondaryActionLabel}
+              secondaryActionHref={hero.secondaryActionHref}
+            />
+          ) : null}
         </div>
       </div>
       <div className="relative min-h-[420px] overflow-hidden rounded-[2rem] border border-[var(--border)] shadow-[var(--shadow)]">

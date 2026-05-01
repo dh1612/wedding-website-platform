@@ -99,6 +99,16 @@ export function coerceWeddingData(input: unknown): WeddingData {
     couple: source.couple ?? fallback.couple,
     date: source.date ?? fallback.date,
     theme: source.theme ?? fallback.theme,
+    hero: {
+      eyebrow: source.hero?.eyebrow ?? "Wedding Day",
+      previewNote:
+        source.hero?.previewNote ??
+        "Sample wording is shown here for review. The couple can change all text before the site goes live.",
+      primaryActionLabel: source.hero?.primaryActionLabel ?? "RSVP Details",
+      primaryActionHref: source.hero?.primaryActionHref ?? "#rsvp",
+      secondaryActionLabel: source.hero?.secondaryActionLabel ?? "Wedding Details",
+      secondaryActionHref: source.hero?.secondaryActionHref ?? "#faq"
+    },
     locationSummary: source.locationSummary ?? fallback.locationSummary,
     locationSummaryHtml:
       typeof source.locationSummaryHtml === "string" && source.locationSummaryHtml.trim()
@@ -276,9 +286,13 @@ export function coerceWeddingData(input: unknown): WeddingData {
     aiConciergeEnabled:
       source.aiConciergeEnabled ?? fallback.aiConciergeEnabled,
     sectionVisibility: {
+      heroEyebrow: source.sectionVisibility?.heroEyebrow ?? true,
+      date: source.sectionVisibility?.date ?? true,
       locationSummary: source.sectionVisibility?.locationSummary ?? true,
       tagline: source.sectionVisibility?.tagline ?? true,
       announcement: source.sectionVisibility?.announcement ?? true,
+      heroActions: source.sectionVisibility?.heroActions ?? true,
+      previewNote: source.sectionVisibility?.previewNote ?? true,
       schedule: source.sectionVisibility?.schedule ?? true,
       travel: source.sectionVisibility?.travel ?? true,
       ceremonyCard: source.sectionVisibility?.ceremonyCard ?? true,

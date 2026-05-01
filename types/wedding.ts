@@ -68,6 +68,14 @@ export type WeddingData = {
   couple: string;
   date: string;
   theme: string;
+  hero?: {
+    eyebrow: string;
+    previewNote: string;
+    primaryActionLabel: string;
+    primaryActionHref: string;
+    secondaryActionLabel: string;
+    secondaryActionHref: string;
+  };
   locationSummary: string;
   locationSummaryHtml?: string;
   tagline: string;
@@ -124,9 +132,13 @@ export type WeddingData = {
   };
   aiConciergeEnabled: boolean;
   sectionVisibility?: {
+    heroEyebrow: boolean;
+    date: boolean;
     locationSummary: boolean;
     tagline: boolean;
     announcement: boolean;
+    heroActions: boolean;
+    previewNote: boolean;
     schedule: boolean;
     travel: boolean;
     ceremonyCard: boolean;
