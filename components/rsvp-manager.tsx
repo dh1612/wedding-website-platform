@@ -17,11 +17,13 @@ type PortalGuest = {
   note: string;
   songRequest?: string;
   messageToCouple?: string;
+  customAnswers?: Record<string, string>;
 };
 
 type RSVPManagerProps = {
   guests: PortalGuest[];
   apiBasePath?: string;
+  customQuestionLabels?: Record<string, string>;
 };
 
 type DraftGuest = {
@@ -42,8 +44,13 @@ const emptyDraft: DraftGuest = {
 
 export function RSVPManager({
   guests,
-  apiBasePath = "/api/portal"
+  apiBasePath = "/api/portal",
+  customQuestionLabels = {}
 }: RSVPManagerProps) {
+  function getCustomQuestionLabel(questionId: string) {
+    return customQuestionLabels[questionId] || questionId;
+  }
+
   const [guestList, setGuestList] = useState<PortalGuest[]>(guests);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | RSVPStatus>("all");
@@ -230,7 +237,18 @@ export function RSVPManager({
                         <div className="space-y-1 text-xs text-[var(--muted)]">
                           {guest.songRequest ? <p>Song: {guest.songRequest}</p> : null}
                           {guest.messageToCouple ? <p>Message: {guest.messageToCouple}</p> : null}
-                          {!guest.songRequest && !guest.messageToCouple ? <p>None</p> : null}
+                          {guest.customAnswers
+                            ? Object.entries(guest.customAnswers).map(([question, answer]) => (
+                                <p key={question}>
+                                  {getCustomQuestionLabel(question)}: {answer}
+                                </p>
+                              ))
+                            : null}
+                          {!guest.songRequest &&
+                          !guest.messageToCouple &&
+                          !Object.keys(guest.customAnswers ?? {}).length ? (
+                            <p>None</p>
+                          ) : null}
                         </div>
                       </td>
                       <td className="px-4 py-4">
@@ -340,6 +358,13 @@ export function RSVPManager({
                     {guest.messageToCouple ? (
                       <p className="mt-1 text-sm text-[var(--muted)]">Message: {guest.messageToCouple}</p>
                     ) : null}
+                    {guest.customAnswers
+                      ? Object.entries(guest.customAnswers).map(([question, answer]) => (
+                          <p key={question} className="mt-1 text-sm text-[var(--muted)]">
+                            {getCustomQuestionLabel(question)}: {answer}
+                          </p>
+                        ))
+                      : null}
                   </div>
                 ))}
               </div>

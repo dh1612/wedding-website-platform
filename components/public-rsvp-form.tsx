@@ -155,12 +155,6 @@ export function PublicRSVPForm({
         </div>
       ) : null}
 
-      {successMessage ? (
-        <div className="rounded-[1.1rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900">
-          {successMessage}
-        </div>
-      ) : null}
-
       {errorMessage ? (
         <div className="rounded-[1.1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-900">
           {errorMessage}
@@ -355,6 +349,12 @@ export function PublicRSVPForm({
       >
         {submitting ? "Sending RSVP..." : settings.submitLabel}
       </button>
+
+      {successMessage ? (
+        <div className="rounded-[1.1rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900">
+          {successMessage}
+        </div>
+      ) : null}
     </form>
   );
 }

@@ -29,6 +29,12 @@ export default async function RSVPDashboardBySlugPage({
   const weddingData = coerceWeddingData(weddingRecord.contentJson);
   const theme = getThemeById(weddingData.theme);
   const guests = await listPortalGuests(weddingRecord.id);
+  const customQuestionLabels = Object.fromEntries(
+    (weddingData.rsvp.form?.customQuestions ?? []).map((question) => [
+      question.id,
+      question.label
+    ])
+  );
 
   return (
     <SiteFrame
@@ -48,7 +54,11 @@ export default async function RSVPDashboardBySlugPage({
         description="Manage the guest list, review RSVP responses, and manually add or remove guests for this wedding."
         themeId={theme.id}
       />
-      <RSVPManager guests={guests} apiBasePath={`/api/portal/${slug}`} />
+      <RSVPManager
+        guests={guests}
+        apiBasePath={`/api/portal/${slug}`}
+        customQuestionLabels={customQuestionLabels}
+      />
     </SiteFrame>
   );
 }
