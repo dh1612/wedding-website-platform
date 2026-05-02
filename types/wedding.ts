@@ -29,6 +29,11 @@ export type TravelInfo = {
   headingHtml?: string;
   description: string;
   descriptionHtml?: string;
+  mapUtilityEyebrow?: string;
+  mapUtilityTitle?: string;
+  mapUtilityTitleHtml?: string;
+  mapUtilityDescription?: string;
+  mapUtilityDescriptionHtml?: string;
   locationOverviewTitle?: string;
   locationOverviewTitleHtml?: string;
   locationOverviewHtml?: string;

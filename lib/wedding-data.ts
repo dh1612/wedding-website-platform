@@ -186,6 +186,26 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.travel?.descriptionHtml === "string" && source.travel.descriptionHtml.trim()
           ? source.travel.descriptionHtml
           : undefined,
+      mapUtilityEyebrow:
+        typeof source.travel?.mapUtilityEyebrow === "string" && source.travel.mapUtilityEyebrow.trim()
+          ? source.travel.mapUtilityEyebrow
+          : "Map & Area",
+      mapUtilityTitle:
+        typeof source.travel?.mapUtilityTitle === "string" && source.travel.mapUtilityTitle.trim()
+          ? source.travel.mapUtilityTitle
+          : "Useful locations at a glance",
+      mapUtilityTitleHtml:
+        typeof source.travel?.mapUtilityTitleHtml === "string" && source.travel.mapUtilityTitleHtml.trim()
+          ? source.travel.mapUtilityTitleHtml
+          : undefined,
+      mapUtilityDescription:
+        typeof source.travel?.mapUtilityDescription === "string" && source.travel.mapUtilityDescription.trim()
+          ? source.travel.mapUtilityDescription
+          : "A quick guide to the places guests are most likely to need before and during the wedding weekend.",
+      mapUtilityDescriptionHtml:
+        typeof source.travel?.mapUtilityDescriptionHtml === "string" && source.travel.mapUtilityDescriptionHtml.trim()
+          ? source.travel.mapUtilityDescriptionHtml
+          : undefined,
       locationOverviewTitle: source.travel?.locationOverviewTitle ?? "",
       locationOverviewTitleHtml:
         typeof source.travel?.locationOverviewTitleHtml === "string" && source.travel.locationOverviewTitleHtml.trim()

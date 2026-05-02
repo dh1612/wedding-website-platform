@@ -160,6 +160,15 @@ export function AdminWeddingEditor({
   const travelHeadingHtml = weddingData.travel.headingHtml
     ? weddingData.travel.headingHtml
     : simpleTextHtml(weddingData.travel.heading);
+  const mapUtilityTitleHtml = weddingData.travel.mapUtilityTitleHtml
+    ? weddingData.travel.mapUtilityTitleHtml
+    : simpleTextHtml(weddingData.travel.mapUtilityTitle ?? "Useful locations at a glance");
+  const mapUtilityDescriptionHtml = weddingData.travel.mapUtilityDescriptionHtml
+    ? weddingData.travel.mapUtilityDescriptionHtml
+    : simpleTextHtml(
+        weddingData.travel.mapUtilityDescription ??
+          "A quick guide to the places guests are most likely to need before and during the wedding weekend."
+      );
   const locationOverviewTitleHtml = weddingData.travel.locationOverviewTitleHtml
     ? weddingData.travel.locationOverviewTitleHtml
     : simpleTextHtml(weddingData.travel.locationOverviewTitle);
@@ -662,6 +671,33 @@ export function AdminWeddingEditor({
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Map link</label>
                 <input name="travelMapLink" defaultValue={weddingData.travel.mapLink} placeholder="https://maps.google.com/..." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Map & area eyebrow</label>
+                <input
+                  name="travelMapUtilityEyebrow"
+                  defaultValue={weddingData.travel.mapUtilityEyebrow ?? "Map & Area"}
+                  placeholder="Map & Area"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <RichTextEditorField
+                  name="travelMapUtilityTitle"
+                  label="Map & area title"
+                  description="This is the large title shown above the useful locations cards."
+                  defaultValue={mapUtilityTitleHtml}
+                  minHeightClassName="min-h-[110px]"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <RichTextEditorField
+                  name="travelMapUtilityDescription"
+                  label="Map & area intro"
+                  description="Use this for the short supporting text under the title."
+                  defaultValue={mapUtilityDescriptionHtml}
+                  minHeightClassName="min-h-[140px]"
+                />
               </div>
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-[#2f473f]">Relaxed itinerary note</label>

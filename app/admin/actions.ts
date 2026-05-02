@@ -232,6 +232,9 @@ export async function updateWeddingContentAction(formData: FormData) {
   const taglineRichText = String(formData.get("tagline") || "").trim();
   const travelHeadingRichText = String(formData.get("travelHeading") || "").trim();
   const travelDescriptionRichText = String(formData.get("travelDescription") || "").trim();
+  const mapUtilityEyebrow = String(formData.get("travelMapUtilityEyebrow") || "").trim();
+  const mapUtilityTitleRichText = String(formData.get("travelMapUtilityTitle") || "").trim();
+  const mapUtilityDescriptionRichText = String(formData.get("travelMapUtilityDescription") || "").trim();
   const locationOverviewTitleRichText = String(formData.get("locationOverviewTitle") || "").trim();
   const locationOverviewRichText = String(formData.get("locationOverview") || "").trim();
   const ceremonyDescriptionRichText = String(formData.get("ceremonyDescription") || "").trim();
@@ -445,6 +448,16 @@ export async function updateWeddingContentAction(formData: FormData) {
         stripHtml(travelDescriptionRichText) || weddingData.travel.description,
       descriptionHtml:
         travelDescriptionRichText || weddingData.travel.descriptionHtml,
+      mapUtilityEyebrow:
+        mapUtilityEyebrow || weddingData.travel.mapUtilityEyebrow,
+      mapUtilityTitle:
+        stripHtml(mapUtilityTitleRichText) || weddingData.travel.mapUtilityTitle,
+      mapUtilityTitleHtml:
+        mapUtilityTitleRichText || weddingData.travel.mapUtilityTitleHtml,
+      mapUtilityDescription:
+        stripHtml(mapUtilityDescriptionRichText) || weddingData.travel.mapUtilityDescription,
+      mapUtilityDescriptionHtml:
+        mapUtilityDescriptionRichText || weddingData.travel.mapUtilityDescriptionHtml,
       locationOverviewTitle:
         stripHtml(locationOverviewTitleRichText) || weddingData.travel.locationOverviewTitle,
       locationOverviewTitleHtml:

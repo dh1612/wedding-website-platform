@@ -67,12 +67,16 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                     }`}
                   >
                     <div className="space-y-4">
-                      <p className="eyebrow">Map & Area</p>
-                      <h3 className="max-w-xl text-2xl sm:text-3xl">Useful locations at a glance</h3>
-                      <p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
-                        A quick guide to the places guests are most likely to need before and during
-                        the wedding weekend.
-                      </p>
+                      <SectionHeading
+                        eyebrow={wedding.travel.mapUtilityEyebrow || "Map & Area"}
+                        title={wedding.travel.mapUtilityTitle || "Useful locations at a glance"}
+                        titleHtml={wedding.travel.mapUtilityTitleHtml}
+                        description={
+                          wedding.travel.mapUtilityDescription ||
+                          "A quick guide to the places guests are most likely to need before and during the wedding weekend."
+                        }
+                        descriptionHtml={wedding.travel.mapUtilityDescriptionHtml}
+                      />
                       <div className="flex flex-wrap gap-3">
                         {wedding.travel.mapLink ? (
                           <a
