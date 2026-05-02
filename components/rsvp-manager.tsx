@@ -54,11 +54,21 @@ export function RSVPManager({
   const [guestList, setGuestList] = useState<PortalGuest[]>(guests);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | RSVPStatus>("all");
+  const [mealFilter, setMealFilter] = useState<"all" | PortalGuest["meal"]>("all");
+  const [dietaryFilter, setDietaryFilter] = useState<"all" | "has" | "none">("all");
+  const [notesFilter, setNotesFilter] = useState<"all" | "has" | "none">("all");
   const [draft, setDraft] = useState<DraftGuest>(emptyDraft);
   const [statusMessage, setStatusMessage] = useState("");
 
   const filteredGuests = useMemo(() => {
     return guestList.filter((guest) => {
+      const hasNotes =
+        Boolean(guest.songRequest) ||
+        Boolean(guest.messageToCouple) ||
+        Boolean(guest.note) ||
+        Boolean(Object.keys(guest.customAnswers ?? {}).length);
+      const hasDietary = Boolean(guest.dietary && guest.dietary.trim());
+
       const matchesSearch =
         guest.name.toLowerCase().includes(search.toLowerCase()) ||
         guest.household.toLowerCase().includes(search.toLowerCase()) ||
@@ -68,10 +78,23 @@ export function RSVPManager({
 
       const matchesStatus =
         statusFilter === "all" ? true : guest.status === statusFilter;
+      const matchesMeal = mealFilter === "all" ? true : guest.meal === mealFilter;
+      const matchesDietary =
+        dietaryFilter === "all"
+          ? true
+          : dietaryFilter === "has"
+            ? hasDietary
+            : !hasDietary;
+      const matchesNotes =
+        notesFilter === "all"
+          ? true
+          : notesFilter === "has"
+            ? hasNotes
+            : !hasNotes;
 
-      return matchesSearch && matchesStatus;
+      return matchesSearch && matchesStatus && matchesMeal && matchesDietary && matchesNotes;
     });
-  }, [guestList, search, statusFilter]);
+  }, [guestList, search, statusFilter, mealFilter, dietaryFilter, notesFilter]);
 
   const summary = useMemo(() => {
     return {
@@ -227,7 +250,7 @@ export function RSVPManager({
               </p>
             ) : null}
 
-            <div className="mt-6 grid gap-4 md:grid-cols-[1fr_220px]">
+            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_220px_220px_220px]">
               <input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
@@ -243,8 +266,45 @@ export function RSVPManager({
               >
                 <option value="all">All statuses</option>
                 <option value="attending">Attending</option>
-                <option value="pending">Pending</option>
-                <option value="declined">Declined</option>
+                  <option value="pending">Pending</option>
+                  <option value="declined">Declined</option>
+                </select>
+              <select
+                value={mealFilter}
+                onChange={(event) =>
+                  setMealFilter(event.target.value as "all" | PortalGuest["meal"])
+                }
+                className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+              >
+                <option value="all">All meals</option>
+                <option value="beef">Beef</option>
+                <option value="fish">Fish</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="kids">Kids</option>
+                <option value="custom">Custom</option>
+              </select>
+              <select
+                value={dietaryFilter}
+                onChange={(event) =>
+                  setDietaryFilter(event.target.value as "all" | "has" | "none")
+                }
+                className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+              >
+                <option value="all">All dietary</option>
+                <option value="has">Has dietary note</option>
+                <option value="none">No dietary note</option>
+              </select>
+              <select
+                value={notesFilter}
+                onChange={(event) =>
+                  setNotesFilter(event.target.value as "all" | "has" | "none")
+                }
+                className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+              >
+                <option value="all">All notes</option>
+                <option value="has">Has notes / messages</option>
+                <option value="none">No notes / messages</option>
               </select>
             </div>
 
