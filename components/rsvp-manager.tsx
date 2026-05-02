@@ -198,7 +198,7 @@ export function RSVPManager({
 
   return (
     <>
-      <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+      <section className="mx-auto w-full max-w-[92rem] px-6 py-8 lg:px-8 lg:py-12">
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
           {summaryCards.map((card) => (
             <div key={card.label} className="section-shell rounded-[1.5rem] p-5">
@@ -209,8 +209,8 @@ export function RSVPManager({
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-6 py-2 lg:px-8 lg:py-4">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+      <section className="mx-auto w-full max-w-[92rem] px-6 py-2 lg:px-8 lg:py-4">
+        <div className="space-y-8">
           <div className="section-shell rounded-[2rem] p-8 sm:p-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -248,15 +248,15 @@ export function RSVPManager({
               </select>
             </div>
 
-            <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-[var(--border)]">
-              <table className="w-full table-fixed border-collapse text-left text-sm">
+            <div className="mt-6 overflow-x-auto rounded-[1.5rem] border border-[var(--border)]">
+              <table className="min-w-[1100px] w-full border-collapse text-left text-sm">
                 <thead className="bg-black/5">
                   <tr>
-                    <th className="w-[16%] px-4 py-3 font-medium">Guest</th>
+                    <th className="w-[18%] px-4 py-3 font-medium">Guest</th>
                     <th className="w-[14%] px-4 py-3 font-medium">Status</th>
-                    <th className="w-[14%] px-4 py-3 font-medium">Meal</th>
-                    <th className="w-[14%] px-4 py-3 font-medium">Dietary</th>
-                    <th className="w-[32%] px-4 py-3 font-medium">Notes</th>
+                    <th className="w-[12%] px-4 py-3 font-medium">Meal</th>
+                    <th className="w-[12%] px-4 py-3 font-medium">Dietary</th>
+                    <th className="w-[34%] px-4 py-3 font-medium">Notes</th>
                     <th className="w-[10%] px-4 py-3 font-medium">Action</th>
                   </tr>
                 </thead>
@@ -300,7 +300,7 @@ export function RSVPManager({
             </div>
           </div>
 
-          <div className="space-y-8">
+          <div className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
             <div className="section-shell rounded-[2rem] p-8">
               <p className="eyebrow">Add Guest</p>
               <h2 className="mt-3 text-3xl">Manual Entry</h2>
