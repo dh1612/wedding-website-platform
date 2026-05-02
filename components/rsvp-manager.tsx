@@ -87,8 +87,57 @@ export function RSVPManager({
   }, [guestList]);
 
   const highlightedGuests = guestList
-    .filter((guest) => guest.dietary || guest.note || guest.songRequest || guest.messageToCouple)
+    .filter(
+      (guest) =>
+        guest.dietary ||
+        guest.note ||
+        guest.songRequest ||
+        guest.messageToCouple ||
+        Object.keys(guest.customAnswers ?? {}).length
+    )
     .slice(0, 8);
+
+  function renderGuestNotes(guest: PortalGuest) {
+    const customEntries = Object.entries(guest.customAnswers ?? {});
+
+    if (!guest.songRequest && !guest.messageToCouple && !customEntries.length) {
+      return <p>None</p>;
+    }
+
+    return (
+      <div className="space-y-2">
+        {guest.songRequest ? (
+          <div className="rounded-[0.9rem] border border-[var(--border)] bg-white/80 px-3 py-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+              Song
+            </p>
+            <p className="mt-1 text-sm leading-6 text-[var(--foreground)]">{guest.songRequest}</p>
+          </div>
+        ) : null}
+        {guest.messageToCouple ? (
+          <div className="rounded-[0.9rem] border border-[var(--border)] bg-white/80 px-3 py-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+              Message
+            </p>
+            <p className="mt-1 text-sm leading-6 text-[var(--foreground)]">
+              {guest.messageToCouple}
+            </p>
+          </div>
+        ) : null}
+        {customEntries.map(([question, answer]) => (
+          <div
+            key={question}
+            className="rounded-[0.9rem] border border-[var(--border)] bg-white/80 px-3 py-2"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+              {getCustomQuestionLabel(question)}
+            </p>
+            <p className="mt-1 text-sm leading-6 text-[var(--foreground)]">{answer}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   async function addGuest() {
     if (!draft.name.trim() || !draft.household.trim()) {
@@ -200,15 +249,15 @@ export function RSVPManager({
             </div>
 
             <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-[var(--border)]">
-              <table className="w-full border-collapse text-left text-sm">
+              <table className="w-full table-fixed border-collapse text-left text-sm">
                 <thead className="bg-black/5">
                   <tr>
-                    <th className="px-4 py-3 font-medium">Guest</th>
-                    <th className="px-4 py-3 font-medium">Status</th>
-                    <th className="px-4 py-3 font-medium">Meal</th>
-                    <th className="px-4 py-3 font-medium">Dietary</th>
-                    <th className="px-4 py-3 font-medium">Notes</th>
-                    <th className="px-4 py-3 font-medium">Action</th>
+                    <th className="w-[16%] px-4 py-3 font-medium">Guest</th>
+                    <th className="w-[14%] px-4 py-3 font-medium">Status</th>
+                    <th className="w-[14%] px-4 py-3 font-medium">Meal</th>
+                    <th className="w-[14%] px-4 py-3 font-medium">Dietary</th>
+                    <th className="w-[32%] px-4 py-3 font-medium">Notes</th>
+                    <th className="w-[10%] px-4 py-3 font-medium">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -233,23 +282,8 @@ export function RSVPManager({
                           : guest.meal.charAt(0).toUpperCase() + guest.meal.slice(1)}
                       </td>
                       <td className="px-4 py-4">{guest.dietary || "None"}</td>
-                      <td className="px-4 py-4">
-                        <div className="space-y-1 text-xs text-[var(--muted)]">
-                          {guest.songRequest ? <p>Song: {guest.songRequest}</p> : null}
-                          {guest.messageToCouple ? <p>Message: {guest.messageToCouple}</p> : null}
-                          {guest.customAnswers
-                            ? Object.entries(guest.customAnswers).map(([question, answer]) => (
-                                <p key={question}>
-                                  {getCustomQuestionLabel(question)}: {answer}
-                                </p>
-                              ))
-                            : null}
-                          {!guest.songRequest &&
-                          !guest.messageToCouple &&
-                          !Object.keys(guest.customAnswers ?? {}).length ? (
-                            <p>None</p>
-                          ) : null}
-                        </div>
+                      <td className="px-4 py-4 align-top">
+                        <div className="text-xs text-[var(--muted)]">{renderGuestNotes(guest)}</div>
                       </td>
                       <td className="px-4 py-4">
                         <button

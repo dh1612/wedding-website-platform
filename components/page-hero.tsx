@@ -1,21 +1,24 @@
 import Link from "next/link";
 import { getWeddingData } from "@/lib/wedding-data";
 import { buildModeHref } from "@/lib/site-navigation";
+import type { WeddingData } from "@/types/wedding";
 
 type PageHeroProps = {
   eyebrow: string;
   title: string;
   description: string;
   themeId: string;
+  weddingData?: WeddingData;
 };
 
 export function PageHero({
   eyebrow,
   title,
   description,
-  themeId
+  themeId,
+  weddingData
 }: PageHeroProps) {
-  const wedding = getWeddingData();
+  const wedding = weddingData ?? getWeddingData();
 
   return (
     <section className="mx-auto w-full max-w-6xl px-6 pb-2 pt-4 lg:px-8">

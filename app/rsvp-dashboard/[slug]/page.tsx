@@ -53,6 +53,7 @@ export default async function RSVPDashboardBySlugPage({
         title="Guest Responses At A Glance"
         description="Manage the guest list, review RSVP responses, and manually add or remove guests for this wedding."
         themeId={theme.id}
+        weddingData={weddingData}
       />
       <RSVPManager
         guests={guests}
