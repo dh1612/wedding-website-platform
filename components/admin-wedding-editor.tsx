@@ -190,12 +190,16 @@ export function AdminWeddingEditor({
     : simpleTextHtml(weddingData.gallery.description);
   const editorSections = [
     { id: "core-setup", label: "Core setup" },
-    { id: "hero-copy", label: "Hero" },
+    { id: "hero-copy", label: "Opening section" },
     { id: "images", label: "Images" },
-    { id: "venue-stay", label: "Venue & stay" },
-    { id: "story-sections", label: "Story & sections" },
-    { id: "key-details", label: "Key details" },
-    { id: "rsvp-form", label: "RSVP form" }
+    { id: "venue-travel", label: "Venue & travel" },
+    { id: "accommodation", label: "Accommodation" },
+    { id: "weekend-timeline", label: "Weekend timeline" },
+    { id: "rsvp-form", label: "RSVP form" },
+    { id: "our-story", label: "Our story" },
+    { id: "ai-concierge", label: "AI concierge" },
+    { id: "faq", label: "FAQ" },
+    { id: "key-details", label: "Key details" }
   ] as const;
 
   return (
@@ -475,10 +479,10 @@ export function AdminWeddingEditor({
           </EditorAccordionSection>
 
           <EditorAccordionSection
-            id="venue-stay"
-            eyebrow="Venue & Guest Stay"
-            title="Where guests need to go and where they can stay"
-            description="This is the practical planning section: ceremony, reception, travel notes, area details, maps, and accommodation."
+            id="venue-travel"
+            eyebrow="Venue & Travel"
+            title="Where guests need to go and how they will get there"
+            description="This is the practical travel section: ceremony, reception, travel notes, area details, maps, and transport guidance."
           >
             <div className="grid gap-4 md:grid-cols-2">
               <div className="md:col-span-2 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -506,11 +510,6 @@ export function AdminWeddingEditor({
                   name="showDirectionsCard"
                   label="Show parking & directions card"
                   checked={visibility?.directionsCard ?? true}
-                />
-                <SectionToggle
-                  name="showAccommodation"
-                  label="Show accommodation"
-                  checked={visibility?.accommodation ?? true}
                 />
               </div>
               <div className="space-y-2 md:col-span-2">
@@ -675,38 +674,60 @@ export function AdminWeddingEditor({
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
-              <p className="eyebrow">Guest Accommodation</p>
-              <h2 className="mt-3 text-2xl">Add hotels and booking links clearly</h2>
-              <p className="prose-copy mt-3">
-                Use one line per hotel in this format:
-                <span className="font-medium text-[var(--foreground)]"> Hotel name | booking link | short note</span>.
-                If you only have the hotel name for now, that is fine too.
-              </p>
-              <textarea name="accommodationText" defaultValue={accommodationLines} rows={6} placeholder="The Harbour Hotel | https://hotel-example.com | 8 minutes from the venue" className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-            </div>
-
             <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-[#fbfcfb] p-5">
               <p className="eyebrow">Guest-Facing Preview Summary</p>
               <h2 className="mt-3 text-2xl">How this section currently reads on the website</h2>
-              <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-                <div className="rounded-[1.25rem] border border-[var(--border)] bg-white p-5">
-                  <p className="eyebrow">Venue Details</p>
-                  <div className="mt-3 space-y-4 text-sm leading-6 text-[#41564e]">
-                    <div>
-                      <p className="font-medium text-[#1c2622]">Ceremony</p>
-                      <p>{weddingData.ceremony.location}</p>
-                      <p>{weddingData.ceremony.time}</p>
-                      <p>{weddingData.ceremony.address}</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-[#1c2622]">Reception</p>
-                      <p>{weddingData.reception.location}</p>
-                      <p>{weddingData.reception.time}</p>
-                      <p>{weddingData.reception.address}</p>
-                    </div>
+              <div className="mt-5 rounded-[1.25rem] border border-[var(--border)] bg-white p-5">
+                <p className="eyebrow">Venue Details</p>
+                <div className="mt-3 space-y-4 text-sm leading-6 text-[#41564e]">
+                  <div>
+                    <p className="font-medium text-[#1c2622]">Ceremony</p>
+                    <p>{weddingData.ceremony.location}</p>
+                    <p>{weddingData.ceremony.time}</p>
+                    <p>{weddingData.ceremony.address}</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#1c2622]">Reception</p>
+                    <p>{weddingData.reception.location}</p>
+                    <p>{weddingData.reception.time}</p>
+                    <p>{weddingData.reception.address}</p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </EditorAccordionSection>
+
+          <EditorAccordionSection
+            id="accommodation"
+            eyebrow="Accommodation"
+            title="Where guests can stay"
+            description="Keep hotel suggestions and booking links separate so this section is easy to update on its own."
+          >
+            <div className="grid gap-4">
+              <SectionToggle
+                name="showAccommodation"
+                label="Show accommodation section"
+                checked={visibility?.accommodation ?? true}
+              />
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Guest Accommodation</p>
+                <h2 className="mt-3 text-2xl">Add hotels and booking links clearly</h2>
+                <p className="prose-copy mt-3">
+                  Use one line per hotel in this format:
+                  <span className="font-medium text-[var(--foreground)]"> Hotel name | booking link | short note</span>.
+                  If you only have the hotel name for now, that is fine too.
+                </p>
+                <textarea
+                  name="accommodationText"
+                  defaultValue={accommodationLines}
+                  rows={6}
+                  placeholder="The Harbour Hotel | https://hotel-example.com | 8 minutes from the venue"
+                  className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-[#fbfcfb] p-5">
+                <p className="eyebrow">Guest-Facing Preview Summary</p>
+                <h2 className="mt-3 text-2xl">How the accommodation section currently reads</h2>
                 <div className="rounded-[1.25rem] border border-[var(--border)] bg-white p-5">
                   <p className="eyebrow">Accommodation</p>
                   <div className="mt-3 space-y-4">
@@ -732,13 +753,35 @@ export function AdminWeddingEditor({
           </EditorAccordionSection>
 
           <EditorAccordionSection
-            id="story-sections"
-            eyebrow="Story & Sections"
-            title="The more personal and guest-facing content"
-            description="Edit the couple story, gallery introduction, timeline content, FAQs, and visibility settings in one place."
+            id="weekend-timeline"
+            eyebrow="Weekend Timeline"
+            title="What happens and when"
+            description="Keep the wedding weekend timing separate so you can shape the guest journey without hunting through the story content."
           >
             <div className="grid gap-4">
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <SectionToggle
+                name="showSchedule"
+                label="Show weekend timeline"
+                checked={visibility?.schedule ?? true}
+              />
+              <textarea
+                name="scheduleText"
+                defaultValue={weddingData.schedule.map((item) => `${item.time} - ${item.title}`).join("\n")}
+                rows={8}
+                placeholder={`Friday 7:00pm - Welcome drinks\nSaturday 3:00pm - Ceremony\nSunday 12:00pm - Brunch`}
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+              />
+            </div>
+          </EditorAccordionSection>
+
+          <EditorAccordionSection
+            id="our-story"
+            eyebrow="Our Story"
+            title="The personal side of the wedding website"
+            description="Edit the couple story and gallery intro here so it feels like one clear pillar rather than part of a larger mixed section."
+          >
+            <div className="grid gap-4">
+              <div className="grid gap-3 md:grid-cols-2">
                 <SectionToggle
                   name="showStory"
                   label="Show story copy"
@@ -748,26 +791,6 @@ export function AdminWeddingEditor({
                   name="showGallery"
                   label="Show gallery images"
                   checked={visibility?.gallery ?? true}
-                />
-                <SectionToggle
-                  name="showSchedule"
-                  label="Show schedule"
-                  checked={visibility?.schedule ?? true}
-                />
-                <SectionToggle
-                  name="showAiConcierge"
-                  label="Show AI concierge"
-                  checked={visibility?.aiConcierge ?? true}
-                />
-                <SectionToggle
-                  name="showFaq"
-                  label="Show FAQ"
-                  checked={visibility?.faq ?? true}
-                />
-                <SectionToggle
-                  name="showRegistry"
-                  label="Show registry"
-                  checked={visibility?.registry ?? true}
                 />
               </div>
               <RichTextEditorField
@@ -798,8 +821,58 @@ export function AdminWeddingEditor({
                 defaultValue={galleryDescriptionHtml}
                 minHeightClassName="min-h-[140px]"
               />
-              <textarea name="scheduleText" defaultValue={weddingData.schedule.map((item) => `${item.time} - ${item.title}`).join("\n")} rows={6} placeholder="Schedule lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-              <textarea name="faqText" defaultValue={weddingData.faq.map((item) => `${item.q} ${item.a}`).join("\n")} rows={6} placeholder="FAQ lines" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+            </div>
+          </EditorAccordionSection>
+
+          <EditorAccordionSection
+            id="ai-concierge"
+            eyebrow="AI Concierge"
+            title="Control the interactive guest Q&A"
+            description="Decide whether the AI concierge appears on this wedding and keep that choice separate from the rest of the FAQ section."
+          >
+            <div className="grid gap-4">
+              <SectionToggle
+                name="showAiConcierge"
+                label="Show AI concierge"
+                checked={visibility?.aiConcierge ?? true}
+              />
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">How this works</p>
+                <p className="prose-copy mt-3">
+                  The concierge answers guest questions from the saved wedding details. It is automatically
+                  enabled for non-basic packages, but this toggle lets you hide or show the guest-facing card
+                  for this specific wedding.
+                </p>
+              </div>
+            </div>
+          </EditorAccordionSection>
+
+          <EditorAccordionSection
+            id="faq"
+            eyebrow="FAQ"
+            title="The practical guest questions"
+            description="Keep FAQs separate so this pillar is easy to update without touching the story, timeline, or concierge."
+          >
+            <div className="grid gap-4">
+              <div className="grid gap-3 md:grid-cols-2">
+                <SectionToggle
+                  name="showFaq"
+                  label="Show FAQ section"
+                  checked={visibility?.faq ?? true}
+                />
+                <SectionToggle
+                  name="showRegistry"
+                  label="Show registry"
+                  checked={visibility?.registry ?? true}
+                />
+              </div>
+              <textarea
+                name="faqText"
+                defaultValue={weddingData.faq.map((item) => `${item.q} ${item.a}`).join("\n")}
+                rows={8}
+                placeholder="What time should we arrive? Please arrive 20 minutes before the ceremony begins."
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+              />
             </div>
           </EditorAccordionSection>
 
