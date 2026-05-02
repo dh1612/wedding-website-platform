@@ -51,6 +51,14 @@ type PlannerTable = PlannerTableInput & {
   isPlaced: boolean;
 };
 
+type DragTableMeta = {
+  tableId: string;
+  offsetX: number;
+  offsetY: number;
+  width: number;
+  height: number;
+};
+
 const starterTables: Array<Pick<PlannerTable, "name" | "shape" | "seats">> = [
   { name: "Top Table", shape: "long", seats: 8 },
   { name: "Table 1", shape: "round", seats: 10 },
@@ -103,6 +111,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
   const [isCompactView, setIsCompactView] = useState(false);
   const [sidebarTab, setSidebarTab] = useState<"add" | "assigned">("add");
   const canvasRef = useRef<HTMLDivElement | null>(null);
+  const dragTableMetaRef = useRef<DragTableMeta | null>(null);
 
   useEffect(() => {
     function updateCompactMode() {
@@ -166,6 +175,14 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
 
   function handleTableDragStart(event: React.DragEvent<HTMLDivElement>, tableId: string) {
     const payload: DragTablePayload = { type: "table", tableId };
+    const rect = event.currentTarget.getBoundingClientRect();
+    dragTableMetaRef.current = {
+      tableId,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+      width: rect.width,
+      height: rect.height
+    };
     event.dataTransfer.setData("application/json", JSON.stringify(payload));
     event.dataTransfer.effectAllowed = "move";
   }
@@ -181,8 +198,24 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current.getBoundingClientRect();
-    const x = ((clientX - canvas.left) / canvas.width) * 100;
-    const y = ((clientY - canvas.top) / canvas.height) * 100;
+    const dragMeta =
+      dragTableMetaRef.current?.tableId === tableId ? dragTableMetaRef.current : null;
+
+    const fallbackTable = plannerTables.find((table) => table.id === tableId);
+    const fallbackWidth = fallbackTable?.shape === "long" ? 272 : 192;
+    const fallbackHeight = fallbackTable?.shape === "long" ? 136 : 192;
+    const elementWidth = dragMeta?.width ?? fallbackWidth;
+    const elementHeight = dragMeta?.height ?? fallbackHeight;
+    const offsetX = dragMeta?.offsetX ?? elementWidth / 2;
+    const offsetY = dragMeta?.offsetY ?? elementHeight / 2;
+
+    const centerX = clientX - canvas.left - offsetX + elementWidth / 2;
+    const centerY = clientY - canvas.top - offsetY + elementHeight / 2;
+
+    const x = (centerX / canvas.width) * 100;
+    const y = (centerY / canvas.height) * 100;
+    const halfWidthPercent = (elementWidth / 2 / canvas.width) * 100;
+    const halfHeightPercent = (elementHeight / 2 / canvas.height) * 100;
 
     setPlannerTables((current) =>
       current.map((table) =>
@@ -190,8 +223,8 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
           ? {
               ...table,
               isPlaced: true,
-              x: Math.min(94, Math.max(6, x)),
-              y: Math.min(90, Math.max(8, y))
+              x: Math.min(100 - halfWidthPercent, Math.max(halfWidthPercent, x)),
+              y: Math.min(100 - halfHeightPercent, Math.max(halfHeightPercent, y))
             }
           : table
       )
@@ -206,6 +239,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
 
     if (payload.type === "table") {
       placeOrMoveTable(payload.tableId, event.clientX, event.clientY);
+      dragTableMetaRef.current = null;
     }
   }
 
@@ -222,6 +256,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
 
     if (payload.type === "table") {
       placeOrMoveTable(payload.tableId, event.clientX, event.clientY);
+      dragTableMetaRef.current = null;
     }
   }
 
