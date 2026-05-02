@@ -61,7 +61,7 @@ export function RSVPManager({
   const [dietaryFilter, setDietaryFilter] = useState<"all" | "has" | "none">("all");
   const [dietaryValueFilter, setDietaryValueFilter] = useState("");
   const [notesFilter, setNotesFilter] = useState<"all" | "has" | "none">("all");
-  const [customFilters, setCustomFilters] = useState<Record<string, string>>({});
+  const [customFilters, setCustomFilters] = useState<Record<string, string[]>>({});
   const [openGroups, setOpenGroups] = useState<Record<RSVPStatus, boolean>>({
     attending: true,
     pending: true,
@@ -112,23 +112,24 @@ export function RSVPManager({
             ? hasNotes
             : !hasNotes;
       const matchesCustomFilters = customSelectableQuestions.every((question) => {
-        const selectedFilter = customFilters[question.id];
+        const selectedFilters = customFilters[question.id] ?? [];
 
-        if (!selectedFilter) {
+        if (!selectedFilters.length) {
           return true;
         }
 
         const answer = guest.customAnswers?.[question.id] ?? "";
 
         if (question.type === "multiselect") {
-          return answer
+          const selectedAnswers = answer
             .split(",")
             .map((item) => item.trim())
-            .filter(Boolean)
-            .includes(selectedFilter);
+            .filter(Boolean);
+
+          return selectedFilters.every((filterValue) => selectedAnswers.includes(filterValue));
         }
 
-        return answer.trim() === selectedFilter;
+        return selectedFilters.includes(answer.trim());
       });
 
       return (
@@ -289,6 +290,20 @@ export function RSVPManager({
     }));
   }
 
+  function toggleCustomFilter(questionId: string, option: string) {
+    setCustomFilters((current) => {
+      const currentValues = current[questionId] ?? [];
+      const nextValues = currentValues.includes(option)
+        ? currentValues.filter((value) => value !== option)
+        : [...currentValues, option];
+
+      return {
+        ...current,
+        [questionId]: nextValues
+      };
+    });
+  }
+
   const customQuestionSummaries = customSelectableQuestions.map((question) => ({
     question,
     options: (question.options ?? []).map((option) => ({
@@ -431,26 +446,59 @@ export function RSVPManager({
 
             {customSelectableQuestions.length ? (
               <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {customSelectableQuestions.map((question) => (
-                  <select
-                    key={question.id}
-                    value={customFilters[question.id] ?? ""}
-                    onChange={(event) =>
-                      setCustomFilters((current) => ({
-                        ...current,
-                        [question.id]: event.target.value
-                      }))
-                    }
-                    className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-                  >
-                    <option value="">All: {question.label}</option>
-                    {(question.options ?? []).map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                ))}
+                {customSelectableQuestions.map((question) => {
+                  const selectedFilters = customFilters[question.id] ?? [];
+
+                  return (
+                    <div
+                      key={question.id}
+                      className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-4"
+                    >
+                      <p className="text-sm font-medium text-[var(--foreground)]">{question.label}</p>
+                      <div className="mt-3 space-y-2">
+                        {(question.options ?? []).map((option) => {
+                          const checked = selectedFilters.includes(option);
+
+                          return (
+                            <label
+                              key={option}
+                              className="flex items-center gap-3 text-sm text-[var(--foreground)]"
+                            >
+                              <input
+                                type={question.type === "multiselect" ? "checkbox" : "radio"}
+                                name={`custom-filter-${question.id}`}
+                                checked={checked}
+                                onChange={() =>
+                                  question.type === "multiselect"
+                                    ? toggleCustomFilter(question.id, option)
+                                    : setCustomFilters((current) => ({
+                                        ...current,
+                                        [question.id]: checked ? [] : [option]
+                                      }))
+                                }
+                              />
+                              <span>{option}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                      {selectedFilters.length ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setCustomFilters((current) => ({
+                              ...current,
+                              [question.id]: []
+                            }))
+                          }
+                          className="mt-3 text-sm text-[var(--accent-strong)] underline-offset-4 hover:underline"
+                        >
+                          Clear filter
+                        </button>
+                      ) : null}
+                    </div>
+                  );
+                })}
               </div>
             ) : null}
 
