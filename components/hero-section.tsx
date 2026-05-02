@@ -387,9 +387,9 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     return (
       <section
         id="top"
-        className="mx-auto grid w-full max-w-6xl grid-cols-[0.86fr_1.14fr] gap-4 px-4 pb-8 pt-4 sm:gap-6 sm:px-6 sm:pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:pb-18"
+        className="mx-auto grid w-full max-w-6xl gap-4 px-4 pb-8 pt-4 sm:grid-cols-[0.86fr_1.14fr] sm:gap-6 sm:px-6 sm:pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:pb-18"
       >
-        <div className="relative min-h-[340px] overflow-hidden rounded-[1.6rem] border border-[var(--border)] shadow-[var(--shadow)] sm:min-h-[420px] sm:rounded-[2rem] lg:min-h-[540px]">
+        <div className="relative min-h-[320px] overflow-hidden rounded-[1.6rem] border border-[var(--border)] shadow-[var(--shadow)] sm:min-h-[420px] sm:rounded-[2rem] lg:min-h-[540px]">
           <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,28,24,0.2)_0%,rgba(17,28,24,0.5)_100%)]" />
         </div>
@@ -404,7 +404,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="relative space-y-5 sm:space-y-6 lg:space-y-8">
             <div className="space-y-3 sm:space-y-4">
               {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
-              <h1 className="text-[2.8rem] leading-[0.93] sm:text-5xl lg:text-7xl">
+              <h1 className="text-4xl leading-[0.95] sm:text-5xl lg:text-7xl">
                 {wedding.couple}
               </h1>
               <div className="space-y-1.5 text-base text-[var(--muted)] sm:space-y-2 sm:text-lg lg:text-xl">
@@ -429,7 +429,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               <AnnouncementCopy
                 html={wedding.announcementHtml}
                 text={wedding.announcement}
-                className="mx-auto max-w-2xl text-sm leading-6 text-white/78 sm:text-base sm:leading-7"
+                className="mx-auto max-w-2xl text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7"
               />
             ) : null}
             {previewMode && showPreviewNote ? <PreviewNote text={hero.previewNote} /> : null}
