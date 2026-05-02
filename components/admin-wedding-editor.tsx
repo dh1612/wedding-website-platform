@@ -133,7 +133,9 @@ export function AdminWeddingEditor({
         question.label,
         question.type,
         question.required ? "required" : "optional",
-        question.placeholder ?? ""
+        question.type === "select" || question.type === "multiselect"
+          ? (question.options ?? []).join("; ")
+          : question.placeholder ?? ""
       ]
         .filter(Boolean)
         .join(" | ")
@@ -1045,15 +1047,15 @@ export function AdminWeddingEditor({
               <p className="prose-copy mt-3">
                 Add one question per line in this format:
                 <span className="font-medium text-[var(--foreground)]">
-                  {" "}Question label | short/long/yesno | required/optional | placeholder
+                  {" "}Question label | short/long/yesno/select/multiselect | required/optional | placeholder or option list
                 </span>.
-                The placeholder is optional. Delete a line to remove that question from the form.
+                For <span className="font-medium text-[var(--foreground)]">select</span> or <span className="font-medium text-[var(--foreground)]">multiselect</span>, use semi-colons between options. Delete a line to remove that question from the form.
               </p>
               <textarea
                 name="rsvpCustomQuestions"
                 defaultValue={customQuestionLines}
                 rows={7}
-                placeholder={`Do you need a coach seat? | yesno | optional\nWill you stay for brunch? | yesno | required\nAny accessibility notes? | long | optional | Share anything helpful here`}
+                placeholder={`Do you need a coach seat? | yesno | optional\nWill you stay for brunch? | yesno | required\nAny accessibility notes? | long | optional | Share anything helpful here\nWhich celebrations will you join? | multiselect | required | Saturday; Sunday (Wedding Day); Monday`}
                 className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
               />
             </div>

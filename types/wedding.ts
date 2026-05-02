@@ -64,9 +64,10 @@ export type ScheduleItem = {
 export type RSVPFormQuestion = {
   id: string;
   label: string;
-  type: "short" | "long" | "yesno";
+  type: "short" | "long" | "yesno" | "select" | "multiselect";
   required: boolean;
   placeholder?: string;
+  options?: string[];
 };
 
 export type WeddingData = {

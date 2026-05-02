@@ -65,27 +65,40 @@ function parseCustomQuestionLine(line: string, index: number) {
     return null;
   }
 
-  const [label, typePart, requiredPart, ...placeholderParts] = parts;
+  const [label, typePart, requiredPart, ...extraParts] = parts;
 
   if (!label) {
     return null;
   }
 
   const type =
-    typePart === "long" || typePart === "yesno" || typePart === "short"
+    typePart === "long" ||
+    typePart === "yesno" ||
+    typePart === "short" ||
+    typePart === "select" ||
+    typePart === "multiselect"
       ? typePart
       : "short";
 
   const requirement = requiredPart?.toLowerCase();
   const required = requirement === "required";
-  const placeholder = placeholderParts.join(" | ").trim() || undefined;
+  const extra = extraParts.join(" | ").trim();
+  const options =
+    type === "select" || type === "multiselect"
+      ? extra
+          .split(";")
+          .map((item) => item.trim())
+          .filter(Boolean)
+      : undefined;
+  const placeholder = type === "short" || type === "long" ? extra || undefined : undefined;
 
   return {
     id: buildCustomQuestionId(label, index),
     label,
     type,
     required,
-    placeholder
+    placeholder,
+    options: options?.length ? options : undefined
   };
 }
 

@@ -57,6 +57,11 @@ export function RSVPManager({
   const [mealFilter, setMealFilter] = useState<"all" | PortalGuest["meal"]>("all");
   const [dietaryFilter, setDietaryFilter] = useState<"all" | "has" | "none">("all");
   const [notesFilter, setNotesFilter] = useState<"all" | "has" | "none">("all");
+  const [openGroups, setOpenGroups] = useState<Record<RSVPStatus, boolean>>({
+    attending: true,
+    pending: true,
+    declined: false
+  });
   const [draft, setDraft] = useState<DraftGuest>(emptyDraft);
   const [statusMessage, setStatusMessage] = useState("");
 
@@ -74,7 +79,10 @@ export function RSVPManager({
         guest.household.toLowerCase().includes(search.toLowerCase()) ||
         (guest.note ?? "").toLowerCase().includes(search.toLowerCase()) ||
         (guest.songRequest ?? "").toLowerCase().includes(search.toLowerCase()) ||
-        (guest.messageToCouple ?? "").toLowerCase().includes(search.toLowerCase());
+        (guest.messageToCouple ?? "").toLowerCase().includes(search.toLowerCase()) ||
+        Object.values(guest.customAnswers ?? {}).some((answer) =>
+          answer.toLowerCase().includes(search.toLowerCase())
+        );
 
       const matchesStatus =
         statusFilter === "all" ? true : guest.status === statusFilter;
@@ -219,6 +227,19 @@ export function RSVPManager({
     { label: "Households", value: summary.households }
   ];
 
+  const groupedGuests: Array<{ status: RSVPStatus; label: string; guests: PortalGuest[] }> = [
+    { status: "attending", label: "Attending", guests: filteredGuests.filter((guest) => guest.status === "attending") },
+    { status: "pending", label: "Pending", guests: filteredGuests.filter((guest) => guest.status === "pending") },
+    { status: "declined", label: "Declined", guests: filteredGuests.filter((guest) => guest.status === "declined") }
+  ];
+
+  function toggleGroup(status: RSVPStatus) {
+    setOpenGroups((current) => ({
+      ...current,
+      [status]: !current[status]
+    }));
+  }
+
   return (
     <>
       <section className="mx-auto w-full max-w-[92rem] px-6 py-8 lg:px-8 lg:py-12">
@@ -308,55 +329,84 @@ export function RSVPManager({
               </select>
             </div>
 
-            <div className="mt-6 overflow-x-auto rounded-[1.5rem] border border-[var(--border)]">
-              <table className="min-w-[1100px] w-full border-collapse text-left text-sm">
-                <thead className="bg-black/5">
-                  <tr>
-                    <th className="w-[18%] px-4 py-3 font-medium">Guest</th>
-                    <th className="w-[14%] px-4 py-3 font-medium">Status</th>
-                    <th className="w-[12%] px-4 py-3 font-medium">Meal</th>
-                    <th className="w-[12%] px-4 py-3 font-medium">Dietary</th>
-                    <th className="w-[34%] px-4 py-3 font-medium">Notes</th>
-                    <th className="w-[10%] px-4 py-3 font-medium">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredGuests.slice(0, 24).map((guest) => (
-                    <tr key={guest.id} className="border-t border-[var(--border)]">
-                      <td className="px-4 py-4">
-                        <div>
-                          <p className="font-medium">{guest.name}</p>
-                          <p className="text-xs text-[var(--muted)]">
-                            {guest.household} · {guest.side}
-                          </p>
+            <div className="mt-6 space-y-4">
+              {groupedGuests.map((group) => (
+                <div key={group.status} className="overflow-hidden rounded-[1.5rem] border border-[var(--border)] bg-white/70">
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.status)}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  >
+                    <div>
+                      <p className="eyebrow">{group.label}</p>
+                      <p className="mt-2 text-sm text-[var(--muted)]">
+                        {group.guests.length} guest{group.guests.length === 1 ? "" : "s"}
+                      </p>
+                    </div>
+                    <span className="text-sm font-medium text-[var(--accent-strong)]">
+                      {openGroups[group.status] ? "Collapse" : "Expand"}
+                    </span>
+                  </button>
+
+                  {openGroups[group.status] ? (
+                    <div className="border-t border-[var(--border)]">
+                      {group.guests.length ? (
+                        <div className="divide-y divide-[var(--border)]">
+                          {group.guests.map((guest) => (
+                            <div
+                              key={guest.id}
+                              className="grid gap-5 px-5 py-5 lg:grid-cols-[minmax(0,1.1fr)_140px_140px_180px_minmax(0,1.4fr)_100px]"
+                            >
+                              <div>
+                                <p className="font-medium text-[var(--foreground)]">{guest.name}</p>
+                                <p className="mt-1 text-sm text-[var(--muted)]">
+                                  {guest.household} · {guest.side}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="eyebrow">Status</p>
+                                <span className="mt-2 inline-flex accent-panel rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                                  {guest.status}
+                                </span>
+                              </div>
+                              <div>
+                                <p className="eyebrow">Meal</p>
+                                <p className="mt-2 text-sm text-[var(--foreground)]">
+                                  {guest.meal === "kids"
+                                    ? "Kids"
+                                    : guest.meal.charAt(0).toUpperCase() + guest.meal.slice(1)}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="eyebrow">Dietary</p>
+                                <p className="mt-2 text-sm text-[var(--foreground)]">
+                                  {guest.dietary || "None"}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="eyebrow">Notes</p>
+                                <div className="mt-2 text-xs text-[var(--muted)]">{renderGuestNotes(guest)}</div>
+                              </div>
+                              <div className="flex items-start justify-start lg:justify-end">
+                                <button
+                                  onClick={() => removeGuest(guest.id)}
+                                  className="text-sm font-medium text-red-700"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      </td>
-                      <td className="px-4 py-4">
-                        <span className="accent-panel rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
-                          {guest.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-4">
-                        {guest.meal === "kids"
-                          ? "Kids"
-                          : guest.meal.charAt(0).toUpperCase() + guest.meal.slice(1)}
-                      </td>
-                      <td className="px-4 py-4">{guest.dietary || "None"}</td>
-                      <td className="px-4 py-4 align-top">
-                        <div className="text-xs text-[var(--muted)]">{renderGuestNotes(guest)}</div>
-                      </td>
-                      <td className="px-4 py-4">
-                        <button
-                          onClick={() => removeGuest(guest.id)}
-                          className="text-sm font-medium text-red-700"
-                        >
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      ) : (
+                        <div className="px-5 py-5 text-sm text-[var(--muted)]">
+                          No guests match this group with the current filters.
+                        </div>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
             </div>
           </div>
 

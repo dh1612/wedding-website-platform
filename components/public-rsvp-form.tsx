@@ -134,6 +134,25 @@ export function PublicRSVPForm({
     }
   }
 
+  function updateCustomAnswer(questionId: string, value: string) {
+    setCustomAnswers((current) => ({
+      ...current,
+      [questionId]: value
+    }));
+  }
+
+  function toggleCustomMultiSelect(questionId: string, option: string) {
+    const currentValues = (customAnswers[questionId] ?? "")
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+    const nextValues = currentValues.includes(option)
+      ? currentValues.filter((value) => value !== option)
+      : [...currentValues, option];
+
+    updateCustomAnswer(questionId, nextValues.join(", "));
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
@@ -299,25 +318,49 @@ export function PublicRSVPForm({
               {question.type === "long" ? (
                 <textarea
                   value={customAnswers[question.id] ?? ""}
-                  onChange={(event) =>
-                    setCustomAnswers((current) => ({
-                      ...current,
-                      [question.id]: event.target.value
-                    }))
-                  }
+                  onChange={(event) => updateCustomAnswer(question.id, event.target.value)}
                   rows={4}
                   placeholder={question.placeholder ?? "Type your answer here"}
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
                 />
+              ) : question.type === "select" ? (
+                <select
+                  value={customAnswers[question.id] ?? ""}
+                  onChange={(event) => updateCustomAnswer(question.id, event.target.value)}
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                >
+                  <option value="">Select an answer</option>
+                  {(question.options ?? []).map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              ) : question.type === "multiselect" ? (
+                <div className="space-y-3 rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3">
+                  {(question.options ?? []).map((option) => {
+                    const selectedValues = (customAnswers[question.id] ?? "")
+                      .split(",")
+                      .map((item) => item.trim())
+                      .filter(Boolean);
+                    const checked = selectedValues.includes(option);
+
+                    return (
+                      <label key={option} className="flex items-center gap-3 text-sm text-[var(--foreground)]">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleCustomMultiSelect(question.id, option)}
+                        />
+                        <span>{option}</span>
+                      </label>
+                    );
+                  })}
+                </div>
               ) : question.type === "yesno" ? (
                 <select
                   value={customAnswers[question.id] ?? ""}
-                  onChange={(event) =>
-                    setCustomAnswers((current) => ({
-                      ...current,
-                      [question.id]: event.target.value
-                    }))
-                  }
+                  onChange={(event) => updateCustomAnswer(question.id, event.target.value)}
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
                 >
                   <option value="">Select an answer</option>
@@ -327,12 +370,7 @@ export function PublicRSVPForm({
               ) : (
                 <input
                   value={customAnswers[question.id] ?? ""}
-                  onChange={(event) =>
-                    setCustomAnswers((current) => ({
-                      ...current,
-                      [question.id]: event.target.value
-                    }))
-                  }
+                  onChange={(event) => updateCustomAnswer(question.id, event.target.value)}
                   placeholder={question.placeholder ?? "Type your answer here"}
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
                 />

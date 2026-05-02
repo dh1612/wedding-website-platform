@@ -36,9 +36,20 @@ function coerceCustomQuestions(input: unknown): RSVPFormQuestion[] {
       if (!label) return null;
 
       const type =
-        source.type === "long" || source.type === "yesno" || source.type === "short"
+        source.type === "long" ||
+        source.type === "yesno" ||
+        source.type === "short" ||
+        source.type === "select" ||
+        source.type === "multiselect"
           ? source.type
           : "short";
+
+      const options =
+        Array.isArray(source.options) && (type === "select" || type === "multiselect")
+          ? source.options
+              .map((item) => (typeof item === "string" ? item.trim() : ""))
+              .filter(Boolean)
+          : undefined;
 
       return {
         id:
@@ -51,7 +62,8 @@ function coerceCustomQuestions(input: unknown): RSVPFormQuestion[] {
         placeholder:
           typeof source.placeholder === "string" && source.placeholder.trim()
             ? source.placeholder.trim()
-            : undefined
+            : undefined,
+        options: options?.length ? options : undefined
       };
     });
 
