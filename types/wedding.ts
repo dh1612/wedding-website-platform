@@ -70,6 +70,20 @@ export type RSVPFormQuestion = {
   options?: string[];
 };
 
+export type MealOptionValue =
+  | "beef"
+  | "fish"
+  | "vegetarian"
+  | "vegan"
+  | "kids"
+  | "custom";
+
+export type RSVPMealOption = {
+  value: MealOptionValue;
+  label: string;
+  enabled: boolean;
+};
+
 export type WeddingData = {
   couple: string;
   date: string;
@@ -116,6 +130,9 @@ export type WeddingData = {
       enableGuestCount: boolean;
       enableMealChoice: boolean;
       enableDietaryNotes: boolean;
+      dietaryInputType?: "text" | "select" | "multiselect";
+      dietaryOptions?: string[];
+      mealOptions?: RSVPMealOption[];
       enableSongRequest: boolean;
       enableMessageToCouple: boolean;
       customQuestions?: RSVPFormQuestion[];

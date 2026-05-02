@@ -127,6 +127,8 @@ export function AdminWeddingEditor({
     .join("\n");
   const visibility = weddingData.sectionVisibility;
   const rsvpForm = weddingData.rsvp.form;
+  const customQuestions = rsvpForm?.customQuestions ?? [];
+  const customQuestionRowCount = Math.max(customQuestions.length + 4, 8);
   const customQuestionLines = (rsvpForm?.customQuestions ?? [])
     .map((question) =>
       [
@@ -1040,23 +1042,134 @@ export function AdminWeddingEditor({
                   </label>
                 ))}
               </div>
+              <div className="mt-6 grid gap-4 lg:grid-cols-2">
+                <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] p-4">
+                  <p className="text-sm font-medium text-[var(--foreground)]">Meal choice options</p>
+                  <p className="prose-copy mt-2">
+                    Show or hide the standard meal choices and rename them if needed. The saved
+                    data still maps cleanly in the dashboard.
+                  </p>
+                  <div className="mt-4 space-y-3">
+                    {(rsvpForm?.mealOptions ?? []).map((option) => (
+                      <div key={option.value} className="grid gap-3 md:grid-cols-[140px_minmax(0,1fr)]">
+                        <label className="flex items-center gap-3 rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]">
+                          <input
+                            type="checkbox"
+                            name={`mealOptionEnabled_${option.value}`}
+                            defaultChecked={option.enabled}
+                            className="h-4 w-4"
+                          />
+                          <span className="capitalize">{option.value}</span>
+                        </label>
+                        <input
+                          name={`mealOptionLabel_${option.value}`}
+                          defaultValue={option.label}
+                          placeholder="Display label"
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] p-4">
+                  <p className="text-sm font-medium text-[var(--foreground)]">Dietary question options</p>
+                  <p className="prose-copy mt-2">
+                    Keep dietary requirements as free text, or turn them into a selectable question
+                    that can be filtered later.
+                  </p>
+                  <select
+                    name="rsvpDietaryInputType"
+                    defaultValue={rsvpForm?.dietaryInputType ?? "text"}
+                    className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                  >
+                    <option value="text">Free text box</option>
+                    <option value="select">Single-choice dropdown</option>
+                    <option value="multiselect">Multi-select checkboxes</option>
+                  </select>
+                  <textarea
+                    name="rsvpDietaryOptions"
+                    defaultValue={(rsvpForm?.dietaryOptions ?? []).join("\n")}
+                    rows={6}
+                    placeholder={`Vegetarian\nVegan\nGluten-free\nNut allergy`}
+                    className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                  />
+                </div>
+              </div>
             </div>
             <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
               <p className="eyebrow">Custom Questions</p>
               <h3 className="mt-3 text-xl">Add wedding-specific questions when a couple needs them</h3>
               <p className="prose-copy mt-3">
-                Add one question per line in this format:
-                <span className="font-medium text-[var(--foreground)]">
-                  {" "}Question label | short/long/yesno/select/multiselect | required/optional | placeholder or option list
-                </span>.
-                For <span className="font-medium text-[var(--foreground)]">select</span> or <span className="font-medium text-[var(--foreground)]">multiselect</span>, use semi-colons between options. Delete a line to remove that question from the form.
+                Build the extra RSVP questions as rows instead of writing parser syntax. Leave a
+                row blank if you don&apos;t need it.
               </p>
+              <div className="mt-4 space-y-4">
+                {Array.from({ length: customQuestionRowCount }).map((_, index) => {
+                  const question = customQuestions[index];
+                  return (
+                    <div
+                      key={question?.id ?? `custom-question-row-${index}`}
+                      className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] p-4"
+                    >
+                      <input
+                        type="hidden"
+                        name="rsvpQuestionId"
+                        value={question?.id ?? ""}
+                      />
+                      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_180px_160px]">
+                        <input
+                          name="rsvpQuestionLabel"
+                          defaultValue={question?.label ?? ""}
+                          placeholder="Question label"
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        />
+                        <select
+                          name="rsvpQuestionType"
+                          defaultValue={question?.type ?? "short"}
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        >
+                          <option value="short">Short text</option>
+                          <option value="long">Long text</option>
+                          <option value="yesno">Yes / No</option>
+                          <option value="select">Dropdown</option>
+                          <option value="multiselect">Multi-select</option>
+                        </select>
+                        <select
+                          name="rsvpQuestionRequired"
+                          defaultValue={question?.required ? "required" : "optional"}
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        >
+                          <option value="optional">Optional</option>
+                          <option value="required">Required</option>
+                        </select>
+                      </div>
+                      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                        <input
+                          name="rsvpQuestionPlaceholder"
+                          defaultValue={question?.placeholder ?? ""}
+                          placeholder="Placeholder for short/long text questions"
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        />
+                        <input
+                          name="rsvpQuestionOptions"
+                          defaultValue={(question?.options ?? []).join("; ")}
+                          placeholder="Options for dropdowns, separated with ;"
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
               <textarea
                 name="rsvpCustomQuestions"
                 defaultValue={customQuestionLines}
-                rows={7}
-                placeholder={`Do you need a coach seat? | yesno | optional\nWill you stay for brunch? | yesno | required\nAny accessibility notes? | long | optional | Share anything helpful here\nWhich celebrations will you join? | multiselect | required | Saturday; Sunday (Wedding Day); Monday`}
-                className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                rows={1}
+                className="sr-only"
+                readOnly
+                aria-hidden="true"
+                tabIndex={-1}
               />
             </div>
           </EditorAccordionSection>

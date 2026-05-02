@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { RSVPFormQuestion } from "@/types/wedding";
 
 type RSVPStatus = "attending" | "declined" | "pending";
 
@@ -24,6 +25,7 @@ type RSVPManagerProps = {
   guests: PortalGuest[];
   apiBasePath?: string;
   customQuestionLabels?: Record<string, string>;
+  customSelectableQuestions?: RSVPFormQuestion[];
 };
 
 type DraftGuest = {
@@ -45,7 +47,8 @@ const emptyDraft: DraftGuest = {
 export function RSVPManager({
   guests,
   apiBasePath = "/api/portal",
-  customQuestionLabels = {}
+  customQuestionLabels = {},
+  customSelectableQuestions = []
 }: RSVPManagerProps) {
   function getCustomQuestionLabel(questionId: string) {
     return customQuestionLabels[questionId] || questionId;
@@ -56,7 +59,9 @@ export function RSVPManager({
   const [statusFilter, setStatusFilter] = useState<"all" | RSVPStatus>("all");
   const [mealFilter, setMealFilter] = useState<"all" | PortalGuest["meal"]>("all");
   const [dietaryFilter, setDietaryFilter] = useState<"all" | "has" | "none">("all");
+  const [dietaryValueFilter, setDietaryValueFilter] = useState("");
   const [notesFilter, setNotesFilter] = useState<"all" | "has" | "none">("all");
+  const [customFilters, setCustomFilters] = useState<Record<string, string>>({});
   const [openGroups, setOpenGroups] = useState<Record<RSVPStatus, boolean>>({
     attending: true,
     pending: true,
@@ -93,16 +98,60 @@ export function RSVPManager({
           : dietaryFilter === "has"
             ? hasDietary
             : !hasDietary;
+      const matchesDietaryValue = !dietaryValueFilter
+        ? true
+        : (guest.dietary ?? "")
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean)
+            .includes(dietaryValueFilter);
       const matchesNotes =
         notesFilter === "all"
           ? true
           : notesFilter === "has"
             ? hasNotes
             : !hasNotes;
+      const matchesCustomFilters = customSelectableQuestions.every((question) => {
+        const selectedFilter = customFilters[question.id];
 
-      return matchesSearch && matchesStatus && matchesMeal && matchesDietary && matchesNotes;
+        if (!selectedFilter) {
+          return true;
+        }
+
+        const answer = guest.customAnswers?.[question.id] ?? "";
+
+        if (question.type === "multiselect") {
+          return answer
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean)
+            .includes(selectedFilter);
+        }
+
+        return answer.trim() === selectedFilter;
+      });
+
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesMeal &&
+        matchesDietary &&
+        matchesDietaryValue &&
+        matchesNotes &&
+        matchesCustomFilters
+      );
     });
-  }, [guestList, search, statusFilter, mealFilter, dietaryFilter, notesFilter]);
+  }, [
+    guestList,
+    search,
+    statusFilter,
+    mealFilter,
+    dietaryFilter,
+    dietaryValueFilter,
+    notesFilter,
+    customSelectableQuestions,
+    customFilters
+  ]);
 
   const summary = useMemo(() => {
     return {
@@ -240,6 +289,40 @@ export function RSVPManager({
     }));
   }
 
+  const customQuestionSummaries = customSelectableQuestions.map((question) => ({
+    question,
+    options: (question.options ?? []).map((option) => ({
+      option,
+      count: guestList.filter((guest) => {
+        const answer = guest.customAnswers?.[question.id] ?? "";
+        if (!answer) return false;
+
+        if (question.type === "multiselect") {
+          return answer
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean)
+            .includes(option);
+        }
+
+        return answer.trim() === option;
+      }).length
+    }))
+  }));
+
+  const dietaryValueOptions = Array.from(
+    new Set(
+      guestList
+        .flatMap((guest) =>
+          (guest.dietary ?? "")
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean)
+        )
+        .filter(Boolean)
+    )
+  );
+
   return (
     <>
       <section className="mx-auto w-full max-w-[92rem] px-6 py-8 lg:px-8 lg:py-12">
@@ -328,6 +411,72 @@ export function RSVPManager({
                 <option value="none">No notes / messages</option>
               </select>
             </div>
+
+            {dietaryValueOptions.length ? (
+              <div className="mt-4 max-w-sm">
+                <select
+                  value={dietaryValueFilter}
+                  onChange={(event) => setDietaryValueFilter(event.target.value)}
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                >
+                  <option value="">All dietary answers</option>
+                  {dietaryValueOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+
+            {customSelectableQuestions.length ? (
+              <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {customSelectableQuestions.map((question) => (
+                  <select
+                    key={question.id}
+                    value={customFilters[question.id] ?? ""}
+                    onChange={(event) =>
+                      setCustomFilters((current) => ({
+                        ...current,
+                        [question.id]: event.target.value
+                      }))
+                    }
+                    className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                  >
+                    <option value="">All: {question.label}</option>
+                    {(question.options ?? []).map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                ))}
+              </div>
+            ) : null}
+
+            {customQuestionSummaries.length ? (
+              <div className="mt-6 rounded-[1.5rem] border border-[var(--border)] bg-white/70 p-5">
+                <p className="eyebrow">Custom Question Counts</p>
+                <div className="mt-4 space-y-5">
+                  {customQuestionSummaries.map(({ question, options }) => (
+                    <div key={question.id}>
+                      <h3 className="text-lg">{question.label}</h3>
+                      <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                        {options.map(({ option, count }) => (
+                          <div
+                            key={option}
+                            className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3"
+                          >
+                            <p className="text-sm text-[var(--muted)]">{option}</p>
+                            <p className="mt-2 text-2xl">{count}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             <div className="mt-6 space-y-4">
               {groupedGuests.map((group) => (

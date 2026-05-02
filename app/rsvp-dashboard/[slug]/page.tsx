@@ -35,6 +35,9 @@ export default async function RSVPDashboardBySlugPage({
       question.label
     ])
   );
+  const customSelectableQuestions = (weddingData.rsvp.form?.customQuestions ?? []).filter(
+    (question) => question.type === "select" || question.type === "multiselect"
+  );
 
   return (
     <SiteFrame
@@ -59,6 +62,7 @@ export default async function RSVPDashboardBySlugPage({
         guests={guests}
         apiBasePath={`/api/portal/${slug}`}
         customQuestionLabels={customQuestionLabels}
+        customSelectableQuestions={customSelectableQuestions}
       />
     </SiteFrame>
   );

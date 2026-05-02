@@ -1,5 +1,5 @@
 import weddingData from "@/data/weddingData.json";
-import type { MapSpot, RSVPFormQuestion, WeddingData } from "@/types/wedding";
+import type { MapSpot, RSVPFormQuestion, RSVPMealOption, WeddingData } from "@/types/wedding";
 
 const defaultWeddingData = weddingData as unknown as WeddingData;
 
@@ -68,6 +68,61 @@ function coerceCustomQuestions(input: unknown): RSVPFormQuestion[] {
     });
 
   return mapped.filter((item): item is RSVPFormQuestion => item !== null);
+}
+
+const defaultMealOptions: RSVPMealOption[] = [
+  { value: "beef", label: "Beef", enabled: true },
+  { value: "fish", label: "Fish", enabled: true },
+  { value: "vegetarian", label: "Vegetarian", enabled: true },
+  { value: "vegan", label: "Vegan", enabled: true },
+  { value: "kids", label: "Kids meal", enabled: true },
+  { value: "custom", label: "Custom / let us know below", enabled: true }
+];
+
+function coerceMealOptions(input: unknown): RSVPMealOption[] {
+  if (!Array.isArray(input)) {
+    return defaultMealOptions;
+  }
+
+  const allowedValues = new Set(defaultMealOptions.map((option) => option.value));
+  const mapped = input
+    .map<RSVPMealOption | null>((item) => {
+      const source = item as Partial<RSVPMealOption>;
+      const value = typeof source.value === "string" ? source.value.trim() : "";
+      const label = typeof source.label === "string" ? source.label.trim() : "";
+
+      if (!allowedValues.has(value as RSVPMealOption["value"])) {
+        return null;
+      }
+
+      return {
+        value: value as RSVPMealOption["value"],
+        label: label || defaultMealOptions.find((option) => option.value === value)?.label || value,
+        enabled: source.enabled ?? true
+      };
+    })
+    .filter((item): item is RSVPMealOption => item !== null);
+
+  if (!mapped.length) {
+    return defaultMealOptions;
+  }
+
+  return defaultMealOptions.map((fallbackOption) => {
+    const match = mapped.find((item) => item.value === fallbackOption.value);
+    return match ?? fallbackOption;
+  });
+}
+
+function coerceStringOptions(input: unknown): string[] | undefined {
+  if (!Array.isArray(input)) {
+    return undefined;
+  }
+
+  const options = input
+    .map((item) => (typeof item === "string" ? item.trim() : ""))
+    .filter(Boolean);
+
+  return options.length ? options : undefined;
 }
 
 function coerceMapSpots(input: unknown, fallback: MapSpot[]) {
@@ -284,6 +339,13 @@ export function coerceWeddingData(input: unknown): WeddingData {
           source.rsvp?.form?.enableMealChoice ?? true,
         enableDietaryNotes:
           source.rsvp?.form?.enableDietaryNotes ?? true,
+        dietaryInputType:
+          source.rsvp?.form?.dietaryInputType === "select" ||
+          source.rsvp?.form?.dietaryInputType === "multiselect"
+            ? source.rsvp.form.dietaryInputType
+            : "text",
+        dietaryOptions: coerceStringOptions(source.rsvp?.form?.dietaryOptions),
+        mealOptions: coerceMealOptions(source.rsvp?.form?.mealOptions),
         enableSongRequest:
           source.rsvp?.form?.enableSongRequest ?? true,
         enableMessageToCouple:

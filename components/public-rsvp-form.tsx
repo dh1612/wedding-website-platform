@@ -19,6 +19,13 @@ type PublicRSVPFormProps = {
     enableGuestCount?: boolean;
     enableMealChoice?: boolean;
     enableDietaryNotes?: boolean;
+    dietaryInputType?: "text" | "select" | "multiselect";
+    dietaryOptions?: string[];
+    mealOptions?: Array<{
+      value: MealChoice;
+      label: string;
+      enabled: boolean;
+    }>;
     enableSongRequest?: boolean;
     enableMessageToCouple?: boolean;
     customQuestions?: RSVPFormQuestion[];
@@ -60,6 +67,17 @@ export function PublicRSVPForm({
     enableGuestCount: formConfig?.enableGuestCount ?? true,
     enableMealChoice: formConfig?.enableMealChoice ?? true,
     enableDietaryNotes: formConfig?.enableDietaryNotes ?? true,
+    dietaryInputType: formConfig?.dietaryInputType ?? "text",
+    dietaryOptions: formConfig?.dietaryOptions ?? [],
+    mealOptions:
+      formConfig?.mealOptions?.filter((option) => option.enabled) ?? [
+        { value: "beef", label: "Beef", enabled: true },
+        { value: "fish", label: "Fish", enabled: true },
+        { value: "vegetarian", label: "Vegetarian", enabled: true },
+        { value: "vegan", label: "Vegan", enabled: true },
+        { value: "kids", label: "Kids meal", enabled: true },
+        { value: "custom", label: "Custom / let us know below", enabled: true }
+      ],
     enableSongRequest: formConfig?.enableSongRequest ?? true,
     enableMessageToCouple: formConfig?.enableMessageToCouple ?? true,
     customQuestions: formConfig?.customQuestions ?? []
@@ -151,6 +169,18 @@ export function PublicRSVPForm({
       : [...currentValues, option];
 
     updateCustomAnswer(questionId, nextValues.join(", "));
+  }
+
+  function toggleDietaryMultiSelect(option: string) {
+    const currentValues = form.dietaryNotes
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+    const nextValues = currentValues.includes(option)
+      ? currentValues.filter((value) => value !== option)
+      : [...currentValues, option];
+
+    updateField("dietaryNotes", nextValues.join(", "));
   }
 
   return (
@@ -254,12 +284,11 @@ export function PublicRSVPForm({
                 onChange={(event) => updateField("mealChoice", event.target.value as MealChoice)}
                 className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
               >
-                <option value="beef">Beef</option>
-                <option value="fish">Fish</option>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="kids">Kids meal</option>
-                <option value="custom">Custom / let us know below</option>
+                {settings.mealOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
             </label>
           ) : null}
@@ -269,13 +298,49 @@ export function PublicRSVPForm({
       {settings.enableDietaryNotes ? (
         <label className="space-y-2">
           <span className="text-sm font-medium text-[var(--foreground)]">Dietary requirements</span>
-          <textarea
-            value={form.dietaryNotes}
-            onChange={(event) => updateField("dietaryNotes", event.target.value)}
-            placeholder="Allergies, preferences, or anything the couple should know"
-            rows={4}
-            className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-          />
+          {settings.dietaryInputType === "select" ? (
+            <select
+              value={form.dietaryNotes}
+              onChange={(event) => updateField("dietaryNotes", event.target.value)}
+              className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+            >
+              <option value="">Select an answer</option>
+              {settings.dietaryOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          ) : settings.dietaryInputType === "multiselect" ? (
+            <div className="space-y-3 rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3">
+              {settings.dietaryOptions.map((option) => {
+                const selectedValues = form.dietaryNotes
+                  .split(",")
+                  .map((item) => item.trim())
+                  .filter(Boolean);
+                const checked = selectedValues.includes(option);
+
+                return (
+                  <label key={option} className="flex items-center gap-3 text-sm text-[var(--foreground)]">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggleDietaryMultiSelect(option)}
+                    />
+                    <span>{option}</span>
+                  </label>
+                );
+              })}
+            </div>
+          ) : (
+            <textarea
+              value={form.dietaryNotes}
+              onChange={(event) => updateField("dietaryNotes", event.target.value)}
+              placeholder="Allergies, preferences, or anything the couple should know"
+              rows={4}
+              className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+            />
+          )}
         </label>
       ) : null}
 

@@ -55,19 +55,25 @@ function buildCustomQuestionId(label: string, index: number) {
   return slug ? `custom-${slug}` : `custom-question-${index + 1}`;
 }
 
-function parseCustomQuestionLine(line: string, index: number) {
-  const parts = line
-    .split("|")
-    .map((item) => item.trim())
-    .filter(Boolean);
-
-  if (!parts.length) {
-    return null;
-  }
-
-  const [label, typePart, requiredPart, ...extraParts] = parts;
-
-  if (!label) {
+function parseCustomQuestionRow({
+  id,
+  label,
+  typePart,
+  required,
+  placeholder,
+  optionsValue,
+  index = 0
+}: {
+  id?: string;
+  label?: string;
+  typePart?: string;
+  required?: boolean;
+  placeholder?: string;
+  optionsValue?: string;
+  index?: number;
+}) {
+  const cleanedLabel = label?.trim() || "";
+  if (!cleanedLabel) {
     return null;
   }
 
@@ -80,24 +86,22 @@ function parseCustomQuestionLine(line: string, index: number) {
       ? typePart
       : "short";
 
-  const requirement = requiredPart?.toLowerCase();
-  const required = requirement === "required";
-  const extra = extraParts.join(" | ").trim();
   const options =
     type === "select" || type === "multiselect"
-      ? extra
+      ? (optionsValue ?? "")
           .split(";")
           .map((item) => item.trim())
           .filter(Boolean)
       : undefined;
-  const placeholder = type === "short" || type === "long" ? extra || undefined : undefined;
+  const safePlaceholder =
+    type === "short" || type === "long" ? placeholder?.trim() || undefined : undefined;
 
   return {
-    id: buildCustomQuestionId(label, index),
-    label,
+    id: id?.trim() || buildCustomQuestionId(cleanedLabel, index),
+    label: cleanedLabel,
     type,
     required,
-    placeholder,
+    placeholder: safePlaceholder,
     options: options?.length ? options : undefined
   };
 }
@@ -295,8 +299,28 @@ export async function updateWeddingContentAction(formData: FormData) {
     .split("\n")
     .map((item) => item.trim())
     .filter(Boolean)
-    .map(parseCustomQuestionLine)
-    .filter((item): item is NonNullable<ReturnType<typeof parseCustomQuestionLine>> => Boolean(item));
+    .map((line, index) => {
+      const parts = line
+        .split("|")
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      if (!parts.length) {
+        return null;
+      }
+
+      const [label, typePart, requiredPart, ...extraParts] = parts;
+      return parseCustomQuestionRow({
+        id: buildCustomQuestionId(label, index),
+        label,
+        typePart,
+        required: requiredPart?.toLowerCase() === "required",
+        placeholder: extraParts.join(" | ").trim(),
+        optionsValue: extraParts.join(" | ").trim(),
+        index
+      });
+    })
+    .filter((item): item is NonNullable<ReturnType<typeof parseCustomQuestionRow>> => Boolean(item));
   const mapSpots = String(formData.get("travelMapSpots") || "")
     .split("\n")
     .map((item) => item.trim())
@@ -308,6 +332,52 @@ export async function updateWeddingContentAction(formData: FormData) {
     .map((item) => item.trim())
     .filter(Boolean)
     .filter(isValidRemoteImageUrl);
+
+  const questionLabels = formData.getAll("rsvpQuestionLabel").map((value) => String(value));
+  const questionIds = formData.getAll("rsvpQuestionId").map((value) => String(value));
+  const questionTypes = formData.getAll("rsvpQuestionType").map((value) => String(value));
+  const questionPlaceholders = formData
+    .getAll("rsvpQuestionPlaceholder")
+    .map((value) => String(value));
+  const questionOptions = formData.getAll("rsvpQuestionOptions").map((value) => String(value));
+  const questionRequiredValues = formData
+    .getAll("rsvpQuestionRequired")
+    .map((value) => String(value));
+
+  const structuredCustomQuestions = questionLabels
+    .map((label, index) =>
+      parseCustomQuestionRow({
+        id: questionIds[index],
+        label,
+        typePart: questionTypes[index],
+        required: questionRequiredValues[index] === "required",
+        placeholder: questionPlaceholders[index],
+        optionsValue: questionOptions[index],
+        index
+      })
+    )
+    .filter((item): item is NonNullable<ReturnType<typeof parseCustomQuestionRow>> => Boolean(item));
+
+  const mealOptionValues = ["beef", "fish", "vegetarian", "vegan", "kids", "custom"] as const;
+  const mealOptions = mealOptionValues.map((value) => ({
+    value,
+    label:
+      String(formData.get(`mealOptionLabel_${value}`) || "").trim() ||
+      {
+        beef: "Beef",
+        fish: "Fish",
+        vegetarian: "Vegetarian",
+        vegan: "Vegan",
+        kids: "Kids meal",
+        custom: "Custom / let us know below"
+      }[value],
+    enabled: formData.has(`mealOptionEnabled_${value}`)
+  }));
+
+  const dietaryOptions = String(formData.get("rsvpDietaryOptions") || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean);
 
   let uploadedHeroImage: string | null = null;
   let uploadedSneakPeekImage: string | null = null;
@@ -537,7 +607,14 @@ export async function updateWeddingContentAction(formData: FormData) {
         enableDietaryNotes: formData.has("rsvpEnableDietaryNotes"),
         enableSongRequest: formData.has("rsvpEnableSongRequest"),
         enableMessageToCouple: formData.has("rsvpEnableMessageToCouple"),
-        customQuestions
+        dietaryInputType:
+          String(formData.get("rsvpDietaryInputType") || "").trim() === "select" ||
+          String(formData.get("rsvpDietaryInputType") || "").trim() === "multiselect"
+            ? (String(formData.get("rsvpDietaryInputType") || "").trim() as "select" | "multiselect")
+            : "text",
+        dietaryOptions: dietaryOptions.length ? dietaryOptions : undefined,
+        mealOptions,
+        customQuestions: structuredCustomQuestions.length ? structuredCustomQuestions : customQuestions
       }
     },
     aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic",
