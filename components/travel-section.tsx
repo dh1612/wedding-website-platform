@@ -57,31 +57,37 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
             ) : null}
             {showMapUtility ? (
               <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
-                <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-                  <div className="space-y-4">
-                    <p className="eyebrow">Map & Area</p>
-                    <h3 className="text-2xl">Useful locations at a glance</h3>
-                    <p className="prose-copy">
-                      A quick guide to the places guests are most likely to need before and during the wedding weekend.
-                    </p>
-                    {wedding.travel.mapLink ? (
-                      <a
-                        href={wedding.travel.mapLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="accent-outline inline-flex rounded-full px-5 py-3 text-sm font-medium"
-                      >
-                        Open map
-                      </a>
-                    ) : null}
+                <div className="space-y-6">
+                  <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+                    <div className="space-y-4">
+                      <p className="eyebrow">Map & Area</p>
+                      <h3 className="max-w-xl text-2xl sm:text-3xl">Useful locations at a glance</h3>
+                      <p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
+                        A quick guide to the places guests are most likely to need before and during
+                        the wedding weekend.
+                      </p>
+                      <div className="flex flex-wrap gap-3">
+                        {wedding.travel.mapLink ? (
+                          <a
+                            href={wedding.travel.mapLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="accent-outline inline-flex rounded-full px-5 py-3 text-sm font-medium"
+                          >
+                            Open map
+                          </a>
+                        ) : null}
+                      </div>
+                    </div>
                     {wedding.travel.relaxedNote ? (
-                      <div className="rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+                      <div className="rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)] lg:max-w-xl">
                         <strong className="text-[var(--foreground)]">Relaxed itinerary note:</strong>{" "}
                         {wedding.travel.relaxedNote}
                       </div>
                     ) : null}
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
+
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {(wedding.travel.mapSpots ?? []).map((spot) => (
                       <div
                         key={`${spot.label}-${spot.detail}`}
