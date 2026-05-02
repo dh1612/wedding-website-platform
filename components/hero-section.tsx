@@ -387,13 +387,13 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     return (
       <section
         id="top"
-        className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-4 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:pb-18"
+        className="mx-auto grid w-full max-w-6xl grid-cols-[0.86fr_1.14fr] gap-4 px-4 pb-8 pt-4 sm:gap-6 sm:px-6 sm:pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:pb-18"
       >
-        <div className="relative min-h-[540px] overflow-hidden rounded-[2rem] border border-[var(--border)] shadow-[var(--shadow)]">
+        <div className="relative min-h-[340px] overflow-hidden rounded-[1.6rem] border border-[var(--border)] shadow-[var(--shadow)] sm:min-h-[420px] sm:rounded-[2rem] lg:min-h-[540px]">
           <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,28,24,0.2)_0%,rgba(17,28,24,0.5)_100%)]" />
         </div>
-        <div className="section-shell relative overflow-hidden rounded-[2rem] p-8 sm:p-10 lg:p-14">
+        <div className="section-shell relative overflow-hidden rounded-[1.6rem] p-5 sm:rounded-[2rem] sm:p-8 lg:p-14">
           <div
             className="absolute inset-0 opacity-100"
             style={{
@@ -401,13 +401,13 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 "radial-gradient(circle at 18% 16%, rgba(255,246,214,0.95) 0 1.2px, transparent 2px), radial-gradient(circle at 42% 12%, rgba(255,236,190,0.8) 0 1px, transparent 1.8px), radial-gradient(circle at 78% 20%, rgba(255,248,223,0.9) 0 1.3px, transparent 2.1px), linear-gradient(180deg, rgba(38,71,60,0.08), transparent 55%)"
             }}
           />
-          <div className="relative space-y-8">
-            <div className="space-y-4">
+          <div className="relative space-y-5 sm:space-y-6 lg:space-y-8">
+            <div className="space-y-3 sm:space-y-4">
               {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
-              <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
+              <h1 className="text-[2.8rem] leading-[0.93] sm:text-5xl lg:text-7xl">
                 {wedding.couple}
               </h1>
-              <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
+              <div className="space-y-1.5 text-base text-[var(--muted)] sm:space-y-2 sm:text-lg lg:text-xl">
                 {showDate && displayDate ? <p>{displayDate}</p> : null}
                 {showLocationSummary ? (
                   <InlineCopy
@@ -422,14 +422,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
               <InlineCopy
                 html={wedding.taglineHtml}
                 text={wedding.tagline}
-                className="max-w-xl text-lg leading-8 text-[var(--muted)]"
+                className="max-w-xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8"
               />
             ) : null}
             {showAnnouncement ? (
               <AnnouncementCopy
                 html={wedding.announcementHtml}
                 text={wedding.announcement}
-                className="mx-auto max-w-2xl text-base leading-7 text-white/78"
+                className="mx-auto max-w-2xl text-sm leading-6 text-white/78 sm:text-base sm:leading-7"
               />
             ) : null}
             {previewMode && showPreviewNote ? <PreviewNote text={hero.previewNote} /> : null}
