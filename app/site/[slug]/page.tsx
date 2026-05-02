@@ -14,11 +14,17 @@ export default async function SitePage({ params }: SitePageProps) {
   const { slug } = await params;
   const weddingRecord = await getWeddingSiteBySlug(slug);
 
-  if (!weddingRecord?.contentJson || weddingRecord.status !== "live") {
+  if (!weddingRecord) {
     redirect("/");
   }
 
-  const weddingData = coerceWeddingData(weddingRecord.contentJson);
+  const publicContent = weddingRecord?.liveContentJson ?? weddingRecord?.contentJson;
+
+  if (!publicContent || weddingRecord.status !== "live") {
+    redirect("/");
+  }
+
+  const weddingData = coerceWeddingData(publicContent);
   const activeTheme = getThemeById(weddingData.theme);
 
   return (

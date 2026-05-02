@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import {
-  createGuest,
   getWeddingSiteBySlug,
-  saveRSVPResponse
+  saveRSVPResponse,
+  upsertGuestForPublicRsvp
 } from "@/lib/production-repositories";
 
 type Context = {
@@ -61,7 +61,7 @@ export async function POST(request: Request, context: Context) {
     );
   }
 
-  const guest = await createGuest({
+  const guest = await upsertGuestForPublicRsvp({
     weddingId: wedding.id,
     invitationName: name,
     householdKey: household,

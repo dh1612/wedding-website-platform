@@ -13,7 +13,9 @@ type AdminWeddingEditorProps = {
     title: string;
     status: "draft" | "approved" | "live";
     contentJson: unknown;
+    liveContentJson?: unknown;
     plannerSettingsJson: unknown;
+    publishedAt?: Date | null;
     adminUsers?: Array<{
       id: string;
       email: string;
@@ -244,6 +246,14 @@ export function AdminWeddingEditor({
         {saved ? (
           <div className="mb-6 rounded-[1.3rem] border border-[#184b38]/14 bg-[#f6fbf8] px-5 py-4 text-sm leading-6 text-[#486159]">
             Wedding updated successfully. The latest version is now saved.
+          </div>
+        ) : null}
+
+        {record.status === "live" ? (
+          <div className="mb-6 rounded-[1.3rem] border border-[#7a652d]/18 bg-[#fff9ef] px-5 py-4 text-sm leading-6 text-[#6a5530]">
+            This wedding is live. Changes you make here update the draft version only until you
+            publish again from the preview page.
+            {record.publishedAt ? ` Last published ${record.publishedAt.toLocaleDateString("en-IE")}.` : ""}
           </div>
         ) : null}
 

@@ -55,7 +55,9 @@ model Wedding {
   eventDate           DateTime?
   timezone            String             @default("Europe/Dublin")
   contentJson         Json?
+  liveContentJson     Json?
   plannerSettingsJson Json?
+  publishedAt         DateTime?
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
 

@@ -13,6 +13,8 @@ import { getWeddingData } from "@/lib/wedding-data";
 type AdminPageProps = {
   searchParams?: Promise<{
     theme?: string;
+    q?: string;
+    status?: "draft" | "approved" | "live" | "all";
   }>;
 };
 
@@ -20,7 +22,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   const wedding = getWeddingData();
   const params = searchParams ? await searchParams : undefined;
   const theme = getThemeById(params?.theme ?? wedding.theme);
-  const weddings = await listWeddings().catch(() => []);
+  const searchQuery = params?.q?.trim() ?? "";
+  const statusFilter = params?.status ?? "all";
+  const weddings = await listWeddings({
+    query: searchQuery,
+    status: statusFilter
+  }).catch(() => []);
 
   return (
     <SiteFrame
@@ -78,6 +85,27 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               </div>
             </div>
             <div className="mt-6 space-y-4">
+              <form className="grid gap-3 rounded-[1.3rem] border border-[var(--border)] bg-white/75 p-4 md:grid-cols-[1fr_220px_auto]">
+                <input
+                  name="q"
+                  defaultValue={searchQuery}
+                  placeholder="Search by couple name or slug"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <select
+                  name="status"
+                  defaultValue={statusFilter}
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                >
+                  <option value="all">All statuses</option>
+                  <option value="draft">Draft</option>
+                  <option value="approved">Approved</option>
+                  <option value="live">Live</option>
+                </select>
+                <button className="accent-button rounded-full px-5 py-3 text-sm font-medium">
+                  Filter
+                </button>
+              </form>
               {weddings.length ? (
                 weddings.map((record) => (
                   <div key={record.id} className="accent-panel rounded-[1.5rem] p-5">

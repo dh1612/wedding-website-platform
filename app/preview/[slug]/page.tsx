@@ -86,6 +86,15 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 Edit Wedding
               </Link>
               {weddingRecord.status === "live" ? (
+                <form action={setStatus}>
+                  <input type="hidden" name="slug" value={slug} />
+                  <input type="hidden" name="status" value="live" />
+                  <button className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#17313c]">
+                    Publish Latest Draft To Guest Website
+                  </button>
+                </form>
+              ) : null}
+              {weddingRecord.status === "live" ? (
                 <Link
                   href={`/site/${slug}`}
                   className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"

@@ -10,8 +10,25 @@ function slugify(input: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-export async function listWeddings() {
+export async function listWeddings(input?: {
+  query?: string;
+  status?: "draft" | "approved" | "live" | "all";
+}) {
+  const query = input?.query?.trim();
+  const where: Prisma.WeddingWhereInput = {
+    ...(input?.status && input.status !== "all" ? { status: input.status } : {}),
+    ...(query
+      ? {
+          OR: [
+            { title: { contains: query, mode: "insensitive" } },
+            { slug: { contains: query, mode: "insensitive" } }
+          ]
+        }
+      : {})
+  };
+
   return prisma.wedding.findMany({
+    where,
     orderBy: {
       createdAt: "desc"
     },
@@ -22,6 +39,7 @@ export async function listWeddings() {
       status: true,
       eventDate: true,
       createdAt: true,
+      publishedAt: true,
       plannerSettingsJson: true,
       _count: {
         select: {
@@ -64,6 +82,7 @@ export async function getWeddingSiteBySlug(slug: string) {
       eventDate: true,
       timezone: true,
       contentJson: true,
+      liveContentJson: true,
       plannerSettingsJson: true
     }
   });
@@ -80,7 +99,9 @@ export async function getWeddingRecordForAdmin(slug: string) {
       eventDate: true,
       timezone: true,
       contentJson: true,
+      liveContentJson: true,
       plannerSettingsJson: true,
+      publishedAt: true,
       adminUsers: {
         orderBy: {
           createdAt: "asc"
@@ -128,6 +149,7 @@ export async function createWeddingDraft(input: {
   eventDate?: Date;
   timezone?: string;
   contentJson?: unknown;
+  liveContentJson?: unknown;
   plannerSettingsJson?: unknown;
   status?: "draft" | "approved" | "live";
 }) {
@@ -139,6 +161,7 @@ export async function createWeddingDraft(input: {
       timezone: input.timezone ?? "Europe/Dublin",
       status: input.status,
       contentJson: input.contentJson as Prisma.InputJsonValue | undefined,
+      liveContentJson: input.liveContentJson as Prisma.InputJsonValue | undefined,
       plannerSettingsJson:
         input.plannerSettingsJson as Prisma.InputJsonValue | undefined
     }
@@ -149,10 +172,24 @@ export async function updateWeddingStatus(input: {
   slug: string;
   status: "draft" | "approved" | "live";
 }) {
+  const wedding = await prisma.wedding.findUnique({
+    where: { slug: input.slug },
+    select: {
+      contentJson: true,
+      publishedAt: true
+    }
+  });
+
   return prisma.wedding.update({
     where: { slug: input.slug },
     data: {
-      status: input.status
+      status: input.status,
+      ...(input.status === "live"
+        ? {
+            liveContentJson: wedding?.contentJson as Prisma.InputJsonValue | undefined,
+            publishedAt: wedding?.publishedAt ?? new Date()
+          }
+        : {})
     }
   });
 }
@@ -163,6 +200,7 @@ export async function updateWeddingBySlug(input: {
   title: string;
   eventDate?: Date;
   contentJson?: unknown;
+  liveContentJson?: unknown;
   plannerSettingsJson?: unknown;
   status?: "draft" | "approved" | "live";
 }) {
@@ -173,6 +211,9 @@ export async function updateWeddingBySlug(input: {
       title: input.title,
       eventDate: input.eventDate,
       contentJson: input.contentJson as Prisma.InputJsonValue | undefined,
+      ...(typeof input.liveContentJson !== "undefined"
+        ? { liveContentJson: input.liveContentJson as Prisma.InputJsonValue | undefined }
+        : {}),
       plannerSettingsJson:
         input.plannerSettingsJson as Prisma.InputJsonValue | undefined,
       status: input.status
@@ -295,6 +336,77 @@ export async function createGuest(input: {
       dietaryNotes: input.dietaryNotes,
       plusOneAllowed: input.plusOneAllowed ?? false,
       notes: input.notes
+    }
+  });
+}
+
+export async function findMatchingGuestForPublicRsvp(input: {
+  weddingId: string;
+  invitationName: string;
+  householdKey?: string;
+  email?: string;
+}) {
+  const email = input.email?.trim().toLowerCase();
+  const invitationName = input.invitationName.trim();
+  const householdKey = input.householdKey?.trim();
+
+  if (email) {
+    const byEmail = await prisma.guest.findFirst({
+      where: {
+        weddingId: input.weddingId,
+        email: {
+          equals: email,
+          mode: "insensitive"
+        }
+      },
+      orderBy: {
+        updatedAt: "desc"
+      }
+    });
+
+    if (byEmail) {
+      return byEmail;
+    }
+  }
+
+  return prisma.guest.findFirst({
+    where: {
+      weddingId: input.weddingId,
+      invitationName,
+      ...(householdKey ? { householdKey } : {})
+    },
+    orderBy: {
+      updatedAt: "desc"
+    }
+  });
+}
+
+export async function upsertGuestForPublicRsvp(input: {
+  weddingId: string;
+  invitationName: string;
+  householdKey?: string;
+  email?: string;
+  phone?: string;
+  side?: "bride" | "groom" | "friends" | "family" | "work" | "other";
+  defaultMeal?: "beef" | "fish" | "vegetarian" | "vegan" | "kids" | "custom";
+  dietaryNotes?: string;
+}) {
+  const existing = await findMatchingGuestForPublicRsvp(input);
+
+  if (!existing) {
+    return createGuest(input);
+  }
+
+  return prisma.guest.update({
+    where: { id: existing.id },
+    data: {
+      invitationName: input.invitationName,
+      householdKey: input.householdKey,
+      email: input.email,
+      phone: input.phone,
+      side: input.side ?? existing.side,
+      defaultMeal: input.defaultMeal,
+      dietaryNotes: input.dietaryNotes
     }
   });
 }
