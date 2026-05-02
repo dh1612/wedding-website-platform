@@ -15,9 +15,10 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
   const showReception = visibility?.receptionCard ?? true;
   const showTransport = visibility?.transportCard ?? true;
   const showDirections = visibility?.directionsCard ?? true;
+  const showRelaxedNote = (visibility?.relaxedNote ?? true) && Boolean(wedding.travel.relaxedNote);
   const showMapUtility =
     Boolean(wedding.travel.mapLink) ||
-    Boolean(wedding.travel.relaxedNote) ||
+    showRelaxedNote ||
     Boolean(wedding.travel.mapSpots?.length);
 
   if (!showCeremony && !showReception && !showTransport && !showDirections && !showMapUtility) {
@@ -58,7 +59,13 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
             {showMapUtility ? (
               <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
                 <div className="space-y-6">
-                  <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+                  <div
+                    className={`grid gap-6 lg:items-start ${
+                      showRelaxedNote
+                        ? "lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
+                        : "lg:grid-cols-1"
+                    }`}
+                  >
                     <div className="space-y-4">
                       <p className="eyebrow">Map & Area</p>
                       <h3 className="max-w-xl text-2xl sm:text-3xl">Useful locations at a glance</h3>
@@ -79,7 +86,7 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                         ) : null}
                       </div>
                     </div>
-                    {wedding.travel.relaxedNote ? (
+                    {showRelaxedNote ? (
                       <div className="rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)] lg:max-w-xl">
                         <strong className="text-[var(--foreground)]">Relaxed itinerary note:</strong>{" "}
                         {wedding.travel.relaxedNote}

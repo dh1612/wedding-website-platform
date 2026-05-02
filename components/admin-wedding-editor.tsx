@@ -511,6 +511,11 @@ export function AdminWeddingEditor({
                   label="Show parking & directions card"
                   checked={visibility?.directionsCard ?? true}
                 />
+                <SectionToggle
+                  name="showRelaxedNote"
+                  label="Show relaxed itinerary note"
+                  checked={visibility?.relaxedNote ?? true}
+                />
               </div>
               <div className="space-y-2 md:col-span-2">
                 <RichTextEditorField

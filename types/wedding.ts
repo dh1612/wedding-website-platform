@@ -145,6 +145,7 @@ export type WeddingData = {
     receptionCard: boolean;
     transportCard: boolean;
     directionsCard: boolean;
+    relaxedNote: boolean;
     accommodation: boolean;
     story: boolean;
     gallery: boolean;

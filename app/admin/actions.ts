@@ -529,6 +529,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       receptionCard: formData.has("showReceptionCard"),
       transportCard: formData.has("showTransportCard"),
       directionsCard: formData.has("showDirectionsCard"),
+      relaxedNote: formData.has("showRelaxedNote"),
       accommodation: formData.has("showAccommodation"),
       story: formData.has("showStory"),
       gallery: formData.has("showGallery"),

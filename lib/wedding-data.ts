@@ -138,7 +138,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.story.html
           : undefined,
       paragraphs:
-        source.story?.paragraphs?.length ? source.story.paragraphs : fallback.story.paragraphs
+        Array.isArray(source.story?.paragraphs) ? source.story.paragraphs : fallback.story.paragraphs
     },
     ceremony: {
       title: source.ceremony?.title ?? fallback.ceremony.title,
@@ -172,7 +172,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.reception.descriptionHtml
           : undefined
     },
-    schedule: source.schedule?.length ? source.schedule : fallback.schedule,
+    schedule: Array.isArray(source.schedule) ? source.schedule : fallback.schedule,
     travel: {
       heading: source.travel?.heading ?? "Where To Go",
       headingHtml:
@@ -222,8 +222,8 @@ export function coerceWeddingData(input: unknown): WeddingData {
       mapLink: source.travel?.mapLink ?? fallback.travel.mapLink
     },
     accommodation:
-      source.accommodation?.length ? source.accommodation : fallback.accommodation,
-    faq: source.faq?.length ? source.faq : fallback.faq,
+      Array.isArray(source.accommodation) ? source.accommodation : fallback.accommodation,
+    faq: Array.isArray(source.faq) ? source.faq : fallback.faq,
     rsvp: {
       label: source.rsvp?.label ?? fallback.rsvp.label,
       description: source.rsvp?.description ?? fallback.rsvp.description,
@@ -270,7 +270,9 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.gallery?.descriptionHtml === "string" && source.gallery.descriptionHtml.trim()
           ? source.gallery.descriptionHtml
           : undefined,
-      images: coerceImageList(source.gallery?.images, fallback.gallery.images)
+      images: Array.isArray(source.gallery?.images)
+        ? coerceImageList(source.gallery?.images, [])
+        : fallback.gallery.images
     },
     registry: {
       message: source.registry?.message ?? fallback.registry.message,
@@ -299,6 +301,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
       receptionCard: source.sectionVisibility?.receptionCard ?? true,
       transportCard: source.sectionVisibility?.transportCard ?? true,
       directionsCard: source.sectionVisibility?.directionsCard ?? true,
+      relaxedNote: source.sectionVisibility?.relaxedNote ?? true,
       accommodation: source.sectionVisibility?.accommodation ?? true,
       story: source.sectionVisibility?.story ?? true,
       gallery: source.sectionVisibility?.gallery ?? true,
