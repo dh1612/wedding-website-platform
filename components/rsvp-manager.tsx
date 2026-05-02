@@ -63,8 +63,8 @@ export function RSVPManager({
   const [notesFilter, setNotesFilter] = useState<"all" | "has" | "none">("all");
   const [customFilters, setCustomFilters] = useState<Record<string, string[]>>({});
   const [openGroups, setOpenGroups] = useState<Record<RSVPStatus, boolean>>({
-    attending: true,
-    pending: true,
+    attending: false,
+    pending: false,
     declined: false
   });
   const [draft, setDraft] = useState<DraftGuest>(emptyDraft);

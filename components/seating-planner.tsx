@@ -101,6 +101,7 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
   const [guestSearch, setGuestSearch] = useState("");
   const [lastSaved, setLastSaved] = useState("Not saved yet");
   const [isCompactView, setIsCompactView] = useState(false);
+  const [sidebarTab, setSidebarTab] = useState<"add" | "assigned">("add");
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -710,77 +711,106 @@ export function SeatingPlanner({ guests }: SeatingPlannerProps) {
               </div>
 
               <div>
-                <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/75 p-5">
-                  <label className="block">
-                    <span className="text-sm font-medium text-[var(--foreground)]">
-                      {selectedTable
-                        ? `Add guest directly to ${selectedTable.name}`
-                        : "Select a table to add guests"}
-                    </span>
-                    <input
-                      value={guestSearch}
-                      onChange={(event) => setGuestSearch(event.target.value)}
-                      placeholder="Search by guest or household"
-                      disabled={!selectedTable}
-                      className="mt-3 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none disabled:cursor-not-allowed disabled:opacity-60"
-                    />
-                  </label>
-                  <div className="mt-4 grid max-h-[16rem] gap-3 overflow-y-auto pr-1">
-                    {selectedTable
-                      ? guestSearchResults.map((guest) => (
-                          <button
-                            key={guest.id}
-                            onClick={() => addGuestToSelectedTable(guest.id)}
-                            className="accent-panel flex items-center justify-between rounded-[1.1rem] p-4 text-left transition hover:bg-white/90"
-                          >
-                            <span>
-                              <span className="block font-medium">{guest.name}</span>
-                              <span className="block text-sm text-[var(--muted)]">
-                                {guest.household} · {guest.meal}
-                              </span>
-                            </span>
-                            <span className="text-xs uppercase tracking-[0.18em] text-[var(--accent)]">
-                              Add
-                            </span>
-                          </button>
-                        ))
-                      : null}
+                <div className="sticky top-6 rounded-[1.5rem] border border-[var(--border)] bg-white/75 p-5">
+                  <div className="grid grid-cols-2 gap-2 rounded-full border border-[var(--border)] bg-[#fafcfb] p-1">
+                    <button
+                      type="button"
+                      onClick={() => setSidebarTab("add")}
+                      className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                        sidebarTab === "add"
+                          ? "bg-[var(--accent-strong)] text-white"
+                          : "text-[var(--foreground)]"
+                      }`}
+                    >
+                      Add Guests
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSidebarTab("assigned")}
+                      className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                        sidebarTab === "assigned"
+                          ? "bg-[var(--accent-strong)] text-white"
+                          : "text-[var(--foreground)]"
+                      }`}
+                    >
+                      Assigned
+                    </button>
                   </div>
-                </div>
 
-                <div className="mt-6">
-                  <p className="eyebrow">Assigned Guests</p>
-                  <div className="mt-4 grid max-h-[20rem] gap-3 overflow-y-auto pr-1">
-                    {selectedGuests.length ? (
-                      selectedGuests.map((guest) => (
-                        <div
-                          key={guest.id}
-                          draggable
-                          onDragStart={(event) => handleGuestDragStart(event, guest.id)}
-                          className="accent-panel flex cursor-grab items-center justify-between rounded-[1.25rem] p-4 active:cursor-grabbing"
-                        >
-                          <div>
-                            <p className="font-medium">{guest.name}</p>
-                            <p className="text-sm text-[var(--muted)]">
-                              {guest.side} · {guest.meal}
-                            </p>
-                          </div>
-                          <button
-                            onClick={() => assignGuest(guest.id, undefined)}
-                            className="text-xs uppercase tracking-[0.2em] text-[var(--accent)]"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="accent-panel rounded-[1.25rem] p-4 text-sm text-[var(--muted)]">
+                  {sidebarTab === "add" ? (
+                    <div className="mt-5">
+                      <label className="block">
+                        <span className="text-sm font-medium text-[var(--foreground)]">
+                          {selectedTable
+                            ? `Add guest directly to ${selectedTable.name}`
+                            : "Select a table to add guests"}
+                        </span>
+                        <input
+                          value={guestSearch}
+                          onChange={(event) => setGuestSearch(event.target.value)}
+                          placeholder="Search by guest or household"
+                          disabled={!selectedTable}
+                          className="mt-3 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                        />
+                      </label>
+                      <div className="mt-4 grid max-h-[24rem] gap-3 overflow-y-auto pr-1">
                         {selectedTable
-                          ? "No guests assigned yet."
-                          : "No table selected yet."}
+                          ? guestSearchResults.map((guest) => (
+                              <button
+                                key={guest.id}
+                                onClick={() => addGuestToSelectedTable(guest.id)}
+                                className="accent-panel flex items-center justify-between rounded-[1.1rem] p-4 text-left transition hover:bg-white/90"
+                              >
+                                <span>
+                                  <span className="block font-medium">{guest.name}</span>
+                                  <span className="block text-sm text-[var(--muted)]">
+                                    {guest.household} · {guest.meal}
+                                  </span>
+                                </span>
+                                <span className="text-xs uppercase tracking-[0.18em] text-[var(--accent)]">
+                                  Add
+                                </span>
+                              </button>
+                            ))
+                          : null}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className="mt-5">
+                      <p className="eyebrow">Assigned Guests</p>
+                      <div className="mt-4 grid max-h-[24rem] gap-3 overflow-y-auto pr-1">
+                        {selectedGuests.length ? (
+                          selectedGuests.map((guest) => (
+                            <div
+                              key={guest.id}
+                              draggable
+                              onDragStart={(event) => handleGuestDragStart(event, guest.id)}
+                              className="accent-panel flex cursor-grab items-center justify-between rounded-[1.25rem] p-4 active:cursor-grabbing"
+                            >
+                              <div>
+                                <p className="font-medium">{guest.name}</p>
+                                <p className="text-sm text-[var(--muted)]">
+                                  {guest.side} · {guest.meal}
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => assignGuest(guest.id, undefined)}
+                                className="text-xs uppercase tracking-[0.2em] text-[var(--accent)]"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="accent-panel rounded-[1.25rem] p-4 text-sm text-[var(--muted)]">
+                            {selectedTable
+                              ? "No guests assigned yet."
+                              : "No table selected yet."}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
