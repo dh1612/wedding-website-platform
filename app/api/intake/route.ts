@@ -63,6 +63,9 @@ export async function POST(request: Request) {
         websiteUnlocked: false,
         portalUnlocked: false,
         unlockRequestedAt: null,
+        paymentStatus: "unpaid",
+        paymentRequestedAt: null,
+        paymentCompletedAt: null,
         intake: submission
       }),
       status: "draft"

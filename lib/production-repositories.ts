@@ -194,6 +194,63 @@ export async function updateWeddingStatus(input: {
   });
 }
 
+export async function updateWeddingAccessState(input: {
+  slug: string;
+  status?: "draft" | "approved" | "live";
+  websiteUnlocked?: boolean;
+  portalUnlocked?: boolean;
+  unlockRequestedAt?: string | null;
+  paymentStatus?: "unpaid" | "payment_requested" | "paid";
+  paymentRequestedAt?: string | null;
+  paymentCompletedAt?: string | null;
+}) {
+  const wedding = await prisma.wedding.findUnique({
+    where: { slug: input.slug },
+    select: {
+      contentJson: true,
+      publishedAt: true,
+      plannerSettingsJson: true
+    }
+  });
+
+  const plannerSettings = (wedding?.plannerSettingsJson ?? {}) as Record<string, unknown>;
+  const nextPlannerSettings = {
+    ...plannerSettings,
+    ...(typeof input.websiteUnlocked === "boolean"
+      ? { websiteUnlocked: input.websiteUnlocked }
+      : {}),
+    ...(typeof input.portalUnlocked === "boolean"
+      ? { portalUnlocked: input.portalUnlocked }
+      : {}),
+    ...(typeof input.unlockRequestedAt !== "undefined"
+      ? { unlockRequestedAt: input.unlockRequestedAt }
+      : {}),
+    ...(typeof input.paymentStatus !== "undefined"
+      ? { paymentStatus: input.paymentStatus }
+      : {}),
+    ...(typeof input.paymentRequestedAt !== "undefined"
+      ? { paymentRequestedAt: input.paymentRequestedAt }
+      : {}),
+    ...(typeof input.paymentCompletedAt !== "undefined"
+      ? { paymentCompletedAt: input.paymentCompletedAt }
+      : {})
+  };
+
+  return prisma.wedding.update({
+    where: { slug: input.slug },
+    data: {
+      ...(input.status ? { status: input.status } : {}),
+      plannerSettingsJson: nextPlannerSettings as Prisma.InputJsonValue,
+      ...(input.status === "live"
+        ? {
+            liveContentJson: wedding?.contentJson as Prisma.InputJsonValue | undefined,
+            publishedAt: wedding?.publishedAt ?? new Date()
+          }
+        : {})
+    }
+  });
+}
+
 export async function updateWeddingBySlug(input: {
   currentSlug: string;
   slug: string;

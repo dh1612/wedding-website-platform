@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { WeddingSitePage } from "@/components/wedding-site-page";
+import { getPackagePaymentLink } from "@/lib/payment";
 import { getThemeById } from "@/lib/themes";
 import {
   getWeddingSiteBySlug
@@ -27,6 +28,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
     packageTier?: "basic" | "smart" | "premium";
   };
   const packageTier = plannerSettings.packageTier ?? "smart";
+  const paymentLink = getPackagePaymentLink(packageTier);
 
   return (
     <>
@@ -62,7 +64,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 href={`/unlock/${slug}`}
                 className="rounded-full border border-white/18 bg-white px-5 py-3 text-sm font-medium text-[#17313c]"
               >
-                Unlock My Website
+                {paymentLink ? "Unlock My Website" : "Request Unlock"}
               </Link>
               {weddingRecord.status === "live" ? (
                 <Link

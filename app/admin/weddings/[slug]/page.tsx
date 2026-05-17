@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
+import { getPackagePaymentLink, getPaymentStatusLabel, type PaymentStatus } from "@/lib/payment";
 import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import { getThemeById } from "@/lib/themes";
 import { coerceWeddingData } from "@/lib/wedding-data";
@@ -9,27 +10,52 @@ import {
   getWeddingBySlug,
   listCalendarItems,
   listChecklistItems,
-  updateWeddingStatus
+  updateWeddingAccessState
 } from "@/lib/production-repositories";
 
 type AdminWeddingWorkspacePageProps = {
   params: Promise<{ slug: string }>;
 };
 
-async function setWeddingStatus(formData: FormData) {
+async function updateWeddingAccessAction(formData: FormData) {
   "use server";
 
   const slug = String(formData.get("slug") || "").trim();
-  const status = String(formData.get("status") || "").trim() as
-    | "draft"
-    | "approved"
-    | "live";
+  const status = String(formData.get("status") || "").trim();
+  const websiteUnlocked = String(formData.get("websiteUnlocked") || "").trim();
+  const portalUnlocked = String(formData.get("portalUnlocked") || "").trim();
+  const clearUnlockRequest = String(formData.get("clearUnlockRequest") || "").trim();
+  const paymentStatus = String(formData.get("paymentStatus") || "").trim();
 
-  if (!slug || !status) {
+  if (!slug) {
     return;
   }
 
-  await updateWeddingStatus({ slug, status });
+  await updateWeddingAccessState({
+    slug,
+    status: status
+      ? (status as "draft" | "approved" | "live")
+      : undefined,
+    websiteUnlocked:
+      websiteUnlocked === "true" ? true : websiteUnlocked === "false" ? false : undefined,
+    portalUnlocked:
+      portalUnlocked === "true" ? true : portalUnlocked === "false" ? false : undefined,
+    unlockRequestedAt: clearUnlockRequest === "true" ? null : undefined,
+    paymentStatus:
+      paymentStatus === "unpaid" ||
+      paymentStatus === "payment_requested" ||
+      paymentStatus === "paid"
+        ? paymentStatus
+        : undefined,
+    paymentRequestedAt:
+      paymentStatus === "payment_requested" ? new Date().toISOString() : undefined,
+    paymentCompletedAt:
+      paymentStatus === "paid"
+        ? new Date().toISOString()
+        : paymentStatus === "unpaid"
+          ? null
+          : undefined
+  });
 }
 
 export default async function AdminWeddingWorkspacePage({
@@ -43,6 +69,24 @@ export default async function AdminWeddingWorkspacePage({
   }
 
   const weddingData = coerceWeddingData(record.contentJson);
+  const plannerSettings = (record.plannerSettingsJson ?? {}) as {
+    packageTier?: "basic" | "smart" | "premium";
+    websiteUnlocked?: boolean;
+    portalUnlocked?: boolean;
+    unlockRequestedAt?: string | null;
+    paymentStatus?: PaymentStatus;
+    paymentRequestedAt?: string | null;
+    paymentCompletedAt?: string | null;
+  };
+  const packageTier = plannerSettings.packageTier ?? "smart";
+  const paymentStatus = plannerSettings.paymentStatus ?? "unpaid";
+  const paymentLink = getPackagePaymentLink(packageTier);
+  const websiteUnlocked =
+    typeof plannerSettings.websiteUnlocked === "boolean"
+      ? plannerSettings.websiteUnlocked
+      : record.status === "live";
+  const portalUnlocked = plannerSettings.portalUnlocked === true;
+  const unlockRequestedAt = plannerSettings.unlockRequestedAt;
   const theme = getThemeById(weddingData.theme);
   const [checklistItems, calendarItems] = await Promise.all([
     listChecklistItems(record.id),
@@ -74,7 +118,10 @@ export default async function AdminWeddingWorkspacePage({
     {
       eyebrow: "Planning Area",
       title: "Portal",
-      description: "Open the couple’s checklist and calendar area tied to this exact wedding record.",
+      description:
+        packageTier === "premium"
+          ? "Open the couple’s checklist and calendar area tied to this exact wedding record."
+          : "The private couple portal is a premium feature, but you can still access the tools here as the operator.",
       href: `/couple-portal/${slug}`,
       button: "Open Portal"
     },
@@ -118,24 +165,93 @@ export default async function AdminWeddingWorkspacePage({
           <p className="eyebrow">Publishing Control</p>
           <h2 className="mt-3 text-3xl">Control when this wedding goes live</h2>
           <p className="prose-copy mt-3">
-            Draft previews stay private. Publish from here when the couple has approved the
-            website and payment is sorted.
+            Draft previews stay private. Unlock the website and, when included, the premium
+            portal from here after approval or payment.
           </p>
+          <div className="mt-5 grid gap-4 md:grid-cols-4">
+            <div className="rounded-[1.2rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
+              <p className="eyebrow">Package</p>
+              <p className="mt-3 text-2xl capitalize">{packageTier}</p>
+            </div>
+            <div className="rounded-[1.2rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
+              <p className="eyebrow">Payment</p>
+              <p className="mt-3 text-2xl">{getPaymentStatusLabel(paymentStatus)}</p>
+            </div>
+            <div className="rounded-[1.2rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
+              <p className="eyebrow">Website</p>
+              <p className="mt-3 text-2xl">{websiteUnlocked ? "Unlocked" : "Locked"}</p>
+            </div>
+            <div className="rounded-[1.2rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
+              <p className="eyebrow">Portal</p>
+              <p className="mt-3 text-2xl">
+                {packageTier === "premium"
+                  ? portalUnlocked
+                    ? "Unlocked"
+                    : "Locked"
+                  : "Not Included"}
+              </p>
+            </div>
+          </div>
+          {unlockRequestedAt ? (
+            <div className="mt-5 rounded-[1.2rem] border border-[#184b38]/14 bg-[#f6fbf8] px-4 py-4 text-sm leading-6 text-[#486159]">
+              Unlock requested on {new Date(unlockRequestedAt).toLocaleString("en-IE", {
+                dateStyle: "medium",
+                timeStyle: "short"
+              })}.
+            </div>
+          ) : null}
+          <div className="mt-5 rounded-[1.2rem] border border-[var(--border)] bg-white/78 px-4 py-4 text-sm leading-6 text-[var(--muted)]">
+            {paymentLink
+              ? "A package payment link is configured for this wedding. You can still mark payment manually and unlock the website or portal yourself."
+              : "No package payment link is configured yet. The unlock flow can still be handled manually from this admin area."}
+          </div>
           <div className="mt-6 flex flex-wrap gap-3">
-            <form action={setWeddingStatus}>
+            <form action={updateWeddingAccessAction}>
+              <input type="hidden" name="slug" value={slug} />
+              <input type="hidden" name="paymentStatus" value="unpaid" />
+              <button className="accent-panel rounded-full px-5 py-3 text-sm font-medium">
+                Mark Unpaid
+              </button>
+            </form>
+            <form action={updateWeddingAccessAction}>
+              <input type="hidden" name="slug" value={slug} />
+              <input type="hidden" name="paymentStatus" value="paid" />
+              <input type="hidden" name="clearUnlockRequest" value="true" />
+              <button className="accent-outline rounded-full px-5 py-3 text-sm font-medium">
+                Mark Paid
+              </button>
+            </form>
+            <form action={updateWeddingAccessAction}>
               <input type="hidden" name="slug" value={slug} />
               <input type="hidden" name="status" value="approved" />
+              <input type="hidden" name="websiteUnlocked" value="false" />
               <button className="accent-panel rounded-full px-5 py-3 text-sm font-medium">
-                Keep Private
+                Keep Website Private
               </button>
             </form>
-            <form action={setWeddingStatus}>
+            <form action={updateWeddingAccessAction}>
               <input type="hidden" name="slug" value={slug} />
               <input type="hidden" name="status" value="live" />
+              <input type="hidden" name="websiteUnlocked" value="true" />
+              <input type="hidden" name="clearUnlockRequest" value="true" />
               <button className="accent-button rounded-full px-5 py-3 text-sm font-medium">
-                Publish Guest Website
+                Unlock Website And Publish
               </button>
             </form>
+            {packageTier === "premium" ? (
+              <form action={updateWeddingAccessAction}>
+                <input type="hidden" name="slug" value={slug} />
+                <input type="hidden" name="portalUnlocked" value={portalUnlocked ? "false" : "true"} />
+                <input type="hidden" name="clearUnlockRequest" value="true" />
+                <button className="accent-outline rounded-full px-5 py-3 text-sm font-medium">
+                  {portalUnlocked ? "Lock Couple Portal" : "Unlock Couple Portal"}
+                </button>
+              </form>
+            ) : (
+              <div className="rounded-full border border-[var(--border)] bg-white/72 px-5 py-3 text-sm text-[var(--muted)]">
+                Couple portal unlock is available on premium only
+              </div>
+            )}
             {record.status === "live" ? (
               <Link
                 href={`/site/${slug}`}
