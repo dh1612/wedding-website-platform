@@ -24,6 +24,7 @@ type AdminWeddingEditorProps = {
     }>;
   };
   saved?: boolean;
+  published?: boolean;
   error?: string;
 };
 
@@ -85,6 +86,7 @@ function SectionToggle({ name, label, checked }: SectionToggleProps) {
 export function AdminWeddingEditor({
   record,
   saved = false,
+  published = false,
   error
 }: AdminWeddingEditorProps) {
   function escapeHtml(value: string) {
@@ -258,7 +260,13 @@ export function AdminWeddingEditor({
 
         {saved ? (
           <div className="mb-6 rounded-[1.3rem] border border-[#184b38]/14 bg-[#f6fbf8] px-5 py-4 text-sm leading-6 text-[#486159]">
-            Wedding updated successfully. The latest version is now saved.
+            Wedding updated successfully. The latest version is now saved to the draft editor.
+          </div>
+        ) : null}
+
+        {published ? (
+          <div className="mb-6 rounded-[1.3rem] border border-[#7a652d]/18 bg-[#fff9ef] px-5 py-4 text-sm leading-6 text-[#6a5530]">
+            The current draft has also been published to the live guest website.
           </div>
         ) : null}
 
@@ -1178,9 +1186,22 @@ export function AdminWeddingEditor({
             <button className="accent-button rounded-full px-6 py-3 text-sm font-medium">
               Save Wedding Changes
             </button>
+            <button
+              type="submit"
+              name="publishLive"
+              value="true"
+              className="accent-outline rounded-full px-6 py-3 text-sm font-medium"
+            >
+              Save And Publish Live Website
+            </button>
             <Link href={`/preview/${record.slug}`} className="accent-panel rounded-full px-6 py-3 text-sm">
               Back To Review
             </Link>
+            {record.status === "live" ? (
+              <Link href={`/site/${record.slug}`} className="accent-panel rounded-full px-6 py-3 text-sm">
+                Open Live Website
+              </Link>
+            ) : null}
           </div>
         </form>
       </section>

@@ -4,7 +4,7 @@ import { getWeddingRecordForAdmin } from "@/lib/production-repositories";
 
 type AdminWeddingEditPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams?: Promise<{ saved?: string; error?: string }>;
+  searchParams?: Promise<{ saved?: string; published?: string; error?: string }>;
 };
 
 export default async function AdminWeddingEditPage({
@@ -23,6 +23,7 @@ export default async function AdminWeddingEditPage({
     <AdminWeddingEditor
       record={record}
       saved={query?.saved === "1"}
+      published={query?.published === "1"}
       error={query?.error}
     />
   );

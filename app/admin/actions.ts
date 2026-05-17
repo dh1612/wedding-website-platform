@@ -211,6 +211,7 @@ export async function updateWeddingContentAction(formData: FormData) {
   const currentSlug = String(formData.get("currentSlug") || "").trim();
   const nextSlug = slugify(String(formData.get("slug") || "").trim());
   const title = String(formData.get("title") || "").trim();
+  const publishLive = String(formData.get("publishLive") || "").trim() === "true";
 
   if (!currentSlug || !nextSlug || !title) {
     redirect("/admin");
@@ -655,7 +656,13 @@ export async function updateWeddingContentAction(formData: FormData) {
       locationSummary: nextContent.locationSummary,
       packageTier: String(formData.get("packageTier") || "").trim() || plannerSettings.packageTier,
       themePreference: nextContent.theme
-    }
+    },
+    ...(publishLive
+      ? {
+          websiteUnlocked: true,
+          unlockRequestedAt: null
+        }
+      : {})
   };
 
   await updateWeddingBySlug({
@@ -664,8 +671,12 @@ export async function updateWeddingContentAction(formData: FormData) {
     title,
     eventDate: nextContent.date ? new Date(nextContent.date) : undefined,
     contentJson: nextContent,
+    liveContentJson: publishLive ? nextContent : undefined,
     plannerSettingsJson: nextPlannerSettings,
-    status: (String(formData.get("status") || existing.status) as "draft" | "approved" | "live")
+    status: publishLive
+      ? "live"
+      : (String(formData.get("status") || existing.status) as "draft" | "approved" | "live"),
+    publishedAt: publishLive ? new Date() : undefined
   });
 
   if (existing.id && portalUserEmail) {
@@ -678,5 +689,5 @@ export async function updateWeddingContentAction(formData: FormData) {
     });
   }
 
-  redirect(`/admin/weddings/${nextSlug}/edit?saved=1`);
+  redirect(`/admin/weddings/${nextSlug}/edit?saved=1${publishLive ? "&published=1" : ""}`);
 }

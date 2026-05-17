@@ -260,6 +260,7 @@ export async function updateWeddingBySlug(input: {
   liveContentJson?: unknown;
   plannerSettingsJson?: unknown;
   status?: "draft" | "approved" | "live";
+  publishedAt?: Date;
 }) {
   return prisma.wedding.update({
     where: { slug: input.currentSlug },
@@ -273,7 +274,10 @@ export async function updateWeddingBySlug(input: {
         : {}),
       plannerSettingsJson:
         input.plannerSettingsJson as Prisma.InputJsonValue | undefined,
-      status: input.status
+      status: input.status,
+      ...(typeof input.publishedAt !== "undefined"
+        ? { publishedAt: input.publishedAt }
+        : {})
     }
   });
 }
