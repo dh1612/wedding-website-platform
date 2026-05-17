@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { shouldBypassImageOptimization } from "@/lib/image-utils";
 
 type VenueSneakPeekProps = {
   imageUrl: string;
@@ -38,6 +39,7 @@ export function VenueSneakPeek({ imageUrl }: VenueSneakPeekProps) {
             src={imageUrl}
             alt="Venue sneak peek"
             fill
+            unoptimized={shouldBypassImageOptimization(imageUrl)}
             className="object-cover"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(29,22,16,0.08),rgba(29,22,16,0.18))]" />

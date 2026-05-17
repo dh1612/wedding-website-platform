@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getThemeById } from "@/lib/themes";
 import { RichTextContent } from "@/components/rich-text-content";
+import { shouldBypassImageOptimization } from "@/lib/image-utils";
 import { formatDisplayDate } from "@/lib/utils";
 import { getWeddingData } from "@/lib/wedding-data";
 import type { WeddingData } from "@/types/wedding";
@@ -85,6 +86,8 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
   const theme = getThemeById(themeId);
   const heroImage = wedding.heroImage || theme.heroImage;
   const detailImage = theme.detailImage;
+  const heroImageUnoptimized = shouldBypassImageOptimization(heroImage);
+  const detailImageUnoptimized = shouldBypassImageOptimization(detailImage);
   const displayDate = formatDisplayDate(wedding.date);
   const visibility = wedding.sectionVisibility;
   const hero = wedding.hero ?? {
@@ -107,7 +110,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     return (
       <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-4 lg:px-8 lg:pb-18">
         <div className="relative min-h-[640px] overflow-hidden rounded-[2rem] border border-black/5 shadow-[var(--shadow)]">
-          <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
+          <Image
+            src={heroImage}
+            alt={`${theme.name} hero`}
+            fill
+            priority
+            unoptimized={heroImageUnoptimized}
+            className="object-cover"
+          />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,33,33,0.56)_0%,rgba(20,33,33,0.2)_46%,rgba(20,33,33,0.18)_100%)]" />
           {detailImage ? (
             <div className="absolute bottom-6 right-6 hidden h-56 w-44 overflow-hidden rounded-[1.5rem] border border-white/30 bg-white/10 shadow-[var(--shadow)] backdrop-blur md:block">
@@ -115,6 +125,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 src={detailImage}
                 alt={`${theme.name} detail`}
                 fill
+                unoptimized={detailImageUnoptimized}
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/10" />
@@ -230,7 +241,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="absolute inset-y-0 right-0 w-[88%] rounded-[2rem] border border-[var(--border)] bg-[var(--accent-soft)] shadow-[var(--shadow)]" />
           <div className="absolute left-0 top-8 h-[86%] w-[82%] overflow-hidden rounded-[2rem] border border-white/40 bg-white p-3 shadow-[var(--shadow)]">
             <div className="relative h-full w-full overflow-hidden rounded-[1.4rem]">
-              <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
+              <Image
+                src={heroImage}
+                alt={`${theme.name} hero`}
+                fill
+                priority
+                unoptimized={heroImageUnoptimized}
+                className="object-cover"
+              />
             </div>
           </div>
           <div className="absolute bottom-4 right-4 max-w-sm rounded-[1.6rem] border border-[var(--border)] bg-white/92 p-6 shadow-[var(--shadow)] backdrop-blur">
@@ -249,7 +267,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
       <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-4 lg:px-8 lg:pb-18">
         <div className="overflow-hidden rounded-[2rem] border border-[var(--border)] shadow-[var(--shadow)]">
           <div className="relative min-h-[400px]">
-            <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
+            <Image
+              src={heroImage}
+              alt={`${theme.name} hero`}
+              fill
+              priority
+              unoptimized={heroImageUnoptimized}
+              className="object-cover"
+            />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,29,28,0.18)_0%,rgba(19,29,28,0.44)_100%)]" />
           </div>
           <div className="section-shell -mt-14 relative mx-6 mb-6 rounded-[2rem] p-8 sm:p-10 lg:mx-8 lg:p-12">
@@ -364,7 +389,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
         </div>
         <div className="grid min-h-[520px] gap-5 lg:grid-rows-[1fr_0.58fr]">
           <div className="relative overflow-hidden rounded-[2rem] border border-[var(--border)] shadow-[var(--shadow)]">
-            <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
+            <Image
+              src={heroImage}
+              alt={`${theme.name} hero`}
+              fill
+              priority
+              unoptimized={heroImageUnoptimized}
+              className="object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/10" />
           </div>
           <div className="grid gap-5 sm:grid-cols-[0.9fr_1.1fr]">
@@ -390,7 +422,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
         className="mx-auto grid w-full max-w-6xl gap-4 px-4 pb-8 pt-4 sm:grid-cols-[0.86fr_1.14fr] sm:gap-6 sm:px-6 sm:pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:pb-18"
       >
         <div className="relative min-h-[320px] overflow-hidden rounded-[1.6rem] border border-[var(--border)] shadow-[var(--shadow)] sm:min-h-[420px] sm:rounded-[2rem] lg:min-h-[540px]">
-          <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
+          <Image
+            src={heroImage}
+            alt={`${theme.name} hero`}
+            fill
+            priority
+            unoptimized={heroImageUnoptimized}
+            className="object-cover"
+          />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,28,24,0.2)_0%,rgba(17,28,24,0.5)_100%)]" />
         </div>
         <div className="section-shell relative overflow-hidden rounded-[1.6rem] p-5 sm:rounded-[2rem] sm:p-8 lg:p-14">
@@ -451,7 +490,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     return (
       <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-4 lg:px-8 lg:pb-18">
         <div className="hero-shell relative min-h-[620px] overflow-hidden rounded-[2rem] border border-white/10 shadow-[var(--shadow)]">
-          <Image src={heroImage} alt={`${theme.name} hero`} fill priority className="object-cover" />
+          <Image
+            src={heroImage}
+            alt={`${theme.name} hero`}
+            fill
+            priority
+            unoptimized={heroImageUnoptimized}
+            className="object-cover"
+          />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,15,0.34)_0%,rgba(8,18,15,0.44)_24%,rgba(8,18,15,0.52)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(25,52,43,0.08),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_18%)]" />
           <div className="relative flex min-h-[620px] flex-col items-center justify-center px-8 py-16 text-center text-white sm:px-14">
@@ -564,7 +610,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
         </div>
       </div>
       <div className="relative min-h-[420px] overflow-hidden rounded-[2rem] border border-[var(--border)] shadow-[var(--shadow)]">
-        <Image src={heroImage} alt={`${wedding.couple} hero`} fill priority className="object-cover" />
+        <Image
+          src={heroImage}
+          alt={`${wedding.couple} hero`}
+          fill
+          priority
+          unoptimized={heroImageUnoptimized}
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/10" />
       </div>
     </section>

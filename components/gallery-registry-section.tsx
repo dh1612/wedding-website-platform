@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { shouldBypassImageOptimization } from "@/lib/image-utils";
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
 import { RichTextContent } from "@/components/rich-text-content";
@@ -69,6 +70,7 @@ export function GalleryRegistrySection({
                           src={image}
                           alt={`Gallery image ${index + 1}`}
                           fill
+                          unoptimized={shouldBypassImageOptimization(image)}
                           className="object-cover"
                         />
                       </div>
