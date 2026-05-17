@@ -12,7 +12,7 @@ type PortalGuest = {
   email?: string;
   status: RSVPStatus;
   side: string;
-  meal: "beef" | "fish" | "vegetarian" | "vegan" | "kids" | "custom";
+  meal?: "beef" | "fish" | "vegetarian" | "vegan" | "kids" | "custom";
   dietary: string;
   partySize: number;
   note: string;
@@ -26,6 +26,7 @@ type RSVPManagerProps = {
   apiBasePath?: string;
   customQuestionLabels?: Record<string, string>;
   customSelectableQuestions?: RSVPFormQuestion[];
+  showMealChoice?: boolean;
 };
 
 type DraftGuest = {
@@ -48,7 +49,8 @@ export function RSVPManager({
   guests,
   apiBasePath = "/api/portal",
   customQuestionLabels = {},
-  customSelectableQuestions = []
+  customSelectableQuestions = [],
+  showMealChoice = true
 }: RSVPManagerProps) {
   function getCustomQuestionLabel(questionId: string) {
     return customQuestionLabels[questionId] || questionId;
@@ -57,7 +59,9 @@ export function RSVPManager({
   const [guestList, setGuestList] = useState<PortalGuest[]>(guests);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | RSVPStatus>("all");
-  const [mealFilter, setMealFilter] = useState<"all" | PortalGuest["meal"]>("all");
+  const [mealFilter, setMealFilter] = useState<
+    "all" | NonNullable<PortalGuest["meal"]>
+  >("all");
   const [dietaryFilter, setDietaryFilter] = useState<"all" | "has" | "none">("all");
   const [dietaryValueFilter, setDietaryValueFilter] = useState("");
   const [notesFilter, setNotesFilter] = useState<"all" | "has" | "none">("all");
@@ -91,7 +95,8 @@ export function RSVPManager({
 
       const matchesStatus =
         statusFilter === "all" ? true : guest.status === statusFilter;
-      const matchesMeal = mealFilter === "all" ? true : guest.meal === mealFilter;
+      const matchesMeal =
+        !showMealChoice || mealFilter === "all" ? true : guest.meal === mealFilter;
       const matchesDietary =
         dietaryFilter === "all"
           ? true
@@ -151,7 +156,8 @@ export function RSVPManager({
     dietaryValueFilter,
     notesFilter,
     customSelectableQuestions,
-    customFilters
+    customFilters,
+    showMealChoice
   ]);
 
   const summary = useMemo(() => {
@@ -235,7 +241,7 @@ export function RSVPManager({
         name: draft.name.trim(),
         household: draft.household.trim(),
         status: draft.status,
-        meal: draft.meal,
+        meal: showMealChoice ? draft.meal : undefined,
         dietary: draft.dietary.trim()
       })
     });
@@ -390,21 +396,23 @@ export function RSVPManager({
                   <option value="pending">Pending</option>
                   <option value="declined">Declined</option>
                 </select>
-              <select
-                value={mealFilter}
-                onChange={(event) =>
-                  setMealFilter(event.target.value as "all" | PortalGuest["meal"])
-                }
-                className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-              >
-                <option value="all">All meals</option>
-                <option value="beef">Beef</option>
-                <option value="fish">Fish</option>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="kids">Kids</option>
-                <option value="custom">Custom</option>
-              </select>
+              {showMealChoice ? (
+                <select
+                  value={mealFilter}
+                  onChange={(event) =>
+                    setMealFilter(event.target.value as "all" | NonNullable<PortalGuest["meal"]>)
+                  }
+                  className="rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                >
+                  <option value="all">All meals</option>
+                  <option value="beef">Beef</option>
+                  <option value="fish">Fish</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="kids">Kids</option>
+                  <option value="custom">Custom</option>
+                </select>
+              ) : null}
               <select
                 value={dietaryFilter}
                 onChange={(event) =>
@@ -554,7 +562,11 @@ export function RSVPManager({
                           {group.guests.map((guest) => (
                             <div
                               key={guest.id}
-                              className="grid gap-5 px-5 py-5 lg:grid-cols-[minmax(0,1.1fr)_140px_140px_180px_minmax(0,1.4fr)_100px]"
+                              className={`grid gap-5 px-5 py-5 ${
+                                showMealChoice
+                                  ? "lg:grid-cols-[minmax(0,1.1fr)_140px_140px_180px_minmax(0,1.4fr)_100px]"
+                                  : "lg:grid-cols-[minmax(0,1.1fr)_140px_180px_minmax(0,1.4fr)_100px]"
+                              }`}
                             >
                               <div>
                                 <p className="font-medium text-[var(--foreground)]">{guest.name}</p>
@@ -568,14 +580,18 @@ export function RSVPManager({
                                   {guest.status}
                                 </span>
                               </div>
-                              <div>
-                                <p className="eyebrow">Meal</p>
-                                <p className="mt-2 text-sm text-[var(--foreground)]">
-                                  {guest.meal === "kids"
-                                    ? "Kids"
-                                    : guest.meal.charAt(0).toUpperCase() + guest.meal.slice(1)}
-                                </p>
-                              </div>
+                              {showMealChoice ? (
+                                <div>
+                                  <p className="eyebrow">Meal</p>
+                                  <p className="mt-2 text-sm text-[var(--foreground)]">
+                                    {guest.meal
+                                      ? guest.meal === "kids"
+                                        ? "Kids"
+                                        : guest.meal.charAt(0).toUpperCase() + guest.meal.slice(1)
+                                      : "None"}
+                                  </p>
+                                </div>
+                              ) : null}
                               <div>
                                 <p className="eyebrow">Dietary</p>
                                 <p className="mt-2 text-sm text-[var(--foreground)]">
@@ -647,22 +663,24 @@ export function RSVPManager({
                   <option value="attending">Attending</option>
                   <option value="declined">Declined</option>
                 </select>
-                <select
-                  value={draft.meal}
-                  onChange={(event) =>
-                    setDraft((current) => ({
-                      ...current,
-                      meal: event.target.value as PortalGuest["meal"]
-                    }))
-                  }
-                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
-                >
-                  <option value="beef">Beef</option>
-                  <option value="fish">Fish</option>
-                  <option value="vegetarian">Vegetarian</option>
-                  <option value="vegan">Vegan</option>
-                  <option value="kids">Kids</option>
-                </select>
+                {showMealChoice ? (
+                  <select
+                    value={draft.meal}
+                    onChange={(event) =>
+                      setDraft((current) => ({
+                        ...current,
+                        meal: event.target.value as NonNullable<PortalGuest["meal"]>
+                      }))
+                    }
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)]"
+                  >
+                    <option value="beef">Beef</option>
+                    <option value="fish">Fish</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="kids">Kids</option>
+                  </select>
+                ) : null}
                 <textarea
                   value={draft.dietary}
                   onChange={(event) =>

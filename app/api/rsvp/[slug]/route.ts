@@ -4,6 +4,7 @@ import {
   saveRSVPResponse,
   upsertGuestForPublicRsvp
 } from "@/lib/production-repositories";
+import { coerceWeddingData } from "@/lib/wedding-data";
 
 type Context = {
   params: Promise<{
@@ -35,6 +36,8 @@ export async function POST(request: Request, context: Context) {
   if (!wedding?.id) {
     return NextResponse.json({ error: "Wedding not found." }, { status: 404 });
   }
+  const weddingData = wedding.contentJson ? coerceWeddingData(wedding.contentJson) : null;
+  const mealChoiceEnabled = weddingData?.rsvp?.form?.enableMealChoice ?? true;
 
   const body = (await request.json()) as {
     name?: string;
@@ -68,7 +71,7 @@ export async function POST(request: Request, context: Context) {
     email,
     phone: clampText(body.phone, 40),
     side: "friends",
-    defaultMeal: body.meal ?? "beef",
+    defaultMeal: mealChoiceEnabled ? body.meal ?? "beef" : undefined,
     dietaryNotes: clampText(body.dietary, 1000)
   });
 
@@ -78,7 +81,7 @@ export async function POST(request: Request, context: Context) {
     status: body.status ?? "pending",
     attendingCount:
       body.status === "declined" ? 0 : Math.max(1, Number(body.attendingCount) || 1),
-    mealChoice: body.meal ?? "beef",
+    mealChoice: mealChoiceEnabled ? body.meal ?? "beef" : undefined,
     dietaryNotes: clampText(body.dietary, 1000),
     songRequest: clampText(body.songRequest, 200),
     messageToCouple: clampText(body.messageToCouple, 2000),
@@ -91,7 +94,7 @@ export async function POST(request: Request, context: Context) {
     household: guest.householdKey ?? "Guest List",
     status: response.status,
     side: guest.side,
-    meal: response.mealChoice ?? guest.defaultMeal ?? "custom",
+    meal: response.mealChoice ?? guest.defaultMeal ?? undefined,
     dietary: response.dietaryNotes ?? guest.dietaryNotes ?? "",
     partySize: response.attendingCount,
     note: guest.notes ?? "",

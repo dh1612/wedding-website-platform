@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { PageHero } from "@/components/page-hero";
+import { PortalLockedState } from "@/components/portal-locked-state";
 import { RSVPManager } from "@/components/rsvp-manager";
 import { SiteFrame } from "@/components/site-frame";
+import { getPortalCookieName, readPortalSessionScope } from "@/lib/portal-auth";
 import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import {
   getWeddingSiteBySlug,
@@ -28,6 +31,39 @@ export default async function RSVPDashboardBySlugPage({
 
   const weddingData = coerceWeddingData(weddingRecord.contentJson);
   const theme = getThemeById(weddingData.theme);
+  const plannerSettings = (weddingRecord.plannerSettingsJson ?? {}) as {
+    packageTier?: "basic" | "smart" | "premium";
+    portalUnlocked?: boolean;
+  };
+  const packageTier = plannerSettings.packageTier ?? "smart";
+  const portalUnlocked = plannerSettings.portalUnlocked === true && packageTier === "premium";
+  const cookieStore = await cookies();
+  const sessionScope = await readPortalSessionScope(
+    cookieStore.get(getPortalCookieName())?.value
+  );
+  const isOperatorView = sessionScope === "admin";
+
+  if (!isOperatorView && !portalUnlocked) {
+    return (
+      <SiteFrame
+        currentPath={`/rsvp-dashboard/${slug}`}
+        mode="pages"
+        themeId={theme.id}
+        themeStyle={theme.style}
+        adminView
+        portalType="couple"
+        weddingData={weddingData}
+      >
+        <PortalLockedState
+          slug={slug}
+          isPremiumPackage={packageTier === "premium"}
+          title="RSVP tools unlock with the private portal"
+          description="Guest reply management is part of the private planning area and is only opened once that portal has been unlocked."
+        />
+      </SiteFrame>
+    );
+  }
+
   const guests = await listPortalGuests(weddingRecord.id);
   const customQuestionLabels = Object.fromEntries(
     (weddingData.rsvp.form?.customQuestions ?? []).map((question) => [
@@ -63,6 +99,7 @@ export default async function RSVPDashboardBySlugPage({
         apiBasePath={`/api/portal/${slug}`}
         customQuestionLabels={customQuestionLabels}
         customSelectableQuestions={customSelectableQuestions}
+        showMealChoice={weddingData.rsvp.form?.enableMealChoice ?? true}
       />
     </SiteFrame>
   );
