@@ -3,6 +3,7 @@ import { updateWeddingContentAction } from "@/app/admin/actions";
 import { PageHero } from "@/components/page-hero";
 import { RichTextEditorField } from "@/components/rich-text-editor-field";
 import { SiteFrame } from "@/components/site-frame";
+import { BRAND_DOMAIN } from "@/lib/brand";
 import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import { getThemeById, weddingThemes } from "@/lib/themes";
 import { coerceWeddingData } from "@/lib/wedding-data";
@@ -128,6 +129,9 @@ export function AdminWeddingEditor({
     .map((spot) => [spot.label, spot.detail, spot.href].filter(Boolean).join(" | "))
     .join("\n");
   const visibility = weddingData.sectionVisibility;
+  const websiteUrl = `https://${BRAND_DOMAIN}/site/${record.slug}`;
+  const previewUrl = `https://${BRAND_DOMAIN}/preview/${record.slug}`;
+  const couplePortalUrl = `https://${BRAND_DOMAIN}/couple-portal/${record.slug}`;
   const rsvpForm = weddingData.rsvp.form;
   const customQuestions = rsvpForm?.customQuestions ?? [];
   const customQuestionRowCount = Math.max(customQuestions.length + 4, 8);
@@ -341,12 +345,22 @@ export function AdminWeddingEditor({
             id="core-setup"
             eyebrow="Core Setup"
             title="The essentials for this wedding"
-            description="Update the wedding title, slug, status, package, and overall design direction from one place."
+            description="Update the wedding title, the shareable website link, the couple portal link, status, package, and overall design direction from one place."
             defaultOpen
           >
             <div className="grid gap-4 md:grid-cols-2">
               <input name="title" defaultValue={record.title} placeholder="Wedding title" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-              <input name="slug" defaultValue={record.slug} placeholder="Slug" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              <div className="grid gap-2">
+                <input
+                  name="slug"
+                  defaultValue={record.slug}
+                  placeholder="website-link-slug"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <p className="text-sm leading-6 text-[var(--muted)]">
+                  This slug controls both the guest website and the couple portal link.
+                </p>
+              </div>
               <input name="couple" defaultValue={weddingData.couple} placeholder="Couple names" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <input name="date" type="date" defaultValue={weddingData.date} className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               <select name="packageTier" defaultValue={plannerSettings.packageTier ?? "smart"} className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none">
@@ -361,6 +375,26 @@ export function AdminWeddingEditor({
               </select>
               <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
                 Current template: <span className="font-medium">{theme.name}</span>
+              </div>
+            </div>
+            <div className="mt-4 rounded-[1.3rem] border border-[var(--border)] bg-[#fafcfb] p-5">
+              <p className="eyebrow">Current Links</p>
+              <div className="mt-3 grid gap-3 text-sm leading-6 text-[var(--foreground)]">
+                <p>
+                  Guest website:
+                  <br />
+                  <span className="font-medium">{websiteUrl}</span>
+                </p>
+                <p>
+                  Couple portal:
+                  <br />
+                  <span className="font-medium">{couplePortalUrl}</span>
+                </p>
+                <p>
+                  Preview:
+                  <br />
+                  <span className="font-medium">{previewUrl}</span>
+                </p>
               </div>
             </div>
             <div className="mt-5 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
