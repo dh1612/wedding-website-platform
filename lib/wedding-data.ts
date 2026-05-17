@@ -291,8 +291,8 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.travel.sneakPeekImage
           : "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80",
       relaxedNote:
-        typeof source.travel?.relaxedNote === "string" && source.travel.relaxedNote.trim()
-          ? source.travel.relaxedNote
+        typeof source.travel?.relaxedNote === "string"
+          ? source.travel.relaxedNote.trim()
           : fallback.travel.relaxedNote,
       mapSpots: coerceMapSpots(source.travel?.mapSpots, fallback.travel.mapSpots ?? []),
       transport: source.travel?.transport ?? fallback.travel.transport,
