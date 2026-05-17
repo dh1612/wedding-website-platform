@@ -1022,11 +1022,10 @@ export function AdminWeddingEditor({
             id="key-details"
             eyebrow="Key Details"
             title="Contact details and private access"
-            description="Set the contact email, RSVP deadline, and the couple’s private portal login for this wedding."
+            description="Set the contact email and the couple’s private portal login for this wedding."
           >
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4">
               <input name="contactEmail" defaultValue={weddingData.contact.email} placeholder="Contact email" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
-              <input name="rsvpDeadline" defaultValue={weddingData.rsvp.deadline} placeholder="RSVP deadline" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
             </div>
             <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
               <p className="eyebrow">Portal Access</p>
@@ -1095,6 +1094,12 @@ export function AdminWeddingEditor({
                 name="rsvpDeadlineEyebrow"
                 defaultValue={weddingData.rsvp.deadlineEyebrow ?? "Deadline"}
                 placeholder="Deadline"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <input
+                name="rsvpDeadline"
+                defaultValue={weddingData.rsvp.deadline}
+                placeholder="As soon as possible"
                 className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
               />
               <RichTextEditorField
