@@ -222,6 +222,7 @@ export function RSVPManager({
 
   async function addGuest() {
     if (!draft.name.trim() || !draft.household.trim()) {
+      setStatusMessage("Add at least a guest name and household before saving.");
       return;
     }
 
@@ -240,7 +241,8 @@ export function RSVPManager({
     });
 
     if (!response.ok) {
-      setStatusMessage("Guest could not be added.");
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      setStatusMessage(payload?.error || "Guest could not be added.");
       return;
     }
 

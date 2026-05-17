@@ -22,10 +22,11 @@ export async function POST(request: Request) {
 
   const name = body.name?.trim();
   const household = body.household?.trim() || name;
+  const email = body.email?.trim() || undefined;
 
-  if (!name || !body.email?.trim()) {
+  if (!name) {
     return NextResponse.json(
-      { error: "Name and email are required." },
+      { error: "Name is required." },
       { status: 400 }
     );
   }
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
     weddingId: wedding.id,
     invitationName: name,
     householdKey: household,
-    email: body.email.trim(),
+    email,
     phone: body.phone?.trim() || undefined,
     side: "friends",
     defaultMeal: body.meal ?? "beef",

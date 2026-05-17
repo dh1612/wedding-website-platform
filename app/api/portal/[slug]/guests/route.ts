@@ -54,9 +54,9 @@ export async function POST(request: Request, context: Context) {
   const household = clampText(body.household, 120) || name;
   const email = clampText(body.email, 160);
 
-  if (!name || !email) {
+  if (!name) {
     return NextResponse.json(
-      { error: "Name and email are required." },
+      { error: "Name is required." },
       { status: 400 }
     );
   }
