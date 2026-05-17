@@ -16,9 +16,11 @@ export function AccommodationSection({
       <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <SectionHeading
-            eyebrow="Accommodation"
-            title="Places To Stay"
-            description="A couple of nearby options for guests travelling in for the celebration."
+            eyebrow={wedding.accommodationEyebrow}
+            title={wedding.accommodationTitle}
+            titleHtml={wedding.accommodationTitleHtml}
+            description={wedding.accommodationDescription}
+            descriptionHtml={wedding.accommodationDescriptionHtml}
           />
         </div>
         <div className="section-shell rounded-[1.75rem] p-6 sm:p-8">

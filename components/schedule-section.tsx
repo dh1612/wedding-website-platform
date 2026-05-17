@@ -9,17 +9,17 @@ type ScheduleSectionProps = {
 
 export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
   const wedding = weddingData ?? getWeddingData();
-  const stepLabel = wedding.scheduleStepLabel?.trim() || "Moment";
+  const stepLabel = typeof wedding.scheduleStepLabel === "string" ? wedding.scheduleStepLabel.trim() : "Moment";
 
   return (
     <section id="schedule" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
       <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <SectionHeading
-            eyebrow={wedding.scheduleEyebrow?.trim() || "Weekend Timeline"}
-            title={wedding.scheduleHeading?.trim() || "What’s Happening And When"}
+            eyebrow={wedding.scheduleEyebrow}
+            title={wedding.scheduleHeading}
             titleHtml={wedding.scheduleHeadingHtml}
-            description={wedding.scheduleDescription?.trim()}
+            description={wedding.scheduleDescription}
             descriptionHtml={wedding.scheduleDescriptionHtml}
           />
           {(wedding.scheduleNoteHtml || wedding.scheduleNote?.trim()) ? (

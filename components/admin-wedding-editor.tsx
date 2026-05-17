@@ -232,6 +232,15 @@ export function AdminWeddingEditor({
         weddingData.scheduleNote ??
           "A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time."
       );
+  const accommodationTitleHtml = weddingData.accommodationTitleHtml
+    ? weddingData.accommodationTitleHtml
+    : simpleTextHtml(weddingData.accommodationTitle ?? "Places To Stay");
+  const accommodationDescriptionHtml = weddingData.accommodationDescriptionHtml
+    ? weddingData.accommodationDescriptionHtml
+    : simpleTextHtml(
+        weddingData.accommodationDescription ??
+          "A couple of nearby options for guests travelling in for the celebration."
+      );
   const editorSections = [
     { id: "core-setup", label: "Core setup" },
     { id: "hero-copy", label: "Opening section" },
@@ -798,6 +807,26 @@ export function AdminWeddingEditor({
                 name="showAccommodation"
                 label="Show accommodation section"
                 checked={visibility?.accommodation ?? true}
+              />
+              <input
+                name="accommodationEyebrow"
+                defaultValue={weddingData.accommodationEyebrow ?? "Accommodation"}
+                placeholder="Accommodation"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <RichTextEditorField
+                name="accommodationTitle"
+                label="Accommodation heading"
+                description="This controls the large heading at the top of the accommodation section."
+                defaultValue={accommodationTitleHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <RichTextEditorField
+                name="accommodationDescription"
+                label="Accommodation intro"
+                description="Use this for the supporting text beneath the accommodation heading."
+                defaultValue={accommodationDescriptionHtml}
+                minHeightClassName="min-h-[140px]"
               />
               <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
                 <p className="eyebrow">Guest Accommodation</p>

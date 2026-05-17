@@ -122,6 +122,11 @@ export type WeddingData = {
   scheduleStepLabel?: string;
   schedule: ScheduleItem[];
   travel: TravelInfo;
+  accommodationEyebrow?: string;
+  accommodationTitle?: string;
+  accommodationTitleHtml?: string;
+  accommodationDescription?: string;
+  accommodationDescriptionHtml?: string;
   accommodation: AccommodationItem[];
   faq: FAQItem[];
   rsvp: {

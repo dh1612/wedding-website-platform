@@ -18,15 +18,14 @@ export function RSVPSection({
 }: RSVPSectionProps) {
   const wedding = weddingData ?? getWeddingData();
   const showInteractiveForm = Boolean(rsvpApiPath) && !demoMode;
-  const rsvpTitle = wedding.rsvp.title?.trim() || "Let Us Know If You Can Make It";
 
   return (
     <section id="rsvp" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
       <div className="section-shell rounded-[2rem] p-8 sm:p-10 lg:p-14">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeading
-            eyebrow={wedding.rsvp.eyebrow?.trim() || "RSVP"}
-            title={rsvpTitle}
+            eyebrow={wedding.rsvp.eyebrow}
+            title={wedding.rsvp.title}
             titleHtml={wedding.rsvp.titleHtml}
             description={
               demoMode
@@ -36,8 +35,8 @@ export function RSVPSection({
             descriptionHtml={demoMode ? undefined : wedding.rsvp.descriptionHtml}
           />
           <div className="accent-panel rounded-[1.75rem] p-8">
-            <p className="eyebrow">{wedding.rsvp.deadlineEyebrow?.trim() || "Deadline"}</p>
-            <p className="mt-3 text-3xl">{demoMode ? "Set around the couple's plans" : wedding.rsvp.deadline}</p>
+            {wedding.rsvp.deadlineEyebrow ? <p className="eyebrow">{wedding.rsvp.deadlineEyebrow}</p> : null}
+            {demoMode ? <p className="mt-3 text-3xl">Set around the couple&apos;s plans</p> : wedding.rsvp.deadline ? <p className="mt-3 text-3xl">{wedding.rsvp.deadline}</p> : null}
             {demoMode ? (
               <p className="prose-copy mt-4">
                 This section can collect attendance, dietary notes, travel updates, and anything else the couple wants included in their guest response form.
@@ -48,12 +47,9 @@ export function RSVPSection({
                 dangerouslySetInnerHTML={{ __html: wedding.rsvp.panelDescriptionHtml }}
               />
             ) : (
-              <p className="prose-copy mt-4">
-                {wedding.rsvp.panelDescription?.trim() ||
-                  (showInteractiveForm
-                    ? "Guests can reply here with the standard wedding details you would usually need, including attendance, dietary requirements, and optional notes."
-                    : "Use this section for final guest updates, questions, or any last-minute changes before the wedding.")}
-              </p>
+              wedding.rsvp.panelDescription ? (
+                <p className="prose-copy mt-4">{wedding.rsvp.panelDescription}</p>
+              ) : null
             )}
             {showInteractiveForm && rsvpApiPath ? (
               <div className="mt-6">

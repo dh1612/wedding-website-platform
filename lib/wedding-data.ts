@@ -248,11 +248,11 @@ export function coerceWeddingData(input: unknown): WeddingData {
           : undefined
     },
     scheduleEyebrow:
-      typeof source.scheduleEyebrow === "string" && source.scheduleEyebrow.trim()
+      typeof source.scheduleEyebrow === "string"
         ? source.scheduleEyebrow.trim()
         : "Weekend Timeline",
     scheduleHeading:
-      typeof source.scheduleHeading === "string" && source.scheduleHeading.trim()
+      typeof source.scheduleHeading === "string"
         ? source.scheduleHeading.trim()
         : "What’s Happening And When",
     scheduleHeadingHtml:
@@ -260,7 +260,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
         ? source.scheduleHeadingHtml
         : undefined,
     scheduleDescription:
-      typeof source.scheduleDescription === "string" && source.scheduleDescription.trim()
+      typeof source.scheduleDescription === "string"
         ? source.scheduleDescription.trim()
         : "A clear outline of the celebration so guests can settle in, enjoy the weekend, and know where they need to be.",
     scheduleDescriptionHtml:
@@ -268,7 +268,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
         ? source.scheduleDescriptionHtml
         : undefined,
     scheduleNote:
-      typeof source.scheduleNote === "string" && source.scheduleNote.trim()
+      typeof source.scheduleNote === "string"
         ? source.scheduleNote.trim()
         : "A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time.",
     scheduleNoteHtml:
@@ -348,16 +348,37 @@ export function coerceWeddingData(input: unknown): WeddingData {
           : undefined,
       mapLink: source.travel?.mapLink ?? fallback.travel.mapLink
     },
+    accommodationEyebrow:
+      typeof source.accommodationEyebrow === "string"
+        ? source.accommodationEyebrow.trim()
+        : "Accommodation",
+    accommodationTitle:
+      typeof source.accommodationTitle === "string"
+        ? source.accommodationTitle.trim()
+        : "Places To Stay",
+    accommodationTitleHtml:
+      typeof source.accommodationTitleHtml === "string" && source.accommodationTitleHtml.trim()
+        ? source.accommodationTitleHtml
+        : undefined,
+    accommodationDescription:
+      typeof source.accommodationDescription === "string"
+        ? source.accommodationDescription.trim()
+        : "A couple of nearby options for guests travelling in for the celebration.",
+    accommodationDescriptionHtml:
+      typeof source.accommodationDescriptionHtml === "string" &&
+      source.accommodationDescriptionHtml.trim()
+        ? source.accommodationDescriptionHtml
+        : undefined,
     accommodation:
       Array.isArray(source.accommodation) ? source.accommodation : fallback.accommodation,
     faq: Array.isArray(source.faq) ? source.faq : fallback.faq,
     rsvp: {
       eyebrow:
-        typeof source.rsvp?.eyebrow === "string" && source.rsvp.eyebrow.trim()
+        typeof source.rsvp?.eyebrow === "string"
           ? source.rsvp.eyebrow.trim()
           : "RSVP",
       title:
-        typeof source.rsvp?.title === "string" && source.rsvp.title.trim()
+        typeof source.rsvp?.title === "string"
           ? source.rsvp.title.trim()
           : "Let Us Know If You Can Make It",
       titleHtml:
@@ -372,12 +393,12 @@ export function coerceWeddingData(input: unknown): WeddingData {
           : undefined,
       url: source.rsvp?.url ?? fallback.rsvp.url,
       deadlineEyebrow:
-        typeof source.rsvp?.deadlineEyebrow === "string" && source.rsvp.deadlineEyebrow.trim()
+        typeof source.rsvp?.deadlineEyebrow === "string"
           ? source.rsvp.deadlineEyebrow.trim()
           : "Deadline",
       deadline: source.rsvp?.deadline ?? fallback.rsvp.deadline,
       panelDescription:
-        typeof source.rsvp?.panelDescription === "string" && source.rsvp.panelDescription.trim()
+        typeof source.rsvp?.panelDescription === "string"
           ? source.rsvp.panelDescription.trim()
           : "Guests can reply here with the standard wedding details you would usually need, including attendance, dietary requirements, and optional notes.",
       panelDescriptionHtml:

@@ -268,6 +268,8 @@ export async function updateWeddingContentAction(formData: FormData) {
   const scheduleHeadingRichText = String(formData.get("scheduleHeading") || "").trim();
   const scheduleDescriptionRichText = String(formData.get("scheduleDescription") || "").trim();
   const scheduleNoteRichText = String(formData.get("scheduleNote") || "").trim();
+  const accommodationTitleRichText = String(formData.get("accommodationTitle") || "").trim();
+  const accommodationDescriptionRichText = String(formData.get("accommodationDescription") || "").trim();
   const heroImageField = String(formData.get("heroImage") || "").trim();
   const storyFeatureImageField = String(formData.get("storyFeatureImage") || "").trim();
   const travelSneakPeekImageField = String(formData.get("travelSneakPeekImage") || "").trim();
@@ -541,27 +543,21 @@ export async function updateWeddingContentAction(formData: FormData) {
         receptionDescriptionRichText || weddingData.reception.descriptionHtml
     },
     scheduleEyebrow:
-      scheduleEyebrow || weddingData.scheduleEyebrow || "Weekend Timeline",
+      scheduleEyebrow,
     scheduleHeading:
-      stripHtml(scheduleHeadingRichText) || weddingData.scheduleHeading || "What’s Happening And When",
+      stripHtml(scheduleHeadingRichText),
     scheduleHeadingHtml:
-      scheduleHeadingRichText || weddingData.scheduleHeadingHtml,
+      scheduleHeadingRichText || undefined,
     scheduleDescription:
-      stripHtml(scheduleDescriptionRichText) ||
-      weddingData.scheduleDescription ||
-      "A clear outline of the celebration so guests can settle in, enjoy the weekend, and know where they need to be.",
+      stripHtml(scheduleDescriptionRichText),
     scheduleDescriptionHtml:
-      scheduleDescriptionRichText || weddingData.scheduleDescriptionHtml,
+      scheduleDescriptionRichText || undefined,
     scheduleNote:
-      stripHtml(scheduleNoteRichText) ||
-      weddingData.scheduleNote ||
-      "A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time.",
+      stripHtml(scheduleNoteRichText),
     scheduleNoteHtml:
-      scheduleNoteRichText || weddingData.scheduleNoteHtml,
+      scheduleNoteRichText || undefined,
     scheduleStepLabel:
-      String(formData.get("scheduleStepLabel") || "").trim() ||
-      weddingData.scheduleStepLabel ||
-      "Moment",
+      String(formData.get("scheduleStepLabel") || "").trim(),
     schedule: scheduleText.trim() ? scheduleItems : [],
     travel: {
       ...weddingData.travel,
@@ -609,7 +605,17 @@ export async function updateWeddingContentAction(formData: FormData) {
       mapLink:
         String(formData.get("travelMapLink") || "").trim() || weddingData.travel.mapLink
     },
-    accommodation: accommodationItems.length ? accommodationItems : weddingData.accommodation,
+    accommodationEyebrow:
+      String(formData.get("accommodationEyebrow") || "").trim(),
+    accommodationTitle:
+      stripHtml(accommodationTitleRichText),
+    accommodationTitleHtml:
+      accommodationTitleRichText || undefined,
+    accommodationDescription:
+      stripHtml(accommodationDescriptionRichText),
+    accommodationDescriptionHtml:
+      accommodationDescriptionRichText || undefined,
+    accommodation: accommodationItems.length ? accommodationItems : [],
     faq: faqItems.length ? faqItems : weddingData.faq,
     contact: {
       ...weddingData.contact,
@@ -618,28 +624,22 @@ export async function updateWeddingContentAction(formData: FormData) {
     rsvp: {
       ...weddingData.rsvp,
       eyebrow:
-        String(formData.get("rsvpEyebrow") || "").trim() ||
-        weddingData.rsvp.eyebrow ||
-        "RSVP",
+        String(formData.get("rsvpEyebrow") || "").trim(),
       title:
-        stripHtml(rsvpTitleRichText) || weddingData.rsvp.title || "Let Us Know If You Can Make It",
+        stripHtml(rsvpTitleRichText),
       titleHtml:
-        rsvpTitleRichText || weddingData.rsvp.titleHtml,
+        rsvpTitleRichText || undefined,
       description:
-        stripHtml(rsvpDescriptionRichText) || weddingData.rsvp.description,
+        stripHtml(rsvpDescriptionRichText),
       descriptionHtml:
-        rsvpDescriptionRichText || weddingData.rsvp.descriptionHtml,
+        rsvpDescriptionRichText || undefined,
       deadlineEyebrow:
-        String(formData.get("rsvpDeadlineEyebrow") || "").trim() ||
-        weddingData.rsvp.deadlineEyebrow ||
-        "Deadline",
-      deadline: String(formData.get("rsvpDeadline") || "").trim() || weddingData.rsvp.deadline,
+        String(formData.get("rsvpDeadlineEyebrow") || "").trim(),
+      deadline: String(formData.get("rsvpDeadline") || "").trim(),
       panelDescription:
-        stripHtml(rsvpPanelDescriptionRichText) ||
-        weddingData.rsvp.panelDescription ||
-        "Guests can reply here with the standard wedding details you would usually need, including attendance, dietary requirements, and optional notes.",
+        stripHtml(rsvpPanelDescriptionRichText),
       panelDescriptionHtml:
-        rsvpPanelDescriptionRichText || weddingData.rsvp.panelDescriptionHtml,
+        rsvpPanelDescriptionRichText || undefined,
       form: {
         ...weddingData.rsvp.form,
         title:
