@@ -70,7 +70,7 @@ export function ClientIntakeForm({
   const [result, setResult] = useState<{
     slug: string;
     packageTier: IntakePackage;
-    styleExampleHref: string;
+    previewUrl: string;
     styleName: string;
   } | null>(null);
 
@@ -205,7 +205,11 @@ export function ClientIntakeForm({
       return;
     }
 
-    const data = (await response.json()) as { slug: string; message: string };
+    const data = (await response.json()) as {
+      slug: string;
+      message: string;
+      previewUrl?: string;
+    };
     const themeId = values.themePreference || weddingThemes[0]?.id || "soft-blush";
     const themeName =
       weddingThemes.find((theme) => theme.id === themeId)?.name ??
@@ -219,7 +223,7 @@ export function ClientIntakeForm({
       setResult({
         slug: data.slug,
         packageTier: values.packageTier,
-        styleExampleHref: `/wedding?theme=${themeId}`,
+        previewUrl: data.previewUrl || `/preview/${data.slug}`,
         styleName: themeName
       });
     }, submissionSteps.length * 900 + 350);
@@ -620,10 +624,10 @@ export function ClientIntakeForm({
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href={result.styleExampleHref}
+                  href={result.previewUrl}
                   className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#133c2d]"
                 >
-                  View {result.styleName} Guest Website Example
+                  View Your {result.styleName} Website Preview
                 </Link>
                 {result.packageTier === "premium" ? (
                   <Link
