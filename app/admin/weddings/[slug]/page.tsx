@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { notFound, redirect } from "next/navigation";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
@@ -140,7 +141,7 @@ export default async function AdminWeddingWorkspacePage({
       description: record.status === "live"
         ? "This wedding is live. Open the public guest-facing website."
         : "This wedding is not live yet. The guest link appears once it has been made live.",
-      href: record.status === "live" ? `/site/${slug}` : `/preview/${slug}`,
+      href: record.status === "live" ? `/${slug}` : `/preview/${slug}`,
       button: record.status === "live" ? "Open Live Site" : "Back To Preview"
     }
   ];
@@ -257,7 +258,7 @@ export default async function AdminWeddingWorkspacePage({
             )}
             {record.status === "live" ? (
               <Link
-                href={`/site/${slug}`}
+                href={`/${slug}` as Route}
                 className="accent-outline rounded-full px-5 py-3 text-sm font-medium"
               >
                 Open Live Website

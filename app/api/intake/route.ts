@@ -92,7 +92,7 @@ export async function POST(request: Request) {
       slug: created.slug,
       status: created.status,
       previewUrl: previewPath,
-      liveUrl: `/site/${created.slug}`,
+      liveUrl: `/${created.slug}`,
       message:
         "Thank you. Your details are in and the first version is now being prepared. A private review link will be shared once it has been checked."
     });

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { updateWeddingContentAction } from "@/app/admin/actions";
 import { PageHero } from "@/components/page-hero";
 import { RichTextEditorField } from "@/components/rich-text-editor-field";
@@ -129,7 +130,7 @@ export function AdminWeddingEditor({
     .map((spot) => [spot.label, spot.detail, spot.href].filter(Boolean).join(" | "))
     .join("\n");
   const visibility = weddingData.sectionVisibility;
-  const websiteUrl = `https://${BRAND_DOMAIN}/site/${record.slug}`;
+  const websiteUrl = `https://${BRAND_DOMAIN}/${record.slug}`;
   const previewUrl = `https://${BRAND_DOMAIN}/preview/${record.slug}`;
   const couplePortalUrl = `https://${BRAND_DOMAIN}/couple-portal/${record.slug}`;
   const rsvpForm = weddingData.rsvp.form;
@@ -1384,7 +1385,7 @@ export function AdminWeddingEditor({
               Back To Review
             </Link>
             {record.status === "live" ? (
-              <Link href={`/site/${record.slug}`} className="accent-panel rounded-full px-6 py-3 text-sm">
+              <Link href={`/${record.slug}` as Route} className="accent-panel rounded-full px-6 py-3 text-sm">
                 Open Live Website
               </Link>
             ) : null}

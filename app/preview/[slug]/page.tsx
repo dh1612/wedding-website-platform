@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { WeddingSitePage } from "@/components/wedding-site-page";
 import { getPackagePaymentLink } from "@/lib/payment";
 import { getThemeById } from "@/lib/themes";
@@ -68,7 +69,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
               </Link>
               {weddingRecord.status === "live" ? (
                 <Link
-                  href={`/site/${slug}`}
+                  href={`/${slug}` as Route}
                   className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
                 >
                   Open Public Website

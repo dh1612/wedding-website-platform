@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { LogoutButton } from "@/components/logout-button";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
@@ -173,7 +174,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           Seating
                         </Link>
                         <Link
-                          href={`/site/${record.slug}`}
+                          href={`/${record.slug}` as Route}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >
                           Live Page
