@@ -1,10 +1,13 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { CoupleChecklist } from "@/components/couple-checklist";
 import { LogoutButton } from "@/components/logout-button";
+import { PortalLockedState } from "@/components/portal-locked-state";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
 import { WeddingCalendarPlanner } from "@/components/wedding-calendar-planner";
+import { getPortalCookieName, readPortalSessionScope } from "@/lib/portal-auth";
 import { buildPortalNavItems } from "@/lib/site-navigation";
 import {
   getWeddingSiteBySlug,
@@ -32,6 +35,34 @@ export default async function CouplePortalBySlugPage({
 
   const weddingData = coerceWeddingData(weddingRecord.contentJson);
   const theme = getThemeById(weddingData.theme);
+  const plannerSettings = (weddingRecord.plannerSettingsJson ?? {}) as {
+    packageTier?: "basic" | "smart" | "premium";
+    portalUnlocked?: boolean;
+  };
+  const packageTier = plannerSettings.packageTier ?? "smart";
+  const portalUnlocked = plannerSettings.portalUnlocked === true && packageTier === "premium";
+  const cookieStore = await cookies();
+  const sessionScope = await readPortalSessionScope(
+    cookieStore.get(getPortalCookieName())?.value
+  );
+  const isOperatorView = sessionScope === "admin";
+
+  if (!isOperatorView && !portalUnlocked) {
+    return (
+      <SiteFrame
+        currentPath={`/couple-portal/${slug}`}
+        mode="pages"
+        themeId={theme.id}
+        themeStyle={theme.style}
+        adminView
+        portalType="couple"
+        weddingData={weddingData}
+      >
+        <PortalLockedState slug={slug} isPremiumPackage={packageTier === "premium"} />
+      </SiteFrame>
+    );
+  }
+
   const [checklistItems, calendarItems] = await Promise.all([
     listChecklistItems(weddingRecord.id),
     listCalendarItems(weddingRecord.id)

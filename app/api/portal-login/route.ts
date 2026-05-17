@@ -35,8 +35,26 @@ export async function POST(request: Request) {
       getWeddingRecordForAdmin(slug)
     ]);
     const plannerSettings = (wedding?.plannerSettingsJson ?? {}) as {
+      packageTier?: "basic" | "smart" | "premium";
+      portalUnlocked?: boolean;
       portalPassword?: string;
     };
+    const packageTier = plannerSettings.packageTier ?? "smart";
+    const portalUnlocked = plannerSettings.portalUnlocked === true;
+
+    if (packageTier !== "premium") {
+      return NextResponse.json(
+        { error: "This private couple portal is only included with the premium package." },
+        { status: 403 }
+      );
+    }
+
+    if (!portalUnlocked) {
+      return NextResponse.json(
+        { error: "This private couple portal will be unlocked after approval or payment." },
+        { status: 403 }
+      );
+    }
 
     if (weddingId && user) {
       const passwordMatches =

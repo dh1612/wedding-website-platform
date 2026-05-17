@@ -18,9 +18,16 @@ export default async function SitePage({ params }: SitePageProps) {
     redirect("/");
   }
 
+  const plannerSettings = (weddingRecord.plannerSettingsJson ?? {}) as {
+    websiteUnlocked?: boolean;
+  };
   const publicContent = weddingRecord?.liveContentJson ?? weddingRecord?.contentJson;
+  const websiteUnlocked =
+    typeof plannerSettings.websiteUnlocked === "boolean"
+      ? plannerSettings.websiteUnlocked
+      : weddingRecord.status === "live";
 
-  if (!publicContent || weddingRecord.status !== "live") {
+  if (!publicContent || weddingRecord.status !== "live" || !websiteUnlocked) {
     redirect("/");
   }
 

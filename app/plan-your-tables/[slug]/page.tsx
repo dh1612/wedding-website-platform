@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { PageHero } from "@/components/page-hero";
+import { PortalLockedState } from "@/components/portal-locked-state";
 import { SeatingPlanner } from "@/components/seating-planner";
 import { SiteFrame } from "@/components/site-frame";
+import { getPortalCookieName, readPortalSessionScope } from "@/lib/portal-auth";
 import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import {
   getWeddingSiteBySlug,
@@ -28,6 +31,39 @@ export default async function PlanYourTablesBySlugPage({
 
   const weddingData = coerceWeddingData(weddingRecord.contentJson);
   const theme = getThemeById(weddingData.theme);
+  const plannerSettings = (weddingRecord.plannerSettingsJson ?? {}) as {
+    packageTier?: "basic" | "smart" | "premium";
+    portalUnlocked?: boolean;
+  };
+  const packageTier = plannerSettings.packageTier ?? "smart";
+  const portalUnlocked = plannerSettings.portalUnlocked === true && packageTier === "premium";
+  const cookieStore = await cookies();
+  const sessionScope = await readPortalSessionScope(
+    cookieStore.get(getPortalCookieName())?.value
+  );
+  const isOperatorView = sessionScope === "admin";
+
+  if (!isOperatorView && !portalUnlocked) {
+    return (
+      <SiteFrame
+        currentPath={`/plan-your-tables/${slug}`}
+        mode="pages"
+        themeId={theme.id}
+        themeStyle={theme.style}
+        adminView
+        portalType="couple"
+        weddingData={weddingData}
+      >
+        <PortalLockedState
+          slug={slug}
+          isPremiumPackage={packageTier === "premium"}
+          title="The seating plan opens with the private portal"
+          description="Table planning is part of the premium private planning area and unlocks after approval or payment."
+        />
+      </SiteFrame>
+    );
+  }
+
   const guests = await listPortalGuests(weddingRecord.id);
 
   return (
