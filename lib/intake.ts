@@ -169,10 +169,10 @@ async function maybePolishText(submission: IntakeSubmission) {
     return {
       storyParagraphs: rawStory
         ? rawStory.split(/\n+/).map((part) => formatSentence(part))
-        : getWeddingData().story.paragraphs,
+        : [],
       announcement: rawTravel
         ? formatSentence(rawTravel)
-        : getWeddingData().announcement,
+        : "",
       faq: parseFaqLines(rawFaq)
     };
   }
@@ -248,18 +248,18 @@ async function maybePolishText(submission: IntakeSubmission) {
       storyParagraphs:
         parsed.storyParagraphs?.length
           ? parsed.storyParagraphs
-          : getWeddingData().story.paragraphs,
-      announcement: parsed.announcement || getWeddingData().announcement,
+          : [],
+      announcement: parsed.announcement || "",
       faq: parsed.faq?.length ? parsed.faq : parseFaqLines(rawFaq)
     };
   } catch {
     return {
       storyParagraphs: rawStory
         ? rawStory.split(/\n+/).map((part) => formatSentence(part))
-        : getWeddingData().story.paragraphs,
+        : [],
       announcement: rawTravel
         ? formatSentence(rawTravel)
-        : getWeddingData().announcement,
+        : "",
       faq: parseFaqLines(rawFaq)
     };
   }
@@ -273,46 +273,108 @@ export async function buildWeddingDataFromIntake(
   const schedule = parseScheduleLines(submission.scheduleText);
   const accommodation = parseAccommodationLines(submission.accommodationText);
   const imageUrls = filterImageUrls(submission.imageUrls);
+  const hasCeremonyDetails = Boolean(
+    submission.ceremonyTime?.trim() ||
+      submission.ceremonyLocation?.trim() ||
+      submission.ceremonyAddress?.trim()
+  );
+  const hasReceptionDetails = Boolean(
+    submission.receptionTime?.trim() ||
+      submission.receptionLocation?.trim() ||
+      submission.receptionAddress?.trim()
+  );
+  const hasTravelContent = Boolean(
+    submission.travelText?.trim() || hasCeremonyDetails || hasReceptionDetails
+  );
+  const hasStory = polished.storyParagraphs.length > 0;
+  const hasGallery = imageUrls.length > 0;
+  const hasSchedule = schedule.length > 0;
+  const hasAccommodation = accommodation.length > 0;
+  const hasFaq = polished.faq.length > 0;
+
+  const storyParagraphs = hasStory
+    ? polished.storyParagraphs
+    : ["Your story can be added here before the site goes live."];
+  const scheduleItems = hasSchedule
+    ? schedule
+    : [
+        {
+          time: "Add timing",
+          title: "Add a weekend event here",
+          details:
+            "The weekend timeline can be added here once the couple confirms the details."
+        }
+      ];
+  const accommodationItems = hasAccommodation
+    ? accommodation
+    : [
+        {
+          name: "Add accommodation option",
+          note:
+            "Recommended hotels or nearby stays can be added here before the site goes live."
+        }
+      ];
+  const faqItems = hasFaq
+    ? polished.faq
+    : [
+        {
+          q: "Add a guest question here",
+          a: "Answers about travel, timings, dress code, or local details can be added here before the site goes live."
+        }
+      ];
+  const travelDescription = submission.travelText?.trim()
+    ? formatSentence(submission.travelText)
+    : "Venue details, directions, transport notes, and local guidance can be added here before the site goes live.";
+  const ceremonyDescription = hasCeremonyDetails
+    ? ""
+    : "Ceremony details can be added here before the site goes live.";
+  const receptionDescription = hasReceptionDetails
+    ? ""
+    : "Reception details can be added here before the site goes live.";
+  const transportDescription = submission.travelText?.trim()
+    ? submission.travelText.trim()
+    : "Travel notes or transport arrangements can be added here before the site goes live.";
 
   return coerceWeddingData({
     couple: submission.couple,
     date: submission.date,
     theme: chooseTheme(submission),
     locationSummary: submission.locationSummary,
-    tagline: `We cannot wait to celebrate with everyone we love.`,
+    tagline: "",
     announcement:
-      polished.announcement ||
-      "Everything you need for the wedding day is gathered here.",
+      polished.announcement || "A short welcome message for guests can be added here before the site goes live.",
     heroImage: imageUrls[0] || defaults.heroImage,
     story: {
       heading: "Our Story",
-      paragraphs: polished.storyParagraphs
+      paragraphs: storyParagraphs
     },
     ceremony: {
       title: "Ceremony",
-      time: submission.ceremonyTime || defaults.ceremony.time,
-      location: submission.ceremonyLocation || defaults.ceremony.location,
-      address: submission.ceremonyAddress || defaults.ceremony.address,
-      description: "We look forward to welcoming guests before the ceremony begins."
+      time: submission.ceremonyTime || "",
+      location: submission.ceremonyLocation || "",
+      address: submission.ceremonyAddress || "",
+      description: ceremonyDescription
     },
     reception: {
       title: "Reception",
-      time: submission.receptionTime || defaults.reception.time,
-      location: submission.receptionLocation || defaults.reception.location,
-      address: submission.receptionAddress || defaults.reception.address,
-      description: "Join us afterwards for food, drinks, and celebrations."
+      time: submission.receptionTime || "",
+      location: submission.receptionLocation || "",
+      address: submission.receptionAddress || "",
+      description: receptionDescription
     },
-    schedule: schedule.length ? schedule : defaults.schedule,
-    accommodation: accommodation.length ? accommodation : defaults.accommodation,
+    schedule: scheduleItems,
+    accommodation: accommodationItems,
     travel: {
-      transport:
-        submission.travelText?.trim() ||
-        defaults.travel.transport,
-      parking: defaults.travel.parking,
-      directions: defaults.travel.directions,
-      mapLink: defaults.travel.mapLink
+      heading: "Venue & Travel",
+      description: travelDescription,
+      transport: transportDescription,
+      parking: "",
+      directions: "",
+      mapLink: "",
+      mapSpots: [],
+      relaxedNote: ""
     },
-    faq: polished.faq.length ? polished.faq : defaults.faq,
+    faq: faqItems,
     contact: {
       email: submission.email,
       note: "If you need anything before the wedding, please get in touch."
@@ -321,7 +383,7 @@ export async function buildWeddingDataFromIntake(
     gallery: {
       heading: defaults.gallery.heading,
       description: defaults.gallery.description,
-      images: imageUrls.length ? imageUrls : defaults.gallery.images
+      images: imageUrls
     },
     rsvp: {
       label: "Contact Us",
@@ -330,7 +392,32 @@ export async function buildWeddingDataFromIntake(
       url: `mailto:${submission.email}`,
       deadline: "As soon as possible"
     },
-    registry: defaults.registry
+    registry: {
+      message: "",
+      links: []
+    },
+    sectionVisibility: {
+      heroEyebrow: true,
+      date: true,
+      locationSummary: Boolean(submission.locationSummary?.trim()),
+      tagline: false,
+      announcement: Boolean(polished.announcement),
+      heroActions: true,
+      previewNote: true,
+      schedule: true,
+      travel: true,
+      ceremonyCard: true,
+      receptionCard: true,
+      transportCard: true,
+      directionsCard: false,
+      accommodation: true,
+      story: true,
+      gallery: hasGallery,
+      registry: false,
+      rsvp: true,
+      faq: true,
+      aiConcierge: submission.packageTier !== "basic"
+    }
   });
 }
 

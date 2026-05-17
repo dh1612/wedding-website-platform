@@ -130,6 +130,10 @@ function coerceMapSpots(input: unknown, fallback: MapSpot[]) {
     return fallback;
   }
 
+  if (input.length === 0) {
+    return [];
+  }
+
   const mapped = input
     .map<MapSpot | null>((item) => {
       const source = item as Partial<MapSpot>;
