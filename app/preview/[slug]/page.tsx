@@ -2,8 +2,7 @@ import Link from "next/link";
 import { WeddingSitePage } from "@/components/wedding-site-page";
 import { getThemeById } from "@/lib/themes";
 import {
-  getWeddingSiteBySlug,
-  updateWeddingStatus
+  getWeddingSiteBySlug
 } from "@/lib/production-repositories";
 import { coerceWeddingData } from "@/lib/wedding-data";
 import { redirect } from "next/navigation";
@@ -13,23 +12,6 @@ type PreviewPageProps = {
     slug: string;
   }>;
 };
-
-async function setStatus(formData: FormData) {
-  "use server";
-
-  const slug = `${formData.get("slug") ?? ""}`;
-  const status = `${formData.get("status") ?? ""}` as
-    | "draft"
-    | "approved"
-    | "live";
-
-  if (!slug || !status) {
-    return;
-  }
-
-  await updateWeddingStatus({ slug, status });
-  redirect(`/preview/${slug}`);
-}
 
 export default async function PreviewPage({ params }: PreviewPageProps) {
   const { slug } = await params;
@@ -55,24 +37,11 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 {weddingRecord.title}
               </h1>
               <p className="mt-2 text-sm text-white/75">
-                This page is just for review. When the couple is happy with everything, they should click the button below to make the website live. That will publish the guest-facing website link.
+                This page is a private draft for review only. Going live is handled from the
+                operator admin area after approval and payment.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <form action={setStatus}>
-                <input type="hidden" name="slug" value={slug} />
-                <input type="hidden" name="status" value="approved" />
-                <button className="rounded-full border border-white/18 bg-white/10 px-5 py-3 text-sm font-medium text-white">
-                  Keep This Private For Now
-                </button>
-              </form>
-              <form action={setStatus}>
-                <input type="hidden" name="slug" value={slug} />
-                <input type="hidden" name="status" value="live" />
-                <button className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#17313c]">
-                  Make It Live And Generate Guest Link
-                </button>
-              </form>
               <Link
                 href={`/couple-portal/${slug}`}
                 className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
@@ -86,15 +55,6 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 Edit Wedding
               </Link>
               {weddingRecord.status === "live" ? (
-                <form action={setStatus}>
-                  <input type="hidden" name="slug" value={slug} />
-                  <input type="hidden" name="status" value="live" />
-                  <button className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#17313c]">
-                    Publish Latest Draft To Guest Website
-                  </button>
-                </form>
-              ) : null}
-              {weddingRecord.status === "live" ? (
                 <Link
                   href={`/site/${slug}`}
                   className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
@@ -103,7 +63,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 </Link>
               ) : (
                 <div className="rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm text-white/72">
-                  Guest website link appears after the couple clicks make it live
+                  Guest website link appears after you publish it from admin
                 </div>
               )}
             </div>

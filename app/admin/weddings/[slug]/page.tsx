@@ -8,12 +8,29 @@ import { coerceWeddingData } from "@/lib/wedding-data";
 import {
   getWeddingBySlug,
   listCalendarItems,
-  listChecklistItems
+  listChecklistItems,
+  updateWeddingStatus
 } from "@/lib/production-repositories";
 
 type AdminWeddingWorkspacePageProps = {
   params: Promise<{ slug: string }>;
 };
+
+async function setWeddingStatus(formData: FormData) {
+  "use server";
+
+  const slug = String(formData.get("slug") || "").trim();
+  const status = String(formData.get("status") || "").trim() as
+    | "draft"
+    | "approved"
+    | "live";
+
+  if (!slug || !status) {
+    return;
+  }
+
+  await updateWeddingStatus({ slug, status });
+}
 
 export default async function AdminWeddingWorkspacePage({
   params
@@ -97,6 +114,39 @@ export default async function AdminWeddingWorkspacePage({
         themeId={theme.id}
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+        <div className="mb-8 rounded-[1.8rem] border border-[var(--border)] bg-white/88 p-6 shadow-[var(--shadow)]">
+          <p className="eyebrow">Publishing Control</p>
+          <h2 className="mt-3 text-3xl">Control when this wedding goes live</h2>
+          <p className="prose-copy mt-3">
+            Draft previews stay private. Publish from here when the couple has approved the
+            website and payment is sorted.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <form action={setWeddingStatus}>
+              <input type="hidden" name="slug" value={slug} />
+              <input type="hidden" name="status" value="approved" />
+              <button className="accent-panel rounded-full px-5 py-3 text-sm font-medium">
+                Keep Private
+              </button>
+            </form>
+            <form action={setWeddingStatus}>
+              <input type="hidden" name="slug" value={slug} />
+              <input type="hidden" name="status" value="live" />
+              <button className="accent-button rounded-full px-5 py-3 text-sm font-medium">
+                Publish Guest Website
+              </button>
+            </form>
+            {record.status === "live" ? (
+              <Link
+                href={`/site/${slug}`}
+                className="accent-outline rounded-full px-5 py-3 text-sm font-medium"
+              >
+                Open Live Website
+              </Link>
+            ) : null}
+          </div>
+        </div>
+
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <div className="section-shell rounded-[1.6rem] p-5">
             <p className="eyebrow">Status</p>
