@@ -4,7 +4,9 @@ import {
   buildWeddingSlug,
   type IntakeSubmission
 } from "@/lib/intake";
+import { sendIntakeConfirmationEmail } from "@/lib/intake-email";
 import { createWeddingDraft } from "@/lib/production-repositories";
+import { getThemeById } from "@/lib/themes";
 
 function stripUndefined<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
@@ -49,6 +51,7 @@ export async function POST(request: Request) {
   try {
     const weddingData = await buildWeddingDataFromIntake(submission);
     const slug = buildWeddingSlug(submission.couple, submission.date);
+    const previewPath = `/preview/${slug}`;
 
     const created = await createWeddingDraft({
       slug,
@@ -57,16 +60,35 @@ export async function POST(request: Request) {
       contentJson: stripUndefined(weddingData),
       plannerSettingsJson: stripUndefined({
         packageTier: submission.packageTier,
+        websiteUnlocked: false,
+        portalUnlocked: false,
+        unlockRequestedAt: null,
         intake: submission
       }),
       status: "draft"
     });
 
+    const requestUrl = new URL(request.url);
+    const previewUrl = new URL(previewPath, requestUrl.origin).toString();
+    const styleName = getThemeById(weddingData.theme).name;
+
+    try {
+      await sendIntakeConfirmationEmail({
+        to: submission.email.trim(),
+        couple: submission.couple.trim(),
+        packageTier: submission.packageTier,
+        previewUrl,
+        styleName
+      });
+    } catch (emailError) {
+      console.error("Intake confirmation email failed", emailError);
+    }
+
     return NextResponse.json({
       id: created.id,
       slug: created.slug,
       status: created.status,
-      previewUrl: `/preview/${created.slug}`,
+      previewUrl: previewPath,
       liveUrl: `/site/${created.slug}`,
       message:
         "Thank you. Your details are in and the first version is now being prepared. A private review link will be shared once it has been checked."
