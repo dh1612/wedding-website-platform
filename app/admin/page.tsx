@@ -45,6 +45,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         title="Preparation Queue"
         description="Use this dashboard to open each wedding's own workspace. Once inside a wedding, you can manage its preview, portal, RSVPs, checklist support, and seating separately."
         themeId={theme.id}
+        showWeddingSummary={false}
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="flex justify-end">

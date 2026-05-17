@@ -9,6 +9,9 @@ type PageHeroProps = {
   description: string;
   themeId: string;
   weddingData?: WeddingData;
+  showWeddingSummary?: boolean;
+  summaryActionHref?: string;
+  summaryActionLabel?: string;
 };
 
 export function PageHero({
@@ -16,7 +19,10 @@ export function PageHero({
   title,
   description,
   themeId,
-  weddingData
+  weddingData,
+  showWeddingSummary = true,
+  summaryActionHref,
+  summaryActionLabel = "Back to home"
 }: PageHeroProps) {
   const wedding = weddingData ?? getWeddingData();
 
@@ -29,18 +35,20 @@ export function PageHero({
             <h1 className="section-title">{title}</h1>
             <p className="prose-copy text-lg">{description}</p>
           </div>
-          <div className="accent-panel rounded-[1.5rem] p-6">
-            <p className="eyebrow">Wedding Day</p>
-            <p className="mt-3 text-3xl">{wedding.couple}</p>
-            <p className="mt-3 text-base text-[var(--foreground)]">{wedding.date}</p>
-            <p className="mt-1 text-base text-[var(--muted)]">{wedding.locationSummary}</p>
-            <Link
-              href={buildModeHref("/templates", themeId, "pages")}
-              className="accent-button mt-5 inline-flex rounded-full px-5 py-3 text-sm font-medium"
-            >
-              Back to home
-            </Link>
-          </div>
+          {showWeddingSummary ? (
+            <div className="accent-panel rounded-[1.5rem] p-6">
+              <p className="eyebrow">Wedding Day</p>
+              <p className="mt-3 text-3xl">{wedding.couple}</p>
+              <p className="mt-3 text-base text-[var(--foreground)]">{wedding.date}</p>
+              <p className="mt-1 text-base text-[var(--muted)]">{wedding.locationSummary}</p>
+              <Link
+                href={summaryActionHref ?? buildModeHref("/templates", themeId, "pages")}
+                className="accent-button mt-5 inline-flex rounded-full px-5 py-3 text-sm font-medium"
+              >
+                {summaryActionLabel}
+              </Link>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

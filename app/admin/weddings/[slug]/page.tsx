@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
 import { getPackagePaymentLink, getPaymentStatusLabel, type PaymentStatus } from "@/lib/payment";
@@ -54,8 +54,10 @@ async function updateWeddingAccessAction(formData: FormData) {
         ? new Date().toISOString()
         : paymentStatus === "unpaid"
           ? null
-          : undefined
+        : undefined
   });
+
+  redirect(`/admin/weddings/${slug}`);
 }
 
 export default async function AdminWeddingWorkspacePage({
@@ -159,6 +161,7 @@ export default async function AdminWeddingWorkspacePage({
         title={record.title}
         description="Everything for this wedding lives here. Open the exact area you need instead of jumping through generic portal pages."
         themeId={theme.id}
+        showWeddingSummary={false}
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="mb-8 rounded-[1.8rem] border border-[var(--border)] bg-white/88 p-6 shadow-[var(--shadow)]">
