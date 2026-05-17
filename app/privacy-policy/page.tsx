@@ -1,5 +1,6 @@
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
+import { BRAND_NAME, SUPPORT_EMAIL } from "@/lib/brand";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -11,7 +12,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h1 className="text-4xl leading-none text-[#1f1d1a] sm:text-5xl">Privacy Policy</h1>
               <p className="mt-4 text-base leading-7">
-                This page explains what information KnotlessWed collects, how it is used, and how
+                This page explains what information {BRAND_NAME} collects, how it is used, and how
                 it is stored while preparing and delivering a wedding website service.
               </p>
             </div>
@@ -50,7 +51,7 @@ export default function PrivacyPolicyPage() {
               <h2 className="text-2xl text-[#1f1d1a]">Contact</h2>
               <p className="mt-3 text-base leading-7">
                 Replace this section with the business contact email before launch, for example
-                <span className="font-medium text-[#184b38]"> hello@knotlesswed.ie</span>.
+                <span className="font-medium text-[#184b38]"> {SUPPORT_EMAIL}</span>.
               </p>
             </section>
           </div>

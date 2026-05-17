@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
+import { buildSampleWebsiteHref } from "@/lib/brand";
 import { packageOffers } from "@/lib/package-offers";
 
 type PackagePageProps = {
@@ -77,7 +78,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                   </Link>
                 ) : (
                   <Link
-                    href={isSmart ? "/wedding?theme=aegean-romance#faq" : "/wedding?theme=aegean-romance"}
+                    href={buildSampleWebsiteHref("aegean-romance", isSmart ? "#faq" : undefined)}
                     className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                   >
                     View Example Website
@@ -163,7 +164,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                     clean and polished.
                   </p>
                   <Link
-                    href="/wedding?theme=aegean-romance#faq"
+                    href={buildSampleWebsiteHref("aegean-romance", "#faq")}
                     className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
                   >
                     View Example Website

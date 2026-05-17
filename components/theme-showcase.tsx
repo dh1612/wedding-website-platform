@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buildSampleWebsiteHref } from "@/lib/brand";
 import { getWeddingData } from "@/lib/wedding-data";
 import { weddingThemes } from "@/lib/themes";
 import { cn } from "@/lib/utils";
@@ -35,7 +36,7 @@ export function ThemeShowcase({ activeThemeId }: ThemeShowcaseProps) {
             return (
               <Link
                 key={theme.id}
-                href={`/templates?theme=${theme.id}`}
+                href={buildSampleWebsiteHref(theme.id)}
                 className={cn(
                   "group rounded-[1.75rem] border p-5 transition hover:-translate-y-1",
                   isActive
@@ -59,7 +60,7 @@ export function ThemeShowcase({ activeThemeId }: ThemeShowcaseProps) {
                   </p>
                   <p className="prose-copy">{theme.description}</p>
                   <p className="pt-2 text-sm font-medium text-[var(--accent-strong)]">
-                    {isActive ? "Currently active" : "Preview this style"}
+                    {isActive ? "Currently active" : "Open this sample website"}
                   </p>
                 </div>
               </Link>

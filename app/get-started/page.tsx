@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { ClientIntakeForm } from "@/components/client-intake-form";
 import { MarketingFooter } from "@/components/marketing-footer";
+import { buildSampleWebsiteHref } from "@/lib/brand";
 import type { IntakePackage } from "@/lib/intake";
 
 type GetStartedPageProps = {
@@ -52,7 +53,7 @@ export default async function GetStartedPage({
               Get My Website Started
             </a>
             <Link
-              href="/wedding?theme=aegean-romance"
+              href={buildSampleWebsiteHref()}
               className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-6 py-3 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
               View Example Website

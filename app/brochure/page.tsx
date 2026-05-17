@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
+import { buildSampleWebsiteHref } from "@/lib/brand";
 import { packageOffers } from "@/lib/package-offers";
 import { weddingThemes } from "@/lib/themes";
 
@@ -123,7 +124,7 @@ export default function BrochurePage() {
             {brochureThemes.map((theme) => (
               <Link
                 key={theme.id}
-                href={`/wedding?theme=${theme.id}`}
+                href={buildSampleWebsiteHref(theme.id)}
                 className="overflow-hidden rounded-[1.9rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
               >
                 <div className="h-56 w-full" style={theme.previewStyle} />

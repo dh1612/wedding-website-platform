@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BRAND_NAME } from "@/lib/brand";
 
 type BrandLogoProps = {
   href?: string;
@@ -23,26 +24,29 @@ function MonogramMark({ mono = false }: { mono?: boolean }) {
       <path d="M48 6L50 10L54 12L50 14L48 18L46 14L42 12L46 10L48 6Z" fill={stroke} />
       <path d="M11 48L13 52L17 54L13 56L11 60L9 56L5 54L9 52L11 48Z" fill={stroke} />
       <path d="M85 48L87 52L91 54L87 56L85 60L83 56L79 54L83 52L85 48Z" fill={stroke} />
+      <text
+        x="48"
+        y="41"
+        textAnchor="middle"
+        fontSize="20"
+        fontFamily="Georgia, 'Times New Roman', serif"
+        letterSpacing="1.2"
+        fill={fill}
+      >
+        CWS
+      </text>
       <path
-        d="M30 24.5V58.5M30 42.5C36.2 42.5 40.9 39.1 44.6 34.1C48.7 28.6 52 25.5 59.2 25.5C65.7 25.5 69.4 29.8 69.4 35.6C69.4 41.9 65 46.7 58.9 46.7C52.5 46.7 49.6 42.8 45.8 37.9C42.2 33.2 38.3 29.9 31.4 29.9"
+        d="M24 57C29 65.8 36.8 70 47.2 70C57.6 70 65.5 65.9 72 57"
         stroke={fill}
-        strokeWidth="2.6"
+        strokeWidth="2.3"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
       <path
-        d="M33.5 24.5H22.5M33.5 41.5L21.5 58.5M33.5 58.5H22.5"
-        stroke={fill}
-        strokeWidth="2.6"
+        d="M25.5 57H70.5"
+        stroke={stroke}
+        strokeWidth="1.2"
         strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M43 55L50.8 83L58.6 55L66.4 83L74.2 55"
-        stroke={fill}
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeDasharray="2.4 4"
       />
     </svg>
   );
@@ -58,10 +62,10 @@ export function BrandLogo({
     <Link href={href} className={`flex items-center gap-3 ${className}`}>
       <MonogramMark mono={mono} />
       <div className="min-w-0">
-        <p className="text-[11px] uppercase tracking-[0.34em] text-[#8b6e56]">
-          knotlesswed.ie
+        <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#8b6e56]">
+          {BRAND_NAME}
         </p>
-        <p className="mt-1 text-base font-semibold leading-tight text-[#1f1d1a] sm:text-lg">
+        <p className="mt-1 text-sm leading-tight text-[#4f463f] sm:text-base">
           {subtitle}
         </p>
       </div>

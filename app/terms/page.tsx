@@ -1,5 +1,6 @@
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
+import { BRAND_NAME } from "@/lib/brand";
 
 export default function TermsPage() {
   return (
@@ -11,7 +12,7 @@ export default function TermsPage() {
             <div>
               <h1 className="text-4xl leading-none text-[#1f1d1a] sm:text-5xl">Terms of Service</h1>
               <p className="mt-4 text-base leading-7">
-                These terms describe the basis on which KnotlessWed provides done-for-you wedding
+                These terms describe the basis on which {BRAND_NAME} provides done-for-you wedding
                 website services, optional planning tools, and related support.
               </p>
             </div>
@@ -48,7 +49,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-2xl text-[#1f1d1a]">Liability</h2>
               <p className="mt-3 text-base leading-7">
-                KnotlessWed is not responsible for losses caused by inaccurate information supplied
+                {BRAND_NAME} is not responsible for losses caused by inaccurate information supplied
                 by the client, delays in approvals, or third-party platform interruptions outside
                 reasonable control.
               </p>

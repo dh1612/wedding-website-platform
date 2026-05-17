@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { BRAND_DOMAIN, BRAND_NAME } from "@/lib/brand";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "knotlesswed.ie",
-  description: "Done-for-you wedding websites with real human support, polished templates, and a guided draft-to-live workflow."
+  title: BRAND_NAME,
+  description: `Done-for-you wedding websites from ${BRAND_DOMAIN}, with real human support, polished templates, and a guided draft-to-live workflow.`
 };
 
 export default function RootLayout({

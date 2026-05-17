@@ -1,4 +1,5 @@
 import { intakePackages, type IntakePackage } from "@/lib/intake";
+import { BRAND_NAME, SUPPORT_EMAIL } from "@/lib/brand";
 
 type SendIntakeConfirmationEmailInput = {
   to: string;
@@ -35,7 +36,7 @@ export async function sendIntakeConfirmationEmail(
   const fromEmail =
     process.env.INTAKE_CONFIRMATION_FROM_EMAIL ??
     process.env.RESEND_FROM_EMAIL ??
-    "hello@knotlesswed.ie";
+    SUPPORT_EMAIL;
 
   if (!apiKey) {
     return { sent: false as const, reason: "missing_api_key" as const };
@@ -49,7 +50,7 @@ export async function sendIntakeConfirmationEmail(
   const html = `
     <div style="font-family: Georgia, 'Times New Roman', serif; color: #2f2924; line-height: 1.6; max-width: 640px; margin: 0 auto; padding: 24px;">
       <p style="font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: #9a7d64; margin: 0 0 16px;">
-        Knotless Wed
+        ${BRAND_NAME}
       </p>
       <h1 style="font-size: 40px; line-height: 1.05; margin: 0 0 18px;">
         Your preview is ready
@@ -123,7 +124,7 @@ export async function sendIntakeConfirmationEmail(
     body: JSON.stringify({
       from: fromEmail,
       to: [input.to],
-      subject: "Your Knotless Wed preview is ready",
+      subject: `Your ${BRAND_NAME} preview is ready`,
       html,
       text
     })

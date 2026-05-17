@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
+import { buildSampleWebsiteHref } from "@/lib/brand";
 import { weddingThemes } from "@/lib/themes";
 
-const exampleHref = "/wedding?theme=aegean-romance";
+const exampleHref = buildSampleWebsiteHref();
 
 const packageCards = [
   {
@@ -473,7 +474,7 @@ export default function MarketingHomePage() {
                 {featuredThemes.map((theme) => (
                   <Link
                     key={theme.id}
-                    href={`/wedding?theme=${theme.id}`}
+                    href={buildSampleWebsiteHref(theme.id)}
                     className="block overflow-hidden rounded-[1rem] border border-black/6 bg-white"
                   >
                     <div className="h-24 w-full" style={theme.previewStyle} />
