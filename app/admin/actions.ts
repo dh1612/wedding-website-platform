@@ -261,6 +261,10 @@ export async function updateWeddingContentAction(formData: FormData) {
   const travelParkingRichText = String(formData.get("travelParking") || "").trim();
   const travelDirectionsRichText = String(formData.get("travelDirections") || "").trim();
   const rsvpFormIntroRichText = String(formData.get("rsvpFormIntro") || "").trim();
+  const scheduleEyebrow = String(formData.get("scheduleEyebrow") || "").trim();
+  const scheduleHeadingRichText = String(formData.get("scheduleHeading") || "").trim();
+  const scheduleDescriptionRichText = String(formData.get("scheduleDescription") || "").trim();
+  const scheduleNoteRichText = String(formData.get("scheduleNote") || "").trim();
   const heroImageField = String(formData.get("heroImage") || "").trim();
   const storyFeatureImageField = String(formData.get("storyFeatureImage") || "").trim();
   const travelSneakPeekImageField = String(formData.get("travelSneakPeekImage") || "").trim();
@@ -533,6 +537,24 @@ export async function updateWeddingContentAction(formData: FormData) {
       descriptionHtml:
         receptionDescriptionRichText || weddingData.reception.descriptionHtml
     },
+    scheduleEyebrow:
+      scheduleEyebrow || weddingData.scheduleEyebrow || "Weekend Timeline",
+    scheduleHeading:
+      stripHtml(scheduleHeadingRichText) || weddingData.scheduleHeading || "What’s Happening And When",
+    scheduleHeadingHtml:
+      scheduleHeadingRichText || weddingData.scheduleHeadingHtml,
+    scheduleDescription:
+      stripHtml(scheduleDescriptionRichText) ||
+      weddingData.scheduleDescription ||
+      "A clear outline of the celebration so guests can settle in, enjoy the weekend, and know where they need to be.",
+    scheduleDescriptionHtml:
+      scheduleDescriptionRichText || weddingData.scheduleDescriptionHtml,
+    scheduleNote:
+      stripHtml(scheduleNoteRichText) ||
+      weddingData.scheduleNote ||
+      "A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time.",
+    scheduleNoteHtml:
+      scheduleNoteRichText || weddingData.scheduleNoteHtml,
     scheduleStepLabel:
       String(formData.get("scheduleStepLabel") || "").trim() ||
       weddingData.scheduleStepLabel ||

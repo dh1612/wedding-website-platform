@@ -112,6 +112,13 @@ export type WeddingData = {
   };
   ceremony: WeddingEvent;
   reception: WeddingEvent;
+  scheduleEyebrow?: string;
+  scheduleHeading?: string;
+  scheduleHeadingHtml?: string;
+  scheduleDescription?: string;
+  scheduleDescriptionHtml?: string;
+  scheduleNote?: string;
+  scheduleNoteHtml?: string;
   scheduleStepLabel?: string;
   schedule: ScheduleItem[];
   travel: TravelInfo;

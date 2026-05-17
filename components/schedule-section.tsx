@@ -1,5 +1,6 @@
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
 
 type ScheduleSectionProps = {
@@ -15,13 +16,21 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
       <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <SectionHeading
-            eyebrow="Weekend Timeline"
-            title="What’s Happening And When"
-            description="A clear outline of the celebration so guests can settle in, enjoy the weekend, and know where they need to be."
+            eyebrow={wedding.scheduleEyebrow?.trim() || "Weekend Timeline"}
+            title={wedding.scheduleHeading?.trim() || "What’s Happening And When"}
+            titleHtml={wedding.scheduleHeadingHtml}
+            description={wedding.scheduleDescription?.trim()}
+            descriptionHtml={wedding.scheduleDescriptionHtml}
           />
-          <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
-            A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time.
-          </div>
+          {(wedding.scheduleNoteHtml || wedding.scheduleNote?.trim()) ? (
+            <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+              {wedding.scheduleNoteHtml ? (
+                <RichTextContent html={wedding.scheduleNoteHtml} className="text-sm leading-6" />
+              ) : (
+                wedding.scheduleNote
+              )}
+            </div>
+          ) : null}
         </div>
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <div className="grid gap-4 sm:grid-cols-2">

@@ -247,6 +247,34 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.reception.descriptionHtml
           : undefined
     },
+    scheduleEyebrow:
+      typeof source.scheduleEyebrow === "string" && source.scheduleEyebrow.trim()
+        ? source.scheduleEyebrow.trim()
+        : "Weekend Timeline",
+    scheduleHeading:
+      typeof source.scheduleHeading === "string" && source.scheduleHeading.trim()
+        ? source.scheduleHeading.trim()
+        : "What’s Happening And When",
+    scheduleHeadingHtml:
+      typeof source.scheduleHeadingHtml === "string" && source.scheduleHeadingHtml.trim()
+        ? source.scheduleHeadingHtml
+        : undefined,
+    scheduleDescription:
+      typeof source.scheduleDescription === "string" && source.scheduleDescription.trim()
+        ? source.scheduleDescription.trim()
+        : "A clear outline of the celebration so guests can settle in, enjoy the weekend, and know where they need to be.",
+    scheduleDescriptionHtml:
+      typeof source.scheduleDescriptionHtml === "string" && source.scheduleDescriptionHtml.trim()
+        ? source.scheduleDescriptionHtml
+        : undefined,
+    scheduleNote:
+      typeof source.scheduleNote === "string" && source.scheduleNote.trim()
+        ? source.scheduleNote.trim()
+        : "A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time.",
+    scheduleNoteHtml:
+      typeof source.scheduleNoteHtml === "string" && source.scheduleNoteHtml.trim()
+        ? source.scheduleNoteHtml
+        : undefined,
     scheduleStepLabel:
       typeof source.scheduleStepLabel === "string" && source.scheduleStepLabel.trim()
         ? source.scheduleStepLabel.trim()

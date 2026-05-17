@@ -205,6 +205,21 @@ export function AdminWeddingEditor({
   const galleryDescriptionHtml = weddingData.gallery.descriptionHtml
     ? weddingData.gallery.descriptionHtml
     : simpleTextHtml(weddingData.gallery.description);
+  const scheduleHeadingHtml = weddingData.scheduleHeadingHtml
+    ? weddingData.scheduleHeadingHtml
+    : simpleTextHtml(weddingData.scheduleHeading ?? "What’s Happening And When");
+  const scheduleDescriptionHtml = weddingData.scheduleDescriptionHtml
+    ? weddingData.scheduleDescriptionHtml
+    : simpleTextHtml(
+        weddingData.scheduleDescription ??
+          "A clear outline of the celebration so guests can settle in, enjoy the weekend, and know where they need to be."
+      );
+  const scheduleNoteHtml = weddingData.scheduleNoteHtml
+    ? weddingData.scheduleNoteHtml
+    : simpleTextHtml(
+        weddingData.scheduleNote ??
+          "A gentle flow is part of the destination-wedding charm, so use this as your guide and leave a little room for island time."
+      );
   const editorSections = [
     { id: "core-setup", label: "Core setup" },
     { id: "hero-copy", label: "Opening section" },
@@ -826,6 +841,33 @@ export function AdminWeddingEditor({
                 name="showSchedule"
                 label="Show weekend timeline"
                 checked={visibility?.schedule ?? true}
+              />
+              <input
+                name="scheduleEyebrow"
+                defaultValue={weddingData.scheduleEyebrow ?? "Weekend Timeline"}
+                placeholder="Weekend Timeline"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <RichTextEditorField
+                name="scheduleHeading"
+                label="Timeline heading"
+                description="This controls the large headline on the left-hand side of the weekend timeline."
+                defaultValue={scheduleHeadingHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <RichTextEditorField
+                name="scheduleDescription"
+                label="Timeline intro"
+                description="Use this for the supporting paragraph under the main weekend timeline heading."
+                defaultValue={scheduleDescriptionHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <RichTextEditorField
+                name="scheduleNote"
+                label="Timeline note"
+                description="This controls the smaller note card beneath the intro copy."
+                defaultValue={scheduleNoteHtml}
+                minHeightClassName="min-h-[140px]"
               />
               <input
                 name="scheduleStepLabel"
