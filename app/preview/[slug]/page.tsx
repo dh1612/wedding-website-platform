@@ -23,6 +23,10 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
 
   const weddingData = coerceWeddingData(weddingRecord.contentJson);
   const activeTheme = getThemeById(weddingData.theme);
+  const plannerSettings = (weddingRecord.plannerSettingsJson ?? {}) as {
+    packageTier?: "basic" | "smart" | "premium";
+  };
+  const packageTier = plannerSettings.packageTier ?? "smart";
 
   return (
     <>
@@ -42,17 +46,23 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
+              {packageTier === "premium" ? (
+                <Link
+                  href={`/couple-portal?theme=${activeTheme.id}`}
+                  className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
+                >
+                  View Couple Portal Demo Area
+                </Link>
+              ) : (
+                <div className="rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm text-white/72">
+                  Private couple portal is a premium-only feature
+                </div>
+              )}
               <Link
-                href={`/couple-portal/${slug}`}
-                className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
+                href={`/unlock/${slug}`}
+                className="rounded-full border border-white/18 bg-white px-5 py-3 text-sm font-medium text-[#17313c]"
               >
-                Open Couple Portal
-              </Link>
-              <Link
-                href={`/admin/weddings/${slug}/edit`}
-                className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
-              >
-                Edit Wedding
+                Unlock My Website
               </Link>
               {weddingRecord.status === "live" ? (
                 <Link
@@ -63,7 +73,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 </Link>
               ) : (
                 <div className="rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm text-white/72">
-                  Guest website link appears after you publish it from admin
+                  The shareable guest link appears after you unlock and publish it from admin
                 </div>
               )}
             </div>
