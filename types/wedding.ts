@@ -173,6 +173,7 @@ export type WeddingData = {
   contact: {
     email: string;
     note: string;
+    rsvpNotificationEmail?: string;
   };
   aiConciergeEnabled: boolean;
   sectionVisibility?: {

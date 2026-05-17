@@ -5,6 +5,7 @@ import {
   upsertGuestForPublicRsvp
 } from "@/lib/production-repositories";
 import { coerceWeddingData } from "@/lib/wedding-data";
+import { sendRsvpNotificationEmail } from "@/lib/rsvp-email";
 
 type Context = {
   params: Promise<{
@@ -38,6 +39,12 @@ export async function POST(request: Request, context: Context) {
   }
   const weddingData = wedding.contentJson ? coerceWeddingData(wedding.contentJson) : null;
   const mealChoiceEnabled = weddingData?.rsvp?.form?.enableMealChoice ?? true;
+  const customQuestionLabels = Object.fromEntries(
+    (weddingData?.rsvp?.form?.customQuestions ?? []).map((question) => [
+      question.id,
+      question.label
+    ])
+  );
 
   const body = (await request.json()) as {
     name?: string;
@@ -87,6 +94,32 @@ export async function POST(request: Request, context: Context) {
     messageToCouple: clampText(body.messageToCouple, 2000),
     customAnswersJson: sanitizeCustomAnswers(body.customAnswers)
   });
+
+  const notificationEmail =
+    weddingData?.contact?.rsvpNotificationEmail?.trim() ||
+    weddingData?.contact?.email?.trim() ||
+    "";
+
+  if (notificationEmail) {
+    sendRsvpNotificationEmail({
+      to: notificationEmail,
+      weddingSlug: slug,
+      couple: weddingData?.couple || wedding.title || "Wedding Couple",
+      guestName: guest.invitationName,
+      guestEmail: guest.email || email,
+      status: response.status,
+      attendingCount: response.attendingCount,
+      meal: response.mealChoice ?? guest.defaultMeal ?? undefined,
+      dietary: response.dietaryNotes ?? guest.dietaryNotes ?? undefined,
+      songRequest: response.songRequest ?? undefined,
+      messageToCouple: response.messageToCouple ?? undefined,
+      customAnswers:
+        (response.customAnswersJson as Record<string, string> | null | undefined) ?? undefined,
+      customQuestionLabels
+    }).catch((error) => {
+      console.error("RSVP notification email failed", error);
+    });
+  }
 
   return NextResponse.json({
     id: guest.id,

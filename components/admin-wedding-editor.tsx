@@ -1055,6 +1055,12 @@ export function AdminWeddingEditor({
           >
             <div className="grid gap-4">
               <input name="contactEmail" defaultValue={weddingData.contact.email} placeholder="Contact email" className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
+              <input
+                name="rsvpNotificationEmail"
+                defaultValue={weddingData.contact.rsvpNotificationEmail ?? ""}
+                placeholder="RSVP notification email (leave blank to use contact email)"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
             </div>
             <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
               <p className="eyebrow">Portal Access</p>

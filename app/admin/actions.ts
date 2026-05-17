@@ -619,7 +619,8 @@ export async function updateWeddingContentAction(formData: FormData) {
     faq: faqItems.length ? faqItems : weddingData.faq,
     contact: {
       ...weddingData.contact,
-      email: String(formData.get("contactEmail") || "").trim() || weddingData.contact.email
+      email: String(formData.get("contactEmail") || "").trim() || weddingData.contact.email,
+      rsvpNotificationEmail: String(formData.get("rsvpNotificationEmail") || "").trim()
     },
     rsvp: {
       ...weddingData.rsvp,

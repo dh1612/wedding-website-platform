@@ -467,7 +467,11 @@ export function coerceWeddingData(input: unknown): WeddingData {
     },
     contact: {
       email: source.contact?.email ?? fallback.contact.email,
-      note: source.contact?.note ?? fallback.contact.note
+      note: source.contact?.note ?? fallback.contact.note,
+      rsvpNotificationEmail:
+        typeof source.contact?.rsvpNotificationEmail === "string"
+          ? source.contact.rsvpNotificationEmail.trim()
+          : undefined
     },
     aiConciergeEnabled:
       source.aiConciergeEnabled ?? fallback.aiConciergeEnabled,
