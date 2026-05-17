@@ -33,12 +33,14 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
                   <div className="accent-panel inline-flex rounded-full px-3 py-1 text-sm uppercase tracking-[0.25em] text-[var(--accent-strong)]">
                     Stop {index + 1}
                   </div>
-                  <p className="mt-3 text-lg font-semibold text-[var(--accent-strong)]">
-                    {item.time}
-                  </p>
+                  {item.time ? (
+                    <p className="mt-3 text-lg font-semibold text-[var(--accent-strong)]">
+                      {item.time}
+                    </p>
+                  ) : null}
                 </div>
-                <h3 className="mt-4 text-2xl">{item.title}</h3>
-                <p className="prose-copy mt-2">{item.details}</p>
+                {item.title ? <h3 className="mt-4 text-2xl">{item.title}</h3> : null}
+                {item.details ? <p className="prose-copy mt-2">{item.details}</p> : null}
               </article>
             ))}
           </div>

@@ -261,17 +261,18 @@ export async function updateWeddingContentAction(formData: FormData) {
   const travelDirectionsRichText = String(formData.get("travelDirections") || "").trim();
   const rsvpFormIntroRichText = String(formData.get("rsvpFormIntro") || "").trim();
 
-  const scheduleItems = String(formData.get("scheduleText") || "")
+  const scheduleText = String(formData.get("scheduleText") || "");
+  const scheduleItems = scheduleText
     .split("\n")
     .map((item) => item.trim())
     .filter(Boolean)
-    .map((line, index) => {
-      const [timePart, ...rest] = line.split("-");
-      const details = rest.join("-").trim();
+    .map((line) => {
+      const [timePart, titlePart, ...rest] = line.split("-").map((part) => part.trim());
+      const details = rest.join(" - ").trim();
       return {
-        time: timePart?.trim() || `Stop ${index + 1}`,
-        title: details || `Wedding moment ${index + 1}`,
-        details: details || line
+        time: timePart || "",
+        title: titlePart || "",
+        details
       };
     });
 
@@ -520,7 +521,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       descriptionHtml:
         receptionDescriptionRichText || weddingData.reception.descriptionHtml
     },
-    schedule: scheduleItems.length ? scheduleItems : weddingData.schedule,
+    schedule: scheduleText.trim() ? scheduleItems : [],
     travel: {
       ...weddingData.travel,
       heading:
