@@ -243,6 +243,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.reception.descriptionHtml
           : undefined
     },
+    scheduleStepLabel:
+      typeof source.scheduleStepLabel === "string" && source.scheduleStepLabel.trim()
+        ? source.scheduleStepLabel.trim()
+        : "Moment",
     schedule: Array.isArray(source.schedule) ? source.schedule : fallback.schedule,
     travel: {
       heading: source.travel?.heading ?? "Where To Go",

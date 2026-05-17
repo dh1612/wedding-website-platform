@@ -522,6 +522,10 @@ export async function updateWeddingContentAction(formData: FormData) {
       descriptionHtml:
         receptionDescriptionRichText || weddingData.reception.descriptionHtml
     },
+    scheduleStepLabel:
+      String(formData.get("scheduleStepLabel") || "").trim() ||
+      weddingData.scheduleStepLabel ||
+      "Moment",
     schedule: scheduleText.trim() ? scheduleItems : [],
     travel: {
       ...weddingData.travel,

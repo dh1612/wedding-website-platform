@@ -827,6 +827,12 @@ export function AdminWeddingEditor({
                 label="Show weekend timeline"
                 checked={visibility?.schedule ?? true}
               />
+              <input
+                name="scheduleStepLabel"
+                defaultValue={weddingData.scheduleStepLabel ?? "Moment"}
+                placeholder="Moment"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
               <textarea
                 name="scheduleText"
                 defaultValue={weddingData.schedule.map((item) => `${item.time} - ${item.title}`).join("\n")}

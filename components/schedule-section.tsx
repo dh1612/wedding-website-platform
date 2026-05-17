@@ -8,6 +8,7 @@ type ScheduleSectionProps = {
 
 export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
   const wedding = weddingData ?? getWeddingData();
+  const stepLabel = wedding.scheduleStepLabel?.trim() || "Moment";
 
   return (
     <section id="schedule" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
@@ -31,7 +32,7 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
               >
                 <div>
                   <div className="accent-panel inline-flex rounded-full px-3 py-1 text-sm uppercase tracking-[0.25em] text-[var(--accent-strong)]">
-                    Stop {index + 1}
+                    {stepLabel} {index + 1}
                   </div>
                   {item.time ? (
                     <p className="mt-3 text-lg font-semibold text-[var(--accent-strong)]">
