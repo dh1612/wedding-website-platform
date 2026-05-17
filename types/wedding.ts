@@ -125,10 +125,17 @@ export type WeddingData = {
   accommodation: AccommodationItem[];
   faq: FAQItem[];
   rsvp: {
+    eyebrow?: string;
+    title?: string;
+    titleHtml?: string;
     label: string;
     description: string;
+    descriptionHtml?: string;
     url: string;
+    deadlineEyebrow?: string;
     deadline: string;
+    panelDescription?: string;
+    panelDescriptionHtml?: string;
     form?: {
       title: string;
       intro: string;

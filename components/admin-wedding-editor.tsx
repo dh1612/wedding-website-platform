@@ -199,6 +199,18 @@ export function AdminWeddingEditor({
   const rsvpIntroHtml = weddingData.rsvp.form?.introHtml
     ? weddingData.rsvp.form.introHtml
     : simpleTextHtml(rsvpForm?.intro ?? "");
+  const rsvpSectionTitleHtml = weddingData.rsvp.titleHtml
+    ? weddingData.rsvp.titleHtml
+    : simpleTextHtml(weddingData.rsvp.title ?? "Let Us Know If You Can Make It");
+  const rsvpSectionDescriptionHtml = weddingData.rsvp.descriptionHtml
+    ? weddingData.rsvp.descriptionHtml
+    : simpleTextHtml(weddingData.rsvp.description);
+  const rsvpPanelDescriptionHtml = weddingData.rsvp.panelDescriptionHtml
+    ? weddingData.rsvp.panelDescriptionHtml
+    : simpleTextHtml(
+        weddingData.rsvp.panelDescription ??
+          "Guests can reply here with the standard wedding details you would usually need, including attendance, dietary requirements, and optional notes."
+      );
   const galleryHeadingHtml = weddingData.gallery.headingHtml
     ? weddingData.gallery.headingHtml
     : simpleTextHtml(weddingData.gallery.heading);
@@ -1058,6 +1070,39 @@ export function AdminWeddingEditor({
                 name="showRsvp"
                 label="Show RSVP section"
                 checked={visibility?.rsvp ?? true}
+              />
+              <input
+                name="rsvpEyebrow"
+                defaultValue={weddingData.rsvp.eyebrow ?? "RSVP"}
+                placeholder="RSVP"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <RichTextEditorField
+                name="rsvpSectionTitle"
+                label="RSVP section heading"
+                description="This controls the large heading on the left-hand side of the RSVP section."
+                defaultValue={rsvpSectionTitleHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <RichTextEditorField
+                name="rsvpSectionDescription"
+                label="RSVP section intro"
+                description="Use this for the supporting text beneath the RSVP heading."
+                defaultValue={rsvpSectionDescriptionHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <input
+                name="rsvpDeadlineEyebrow"
+                defaultValue={weddingData.rsvp.deadlineEyebrow ?? "Deadline"}
+                placeholder="Deadline"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <RichTextEditorField
+                name="rsvpPanelDescription"
+                label="Deadline panel copy"
+                description="This controls the explanatory copy inside the right-hand RSVP panel above the form."
+                defaultValue={rsvpPanelDescriptionHtml}
+                minHeightClassName="min-h-[140px]"
               />
               <input
                 name="rsvpFormTitle"

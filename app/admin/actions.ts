@@ -261,6 +261,9 @@ export async function updateWeddingContentAction(formData: FormData) {
   const travelParkingRichText = String(formData.get("travelParking") || "").trim();
   const travelDirectionsRichText = String(formData.get("travelDirections") || "").trim();
   const rsvpFormIntroRichText = String(formData.get("rsvpFormIntro") || "").trim();
+  const rsvpTitleRichText = String(formData.get("rsvpSectionTitle") || "").trim();
+  const rsvpDescriptionRichText = String(formData.get("rsvpSectionDescription") || "").trim();
+  const rsvpPanelDescriptionRichText = String(formData.get("rsvpPanelDescription") || "").trim();
   const scheduleEyebrow = String(formData.get("scheduleEyebrow") || "").trim();
   const scheduleHeadingRichText = String(formData.get("scheduleHeading") || "").trim();
   const scheduleDescriptionRichText = String(formData.get("scheduleDescription") || "").trim();
@@ -614,7 +617,29 @@ export async function updateWeddingContentAction(formData: FormData) {
     },
     rsvp: {
       ...weddingData.rsvp,
+      eyebrow:
+        String(formData.get("rsvpEyebrow") || "").trim() ||
+        weddingData.rsvp.eyebrow ||
+        "RSVP",
+      title:
+        stripHtml(rsvpTitleRichText) || weddingData.rsvp.title || "Let Us Know If You Can Make It",
+      titleHtml:
+        rsvpTitleRichText || weddingData.rsvp.titleHtml,
+      description:
+        stripHtml(rsvpDescriptionRichText) || weddingData.rsvp.description,
+      descriptionHtml:
+        rsvpDescriptionRichText || weddingData.rsvp.descriptionHtml,
+      deadlineEyebrow:
+        String(formData.get("rsvpDeadlineEyebrow") || "").trim() ||
+        weddingData.rsvp.deadlineEyebrow ||
+        "Deadline",
       deadline: String(formData.get("rsvpDeadline") || "").trim() || weddingData.rsvp.deadline,
+      panelDescription:
+        stripHtml(rsvpPanelDescriptionRichText) ||
+        weddingData.rsvp.panelDescription ||
+        "Guests can reply here with the standard wedding details you would usually need, including attendance, dietary requirements, and optional notes.",
+      panelDescriptionHtml:
+        rsvpPanelDescriptionRichText || weddingData.rsvp.panelDescriptionHtml,
       form: {
         ...weddingData.rsvp.form,
         title:

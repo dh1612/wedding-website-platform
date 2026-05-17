@@ -352,10 +352,39 @@ export function coerceWeddingData(input: unknown): WeddingData {
       Array.isArray(source.accommodation) ? source.accommodation : fallback.accommodation,
     faq: Array.isArray(source.faq) ? source.faq : fallback.faq,
     rsvp: {
+      eyebrow:
+        typeof source.rsvp?.eyebrow === "string" && source.rsvp.eyebrow.trim()
+          ? source.rsvp.eyebrow.trim()
+          : "RSVP",
+      title:
+        typeof source.rsvp?.title === "string" && source.rsvp.title.trim()
+          ? source.rsvp.title.trim()
+          : "Let Us Know If You Can Make It",
+      titleHtml:
+        typeof source.rsvp?.titleHtml === "string" && source.rsvp.titleHtml.trim()
+          ? source.rsvp.titleHtml
+          : undefined,
       label: source.rsvp?.label ?? fallback.rsvp.label,
       description: source.rsvp?.description ?? fallback.rsvp.description,
+      descriptionHtml:
+        typeof source.rsvp?.descriptionHtml === "string" && source.rsvp.descriptionHtml.trim()
+          ? source.rsvp.descriptionHtml
+          : undefined,
       url: source.rsvp?.url ?? fallback.rsvp.url,
+      deadlineEyebrow:
+        typeof source.rsvp?.deadlineEyebrow === "string" && source.rsvp.deadlineEyebrow.trim()
+          ? source.rsvp.deadlineEyebrow.trim()
+          : "Deadline",
       deadline: source.rsvp?.deadline ?? fallback.rsvp.deadline,
+      panelDescription:
+        typeof source.rsvp?.panelDescription === "string" && source.rsvp.panelDescription.trim()
+          ? source.rsvp.panelDescription.trim()
+          : "Guests can reply here with the standard wedding details you would usually need, including attendance, dietary requirements, and optional notes.",
+      panelDescriptionHtml:
+        typeof source.rsvp?.panelDescriptionHtml === "string" &&
+        source.rsvp.panelDescriptionHtml.trim()
+          ? source.rsvp.panelDescriptionHtml
+          : undefined,
       form: {
         title:
           source.rsvp?.form?.title ??
