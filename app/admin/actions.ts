@@ -261,6 +261,10 @@ export async function updateWeddingContentAction(formData: FormData) {
   const travelParkingRichText = String(formData.get("travelParking") || "").trim();
   const travelDirectionsRichText = String(formData.get("travelDirections") || "").trim();
   const rsvpFormIntroRichText = String(formData.get("rsvpFormIntro") || "").trim();
+  const heroImageField = String(formData.get("heroImage") || "").trim();
+  const storyFeatureImageField = String(formData.get("storyFeatureImage") || "").trim();
+  const travelSneakPeekImageField = String(formData.get("travelSneakPeekImage") || "").trim();
+  const galleryImagesField = String(formData.get("galleryImages") || "");
 
   const scheduleText = String(formData.get("scheduleText") || "");
   const scheduleItems = scheduleText
@@ -329,7 +333,7 @@ export async function updateWeddingContentAction(formData: FormData) {
     .filter(Boolean)
     .map(parseMapSpotLine)
     .filter((item): item is NonNullable<ReturnType<typeof parseMapSpotLine>> => Boolean(item));
-  const galleryImages = String(formData.get("galleryImages") || "")
+  const galleryImages = galleryImagesField
     .split("\n")
     .map((item) => item.trim())
     .filter(Boolean)
@@ -382,6 +386,7 @@ export async function updateWeddingContentAction(formData: FormData) {
     .filter(Boolean);
 
   let uploadedHeroImage: string | null = null;
+  let uploadedStoryFeatureImage: string | null = null;
   let uploadedSneakPeekImage: string | null = null;
   let uploadedGalleryImages: string[] = [];
 
@@ -391,6 +396,13 @@ export async function updateWeddingContentAction(formData: FormData) {
       weddingSlug: nextSlug,
       folder: "hero",
       fallbackLabel: "hero"
+    });
+
+    uploadedStoryFeatureImage = await uploadImageFile({
+      file: formData.get("storyFeatureImageFile") as File | null,
+      weddingSlug: nextSlug,
+      folder: "story",
+      fallbackLabel: "feature"
     });
 
     uploadedSneakPeekImage = await uploadImageFile({
@@ -423,9 +435,9 @@ export async function updateWeddingContentAction(formData: FormData) {
   }
 
   const mergedGalleryImages =
-    uploadedGalleryImages.length || galleryImages.length
+    uploadedGalleryImages.length || galleryImagesField.trim()
       ? [...uploadedGalleryImages, ...galleryImages]
-      : weddingData.gallery.images;
+      : [];
 
   const nextContent = {
     ...weddingData,
@@ -469,9 +481,7 @@ export async function updateWeddingContentAction(formData: FormData) {
     announcement: stripHtml(announcementRichText) || weddingData.announcement,
     announcementHtml: announcementRichText || weddingData.announcementHtml,
     heroImage:
-      uploadedHeroImage ||
-      String(formData.get("heroImage") || "").trim() ||
-      weddingData.heroImage,
+      uploadedHeroImage || heroImageField || "",
     story: {
       ...weddingData.story,
       heading: stripHtml(storyHeadingRichText) || weddingData.story.heading,
@@ -482,7 +492,8 @@ export async function updateWeddingContentAction(formData: FormData) {
           : storyParagraphs.length
             ? storyParagraphs
             : weddingData.story.paragraphs,
-      html: storyRichText || weddingData.story.html
+      html: storyRichText || weddingData.story.html,
+      featureImage: uploadedStoryFeatureImage || storyFeatureImageField || undefined
     },
     gallery: {
       ...weddingData.gallery,
@@ -554,9 +565,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       locationOverviewHtml:
         locationOverviewRichText || weddingData.travel.locationOverviewHtml,
       sneakPeekImage:
-        uploadedSneakPeekImage ||
-        String(formData.get("travelSneakPeekImage") || "").trim() ||
-        weddingData.travel.sneakPeekImage,
+        uploadedSneakPeekImage || travelSneakPeekImageField || undefined,
       relaxedNote:
         String(formData.get("travelRelaxedNote") || "").trim() || weddingData.travel.relaxedNote,
       mapSpots: mapSpots.length ? mapSpots : weddingData.travel.mapSpots,

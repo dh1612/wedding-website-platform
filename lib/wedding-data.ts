@@ -208,6 +208,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.story?.html === "string" && source.story.html.trim()
           ? source.story.html
           : undefined,
+      featureImage:
+        typeof source.story?.featureImage === "string" && isValidRemoteImageUrl(source.story.featureImage)
+          ? source.story.featureImage
+          : undefined,
       paragraphs:
         Array.isArray(source.story?.paragraphs) ? source.story.paragraphs : fallback.story.paragraphs
     },

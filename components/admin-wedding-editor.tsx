@@ -876,6 +876,25 @@ export function AdminWeddingEditor({
                 defaultValue={storyHtml}
                 minHeightClassName="min-h-[240px]"
               />
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Story Feature Image</p>
+                <p className="prose-copy mt-3">
+                  Upload an image to sit alongside the story section, or paste a direct image URL.
+                  Clearing this field removes the story image entirely.
+                </p>
+                <input
+                  name="storyFeatureImageFile"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/avif"
+                  className="mt-4 block w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+                />
+                <input
+                  name="storyFeatureImage"
+                  defaultValue={weddingData.story.featureImage ?? ""}
+                  placeholder="https://..."
+                  className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
               <RichTextEditorField
                 name="galleryHeading"
                 label="Gallery heading"
