@@ -89,6 +89,7 @@ export function buildOperatorWeddingNavItems(slug: string) {
     { label: "Dashboard", path: "/admin" },
     { label: "Workspace", path: `/admin/weddings/${slug}` },
     { label: "Edit Wedding", path: `/admin/weddings/${slug}/edit` },
+    { label: "Invitations", path: `/admin/weddings/${slug}/invitation` },
     { label: "Preview", path: `/preview/${slug}` },
     { label: "Portal", path: `/couple-portal/${slug}` },
     { label: "RSVPs", path: `/rsvp-dashboard/${slug}` },

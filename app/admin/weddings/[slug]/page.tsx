@@ -105,6 +105,13 @@ export default async function AdminWeddingWorkspacePage({
       button: "Open Editor"
     },
     {
+      eyebrow: "Stationery",
+      title: "Invitations",
+      description: "Generate a theme-matched invitation suite using the wedding details already saved on the website.",
+      href: `/admin/weddings/${slug}/invitation`,
+      button: "Generate Invitations"
+    },
+    {
       eyebrow: "Draft Review",
       title: "Preview",
       description: "Review the private draft before the couple makes the guest website live.",
