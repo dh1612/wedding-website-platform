@@ -16,7 +16,13 @@ export function GalleryRegistrySection({
   const showStory = wedding.sectionVisibility?.story ?? true;
   const showGallery = wedding.sectionVisibility?.gallery ?? true;
   const showRegistry = wedding.sectionVisibility?.registry ?? true;
-  const hasStoryImage = Boolean(wedding.story.featureImage);
+  const storyImages =
+    wedding.story.featureImages?.length
+      ? wedding.story.featureImages
+      : wedding.story.featureImage
+        ? [wedding.story.featureImage]
+        : [];
+  const hasStoryImage = storyImages.length > 0;
   const hasGalleryImages = wedding.gallery.images.length > 0;
 
   if (!showStory && !showGallery && !showRegistry) {
@@ -63,14 +69,42 @@ export function GalleryRegistrySection({
               {(hasStoryImage || (showGallery && hasGalleryImages)) ? (
                 <div>
                   {hasStoryImage ? (
-                    <div className="relative min-h-[340px] overflow-hidden rounded-[1.6rem]">
-                      <Image
-                        src={wedding.story.featureImage!}
-                        alt={`${wedding.story.heading} image`}
-                        fill
-                        unoptimized={shouldBypassImageOptimization(wedding.story.featureImage)}
-                        className="object-cover"
-                      />
+                    <div
+                      className={`grid gap-4 ${
+                        storyImages.length === 1
+                          ? ""
+                          : storyImages.length === 2
+                            ? "sm:grid-cols-2"
+                            : "sm:grid-cols-[1.1fr_0.9fr]"
+                      }`}
+                    >
+                      <div className="relative min-h-[340px] overflow-hidden rounded-[1.6rem]">
+                        <Image
+                          src={storyImages[0]!}
+                          alt={`${wedding.story.heading} image 1`}
+                          fill
+                          unoptimized={shouldBypassImageOptimization(storyImages[0])}
+                          className="object-cover"
+                        />
+                      </div>
+                      {storyImages.length > 1 ? (
+                        <div className={`grid gap-4 ${storyImages.length === 2 ? "" : "grid-rows-2"}`}>
+                          {storyImages.slice(1, 3).map((image, index) => (
+                            <div
+                              key={image}
+                              className={`relative overflow-hidden rounded-[1.5rem] ${storyImages.length === 2 ? "min-h-[340px]" : "min-h-[160px]"}`}
+                            >
+                              <Image
+                                src={image}
+                                alt={`${wedding.story.heading} image ${index + 2}`}
+                                fill
+                                unoptimized={shouldBypassImageOptimization(image)}
+                                className="object-cover"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
                   ) : null}
                   {showGallery && hasGalleryImages ? (

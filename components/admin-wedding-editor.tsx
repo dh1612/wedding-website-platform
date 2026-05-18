@@ -1069,23 +1069,39 @@ export function AdminWeddingEditor({
                 minHeightClassName="min-h-[240px]"
               />
               <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
-                <p className="eyebrow">Story Feature Image</p>
+                <p className="eyebrow">Story Images</p>
                 <p className="prose-copy mt-3">
-                  Upload an image to sit alongside the story section, or paste a direct image URL.
-                  Clearing this field removes the story image entirely.
+                  Add up to three images to sit alongside the story section. You can upload files,
+                  paste direct image URLs, or clear any slot completely.
                 </p>
-                <input
-                  name="storyFeatureImageFile"
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp,image/avif"
-                  className="mt-4 block w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
-                />
-                <input
-                  name="storyFeatureImage"
-                  defaultValue={weddingData.story.featureImage ?? ""}
-                  placeholder="https://..."
-                  className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-                />
+                {[0, 1, 2].map((index) => {
+                  const slot = index + 1;
+                  const existingImage =
+                    weddingData.story.featureImages?.[index] ??
+                    (index === 0 ? weddingData.story.featureImage ?? "" : "");
+                  const fileName = index === 0 ? "storyFeatureImageFile" : `storyFeatureImageFile${slot}`;
+                  const urlName = index === 0 ? "storyFeatureImage" : `storyFeatureImage${slot}`;
+
+                  return (
+                    <div key={slot} className="mt-4 rounded-[1rem] border border-[var(--border)] bg-[var(--panel)] p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--muted)]">
+                        Story image {slot}
+                      </p>
+                      <input
+                        name={fileName}
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/avif"
+                        className="mt-3 block w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+                      />
+                      <input
+                        name={urlName}
+                        defaultValue={existingImage}
+                        placeholder="https://..."
+                        className="mt-3 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                      />
+                    </div>
+                  );
+                })}
               </div>
               <RichTextEditorField
                 name="galleryHeading"

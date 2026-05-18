@@ -276,6 +276,8 @@ export async function updateWeddingContentAction(formData: FormData) {
   const accommodationDescriptionRichText = String(formData.get("accommodationDescription") || "").trim();
   const heroImageField = String(formData.get("heroImage") || "").trim();
   const storyFeatureImageField = String(formData.get("storyFeatureImage") || "").trim();
+  const storyFeatureImageFieldTwo = String(formData.get("storyFeatureImage2") || "").trim();
+  const storyFeatureImageFieldThree = String(formData.get("storyFeatureImage3") || "").trim();
   const travelSneakPeekImageField = String(formData.get("travelSneakPeekImage") || "").trim();
   const galleryImagesField = String(formData.get("galleryImages") || "");
 
@@ -400,6 +402,8 @@ export async function updateWeddingContentAction(formData: FormData) {
 
   let uploadedHeroImage: string | null = null;
   let uploadedStoryFeatureImage: string | null = null;
+  let uploadedStoryFeatureImageTwo: string | null = null;
+  let uploadedStoryFeatureImageThree: string | null = null;
   let uploadedSneakPeekImage: string | null = null;
   let uploadedGalleryImages: string[] = [];
 
@@ -415,7 +419,21 @@ export async function updateWeddingContentAction(formData: FormData) {
       file: formData.get("storyFeatureImageFile") as File | null,
       weddingSlug: nextSlug,
       folder: "story",
-      fallbackLabel: "feature"
+      fallbackLabel: "feature-1"
+    });
+
+    uploadedStoryFeatureImageTwo = await uploadImageFile({
+      file: formData.get("storyFeatureImageFile2") as File | null,
+      weddingSlug: nextSlug,
+      folder: "story",
+      fallbackLabel: "feature-2"
+    });
+
+    uploadedStoryFeatureImageThree = await uploadImageFile({
+      file: formData.get("storyFeatureImageFile3") as File | null,
+      weddingSlug: nextSlug,
+      folder: "story",
+      fallbackLabel: "feature-3"
     });
 
     uploadedSneakPeekImage = await uploadImageFile({
@@ -451,6 +469,15 @@ export async function updateWeddingContentAction(formData: FormData) {
     uploadedGalleryImages.length || galleryImagesField.trim()
       ? [...uploadedGalleryImages, ...galleryImages]
       : [];
+
+  const mergedStoryFeatureImages = [
+    uploadedStoryFeatureImage || storyFeatureImageField,
+    uploadedStoryFeatureImageTwo || storyFeatureImageFieldTwo,
+    uploadedStoryFeatureImageThree || storyFeatureImageFieldThree
+  ]
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .filter(isValidRemoteImageUrl);
 
   const nextContent = {
     ...weddingData,
@@ -506,7 +533,8 @@ export async function updateWeddingContentAction(formData: FormData) {
             ? storyParagraphs
             : weddingData.story.paragraphs,
       html: storyRichText || weddingData.story.html,
-      featureImage: uploadedStoryFeatureImage || storyFeatureImageField || undefined
+      featureImage: mergedStoryFeatureImages[0] || undefined,
+      featureImages: mergedStoryFeatureImages
     },
     gallery: {
       ...weddingData.gallery,

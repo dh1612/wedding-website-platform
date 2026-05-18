@@ -122,6 +122,7 @@ export type WeddingData = {
     paragraphs: string[];
     html?: string;
     featureImage?: string;
+    featureImages?: string[];
   };
   ceremony: WeddingEvent;
   reception: WeddingEvent;
