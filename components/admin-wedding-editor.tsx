@@ -1032,6 +1032,12 @@ export function AdminWeddingEditor({
                 defaultValue={dayTwoDetailsHtml}
                 minHeightClassName="min-h-[180px]"
               />
+              <input
+                name="dayTwoMapLink"
+                defaultValue={weddingData.dayTwo?.mapLink ?? ""}
+                placeholder="https://maps.google.com/..."
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
             </div>
           </EditorAccordionSection>
 

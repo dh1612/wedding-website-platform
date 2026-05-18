@@ -601,7 +601,8 @@ export async function updateWeddingContentAction(formData: FormData) {
       panelTitle: stripHtml(dayTwoPanelTitleRichText),
       panelTitleHtml: dayTwoPanelTitleRichText || undefined,
       details: stripHtml(dayTwoDetailsRichText),
-      detailsHtml: dayTwoDetailsRichText || undefined
+      detailsHtml: dayTwoDetailsRichText || undefined,
+      mapLink: String(formData.get("dayTwoMapLink") || "").trim() || undefined
     },
     travel: {
       ...weddingData.travel,

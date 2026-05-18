@@ -72,6 +72,7 @@ export type DayTwoSectionContent = {
   panelTitleHtml?: string;
   details?: string;
   detailsHtml?: string;
+  mapLink?: string;
 };
 
 export type RSVPFormQuestion = {

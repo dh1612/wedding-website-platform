@@ -329,6 +329,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.dayTwo?.detailsHtml === "string" &&
         source.dayTwo.detailsHtml.trim()
           ? source.dayTwo.detailsHtml
+          : undefined,
+      mapLink:
+        typeof source.dayTwo?.mapLink === "string" && source.dayTwo.mapLink.trim()
+          ? source.dayTwo.mapLink.trim()
           : undefined
     },
     travel: {

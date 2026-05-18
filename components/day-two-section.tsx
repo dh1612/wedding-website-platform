@@ -50,6 +50,16 @@ export function DayTwoSection({ weddingData }: DayTwoSectionProps) {
               ) : dayTwo.details?.trim() ? (
                 <p className="prose-copy mt-5">{dayTwo.details}</p>
               ) : null}
+              {dayTwo.mapLink ? (
+                <a
+                  href={dayTwo.mapLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 inline-flex items-center rounded-full border border-[var(--border)] bg-white/75 px-5 py-3 text-sm font-medium text-[var(--accent)] transition hover:bg-white"
+                >
+                  Open in maps
+                </a>
+              ) : null}
             </div>
           </div>
         ) : null}
