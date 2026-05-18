@@ -61,6 +61,19 @@ export type ScheduleItem = {
   details: string;
 };
 
+export type DayTwoSectionContent = {
+  eyebrow?: string;
+  title?: string;
+  titleHtml?: string;
+  description?: string;
+  descriptionHtml?: string;
+  panelEyebrow?: string;
+  panelTitle?: string;
+  panelTitleHtml?: string;
+  details?: string;
+  detailsHtml?: string;
+};
+
 export type RSVPFormQuestion = {
   id: string;
   label: string;
@@ -121,6 +134,7 @@ export type WeddingData = {
   scheduleNoteHtml?: string;
   scheduleStepLabel?: string;
   schedule: ScheduleItem[];
+  dayTwo?: DayTwoSectionContent;
   travel: TravelInfo;
   accommodationEyebrow?: string;
   accommodationTitle?: string;
@@ -192,6 +206,7 @@ export type WeddingData = {
     directionsCard: boolean;
     relaxedNote: boolean;
     accommodation: boolean;
+    dayTwo: boolean;
     story: boolean;
     gallery: boolean;
     registry: boolean;

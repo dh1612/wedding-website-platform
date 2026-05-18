@@ -246,6 +246,24 @@ export function AdminWeddingEditor({
         weddingData.accommodationDescription ??
           "A couple of nearby options for guests travelling in for the celebration."
       );
+  const dayTwoTitleHtml = weddingData.dayTwo?.titleHtml
+    ? weddingData.dayTwo.titleHtml
+    : simpleTextHtml(weddingData.dayTwo?.title ?? "Keep The Celebrations Going");
+  const dayTwoDescriptionHtml = weddingData.dayTwo?.descriptionHtml
+    ? weddingData.dayTwo.descriptionHtml
+    : simpleTextHtml(
+        weddingData.dayTwo?.description ??
+          "If you are extending the weekend, use this space for the second-day plan so guests know what is happening next."
+      );
+  const dayTwoPanelTitleHtml = weddingData.dayTwo?.panelTitleHtml
+    ? weddingData.dayTwo.panelTitleHtml
+    : simpleTextHtml(weddingData.dayTwo?.panelTitle ?? "Join us for one more celebration");
+  const dayTwoDetailsHtml = weddingData.dayTwo?.detailsHtml
+    ? weddingData.dayTwo.detailsHtml
+    : simpleTextHtml(
+        weddingData.dayTwo?.details ??
+          "Add the timing, location, and any dress code or transport notes here."
+      );
   const editorSections = [
     { id: "core-setup", label: "Core setup" },
     { id: "hero-copy", label: "Opening section" },
@@ -253,6 +271,7 @@ export function AdminWeddingEditor({
     { id: "venue-travel", label: "Venue & travel" },
     { id: "accommodation", label: "Accommodation" },
     { id: "weekend-timeline", label: "Weekend timeline" },
+    { id: "day-two", label: "Day two" },
     { id: "rsvp-form", label: "RSVP form" },
     { id: "our-story", label: "Our story" },
     { id: "ai-concierge", label: "AI concierge" },
@@ -957,6 +976,61 @@ export function AdminWeddingEditor({
                 rows={8}
                 placeholder={`Friday 7:00pm - Welcome drinks\nSaturday 3:00pm - Ceremony\nSunday 12:00pm - Brunch`}
                 className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+              />
+            </div>
+          </EditorAccordionSection>
+
+          <EditorAccordionSection
+            id="day-two"
+            eyebrow="Day Two"
+            title="An optional second-day celebration"
+            description="Use this as a dedicated pillar when the next-day event deserves its own spotlight instead of living inside the main timeline."
+          >
+            <div className="grid gap-4">
+              <SectionToggle
+                name="showDayTwo"
+                label="Show day two section"
+                checked={visibility?.dayTwo ?? false}
+              />
+              <input
+                name="dayTwoEyebrow"
+                defaultValue={weddingData.dayTwo?.eyebrow ?? "Day Two"}
+                placeholder="Day Two"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <RichTextEditorField
+                name="dayTwoTitle"
+                label="Day two heading"
+                description="This is the large heading on the left side of the day two pillar."
+                defaultValue={dayTwoTitleHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <RichTextEditorField
+                name="dayTwoDescription"
+                label="Day two intro"
+                description="Use this for a short explanation of what the second day is about."
+                defaultValue={dayTwoDescriptionHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <input
+                name="dayTwoPanelEyebrow"
+                defaultValue={weddingData.dayTwo?.panelEyebrow ?? "Day Two Details"}
+                placeholder="Day Two Details"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <RichTextEditorField
+                name="dayTwoPanelTitle"
+                label="Details box heading"
+                description="This controls the heading inside the fancy details card on the right."
+                defaultValue={dayTwoPanelTitleHtml}
+                minHeightClassName="min-h-[120px]"
+              />
+              <RichTextEditorField
+                name="dayTwoDetails"
+                label="Details box copy"
+                description="Add the time, place, dress code, transport notes, or anything else guests need for day two."
+                defaultValue={dayTwoDetailsHtml}
+                minHeightClassName="min-h-[180px]"
               />
             </div>
           </EditorAccordionSection>

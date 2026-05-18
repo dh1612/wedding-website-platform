@@ -1,4 +1,5 @@
 import { AccommodationSection } from "@/components/accommodation-section";
+import { DayTwoSection } from "@/components/day-two-section";
 import { FAQSection } from "@/components/faq-section";
 import { GalleryRegistrySection } from "@/components/gallery-registry-section";
 import { HeroSection } from "@/components/hero-section";
@@ -63,6 +64,9 @@ export function WeddingSitePage({
       ) : null}
       {(weddingData.sectionVisibility?.schedule ?? true) ? (
         <ScheduleSection weddingData={weddingData} />
+      ) : null}
+      {(weddingData.sectionVisibility?.dayTwo ?? false) ? (
+        <DayTwoSection weddingData={weddingData} />
       ) : null}
       {(weddingData.sectionVisibility?.rsvp ?? true) ? (
         <RSVPSection

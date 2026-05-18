@@ -280,6 +280,51 @@ export function coerceWeddingData(input: unknown): WeddingData {
         ? source.scheduleStepLabel.trim()
         : "Moment",
     schedule: Array.isArray(source.schedule) ? source.schedule : fallback.schedule,
+    dayTwo: {
+      eyebrow:
+        typeof source.dayTwo?.eyebrow === "string"
+          ? source.dayTwo.eyebrow.trim()
+          : "Day Two",
+      title:
+        typeof source.dayTwo?.title === "string"
+          ? source.dayTwo.title.trim()
+          : "Keep The Celebrations Going",
+      titleHtml:
+        typeof source.dayTwo?.titleHtml === "string" && source.dayTwo.titleHtml.trim()
+          ? source.dayTwo.titleHtml
+          : undefined,
+      description:
+        typeof source.dayTwo?.description === "string"
+          ? source.dayTwo.description.trim()
+          : "If you are extending the weekend, use this space for the second-day plan so guests know what is happening next.",
+      descriptionHtml:
+        typeof source.dayTwo?.descriptionHtml === "string" &&
+        source.dayTwo.descriptionHtml.trim()
+          ? source.dayTwo.descriptionHtml
+          : undefined,
+      panelEyebrow:
+        typeof source.dayTwo?.panelEyebrow === "string"
+          ? source.dayTwo.panelEyebrow.trim()
+          : "Day Two Details",
+      panelTitle:
+        typeof source.dayTwo?.panelTitle === "string"
+          ? source.dayTwo.panelTitle.trim()
+          : "Join us for one more celebration",
+      panelTitleHtml:
+        typeof source.dayTwo?.panelTitleHtml === "string" &&
+        source.dayTwo.panelTitleHtml.trim()
+          ? source.dayTwo.panelTitleHtml
+          : undefined,
+      details:
+        typeof source.dayTwo?.details === "string"
+          ? source.dayTwo.details.trim()
+          : "Add the timing, location, and any dress code or transport notes here.",
+      detailsHtml:
+        typeof source.dayTwo?.detailsHtml === "string" &&
+        source.dayTwo.detailsHtml.trim()
+          ? source.dayTwo.detailsHtml
+          : undefined
+    },
     travel: {
       heading: source.travel?.heading ?? "Where To Go",
       headingHtml:
@@ -491,6 +536,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
       directionsCard: source.sectionVisibility?.directionsCard ?? true,
       relaxedNote: source.sectionVisibility?.relaxedNote ?? true,
       accommodation: source.sectionVisibility?.accommodation ?? true,
+      dayTwo: source.sectionVisibility?.dayTwo ?? false,
       story: source.sectionVisibility?.story ?? true,
       gallery: source.sectionVisibility?.gallery ?? true,
       registry: source.sectionVisibility?.registry ?? true,

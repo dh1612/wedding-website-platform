@@ -268,6 +268,10 @@ export async function updateWeddingContentAction(formData: FormData) {
   const scheduleHeadingRichText = String(formData.get("scheduleHeading") || "").trim();
   const scheduleDescriptionRichText = String(formData.get("scheduleDescription") || "").trim();
   const scheduleNoteRichText = String(formData.get("scheduleNote") || "").trim();
+  const dayTwoTitleRichText = String(formData.get("dayTwoTitle") || "").trim();
+  const dayTwoDescriptionRichText = String(formData.get("dayTwoDescription") || "").trim();
+  const dayTwoPanelTitleRichText = String(formData.get("dayTwoPanelTitle") || "").trim();
+  const dayTwoDetailsRichText = String(formData.get("dayTwoDetails") || "").trim();
   const accommodationTitleRichText = String(formData.get("accommodationTitle") || "").trim();
   const accommodationDescriptionRichText = String(formData.get("accommodationDescription") || "").trim();
   const heroImageField = String(formData.get("heroImage") || "").trim();
@@ -559,6 +563,18 @@ export async function updateWeddingContentAction(formData: FormData) {
     scheduleStepLabel:
       String(formData.get("scheduleStepLabel") || "").trim(),
     schedule: scheduleText.trim() ? scheduleItems : [],
+    dayTwo: {
+      eyebrow: String(formData.get("dayTwoEyebrow") || "").trim(),
+      title: stripHtml(dayTwoTitleRichText),
+      titleHtml: dayTwoTitleRichText || undefined,
+      description: stripHtml(dayTwoDescriptionRichText),
+      descriptionHtml: dayTwoDescriptionRichText || undefined,
+      panelEyebrow: String(formData.get("dayTwoPanelEyebrow") || "").trim(),
+      panelTitle: stripHtml(dayTwoPanelTitleRichText),
+      panelTitleHtml: dayTwoPanelTitleRichText || undefined,
+      details: stripHtml(dayTwoDetailsRichText),
+      detailsHtml: dayTwoDetailsRichText || undefined
+    },
     travel: {
       ...weddingData.travel,
       heading:
@@ -690,6 +706,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       heroActions: formData.has("showHeroActions"),
       previewNote: formData.has("showPreviewNote"),
       schedule: formData.has("showSchedule"),
+      dayTwo: formData.has("showDayTwo"),
       travel: formData.has("showTravel"),
       ceremonyCard: formData.has("showCeremonyCard"),
       receptionCard: formData.has("showReceptionCard"),
