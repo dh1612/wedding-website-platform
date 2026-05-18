@@ -29,6 +29,57 @@ function getPackageLabel(packageTier: IntakePackage) {
   );
 }
 
+function getPackageEmailContent(packageTier: IntakePackage) {
+  switch (packageTier) {
+    case "basic":
+      return {
+        supportLine:
+          "This is the cleanest starting point if you want a beautiful guest website without the extra planning tools.",
+        included: [
+          "A private first-draft website preview to review.",
+          "Core guest information pages shaped around your details.",
+          "A final refinement pass before the guest website goes live."
+        ],
+        nextSteps: [
+          "Review the private preview and note any wording or layout changes you want.",
+          "If you would like to proceed, use the unlock option on the preview page.",
+          "Once approved, we refine the final guest website and prepare it for launch."
+        ]
+      };
+    case "premium":
+      return {
+        supportLine:
+          "This includes the fullest support level, including the private couple portal experience once your website is unlocked.",
+        included: [
+          "A private first-draft website preview to review.",
+          "Premium planning features and access to the couple portal after unlock.",
+          "A fuller refinement and setup pass before launch."
+        ],
+        nextSteps: [
+          "Review the private preview and note any wording, layout, or planning features you want adjusted.",
+          "If you would like to proceed, use the unlock option on the preview page.",
+          "Once approved, we unlock the website, prepare the portal, and help shape the final version."
+        ]
+      };
+    case "smart":
+    default:
+      return {
+        supportLine:
+          "This gives you a stronger refinement layer, including AI-assisted content polishing and a more guided final version.",
+        included: [
+          "A private first-draft website preview to review.",
+          "Extra content-polish support before the final version is prepared.",
+          "A refined guest website ready for approval before launch."
+        ],
+        nextSteps: [
+          "Review the private preview and note any changes you want.",
+          "If you would like to proceed, use the unlock option on the preview page.",
+          "Once approved, we refine the wording and structure, then prepare the final guest website."
+        ]
+      };
+  }
+}
+
 export async function sendIntakeConfirmationEmail(
   input: SendIntakeConfirmationEmailInput
 ) {
@@ -43,6 +94,7 @@ export async function sendIntakeConfirmationEmail(
   }
 
   const packageInfo = getPackageLabel(input.packageTier);
+  const packageContent = getPackageEmailContent(input.packageTier);
   const safeCouple = escapeHtml(input.couple);
   const safePreviewUrl = escapeHtml(input.previewUrl);
   const safeStyleName = escapeHtml(input.styleName);
@@ -72,6 +124,9 @@ export async function sendIntakeConfirmationEmail(
         <p style="margin: 10px 0 0; color: #6d655d;">
           Chosen style: ${safeStyleName}
         </p>
+        <p style="margin: 10px 0 0; color: #6d655d;">
+          ${escapeHtml(packageContent.supportLine)}
+        </p>
       </div>
 
       <div style="margin: 0 0 28px;">
@@ -82,12 +137,20 @@ export async function sendIntakeConfirmationEmail(
 
       <div style="border: 1px solid #e2d6c8; border-radius: 20px; background: white; padding: 20px; margin: 0 0 24px;">
         <p style="margin: 0 0 10px; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #9a7d64;">
+          What happens next
+        </p>
+        <ul style="margin: 0 0 20px; padding-left: 20px; color: #5f564e;">
+          ${packageContent.included
+            .map((item) => `<li style="margin: 0 0 8px;">${escapeHtml(item)}</li>`)
+            .join("")}
+        </ul>
+        <p style="margin: 0 0 10px; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #9a7d64;">
           Next steps
         </p>
         <ol style="margin: 0; padding-left: 20px; color: #5f564e;">
-          <li>Review the private preview and note any changes you want.</li>
-          <li>If you want to move forward, use the unlock option on the preview page.</li>
-          <li>The final guest website is unlocked and published after approval and payment.</li>
+          ${packageContent.nextSteps
+            .map((item) => `<li style="margin: 0 0 8px;">${escapeHtml(item)}</li>`)
+            .join("")}
         </ol>
       </div>
 
@@ -107,12 +170,14 @@ export async function sendIntakeConfirmationEmail(
     "",
     `Package: ${packageInfo.name}`,
     `Chosen style: ${input.styleName}`,
+    packageContent.supportLine,
     `Preview link: ${input.previewUrl}`,
     "",
+    "What happens next:",
+    ...packageContent.included.map((item) => `- ${item}`),
+    "",
     "Next steps:",
-    "1. Review the private preview and note any changes you want.",
-    "2. If you want to move forward, use the unlock option on the preview page.",
-    "3. The final guest website is unlocked and published after approval and payment."
+    ...packageContent.nextSteps.map((item, index) => `${index + 1}. ${item}`)
   ].join("\n");
 
   const response = await fetch("https://api.resend.com/emails", {

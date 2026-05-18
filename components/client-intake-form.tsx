@@ -384,81 +384,14 @@ export function ClientIntakeForm({
             before anything goes live.
           </div>
 
-          <div className="space-y-3">
-            <div>
-              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Preferred style direction</p>
-              <h3 className="mt-2 text-2xl">Choose a look, or let us choose</h3>
-              <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                Pick a direction early so the first version feels closer to the right look straight away.
-              </p>
-            </div>
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-              <button
-                type="button"
-                onClick={() => updateField("themePreference", "")}
-                className={`rounded-[1.35rem] border p-4 text-left ${
-                  !values.themePreference
-                    ? "border-[#184b38] bg-[#184b38] text-white"
-                    : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
-                }`}
-              >
-                <p className="text-sm font-medium">Not sure? We&apos;ll choose for you</p>
-                <p
-                  className={`mt-2 text-sm leading-6 ${
-                    !values.themePreference ? "text-white/78" : "text-[#6d655d]"
-                  }`}
-                >
-                  This is selected by default, so there is no pressure to choose a style right away.
-                </p>
-              </button>
-              {intakeThemeOptions.map((theme) => {
-                const isSelected = values.themePreference === theme.id;
-
-                return (
-                  <button
-                    key={theme.id}
-                    type="button"
-                    onClick={() => updateField("themePreference", theme.id)}
-                    className={`overflow-hidden rounded-[1.35rem] border text-left ${
-                      isSelected
-                        ? "border-[#184b38] bg-[#184b38] text-white"
-                        : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
-                    }`}
-                  >
-                    <div className="h-28 w-full" style={theme.previewStyle} />
-                    <div className="p-4">
-                      <p className="text-lg font-medium">{theme.name}</p>
-                      <p
-                        className={`mt-2 text-sm leading-6 ${
-                          isSelected ? "text-white/78" : "text-[#6d655d]"
-                        }`}
-                      >
-                        {theme.label}. {theme.description}
-                      </p>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-            <div className="rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
-              Want to browse more design directions first?{" "}
-              <Link
-                href="/brochure#designs"
-                className="font-medium text-[#184b38] underline underline-offset-2"
-              >
-                View the brochure designs
-              </Link>
-              .
-            </div>
-          </div>
-
           <details className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4">
             <summary className="cursor-pointer list-none">
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
-              <h3 className="mt-2 text-2xl">Add more if it is ready</h3>
+              <h3 className="mt-2 text-2xl">Add a few more details for a stronger first draft</h3>
               <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                Add as much or as little as you have. If details are still coming together, the
-                first draft will stay focused on the strongest sections instead of padding out thin areas.
+                Even two or three extra details can make a big difference. If details are still
+                coming together, the first draft will stay focused on the strongest sections instead
+                of padding out thin areas.
               </p>
             </summary>
             <div className="mt-5 space-y-5">
@@ -533,6 +466,74 @@ export function ClientIntakeForm({
               />
             </div>
           </details>
+
+          <div className="space-y-3">
+            <div>
+              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Preferred style direction</p>
+              <h3 className="mt-2 text-2xl">Choose a look, or let us choose</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                Pick a direction early so the first version feels closer to the right look straight away.
+              </p>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <button
+                type="button"
+                onClick={() => updateField("themePreference", "")}
+                className={`rounded-[1.35rem] border p-4 text-left ${
+                  !values.themePreference
+                    ? "border-[#184b38] bg-[#184b38] text-white"
+                    : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
+                }`}
+              >
+                <p className="text-sm font-medium">Not sure? We&apos;ll choose for you</p>
+                <p
+                  className={`mt-2 text-sm leading-6 ${
+                    !values.themePreference ? "text-white/78" : "text-[#6d655d]"
+                  }`}
+                >
+                  This is selected by default, so there is no pressure to choose a style right away.
+                </p>
+              </button>
+              {intakeThemeOptions.map((theme) => {
+                const isSelected = values.themePreference === theme.id;
+
+                return (
+                  <button
+                    key={theme.id}
+                    type="button"
+                    onClick={() => updateField("themePreference", theme.id)}
+                    className={`overflow-hidden rounded-[1.35rem] border text-left ${
+                      isSelected
+                        ? "border-[#184b38] bg-[#184b38] text-white"
+                        : "border-black/6 bg-[#faf7f2] text-[#3f3832]"
+                    }`}
+                  >
+                    <div className="h-28 w-full" style={theme.previewStyle} />
+                    <div className="p-4">
+                      <p className="text-lg font-medium">{theme.name}</p>
+                      <p
+                        className={`mt-2 text-sm leading-6 ${
+                          isSelected ? "text-white/78" : "text-[#6d655d]"
+                        }`}
+                      >
+                        {theme.label}. {theme.description}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="rounded-[1rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
+              Want to browse more design directions first?{" "}
+              <Link
+                href="/brochure#designs"
+                className="font-medium text-[#184b38] underline underline-offset-2"
+              >
+                View the brochure designs
+              </Link>
+              .
+            </div>
+          </div>
 
           <div className="space-y-3">
             <div>
