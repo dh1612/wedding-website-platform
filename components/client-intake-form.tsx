@@ -16,9 +16,9 @@ type ClientIntakeFormProps = {
 const STORAGE_KEY = "wedding-intake-draft-v2";
 const intakeThemeOptions = weddingThemes.slice(0, 6);
 const submissionSteps = [
-  "Designing layout...",
-  "Adding your details...",
-  "Finalising your preview..."
+  "Choosing the strongest sections to lead with...",
+  "Shaping your first tailored draft...",
+  "Preparing your private preview..."
 ];
 
 const defaultValues: IntakeSubmission = {
@@ -283,8 +283,9 @@ export function ClientIntakeForm({
         </div>
 
         <div className="mt-4 rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
-          AI can help shape wording, but a real person still checks the first version and helps with
-          changes before anything goes live.
+          This first preview is meant to show the direction, design, and potential of your website.
+          If your details are still light, we keep the draft focused and refine the fuller version
+          with you later.
         </div>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -379,7 +380,8 @@ export function ClientIntakeForm({
           </div>
 
           <div className="rounded-[1.2rem] border border-[#184b38]/12 bg-[#f6fbf8] px-4 py-3 text-sm leading-6 text-[#486159]">
-            This will become your wedding website — ready to share with your guests.
+            This creates your first tailored draft — the polished final version is refined with you
+            before anything goes live.
           </div>
 
           <div className="space-y-3">
@@ -455,7 +457,8 @@ export function ClientIntakeForm({
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
               <h3 className="mt-2 text-2xl">Add more if it is ready</h3>
               <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                Ceremony, reception, travel, FAQ, story, and images can all be added later.
+                Add as much or as little as you have. If details are still coming together, the
+                first draft will stay focused on the strongest sections instead of padding out thin areas.
               </p>
             </summary>
             <div className="mt-5 space-y-5">
@@ -586,7 +589,8 @@ export function ClientIntakeForm({
               </p>
               <h3 className="mt-3 text-3xl">Your wedding website is being prepared 🎉</h3>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[#486159]">
-                We&apos;ll send your first version shortly for review.
+                We&apos;re putting together a focused first draft for review. If some details are still
+                missing, we&apos;ll keep the preview clean and refine the fuller version with you later.
               </p>
               <div className="mt-5 space-y-3">
                 {submissionSteps.map((step, index) => {
@@ -616,8 +620,13 @@ export function ClientIntakeForm({
               </p>
               <h3 className="mt-3 text-3xl">Thank you</h3>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[#486159]">
-                Your wedding website is being prepared 🎉 We&apos;ll send your first version shortly for review.
+                Your first tailored draft is being prepared 🎉 This is a private preview to review
+                the look, structure, and direction before the final version is refined.
               </p>
+              <div className="mt-5 rounded-[1.2rem] border border-[#184b38]/12 bg-white px-4 py-4 text-sm leading-6 text-[#486159]">
+                Light details are completely fine. We intentionally keep early drafts focused, then
+                polish the final guest version with your wording, timings, travel notes, and finishing touches.
+              </div>
               <p className="mt-5 text-[12px] uppercase tracking-[0.28em] text-[#9a7d64]">
                 This is what your guests will see
               </p>

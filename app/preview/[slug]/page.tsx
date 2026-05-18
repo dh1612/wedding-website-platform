@@ -44,8 +44,12 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 {weddingRecord.title}
               </h1>
               <p className="mt-2 text-sm text-white/75">
-                This page is a private draft for review only. Going live is handled from the
-                operator admin area after approval and payment.
+                This page is a private first draft for review only. It is designed to show the look,
+                structure, and overall direction of the website before the polished final version is refined.
+              </p>
+              <p className="mt-2 text-sm text-white/65">
+                If some details were still missing when the builder was completed, the draft may stay
+                intentionally focused rather than filling space with weak placeholder sections.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">

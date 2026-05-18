@@ -104,9 +104,9 @@ function parseScheduleLines(value?: string) {
     const [timePart, ...rest] = line.split("-");
     const details = rest.join("-").trim();
     return {
-      time: timePart?.trim() || `Stop ${index + 1}`,
-      title: details || `Wedding moment ${index + 1}`,
-      details: details || line
+      time: timePart?.trim() || `Event ${index + 1}`,
+      title: details || line.trim(),
+      details: details || ""
     };
   });
 }
@@ -284,56 +284,44 @@ export async function buildWeddingDataFromIntake(
       submission.receptionAddress?.trim()
   );
   const hasTravelContent = Boolean(
-    submission.travelText?.trim() || hasCeremonyDetails || hasReceptionDetails
+    submission.travelText?.trim() ||
+      submission.locationSummary?.trim() ||
+      hasCeremonyDetails ||
+      hasReceptionDetails
   );
   const hasStory = polished.storyParagraphs.length > 0;
   const hasGallery = imageUrls.length > 0;
   const hasSchedule = schedule.length > 0;
   const hasAccommodation = accommodation.length > 0;
   const hasFaq = polished.faq.length > 0;
+  const hasMeaningfulDraftContent =
+    hasCeremonyDetails ||
+    hasReceptionDetails ||
+    hasTravelContent ||
+    hasStory ||
+    hasGallery ||
+    hasSchedule ||
+    hasAccommodation ||
+    hasFaq;
 
-  const storyParagraphs = hasStory
-    ? polished.storyParagraphs
-    : ["Your story can be added here before the site goes live."];
-  const scheduleItems = hasSchedule
-    ? schedule
-    : [
-        {
-          time: "Add timing",
-          title: "Add a weekend event here",
-          details:
-            "The weekend timeline can be added here once the couple confirms the details."
-        }
-      ];
-  const accommodationItems = hasAccommodation
-    ? accommodation
-    : [
-        {
-          name: "Add accommodation option",
-          note:
-            "Recommended hotels or nearby stays can be added here before the site goes live."
-        }
-      ];
-  const faqItems = hasFaq
-    ? polished.faq
-    : [
-        {
-          q: "Add a guest question here",
-          a: "Answers about travel, timings, dress code, or local details can be added here before the site goes live."
-        }
-      ];
+  const storyParagraphs = hasStory ? polished.storyParagraphs : [];
+  const scheduleItems = hasSchedule ? schedule : [];
+  const accommodationItems = hasAccommodation ? accommodation : [];
+  const faqItems = hasFaq ? polished.faq : [];
   const travelDescription = submission.travelText?.trim()
     ? formatSentence(submission.travelText)
-    : "Venue details, directions, transport notes, and local guidance can be added here before the site goes live.";
+    : hasTravelContent
+      ? "Venue details, directions, transport notes, and local guidance can be refined here before the site goes live."
+      : "";
   const ceremonyDescription = hasCeremonyDetails
     ? ""
-    : "Ceremony details can be added here before the site goes live.";
+    : "";
   const receptionDescription = hasReceptionDetails
     ? ""
-    : "Reception details can be added here before the site goes live.";
+    : "";
   const transportDescription = submission.travelText?.trim()
     ? submission.travelText.trim()
-    : "Travel notes or transport arrangements can be added here before the site goes live.";
+    : "";
 
   return coerceWeddingData({
     couple: submission.couple,
@@ -342,7 +330,7 @@ export async function buildWeddingDataFromIntake(
     locationSummary: submission.locationSummary,
     tagline: "",
     announcement:
-      polished.announcement || "A short welcome message for guests can be added here before the site goes live.",
+      polished.announcement || "",
     heroImage: imageUrls[0] || defaults.heroImage,
     story: {
       heading: "Our Story",
@@ -377,7 +365,9 @@ export async function buildWeddingDataFromIntake(
     faq: faqItems,
     contact: {
       email: submission.email,
-      note: "If you need anything before the wedding, please get in touch."
+      note: hasMeaningfulDraftContent
+        ? "If you need anything before the wedding, please get in touch."
+        : "This first draft focuses on the essentials. Final guest-facing details can be refined before the site goes live."
     },
     aiConciergeEnabled: submission.packageTier !== "basic",
     gallery: {
@@ -404,18 +394,18 @@ export async function buildWeddingDataFromIntake(
       announcement: Boolean(polished.announcement),
       heroActions: true,
       previewNote: true,
-      schedule: true,
-      travel: true,
-      ceremonyCard: true,
-      receptionCard: true,
-      transportCard: true,
+      schedule: hasSchedule,
+      travel: hasTravelContent,
+      ceremonyCard: hasCeremonyDetails,
+      receptionCard: hasReceptionDetails,
+      transportCard: Boolean(submission.travelText?.trim()),
       directionsCard: false,
-      accommodation: true,
-      story: true,
+      accommodation: hasAccommodation,
+      story: hasStory,
       gallery: hasGallery,
       registry: false,
       rsvp: true,
-      faq: true,
+      faq: hasFaq,
       aiConcierge: submission.packageTier !== "basic"
     }
   });

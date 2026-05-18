@@ -37,12 +37,12 @@ export default async function GetStartedPage({
             We build it for you. Just tell us what your guests need to know — we handle the rest.
           </p>
           <p className="max-w-3xl text-base leading-7 text-[#5f564e]">
-            No DIY. No setup. No back and forth. Get a beautiful, ready-to-share wedding website
-            in minutes.
+            No DIY. No setup. No pressure to have every detail ready. Start with the essentials and
+            we&apos;ll shape a strong first draft around what matters most.
           </p>
           <div className="space-y-2 text-sm leading-6 text-[#6d655d]">
             <p>• Most couples complete this in under 2 minutes</p>
-            <p>• No payment required upfront</p>
+            <p>• Light details are fine — sparse drafts stay clean and focused</p>
             <p>• Private review before anything is shared</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
