@@ -30,14 +30,16 @@ function parseAccommodationLine(line: string) {
     return null;
   }
 
-  const [name, second, third] = parts;
+  const [name, second, third, fourth] = parts;
   const link = second?.startsWith("http://") || second?.startsWith("https://") ? second : undefined;
   const note = link ? third : second;
+  const linkLabel = link ? fourth : third;
 
   return {
     name,
     link,
-    note: note || "Recommended for guests travelling to the wedding."
+    note: note || "Recommended for guests travelling to the wedding.",
+    linkLabel: linkLabel || undefined
   };
 }
 

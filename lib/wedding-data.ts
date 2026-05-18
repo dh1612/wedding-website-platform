@@ -458,7 +458,28 @@ export function coerceWeddingData(input: unknown): WeddingData {
         ? source.accommodationDescriptionHtml
         : undefined,
     accommodation:
-      Array.isArray(source.accommodation) ? source.accommodation : fallback.accommodation,
+      Array.isArray(source.accommodation)
+        ? source.accommodation.map((item) => {
+            const sourceItem = item as Partial<WeddingData["accommodation"][number]>;
+            const name =
+              typeof sourceItem.name === "string" ? sourceItem.name.trim() : "";
+            const note =
+              typeof sourceItem.note === "string" ? sourceItem.note.trim() : "";
+            const link =
+              typeof sourceItem.link === "string" ? sourceItem.link.trim() : "";
+            const linkLabel =
+              typeof sourceItem.linkLabel === "string"
+                ? sourceItem.linkLabel.trim()
+                : "";
+
+            return {
+              name: name || "Guest accommodation",
+              note: note || "Recommended for guests travelling to the wedding.",
+              link: isValidRemoteImageUrl(link) ? link : undefined,
+              linkLabel: linkLabel || undefined
+            };
+          })
+        : fallback.accommodation,
     suppliersEyebrow:
       typeof source.suppliersEyebrow === "string"
         ? source.suppliersEyebrow.trim()

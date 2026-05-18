@@ -123,7 +123,7 @@ export function AdminWeddingEditor({
   const portalUser = record.adminUsers?.[0] ?? null;
   const theme = getThemeById(weddingData.theme);
   const accommodationLines = weddingData.accommodation
-    .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
+    .map((item) => [item.name, item.link, item.note, item.linkLabel].filter(Boolean).join(" | "))
     .join("\n");
   const supplierLines = weddingData.suppliers
     .map((item) => [item.name, item.category, item.note, item.link].filter(Boolean).join(" | "))
@@ -900,14 +900,14 @@ export function AdminWeddingEditor({
                 <h2 className="mt-3 text-2xl">Add hotels and booking links clearly</h2>
                 <p className="prose-copy mt-3">
                   Use one line per hotel in this format:
-                  <span className="font-medium text-[var(--foreground)]"> Hotel name | booking link | short note</span>.
+                  <span className="font-medium text-[var(--foreground)]"> Hotel name | booking link | short note | button label</span>.
                   If you only have the hotel name for now, that is fine too.
                 </p>
                 <textarea
                   name="accommodationText"
                   defaultValue={accommodationLines}
                   rows={6}
-                  placeholder="The Harbour Hotel | https://hotel-example.com | 8 minutes from the venue"
+                  placeholder="The Harbour Hotel | https://hotel-example.com | 8 minutes from the venue | View hotel"
                   className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                 />
               </div>
@@ -923,7 +923,7 @@ export function AdminWeddingEditor({
                           <p className="font-medium text-[#1c2622]">{item.name}</p>
                           <p className="mt-1 text-sm leading-6 text-[#41564e]">{item.note}</p>
                           {item.link ? (
-                            <p className="mt-2 text-sm text-[#0f5a43]">Guest button: View hotel</p>
+                            <p className="mt-2 text-sm text-[#0f5a43]">Guest button: {item.linkLabel || "View hotel"}</p>
                           ) : (
                             <p className="mt-2 text-sm text-[#6e7e78]">No hotel link added yet</p>
                           )}

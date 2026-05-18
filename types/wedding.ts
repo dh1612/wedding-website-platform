@@ -53,6 +53,7 @@ export type AccommodationItem = {
   name: string;
   note: string;
   link?: string;
+  linkLabel?: string;
 };
 
 export type SupplierItem = {

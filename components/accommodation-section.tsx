@@ -43,7 +43,7 @@ export function AccommodationSection({
                     rel="noreferrer"
                     className="accent-outline shrink-0 rounded-full px-5 py-3 text-sm font-medium"
                   >
-                    View hotel
+                    {hotel.linkLabel || "View hotel"}
                   </a>
                 ) : null}
               </article>
