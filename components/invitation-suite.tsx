@@ -41,6 +41,7 @@ export function InvitationSuite({
   weddingData
 }: InvitationSuiteProps) {
   const liveUrl = `https://${BRAND_DOMAIN}/${slug}`;
+  const liveUrlDisplay = `${BRAND_DOMAIN}/${slug}`;
   const inviteDate = formatInviteDate(weddingData.date);
   const ceremonyLocation = compactLocation(weddingData.ceremony.location);
   const receptionLocation = compactLocation(weddingData.reception.location);
@@ -80,7 +81,7 @@ export function InvitationSuite({
             </div>
             <div className="mt-12 border-t border-[var(--border)] pt-6">
               <p className="eyebrow">Details online</p>
-              <p className="mt-3 text-lg text-[var(--foreground)]">{liveUrl}</p>
+              <p className="mt-3 text-lg text-[var(--foreground)]">{liveUrlDisplay}</p>
             </div>
           </div>
         </section>
@@ -123,7 +124,7 @@ export function InvitationSuite({
                 <p className="eyebrow">{weddingData.rsvp.deadlineEyebrow || "RSVP"}</p>
                 <p className="mt-4 text-3xl">{weddingData.rsvp.deadline}</p>
                 <p className="mt-3 text-base leading-7 text-[var(--muted)]">
-                  Reply and view the full wedding details online at {liveUrl}
+                  Reply and view the full wedding details online at {liveUrlDisplay}
                 </p>
               </div>
 
@@ -185,6 +186,38 @@ export function InvitationSuite({
             </div>
           </section>
         ) : null}
+
+        <section className="invitation-print-card section-shell rounded-[2.4rem] p-10 sm:p-14 print:min-h-[10.5in] print:rounded-none print:border-0 print:shadow-none lg:col-span-2">
+          <div className="mx-auto max-w-[5in] rounded-[2rem] border border-[var(--border)] bg-white/80 p-8 shadow-[var(--shadow)] print:shadow-none">
+            <div className="text-center">
+              <p className="eyebrow">Card Format</p>
+              <p
+                className="mt-6 text-[clamp(2.6rem,7vw,4.6rem)] leading-[0.96]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {weddingData.couple}
+              </p>
+              <p className="mt-6 text-2xl">{inviteDate}</p>
+              {ceremonyLocation ? (
+                <p className="mt-3 text-lg leading-8 text-[var(--muted)]">
+                  {ceremonyLocation}
+                </p>
+              ) : null}
+              {weddingData.rsvp.deadline?.trim() ? (
+                <div className="mt-8 border-t border-[var(--border)] pt-6">
+                  <p className="eyebrow">{weddingData.rsvp.deadlineEyebrow || "RSVP"}</p>
+                  <p className="mt-3 text-xl">{weddingData.rsvp.deadline}</p>
+                </div>
+              ) : null}
+              <div className="mt-8 border-t border-[var(--border)] pt-6">
+                <p className="eyebrow">Website</p>
+                <p className="mt-3 text-base break-words text-[var(--foreground)]">
+                  {liveUrlDisplay}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       <style>{`
