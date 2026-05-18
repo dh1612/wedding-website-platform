@@ -86,6 +86,7 @@ export async function sendIntakeConfirmationEmail(
   const apiKey = process.env.RESEND_API_KEY;
   const fromEmail =
     process.env.INTAKE_CONFIRMATION_FROM_EMAIL ??
+    process.env.RSVP_NOTIFICATION_FROM_EMAIL ??
     process.env.RESEND_FROM_EMAIL ??
     SUPPORT_EMAIL;
 
