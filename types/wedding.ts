@@ -55,6 +55,13 @@ export type AccommodationItem = {
   link?: string;
 };
 
+export type SupplierItem = {
+  name: string;
+  category?: string;
+  note: string;
+  link?: string;
+};
+
 export type ScheduleItem = {
   time: string;
   title: string;
@@ -144,6 +151,12 @@ export type WeddingData = {
   accommodationDescription?: string;
   accommodationDescriptionHtml?: string;
   accommodation: AccommodationItem[];
+  suppliersEyebrow?: string;
+  suppliersTitle?: string;
+  suppliersTitleHtml?: string;
+  suppliersDescription?: string;
+  suppliersDescriptionHtml?: string;
+  suppliers: SupplierItem[];
   faq: FAQItem[];
   rsvp: {
     eyebrow?: string;
@@ -208,6 +221,7 @@ export type WeddingData = {
     directionsCard: boolean;
     relaxedNote: boolean;
     accommodation: boolean;
+    suppliers: boolean;
     dayTwo: boolean;
     story: boolean;
     gallery: boolean;

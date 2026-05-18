@@ -125,6 +125,9 @@ export function AdminWeddingEditor({
   const accommodationLines = weddingData.accommodation
     .map((item) => [item.name, item.link, item.note].filter(Boolean).join(" | "))
     .join("\n");
+  const supplierLines = weddingData.suppliers
+    .map((item) => [item.name, item.category, item.note, item.link].filter(Boolean).join(" | "))
+    .join("\n");
   const galleryImageLines = weddingData.gallery.images.join("\n");
   const mapSpotLines = (weddingData.travel.mapSpots ?? [])
     .map((spot) => [spot.label, spot.detail, spot.href].filter(Boolean).join(" | "))
@@ -246,6 +249,15 @@ export function AdminWeddingEditor({
         weddingData.accommodationDescription ??
           "A couple of nearby options for guests travelling in for the celebration."
       );
+  const suppliersTitleHtml = weddingData.suppliersTitleHtml
+    ? weddingData.suppliersTitleHtml
+    : simpleTextHtml(weddingData.suppliersTitle ?? "Helpful Local Contacts");
+  const suppliersDescriptionHtml = weddingData.suppliersDescriptionHtml
+    ? weddingData.suppliersDescriptionHtml
+    : simpleTextHtml(
+        weddingData.suppliersDescription ??
+          "Recommended local beauty, hair, and wedding-day extras guests may want to book ahead of time."
+      );
   const dayTwoTitleHtml = weddingData.dayTwo?.titleHtml
     ? weddingData.dayTwo.titleHtml
     : simpleTextHtml(weddingData.dayTwo?.title ?? "Keep The Celebrations Going");
@@ -273,6 +285,7 @@ export function AdminWeddingEditor({
     { id: "weekend-timeline", label: "Weekend timeline" },
     { id: "day-two", label: "Day two" },
     { id: "rsvp-form", label: "RSVP form" },
+    { id: "suppliers", label: "Suppliers" },
     { id: "our-story", label: "Our story" },
     { id: "ai-concierge", label: "AI concierge" },
     { id: "faq", label: "FAQ" },
@@ -1462,6 +1475,84 @@ export function AdminWeddingEditor({
                 aria-hidden="true"
                 tabIndex={-1}
               />
+            </div>
+          </EditorAccordionSection>
+
+          <EditorAccordionSection
+            id="suppliers"
+            eyebrow="Suppliers"
+            title="Helpful local recommendations"
+            description="Use this optional pillar for beauty, hair, makeup, transport, or other trusted local suppliers couples want to spotlight for guests."
+          >
+            <div className="grid gap-4">
+              <SectionToggle
+                name="showSuppliers"
+                label="Show suppliers section"
+                checked={visibility?.suppliers ?? false}
+              />
+              <input
+                name="suppliersEyebrow"
+                defaultValue={weddingData.suppliersEyebrow ?? "Suppliers"}
+                placeholder="Suppliers"
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              />
+              <RichTextEditorField
+                name="suppliersTitle"
+                label="Suppliers heading"
+                description="This controls the large heading for the supplier recommendations section."
+                defaultValue={suppliersTitleHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <RichTextEditorField
+                name="suppliersDescription"
+                label="Suppliers intro"
+                description="Use this for a short explanation of what guests will find in the supplier recommendations."
+                defaultValue={suppliersDescriptionHtml}
+                minHeightClassName="min-h-[140px]"
+              />
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Recommended Suppliers</p>
+                <h2 className="mt-3 text-2xl">Add one local contact per line</h2>
+                <p className="prose-copy mt-3">
+                  Use this format:
+                  <span className="font-medium text-[var(--foreground)]"> Supplier name | category | short note | link</span>.
+                  The category and link are optional, but the note helps guests know why it is useful.
+                </p>
+                <textarea
+                  name="suppliersText"
+                  defaultValue={supplierLines}
+                  rows={6}
+                  placeholder="Glow Beauty Studio | Hair & Makeup | Bridal styling and makeup appointments | https://example.com"
+                  className="mt-4 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-[#fbfcfb] p-5">
+                <p className="eyebrow">Guest-Facing Preview Summary</p>
+                <h2 className="mt-3 text-2xl">How this section currently reads</h2>
+                <div className="rounded-[1.25rem] border border-[var(--border)] bg-white p-5">
+                  <div className="mt-3 space-y-4">
+                    {weddingData.suppliers.length ? (
+                      weddingData.suppliers.map((item) => (
+                        <div
+                          key={`${item.name}-${item.category ?? "supplier"}`}
+                          className="border-b border-[var(--border)] pb-4 last:border-b-0 last:pb-0"
+                        >
+                          {item.category ? <p className="eyebrow">{item.category}</p> : null}
+                          <p className="mt-2 font-medium text-[#1c2622]">{item.name}</p>
+                          <p className="mt-1 text-sm leading-6 text-[#41564e]">{item.note}</p>
+                          {item.link ? (
+                            <p className="mt-2 text-sm text-[#0f5a43]">Guest button: View supplier</p>
+                          ) : null}
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm leading-6 text-[#6e7e78]">
+                        No supplier recommendations have been added yet.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </EditorAccordionSection>
 

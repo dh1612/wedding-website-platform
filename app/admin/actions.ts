@@ -41,6 +41,30 @@ function parseAccommodationLine(line: string) {
   };
 }
 
+function parseSupplierLine(line: string) {
+  const parts = line
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (!parts.length) {
+    return null;
+  }
+
+  const [name, second, third, fourth] = parts;
+  const category =
+    second && !second.startsWith("http://") && !second.startsWith("https://") ? second : undefined;
+  const note = category ? third : second;
+  const link = category ? fourth : third;
+
+  return {
+    name,
+    category,
+    note: note || "A trusted local recommendation for the wedding weekend.",
+    link: link?.startsWith("http://") || link?.startsWith("https://") ? link : undefined
+  };
+}
+
 function stripHtml(value: string) {
   return value
     .replace(/<br\s*\/?>/gi, "\n")
@@ -274,6 +298,8 @@ export async function updateWeddingContentAction(formData: FormData) {
   const dayTwoDetailsRichText = String(formData.get("dayTwoDetails") || "").trim();
   const accommodationTitleRichText = String(formData.get("accommodationTitle") || "").trim();
   const accommodationDescriptionRichText = String(formData.get("accommodationDescription") || "").trim();
+  const suppliersTitleRichText = String(formData.get("suppliersTitle") || "").trim();
+  const suppliersDescriptionRichText = String(formData.get("suppliersDescription") || "").trim();
   const heroImageField = String(formData.get("heroImage") || "").trim();
   const storyFeatureImageField = String(formData.get("storyFeatureImage") || "").trim();
   const storyFeatureImageFieldTwo = String(formData.get("storyFeatureImage2") || "").trim();
@@ -315,6 +341,12 @@ export async function updateWeddingContentAction(formData: FormData) {
     .filter(Boolean)
     .map(parseAccommodationLine)
     .filter((item): item is NonNullable<ReturnType<typeof parseAccommodationLine>> => Boolean(item));
+  const supplierItems = String(formData.get("suppliersText") || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map(parseSupplierLine)
+    .filter((item): item is NonNullable<ReturnType<typeof parseSupplierLine>> => Boolean(item));
 
   const customQuestions = String(formData.get("rsvpCustomQuestions") || "")
     .split("\n")
@@ -661,6 +693,17 @@ export async function updateWeddingContentAction(formData: FormData) {
     accommodationDescriptionHtml:
       accommodationDescriptionRichText || undefined,
     accommodation: accommodationItems.length ? accommodationItems : [],
+    suppliersEyebrow:
+      String(formData.get("suppliersEyebrow") || "").trim(),
+    suppliersTitle:
+      stripHtml(suppliersTitleRichText),
+    suppliersTitleHtml:
+      suppliersTitleRichText || undefined,
+    suppliersDescription:
+      stripHtml(suppliersDescriptionRichText),
+    suppliersDescriptionHtml:
+      suppliersDescriptionRichText || undefined,
+    suppliers: supplierItems,
     faq: faqItems.length ? faqItems : weddingData.faq,
     contact: {
       ...weddingData.contact,
@@ -743,6 +786,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       directionsCard: formData.has("showDirectionsCard"),
       relaxedNote: formData.has("showRelaxedNote"),
       accommodation: formData.has("showAccommodation"),
+      suppliers: formData.has("showSuppliers"),
       story: formData.has("showStory"),
       gallery: formData.has("showGallery"),
       registry: formData.has("showRegistry"),

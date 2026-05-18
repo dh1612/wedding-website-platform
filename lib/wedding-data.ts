@@ -1,5 +1,11 @@
 import weddingData from "@/data/weddingData.json";
-import type { MapSpot, RSVPFormQuestion, RSVPMealOption, WeddingData } from "@/types/wedding";
+import type {
+  MapSpot,
+  RSVPFormQuestion,
+  RSVPMealOption,
+  SupplierItem,
+  WeddingData
+} from "@/types/wedding";
 
 const defaultWeddingData = weddingData as unknown as WeddingData;
 
@@ -156,6 +162,33 @@ function coerceMapSpots(input: unknown, fallback: MapSpot[]) {
     .filter((item): item is MapSpot => item !== null);
 
   return mapped.length ? mapped : fallback;
+}
+
+function coerceSuppliers(input: unknown): SupplierItem[] {
+  if (!Array.isArray(input)) {
+    return [];
+  }
+
+  return input
+    .map<SupplierItem | null>((item) => {
+      const source = item as Partial<SupplierItem>;
+      const name = typeof source.name === "string" ? source.name.trim() : "";
+      const note = typeof source.note === "string" ? source.note.trim() : "";
+      const category = typeof source.category === "string" ? source.category.trim() : "";
+      const link = typeof source.link === "string" ? source.link.trim() : "";
+
+      if (!name) {
+        return null;
+      }
+
+      return {
+        name,
+        category: category || undefined,
+        note: note || "A trusted local recommendation for the wedding weekend.",
+        link: isValidRemoteImageUrl(link) ? link : undefined
+      };
+    })
+    .filter((item): item is SupplierItem => item !== null);
 }
 
 export function getWeddingData(): WeddingData {
@@ -426,6 +459,28 @@ export function coerceWeddingData(input: unknown): WeddingData {
         : undefined,
     accommodation:
       Array.isArray(source.accommodation) ? source.accommodation : fallback.accommodation,
+    suppliersEyebrow:
+      typeof source.suppliersEyebrow === "string"
+        ? source.suppliersEyebrow.trim()
+        : "Suppliers",
+    suppliersTitle:
+      typeof source.suppliersTitle === "string"
+        ? source.suppliersTitle.trim()
+        : "Helpful Local Contacts",
+    suppliersTitleHtml:
+      typeof source.suppliersTitleHtml === "string" && source.suppliersTitleHtml.trim()
+        ? source.suppliersTitleHtml
+        : undefined,
+    suppliersDescription:
+      typeof source.suppliersDescription === "string"
+        ? source.suppliersDescription.trim()
+        : "Recommended local beauty, hair, and wedding-day extras guests may want to book ahead of time.",
+    suppliersDescriptionHtml:
+      typeof source.suppliersDescriptionHtml === "string" &&
+      source.suppliersDescriptionHtml.trim()
+        ? source.suppliersDescriptionHtml
+        : undefined,
+    suppliers: coerceSuppliers(source.suppliers),
     faq: Array.isArray(source.faq) ? source.faq : fallback.faq,
     rsvp: {
       eyebrow:
@@ -546,6 +601,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
       directionsCard: source.sectionVisibility?.directionsCard ?? true,
       relaxedNote: source.sectionVisibility?.relaxedNote ?? true,
       accommodation: source.sectionVisibility?.accommodation ?? true,
+      suppliers: source.sectionVisibility?.suppliers ?? false,
       dayTwo: source.sectionVisibility?.dayTwo ?? false,
       story: source.sectionVisibility?.story ?? true,
       gallery: source.sectionVisibility?.gallery ?? true,

@@ -7,6 +7,7 @@ import { RSVPSection } from "@/components/rsvp-section";
 import { ScheduleSection } from "@/components/schedule-section";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { SuppliersSection } from "@/components/suppliers-section";
 import { TravelSection } from "@/components/travel-section";
 import type { SiteMode } from "@/lib/site-navigation";
 import type { ThemeDefinition } from "@/lib/themes";
@@ -75,6 +76,9 @@ export function WeddingSitePage({
           previewMode={previewMode}
           rsvpApiPath={rsvpApiPath}
         />
+      ) : null}
+      {(weddingData.sectionVisibility?.suppliers ?? false) ? (
+        <SuppliersSection weddingData={weddingData} />
       ) : null}
       <GalleryRegistrySection weddingData={weddingData} />
       <FAQSection
