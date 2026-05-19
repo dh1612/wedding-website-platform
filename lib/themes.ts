@@ -197,24 +197,24 @@ export const weddingThemes: ThemeDefinition[] = [
       backgroundPosition: "center"
     },
     style: createThemeStyle({
-      background: "#edf4f5",
-      foreground: "#19303a",
-      surface: "rgba(250, 254, 255, 0.8)",
-      surfaceStrong: "#fbfeff",
-      border: "rgba(61, 104, 118, 0.16)",
-      accent: "#6c96a1",
-      accentSoft: "rgba(108, 150, 161, 0.16)",
-      accentStrong: "#345866",
-      accentContrast: "#f5fcff",
-      muted: "#53717c",
-      gold: "#d0b178",
-      shadow: "0 24px 72px rgba(41, 92, 111, 0.14)",
+      background: "#e8f1f4",
+      foreground: "#14313d",
+      surface: "rgba(245, 252, 255, 0.84)",
+      surfaceStrong: "#fcfeff",
+      border: "rgba(45, 95, 114, 0.2)",
+      accent: "#5e90a2",
+      accentSoft: "rgba(94, 144, 162, 0.18)",
+      accentStrong: "#215066",
+      accentContrast: "#f3fbff",
+      muted: "#4d6e7b",
+      gold: "#d6b06c",
+      shadow: "0 26px 76px rgba(36, 88, 108, 0.16)",
       pageGradient:
-        "radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 24%), radial-gradient(circle at 82% 16%, rgba(121, 175, 190, 0.2), transparent 22%), linear-gradient(180deg, #f8fcff 0%, #edf4f5 48%, #dfecef 100%)",
+        "radial-gradient(circle at top left, rgba(255,255,255,0.94), transparent 24%), radial-gradient(circle at 82% 16%, rgba(94, 144, 162, 0.24), transparent 24%), linear-gradient(180deg, #f7fcff 0%, #e8f1f4 44%, #d1e3ea 100%)",
       cardGlow:
-        "linear-gradient(180deg, rgba(255,255,255,0.26), rgba(198,221,226,0.08))",
+        "linear-gradient(180deg, rgba(255,255,255,0.28), rgba(210,232,239,0.08))",
       heroGlow:
-        "radial-gradient(circle at top right, rgba(148, 196, 205, 0.24), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.18), transparent)",
+        "radial-gradient(circle at top right, rgba(94, 144, 162, 0.28), transparent 32%), linear-gradient(180deg, rgba(255,255,255,0.22), transparent)",
       fontBody: "Georgia, 'Times New Roman', serif",
       fontDisplay: "'Hoefler Text', Garamond, serif"
     }),
@@ -425,26 +425,26 @@ export const weddingThemes: ThemeDefinition[] = [
       backgroundPosition: "center"
     },
     style: createThemeStyle({
-      background: "#f5f0ea",
-      foreground: "#2b221d",
-      surface: "rgba(255, 252, 247, 0.82)",
-      surfaceStrong: "#fffdf9",
-      border: "rgba(89, 70, 57, 0.14)",
-      accent: "#9a785d",
-      accentSoft: "rgba(154, 120, 93, 0.14)",
-      accentStrong: "#5b4435",
-      accentContrast: "#fff8f0",
-      muted: "#6c5b4e",
-      gold: "#cba467",
-      shadow: "0 24px 76px rgba(63, 45, 31, 0.14)",
+      background: "#f1ede8",
+      foreground: "#191919",
+      surface: "rgba(255, 253, 250, 0.88)",
+      surfaceStrong: "#fffdfa",
+      border: "rgba(54, 54, 54, 0.18)",
+      accent: "#8c7b68",
+      accentSoft: "rgba(140, 123, 104, 0.14)",
+      accentStrong: "#1a1a1a",
+      accentContrast: "#fffaf4",
+      muted: "#57524c",
+      gold: "#c8a56b",
+      shadow: "0 28px 80px rgba(26, 26, 26, 0.16)",
       pageGradient:
-        "radial-gradient(circle at 12% 0%, rgba(255,255,255,0.9), transparent 26%), radial-gradient(circle at 84% 16%, rgba(203,164,103,0.16), transparent 20%), linear-gradient(180deg, #fbf7f2 0%, #f5f0ea 52%, #eadfd3 100%)",
+        "radial-gradient(circle at 12% 0%, rgba(255,255,255,0.95), transparent 24%), radial-gradient(circle at 84% 16%, rgba(200,165,107,0.14), transparent 20%), linear-gradient(180deg, #fcfaf7 0%, #f1ede8 48%, #e2d8cd 100%)",
       cardGlow:
-        "linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,248,240,0.08))",
+        "linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,250,244,0.08))",
       heroGlow:
-        "radial-gradient(circle at top right, rgba(203,164,103,0.18), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.18), transparent)",
-      fontBody: "Georgia, 'Times New Roman', serif",
-      fontDisplay: "Didot, 'Bodoni MT', serif"
+        "radial-gradient(circle at top right, rgba(0,0,0,0.08), transparent 28%), radial-gradient(circle at 74% 14%, rgba(200,165,107,0.16), transparent 18%), linear-gradient(180deg, rgba(255,255,255,0.22), transparent)",
+      fontBody: "'Libre Baskerville', Georgia, serif",
+      fontDisplay: "'Playfair Display', Didot, serif"
     }),
     heroImage:
       "https://images.pexels.com/photos/34433181/pexels-photo-34433181.jpeg?auto=compress&cs=tinysrgb&w=1600",

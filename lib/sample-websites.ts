@@ -30,7 +30,7 @@ export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
   },
   {
     sampleId: "atlantic-weekend",
-    themeId: "summer-garden",
+    themeId: "summer-coast",
     title: "Cliffs & Coast Weekend",
     label: "Atlantic destination feel",
     location: "Spanish Point, Co. Clare",
@@ -44,7 +44,7 @@ export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
   },
   {
     sampleId: "black-tie-city",
-    themeId: "tailored-vows",
+    themeId: "black-tie-details",
     title: "Black Tie City Celebration",
     label: "Formal and editorial",
     location: "The Merrion, Dublin",
