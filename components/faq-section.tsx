@@ -22,7 +22,11 @@ export function FAQSection({
   }
 
   return (
-    <section id="faq" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+    <section
+      id="faq"
+      data-section="faq"
+      className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12"
+    >
       <div className="space-y-8">
         {showConcierge ? (
           <div className="section-shell rounded-[2rem] p-8 sm:p-10">

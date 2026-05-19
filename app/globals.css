@@ -95,6 +95,106 @@ main[data-theme="winter-velvet"]::before {
     linear-gradient(180deg, rgba(5, 28, 19, 0.34) 0%, rgba(5, 28, 19, 0.12) 30%, transparent 50%);
 }
 
+main[data-theme="maison-mosaic"] {
+  position: relative;
+  isolation: isolate;
+}
+
+main[data-theme="maison-mosaic"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 12% 4%, rgba(255,255,255,0.92), transparent 20%),
+    radial-gradient(circle at 82% 10%, rgba(119, 147, 170, 0.16), transparent 22%),
+    radial-gradient(circle at 86% 58%, rgba(190, 160, 128, 0.14), transparent 18%),
+    linear-gradient(180deg, rgba(255,255,255,0.08), transparent 24%);
+}
+
+main[data-theme="maison-mosaic"] [data-section] .section-shell,
+main[data-theme="maison-mosaic"] [data-section] .accent-panel {
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+main[data-theme="maison-mosaic"] [data-section="travel"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(236, 245, 248, 0.1)),
+    rgba(244, 250, 252, 0.84);
+  border-color: rgba(92, 129, 145, 0.22);
+}
+
+main[data-theme="maison-mosaic"] [data-section="travel"] .accent-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.3), rgba(232, 242, 245, 0.08)),
+    rgba(225, 239, 243, 0.48);
+  border-color: rgba(92, 129, 145, 0.18);
+}
+
+main[data-theme="maison-mosaic"] [data-section="accommodation"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(249, 243, 236, 0.1)),
+    rgba(250, 246, 240, 0.86);
+  border-color: rgba(183, 157, 122, 0.2);
+}
+
+main[data-theme="maison-mosaic"] [data-section="schedule"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.26), rgba(244, 237, 234, 0.1)),
+    rgba(249, 244, 241, 0.86);
+  border-color: rgba(164, 137, 124, 0.2);
+}
+
+main[data-theme="maison-mosaic"] [data-section="schedule"] .accent-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(252, 245, 242, 0.08)),
+    rgba(255, 250, 248, 0.68);
+  border-color: rgba(181, 152, 139, 0.18);
+}
+
+main[data-theme="maison-mosaic"] [data-section="day-two"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), rgba(238, 246, 239, 0.1)),
+    rgba(242, 248, 242, 0.86);
+  border-color: rgba(117, 145, 123, 0.2);
+}
+
+main[data-theme="maison-mosaic"] [data-section="rsvp"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.26), rgba(243, 240, 233, 0.1)),
+    rgba(249, 245, 239, 0.88);
+  border-color: rgba(167, 144, 118, 0.2);
+}
+
+main[data-theme="maison-mosaic"] [data-section="rsvp"] .accent-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(250, 246, 240, 0.08)),
+    rgba(255, 251, 246, 0.74);
+  border-color: rgba(183, 158, 129, 0.18);
+}
+
+main[data-theme="maison-mosaic"] [data-section="suppliers"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), rgba(238, 245, 241, 0.1)),
+    rgba(244, 249, 246, 0.86);
+  border-color: rgba(106, 133, 118, 0.2);
+}
+
+main[data-theme="maison-mosaic"] [data-section="faq"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), rgba(239, 241, 246, 0.1)),
+    rgba(245, 247, 250, 0.86);
+  border-color: rgba(124, 132, 154, 0.18);
+}
+
+main[data-theme="maison-mosaic"] [data-section="story"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.26), rgba(246, 241, 238, 0.08)),
+    rgba(252, 249, 246, 0.88);
+  border-color: rgba(172, 151, 135, 0.16);
+}
+
 a {
   text-decoration: none;
 }

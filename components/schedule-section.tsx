@@ -12,7 +12,11 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
   const stepLabel = typeof wedding.scheduleStepLabel === "string" ? wedding.scheduleStepLabel.trim() : "Moment";
 
   return (
-    <section id="schedule" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+    <section
+      id="schedule"
+      data-section="schedule"
+      className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12"
+    >
       <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <SectionHeading

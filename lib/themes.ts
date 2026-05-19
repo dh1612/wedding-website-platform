@@ -223,6 +223,48 @@ export const weddingThemes: ThemeDefinition[] = [
     heroLayout: "panorama"
   },
   {
+    id: "maison-mosaic",
+    name: "Maison Mosaic",
+    label: "Layered tonal panels",
+    description: "A more editorial multi-tone direction where each section shifts gently in mood, adding movement and separation without breaking the overall calm.",
+    season: "All season / editorial",
+    previewStyle: {
+      backgroundImage:
+        "linear-gradient(180deg, rgba(45,57,66,0.12), rgba(45,57,66,0.08)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80')",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    },
+    style: createThemeStyle({
+      background: "#f4efea",
+      foreground: "#2b241f",
+      surface: "rgba(255, 252, 248, 0.82)",
+      surfaceStrong: "#fffdf9",
+      border: "rgba(120, 104, 92, 0.16)",
+      accent: "#886f5c",
+      accentSoft: "rgba(136, 111, 92, 0.12)",
+      accentStrong: "#5a4537",
+      accentContrast: "#fff8f1",
+      muted: "#67574c",
+      gold: "#d0ac73",
+      shadow: "0 24px 72px rgba(63, 46, 35, 0.12)",
+      pageGradient:
+        "radial-gradient(circle at 10% 0%, rgba(255,255,255,0.92), transparent 24%), radial-gradient(circle at 84% 16%, rgba(160,190,202,0.16), transparent 22%), linear-gradient(180deg, #faf6f1 0%, #f4efea 48%, #ece4da 100%)",
+      cardGlow:
+        "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,249,243,0.08))",
+      heroGlow:
+        "radial-gradient(circle at top right, rgba(160,190,202,0.18), transparent 30%), radial-gradient(circle at 72% 12%, rgba(208,172,115,0.12), transparent 18%), linear-gradient(180deg, rgba(255,255,255,0.18), transparent)",
+      fontBody: "'Libre Baskerville', Georgia, serif",
+      fontDisplay: "'Cormorant Garamond', 'Hoefler Text', Garamond, serif",
+      fontScript:
+        "'Snell Roundhand', 'Apple Chancery', 'Zapfino', 'URW Chancery L', cursive"
+    }),
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    detailImage:
+      "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80",
+    heroLayout: "editorial-frame"
+  },
+  {
     id: "classical-soiree",
     name: "Heirloom Rings",
     label: "Detail-led and intimate",

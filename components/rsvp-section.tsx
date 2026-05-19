@@ -20,7 +20,11 @@ export function RSVPSection({
   const showInteractiveForm = Boolean(rsvpApiPath) && !demoMode;
 
   return (
-    <section id="rsvp" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+    <section
+      id="rsvp"
+      data-section="rsvp"
+      className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12"
+    >
       <div className="section-shell rounded-[2rem] p-8 sm:p-10 lg:p-14">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeading

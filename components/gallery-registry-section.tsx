@@ -30,7 +30,11 @@ export function GalleryRegistrySection({
   }
 
   return (
-    <section id="story" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+    <section
+      id="story"
+      data-section="story"
+      className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12"
+    >
       <div className="space-y-8">
         {(showStory || showGallery) ? (
           <div className="section-shell rounded-[2rem] p-8 sm:p-10">

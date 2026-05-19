@@ -121,7 +121,7 @@ export default function BrochurePage() {
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             {sampleWebsiteShowcases.map((theme) => (
               <Link
-                key={theme.sampleId}
+                key={`${theme.sampleId}-${theme.themeId}`}
                 href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
                 className="overflow-hidden rounded-[1.9rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
               >

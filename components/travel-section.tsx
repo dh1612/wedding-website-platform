@@ -26,7 +26,11 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
   }
 
   return (
-    <section id="travel" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+    <section
+      id="travel"
+      data-section="travel"
+      className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12"
+    >
       <div className="section-shell rounded-[2rem] p-8 sm:p-10 lg:p-14">
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="max-w-2xl space-y-4">

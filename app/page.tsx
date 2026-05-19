@@ -476,7 +476,7 @@ export default function MarketingHomePage() {
               <div className="mt-4 space-y-3">
                 {sampleWebsiteShowcases.map((theme) => (
                   <Link
-                    key={theme.sampleId}
+                    key={`${theme.sampleId}-${theme.themeId}`}
                     href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
                     className="block overflow-hidden rounded-[1rem] border border-black/6 bg-white transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(52,35,24,0.12)]"
                   >

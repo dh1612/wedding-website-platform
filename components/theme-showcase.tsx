@@ -38,7 +38,7 @@ export function ThemeShowcase({ activeThemeId }: ThemeShowcaseProps) {
 
             return (
               <Link
-                key={showcase.sampleId}
+                key={`${showcase.sampleId}-${showcase.themeId}`}
                 href={buildSampleWebsiteHref(showcase.themeId, undefined, showcase.sampleId)}
                 className={cn(
                   "group overflow-hidden rounded-[1.75rem] border transition hover:-translate-y-1",

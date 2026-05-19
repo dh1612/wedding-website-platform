@@ -29,6 +29,20 @@ export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
     kicker: "Country house weekend"
   },
   {
+    sampleId: "manor-house",
+    themeId: "maison-mosaic",
+    title: "Maison Mosaic Edit",
+    label: "Layered editorial mood",
+    location: "Ballymagarvey Village, Co. Meath",
+    image:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
+    blurb:
+      "A more fashion-led variation where each section shifts gently in tone, so the site feels more collected and editorial from pillar to pillar.",
+    tone: "editorial",
+    accent: "Soft blush, blue-grey, parchment, and sage layered through the page",
+    kicker: "Layered tonal panels"
+  },
+  {
     sampleId: "atlantic-weekend",
     themeId: "summer-coast",
     title: "Cliffs & Coast Weekend",

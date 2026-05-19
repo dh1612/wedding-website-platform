@@ -14,7 +14,11 @@ export function SuppliersSection({ weddingData }: SuppliersSectionProps) {
   }
 
   return (
-    <section id="suppliers" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+    <section
+      id="suppliers"
+      data-section="suppliers"
+      className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12"
+    >
       <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <SectionHeading
