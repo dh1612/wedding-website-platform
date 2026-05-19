@@ -2,7 +2,10 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { buildSampleWebsiteHref } from "@/lib/brand";
-import { weddingThemes } from "@/lib/themes";
+import {
+  defaultSampleWebsiteShowcase,
+  sampleWebsiteShowcases
+} from "@/lib/sample-websites";
 
 const exampleHref = buildSampleWebsiteHref();
 
@@ -11,10 +14,10 @@ const packageCards = [
     id: "basic",
     name: "Basic",
     price: "EUR245",
-    summary: "A polished wedding website, prepared from the details already shared.",
+    summary: "An elegant information-only wedding website, built from the details already shared.",
     points: [
-      "Done-for-you website setup",
-      "Schedule, travel, FAQ and RSVP sections",
+      "Done-for-you information website",
+      "Schedule, travel, stay and FAQ sections",
       "Private review before it is shared",
       "One premium design direction"
     ]
@@ -23,24 +26,24 @@ const packageCards = [
     id: "smart",
     name: "Smart",
     price: "EUR395",
-    summary: "A more polished first version, shaped faster with support behind the scenes.",
+    summary: "Adds RSVP collection, AI concierge access, and a guided walkthrough.",
     points: [
       "Everything in Basic",
-      "AI-supported first draft",
-      "More finished first version",
-      "Optional concierge touches"
+      "RSVP collection",
+      "AI concierge access",
+      "1-hour walkthrough call"
     ]
   },
   {
     id: "premium",
     name: "Premium",
     price: "EUR645",
-    summary: "Includes the website, the private planning area, and a guided premium handover.",
+    summary: "The full experience, including the private couple portal and every planning feature.",
     points: [
       "Everything in Smart",
-      "Private couple area",
+      "Private couple portal",
       "Checklist, RSVP and planning tools",
-      "1-hour walkthrough call"
+      "Seating plan and premium planning tools"
     ]
   }
 ];
@@ -67,8 +70,6 @@ const flowSteps = [
     copy: "A beautiful site, ready for your guests"
   }
 ];
-
-const featuredThemes = weddingThemes.slice(0, 3);
 
 const portalPreviewCards = [
   {
@@ -164,21 +165,56 @@ export default function MarketingHomePage() {
         </div>
       </header>
 
-      <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-8 lg:pt-16">
+      <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 lg:px-8 lg:pt-16">
+        <div className="rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.2)] sm:rounded-[2.4rem] sm:p-5">
+          <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
+            <div className="overflow-hidden rounded-[1.6rem] border border-white/16 bg-white/10 sm:rounded-[2rem]">
+              <div
+                className="h-[300px] w-full bg-cover bg-center sm:h-[500px]"
+                style={{
+                  backgroundImage:
+                    "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
+                }}
+              />
+            </div>
+            <div className="grid gap-4">
+              <div className="overflow-hidden rounded-[1.4rem] border border-white/16 bg-white/10 sm:rounded-[1.7rem]">
+                <div
+                  className="h-[180px] w-full bg-cover bg-center sm:h-[280px]"
+                  style={{
+                    backgroundImage:
+                      "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
+                  }}
+                />
+              </div>
+              <div className="rounded-[1.4rem] border border-white/12 bg-white/92 p-5 shadow-[0_20px_60px_rgba(17,28,23,0.18)] sm:rounded-[1.7rem] sm:p-6">
+                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">
+                  Premium package highlight
+                </p>
+                <p className="mt-3 text-2xl leading-tight">
+                  The public wedding website plus the private planning side, handled properly.
+                </p>
+                <p className="mt-3 text-base leading-7 text-[#5f564e]">
+                  Premium gives couples the guest-facing website, RSVPs, AI concierge access, and
+                  the full private planning area for deadlines, seating, and organisation behind
+                  the scenes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="space-y-7">
           <div className="space-y-5">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
               Beautiful wedding websites, built for you
             </p>
-            <h1 className="max-w-3xl text-[3.35rem] leading-none sm:text-6xl lg:text-7xl">
-              Skip the stress of building a wedding website.
+            <h1 className="max-w-3xl text-[3.1rem] leading-none sm:text-[4.4rem] lg:text-6xl">
+              A wedding website that looks premium, without you building it yourself.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              We build it for you. Just tell us what your guests need to know — we handle the rest.
-            </p>
-            <p className="max-w-2xl text-base leading-7 text-[#5f564e] sm:text-lg">
-              No DIY. No setup. No back and forth. Get a beautiful, ready-to-share wedding website
-              in minutes.
+              Share the details your guests need to know and we handle the structure, wording,
+              styling, and review.
             </p>
           </div>
 
@@ -218,43 +254,8 @@ export default function MarketingHomePage() {
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
-            Weddings are stressful enough. Your website shouldn&apos;t be. We take care of
-            everything — so you don&apos;t have to.
-          </div>
-        </div>
-
-        <div className="rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.2)] sm:rounded-[2.4rem] sm:p-5">
-          <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
-            <div className="overflow-hidden rounded-[1.6rem] border border-white/16 bg-white/10 sm:rounded-[2rem]">
-              <div
-                className="h-[300px] w-full bg-cover bg-center sm:h-[500px]"
-                style={{
-                  backgroundImage:
-                    "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
-                }}
-              />
-            </div>
-            <div className="grid gap-4">
-              <div className="overflow-hidden rounded-[1.4rem] border border-white/16 bg-white/10 sm:rounded-[1.7rem]">
-                <div
-                  className="h-[180px] w-full bg-cover bg-center sm:h-[280px]"
-                  style={{
-                    backgroundImage:
-                      "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
-                  }}
-                />
-              </div>
-                <div className="rounded-[1.4rem] border border-white/12 bg-white/92 p-5 shadow-[0_20px_60px_rgba(17,28,23,0.18)] sm:rounded-[1.7rem] sm:p-6">
-                  <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Premium package highlight</p>
-                  <p className="mt-3 text-2xl leading-tight">
-                  The wedding website plus the private planning side, handled properly.
-                  </p>
-                  <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  Premium gives couples the public wedding website plus a calmer private area for
-                  RSVPs, notes, key dates, seating, and a guided walkthrough call.
-                  </p>
-                </div>
-            </div>
+            Start with a fast first draft, then decide how much support you want around RSVPs,
+            guest communication, and the planning side.
           </div>
         </div>
       </section>
@@ -270,12 +271,13 @@ export default function MarketingHomePage() {
                 See exactly what you&apos;ll get
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-                The quickest way to understand the service is to see the kind of website, support,
-                and private couple area a couple would actually receive.
+                The quickest way to understand the service is to open a fuller example website and
+                see how the guest-facing experience actually comes together.
               </p>
               <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-sm leading-7 text-[#486159]">
-                Premium includes a 1-hour video walkthrough, so the couple can be shown exactly how
-                to use the private planning area rather than being left to figure it out alone.
+                This sample includes accommodation suggestions, local suppliers, RSVP, and a
+                second-day section, so couples can see the richer version of what the website can
+                become.
               </div>
               <div className="pt-1">
                 <Link
@@ -294,17 +296,16 @@ export default function MarketingHomePage() {
                 <div
                   className="h-[240px] w-full bg-cover bg-center"
                   style={{
-                    backgroundImage:
-                      "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
+                    backgroundImage: `url('${defaultSampleWebsiteShowcase.image}')`
                   }}
                 />
                 <div className="p-6">
                   <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
                     Public Website Example
                   </p>
-                  <h3 className="mt-3 text-3xl">Aegean destination example</h3>
+                  <h3 className="mt-3 text-3xl">{defaultSampleWebsiteShowcase.title}</h3>
                   <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                    A guest-facing site with hero, schedule, travel details, story, and RSVP flow already styled and ready to explore.
+                    {defaultSampleWebsiteShowcase.blurb}
                   </p>
                   <p className="mt-5 text-sm font-medium text-[#184b38]">View Example Website</p>
                 </div>
@@ -326,8 +327,9 @@ export default function MarketingHomePage() {
                   </span>
                 </div>
                 <p className="mt-4 text-base leading-7 text-[#5f564e]">
-                  Premium adds the private planning area plus a 1-hour walkthrough call, so the
-                  couple is not left to figure the features out alone.
+                  Premium adds the full couple portal, plus a 1-hour walkthrough call, so the
+                  couple is shown exactly how to use it rather than being left to figure it out
+                  alone.
                 </p>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {portalPreviewCards.map((card) => (
@@ -471,15 +473,18 @@ export default function MarketingHomePage() {
             <div className="rounded-[1.5rem] border border-black/6 bg-[#f7fbf8] p-6">
               <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Three Style Directions</p>
               <div className="mt-4 space-y-3">
-                {featuredThemes.map((theme) => (
+                {sampleWebsiteShowcases.map((theme) => (
                   <Link
-                    key={theme.id}
-                    href={buildSampleWebsiteHref(theme.id)}
-                    className="block overflow-hidden rounded-[1rem] border border-black/6 bg-white"
-                  >
-                    <div className="h-24 w-full" style={theme.previewStyle} />
+                      key={theme.sampleId}
+                      href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
+                      className="block overflow-hidden rounded-[1rem] border border-black/6 bg-white"
+                    >
+                    <div
+                      className="h-24 w-full bg-cover bg-center"
+                      style={{ backgroundImage: `url('${theme.image}')` }}
+                    />
                     <div className="px-4 py-3">
-                      <p className="text-sm font-medium text-[#241f1b]">{theme.name}</p>
+                      <p className="text-sm font-medium text-[#241f1b]">{theme.title}</p>
                       <p className="mt-1 text-xs uppercase tracking-[0.24em] text-[#9a7d64]">{theme.label}</p>
                     </div>
                   </Link>

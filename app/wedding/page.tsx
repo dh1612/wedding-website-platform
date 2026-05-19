@@ -5,12 +5,13 @@ import { getWeddingData } from "@/lib/wedding-data";
 type WeddingPageProps = {
   searchParams?: Promise<{
     theme?: string;
+    sample?: string;
   }>;
 };
 
 export default async function WeddingPage({ searchParams }: WeddingPageProps) {
-  const wedding = getWeddingData();
   const params = searchParams ? await searchParams : undefined;
+  const wedding = getWeddingData(params?.sample);
   const activeTheme = getThemeById(params?.theme ?? wedding.theme);
 
   return (

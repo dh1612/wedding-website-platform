@@ -3,9 +3,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { buildSampleWebsiteHref } from "@/lib/brand";
 import { packageOffers } from "@/lib/package-offers";
-import { weddingThemes } from "@/lib/themes";
-
-const brochureThemes = weddingThemes.slice(0, 3);
+import { sampleWebsiteShowcases } from "@/lib/sample-websites";
 
 const portalCards = [
   {
@@ -121,22 +119,25 @@ export default function BrochurePage() {
             </p>
           </div>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            {brochureThemes.map((theme) => (
+            {sampleWebsiteShowcases.map((theme) => (
               <Link
-                key={theme.id}
-                href={buildSampleWebsiteHref(theme.id)}
+                key={theme.sampleId}
+                href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
                 className="overflow-hidden rounded-[1.9rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
               >
-                <div className="h-56 w-full" style={theme.previewStyle} />
+                <div
+                  className="h-56 w-full bg-cover bg-center"
+                  style={{ backgroundImage: `url('${theme.image}')` }}
+                />
                 <div className="p-6">
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-3xl leading-tight">{theme.name}</h3>
+                    <h3 className="text-3xl leading-tight">{theme.title}</h3>
                     <span className="text-[11px] uppercase tracking-[0.26em] text-[#9a7d64]">
-                      {theme.season}
+                      {theme.location}
                     </span>
                   </div>
                   <p className="mt-3 text-base font-medium text-[#184b38]">{theme.label}</p>
-                  <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.description}</p>
+                  <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.blurb}</p>
                   <p className="mt-5 text-sm font-medium text-[#184b38]">View guest website example</p>
                 </div>
               </Link>

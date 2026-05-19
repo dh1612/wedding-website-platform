@@ -35,19 +35,19 @@ export const intakePackages: Array<{
     id: "basic",
     name: "Basic",
     price: "EUR245",
-    summary: "A beautiful wedding website built from your information."
+    summary: "An elegant information-only wedding website built from your details."
   },
   {
     id: "smart",
     name: "Smart",
     price: "EUR395",
-    summary: "Website plus AI-assisted content polishing and optional concierge."
+    summary: "Website plus RSVP collection, AI concierge access, and a walkthrough call."
   },
   {
     id: "premium",
     name: "Premium",
     price: "EUR645",
-    summary: "Website plus premium planning features and a fuller portal setup."
+    summary: "Website plus the full couple portal and every premium planning feature."
   }
 ];
 

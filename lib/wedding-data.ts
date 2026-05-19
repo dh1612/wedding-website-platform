@@ -1,4 +1,5 @@
 import weddingData from "@/data/weddingData.json";
+import { sampleWeddingVariants, type SampleWeddingId } from "@/data/sample-weddings";
 import type {
   MapSpot,
   RSVPFormQuestion,
@@ -191,8 +192,12 @@ function coerceSuppliers(input: unknown): SupplierItem[] {
     .filter((item): item is SupplierItem => item !== null);
 }
 
-export function getWeddingData(): WeddingData {
-  return defaultWeddingData;
+export function getWeddingData(sampleId?: string): WeddingData {
+  if (sampleId && sampleId in sampleWeddingVariants) {
+    return sampleWeddingVariants[sampleId as SampleWeddingId];
+  }
+
+  return sampleWeddingVariants["manor-house"] ?? defaultWeddingData;
 }
 
 export function coerceWeddingData(input: unknown): WeddingData {

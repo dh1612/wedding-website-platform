@@ -4,6 +4,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { buildSampleWebsiteHref } from "@/lib/brand";
 import { packageOffers } from "@/lib/package-offers";
+import { defaultSampleWebsiteShowcase } from "@/lib/sample-websites";
 
 type PackagePageProps = {
   params: Promise<{ slug: string }>;
@@ -78,7 +79,11 @@ export default async function PackagePage({ params }: PackagePageProps) {
                   </Link>
                 ) : (
                   <Link
-                    href={buildSampleWebsiteHref("aegean-romance", isSmart ? "#faq" : undefined)}
+                    href={buildSampleWebsiteHref(
+                      defaultSampleWebsiteShowcase.themeId,
+                      isSmart ? "#rsvp" : undefined,
+                      defaultSampleWebsiteShowcase.sampleId
+                    )}
                     className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                   >
                     View Example Website
@@ -153,18 +158,22 @@ export default async function PackagePage({ params }: PackagePageProps) {
               <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                 <div className="space-y-4">
                   <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-                    AI Concierge Preview
+                    RSVP + Concierge Preview
                   </p>
                   <h3 className="text-4xl leading-none sm:text-5xl">
-                    The standout feature here is smarter guest support
+                    The standout feature here is the guest-response side
                   </h3>
                   <p className="text-lg leading-8 text-[#5f564e]">
-                    Smart brings the AI-assisted guest experience much closer to the front. It helps
-                    answer common guest questions quickly, while the website itself still feels
-                    clean and polished.
+                    Smart brings the RSVP experience and AI concierge much closer to the front. It
+                    helps couples collect replies cleanly, while guests can still get quick answers
+                    without turning every small question into a message thread.
                   </p>
                   <Link
-                    href={buildSampleWebsiteHref("aegean-romance", "#faq")}
+                    href={buildSampleWebsiteHref(
+                      defaultSampleWebsiteShowcase.themeId,
+                      "#rsvp",
+                      defaultSampleWebsiteShowcase.sampleId
+                    )}
                     className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
                   >
                     View Example Website
@@ -176,11 +185,11 @@ export default async function PackagePage({ params }: PackagePageProps) {
                   </p>
                   <div className="mt-5 space-y-4">
                     <div className="rounded-[1.1rem] bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#4e453f]">
-                      What time does the ceremony start and is transport provided afterwards?
+                      What time does the ceremony start, and can I also RSVP for day two?
                     </div>
                     <div className="rounded-[1.1rem] bg-[#184b38] px-4 py-4 text-sm leading-6 text-white/88">
-                      The ceremony begins at 2:00 PM. Coaches leave the church at 3:30 PM and
-                      travel directly to the reception venue.
+                      The ceremony begins at 2:00 PM. Yes, you can also confirm day two attendance
+                      through the RSVP form on the website.
                     </div>
                     <div className="rounded-[1.1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
                       A guest gets a quick answer without having to message the couple directly.
