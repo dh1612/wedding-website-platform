@@ -165,63 +165,25 @@ export default function MarketingHomePage() {
         </div>
       </header>
 
-      <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 lg:px-8 lg:pt-16">
-        <div className="rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.2)] sm:rounded-[2.4rem] sm:p-5">
-          <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
-            <div className="overflow-hidden rounded-[1.6rem] border border-white/16 bg-white/10 sm:rounded-[2rem]">
-              <div
-                className="h-[300px] w-full bg-cover bg-center sm:h-[500px]"
-                style={{
-                  backgroundImage:
-                    "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
-                }}
-              />
-            </div>
-            <div className="grid gap-4">
-              <div className="overflow-hidden rounded-[1.4rem] border border-white/16 bg-white/10 sm:rounded-[1.7rem]">
-                <div
-                  className="h-[180px] w-full bg-cover bg-center sm:h-[280px]"
-                  style={{
-                    backgroundImage:
-                      "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
-                  }}
-                />
-              </div>
-              <div className="rounded-[1.4rem] border border-white/12 bg-white/92 p-5 shadow-[0_20px_60px_rgba(17,28,23,0.18)] sm:rounded-[1.7rem] sm:p-6">
-                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">
-                  Premium package highlight
-                </p>
-                <p className="mt-3 text-2xl leading-tight">
-                  The public wedding website plus the private planning side, handled properly.
-                </p>
-                <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  Premium gives couples the guest-facing website, RSVPs, AI concierge access, and
-                  the full private planning area for deadlines, seating, and organisation behind
-                  the scenes.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-8 lg:grid-cols-[0.98fr_1.02fr] lg:gap-10 lg:px-8 lg:pt-16">
         <div className="space-y-7">
           <div className="space-y-5">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              Beautiful wedding websites, built for you
+              Wedding websites tailored for you
             </p>
             <h1 className="max-w-3xl text-[3.1rem] leading-none sm:text-[4.4rem] lg:text-6xl">
-              A wedding website that looks premium, without you building it yourself.
+              A done-for-you wedding website, shaped around your style and your guests.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              Share the details your guests need to know and we handle the structure, wording,
-              styling, and review.
+              This is not a DIY builder. We create the website with you, refine it around your
+              preferences, and match the level of support to the package that suits your day.
             </p>
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 sm:p-6">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it works</p>
             <h2 className="mt-3 text-2xl leading-tight text-[#184b38] sm:text-3xl">
-              We handle everything — you stay in control
+              Thoughtfully curated, with package options to fit how much support you want
             </h2>
             <div className="mt-5 space-y-4">
               {flowSteps.map((step, index) => (
@@ -254,8 +216,47 @@ export default function MarketingHomePage() {
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
-            Start with a fast first draft, then decide how much support you want around RSVPs,
-            guest communication, and the planning side.
+            Start with a strong first draft, then choose whether you want a simple guest website,
+            RSVP support, or the full private planning side as well.
+          </div>
+        </div>
+
+        <div className="rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.2)] sm:rounded-[2.4rem] sm:p-5">
+          <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
+            <div className="overflow-hidden rounded-[1.6rem] border border-white/16 bg-white/10 sm:rounded-[2rem]">
+              <div
+                className="h-[300px] w-full bg-cover bg-center sm:h-[500px]"
+                style={{
+                  backgroundImage:
+                    "url('https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1200')"
+                }}
+              />
+            </div>
+            <div className="grid gap-4">
+              <div className="overflow-hidden rounded-[1.4rem] border border-white/16 bg-white/10 sm:rounded-[1.7rem]">
+                <div
+                  className="h-[180px] w-full bg-cover bg-center sm:h-[280px]"
+                  style={{
+                    backgroundImage:
+                      "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
+                  }}
+                />
+              </div>
+              <div className="rounded-[1.4rem] border border-white/12 bg-white/92 p-5 shadow-[0_20px_60px_rgba(17,28,23,0.18)] sm:rounded-[1.7rem] sm:p-6">
+                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">
+                  Tailored with you
+                </p>
+                <p className="mt-3 text-2xl leading-tight">
+                  A curated wedding website experience, from first draft through to the final live
+                  version.
+                </p>
+                <p className="mt-3 text-base leading-7 text-[#5f564e]">
+                  We shape the wording, structure, styling, guest details, and support around the
+                  kind of experience you want to create, with package options for information-only
+                  websites right through to the full planning portal.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
