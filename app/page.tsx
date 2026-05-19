@@ -50,24 +50,24 @@ const packageCards = [
 
 const flowSteps = [
   {
-    title: "Share a few details (2 minutes)",
-    copy: "Names, date, location — nothing complicated"
+    title: "Share the starting details",
+    copy: "Names, date, location, and anything guests need to know so the first version has the right foundation."
   },
   {
-    title: "We build your website for you",
-    copy: "Designed, written, and structured around your day"
+    title: "We shape the first draft for you",
+    copy: "The wording, layout, and overall direction are curated around your day rather than left to you to assemble."
   },
   {
-    title: "You review privately",
-    copy: "Nothing is shared until you’re happy"
+    title: "You review it privately",
+    copy: "Nothing is shared until it feels right, so any changes can be made quietly before guests ever see it."
   },
   {
-    title: "We refine it together",
-    copy: "Small tweaks, final touches, everything polished"
+    title: "We refine the final version together",
+    copy: "Details, tone, styling, and guest-facing information are polished until the website feels ready to send out."
   },
   {
-    title: "You go live with confidence",
-    copy: "A beautiful site, ready for your guests"
+    title: "You go live with the right level of support",
+    copy: "Choose the package that fits your day, from a clean information site through to RSVP and the full private planning side."
   }
 ];
 
@@ -183,7 +183,7 @@ export default function MarketingHomePage() {
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 sm:p-6">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it works</p>
             <h2 className="mt-3 text-2xl leading-tight text-[#184b38] sm:text-3xl">
-              Thoughtfully curated, with package options to fit how much support you want
+              A guided, curated process from first draft to final website
             </h2>
             <div className="mt-5 space-y-4">
               {flowSteps.map((step, index) => (
