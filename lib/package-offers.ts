@@ -85,7 +85,7 @@ export const packageOffers: PackageOffer[] = [
       {
         title: "A real walkthrough still included",
         copy:
-          "Smart includes a 1-hour walkthrough call, so the couple is shown exactly how the website works instead of being left to figure it out alone."
+          "Smart includes a 1-hour walkthrough call, so everything feels clear from the start and the final handover stays calm and guided."
       }
     ],
     accentLabel: "Most practical package"

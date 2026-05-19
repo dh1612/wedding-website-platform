@@ -408,7 +408,7 @@ export default function MarketingHomePage() {
                   {pkg.summary}
                 </p>
                 <p className={`mt-3 text-sm leading-6 ${index === 2 ? "text-white/72" : "text-[#486159]"}`}>
-                  Every package includes a real person reviewing the first version before it is
+                  Every package includes a private curated review before the first version is
                   shared for feedback.
                 </p>
                 <div className="mt-6 space-y-3">
