@@ -8,6 +8,9 @@ export type SampleWebsiteShowcase = {
   location: string;
   image: string;
   blurb: string;
+  tone: "romantic" | "coastal" | "editorial";
+  accent: string;
+  kicker: string;
 };
 
 export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
@@ -20,7 +23,10 @@ export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
     image:
       "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=80",
     blurb:
-      "A polished countryside example with accommodation, suppliers, RSVP flow, and a proper day-two brunch section."
+      "A polished countryside example with accommodation, suppliers, RSVP flow, and a proper day-two brunch section.",
+    tone: "romantic",
+    accent: "Soft ivory, candlelight, and country-house warmth",
+    kicker: "Country house weekend"
   },
   {
     sampleId: "atlantic-weekend",
@@ -31,7 +37,10 @@ export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
     image:
       "https://images.unsplash.com/photo-1546986294-d9cdc4873420?auto=format&fit=crop&fm=jpg&q=80&w=1400",
     blurb:
-      "A fuller wedding-weekend example with travel planning, stay options, local suppliers, and a standout day-two event."
+      "A fuller wedding-weekend example with travel planning, stay options, local suppliers, and a standout day-two event.",
+    tone: "coastal",
+    accent: "Atlantic blues, open skies, and destination energy",
+    kicker: "Atlantic destination feel"
   },
   {
     sampleId: "black-tie-city",
@@ -42,7 +51,10 @@ export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
     image:
       "https://images.pexels.com/photos/33425288/pexels-photo-33425288.jpeg?auto=compress&cs=tinysrgb&w=1400",
     blurb:
-      "A sharper formal example with city-stay recommendations, RSVP, and a more invitation-led look and feel."
+      "A sharper formal example with city-stay recommendations, RSVP, and a more invitation-led look and feel.",
+    tone: "editorial",
+    accent: "Black-tie structure, city polish, and invitation-led styling",
+    kicker: "Formal and editorial"
   }
 ];
 

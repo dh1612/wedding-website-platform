@@ -137,6 +137,7 @@ export default function BrochurePage() {
                     </span>
                   </div>
                   <p className="mt-3 text-base font-medium text-[#184b38]">{theme.label}</p>
+                  <p className="mt-2 text-sm leading-6 text-[#486159]">{theme.accent}</p>
                   <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.blurb}</p>
                   <p className="mt-5 text-sm font-medium text-[#184b38]">View guest website example</p>
                 </div>

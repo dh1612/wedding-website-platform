@@ -476,10 +476,10 @@ export default function MarketingHomePage() {
               <div className="mt-4 space-y-3">
                 {sampleWebsiteShowcases.map((theme) => (
                   <Link
-                      key={theme.sampleId}
-                      href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
-                      className="block overflow-hidden rounded-[1rem] border border-black/6 bg-white"
-                    >
+                    key={theme.sampleId}
+                    href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
+                    className="block overflow-hidden rounded-[1rem] border border-black/6 bg-white transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(52,35,24,0.12)]"
+                  >
                     <div
                       className="h-24 w-full bg-cover bg-center"
                       style={{ backgroundImage: `url('${theme.image}')` }}
@@ -487,6 +487,7 @@ export default function MarketingHomePage() {
                     <div className="px-4 py-3">
                       <p className="text-sm font-medium text-[#241f1b]">{theme.title}</p>
                       <p className="mt-1 text-xs uppercase tracking-[0.24em] text-[#9a7d64]">{theme.label}</p>
+                      <p className="mt-2 text-xs leading-5 text-[#5f564e]">{theme.accent}</p>
                     </div>
                   </Link>
                 ))}
