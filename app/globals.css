@@ -195,6 +195,97 @@ main[data-theme="maison-mosaic"] [data-section="story"] .section-shell {
   border-color: rgba(172, 151, 135, 0.16);
 }
 
+main[data-theme="petal-script"] {
+  position: relative;
+  isolation: isolate;
+}
+
+main[data-theme="petal-script"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,0.98), transparent 24%),
+    radial-gradient(circle at 88% 8%, rgba(183,131,140,0.14), transparent 18%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 18%);
+}
+
+main[data-theme="petal-script"] .section-shell {
+  background: rgba(255, 252, 249, 0.9);
+  border-color: rgba(177, 145, 138, 0.14);
+  box-shadow: 0 22px 68px rgba(92, 61, 54, 0.08);
+}
+
+main[data-theme="petal-script"] .accent-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), transparent),
+    rgba(247, 235, 236, 0.62);
+  border-color: rgba(183, 131, 140, 0.18);
+}
+
+main[data-theme="petal-script"] [data-section="travel"] .section-shell,
+main[data-theme="petal-script"] [data-section="faq"] .section-shell {
+  background: rgba(254, 252, 250, 0.94);
+}
+
+main[data-theme="petal-script"] [data-section="schedule"] .section-shell,
+main[data-theme="petal-script"] [data-section="rsvp"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.3), rgba(249, 241, 241, 0.08)),
+    rgba(255, 251, 249, 0.92);
+}
+
+main[data-theme="petal-script"] .floral-header-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+main[data-theme="petal-script"] .floral-corner {
+  position: absolute;
+  top: -1.6rem;
+  width: 14rem;
+  height: 10rem;
+  pointer-events: none;
+  opacity: 0.95;
+  background:
+    radial-gradient(circle at 24% 30%, rgba(255,246,247,0.98) 0 1.4rem, transparent 1.45rem),
+    radial-gradient(circle at 18% 38%, rgba(254, 218, 222, 0.94) 0 1.15rem, transparent 1.2rem),
+    radial-gradient(circle at 32% 36%, rgba(255, 232, 236, 0.96) 0 1.15rem, transparent 1.2rem),
+    radial-gradient(circle at 25% 18%, rgba(149, 28, 58, 0.92) 0 1rem, transparent 1.05rem),
+    radial-gradient(circle at 38% 14%, rgba(101, 13, 39, 0.88) 0 0.95rem, transparent 1rem),
+    radial-gradient(circle at 8% 16%, rgba(238, 187, 197, 0.9) 0 0.9rem, transparent 0.96rem),
+    linear-gradient(126deg, transparent 0 44%, rgba(91, 127, 90, 0.95) 44% 48%, transparent 48%),
+    linear-gradient(152deg, transparent 0 56%, rgba(128, 156, 117, 0.9) 56% 60%, transparent 60%),
+    linear-gradient(178deg, transparent 0 68%, rgba(150, 188, 137, 0.88) 68% 72%, transparent 72%);
+  filter: saturate(0.96);
+}
+
+main[data-theme="petal-script"] .floral-corner-left {
+  left: -0.8rem;
+}
+
+main[data-theme="petal-script"] .floral-corner-right {
+  right: -0.8rem;
+  transform: scaleX(-1);
+}
+
+main[data-theme="petal-script"] .floral-hero-frame {
+  position: relative;
+}
+
+main[data-theme="petal-script"] .floral-hero-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 22%),
+    radial-gradient(circle at 82% 14%, rgba(183,131,140,0.12), transparent 18%);
+}
+
 a {
   text-decoration: none;
 }

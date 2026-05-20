@@ -30,6 +30,20 @@ export const sampleWebsiteShowcases: SampleWebsiteShowcase[] = [
   },
   {
     sampleId: "manor-house",
+    themeId: "petal-script",
+    title: "Petal Script",
+    label: "Floral editorial romance",
+    location: "Ballymagarvey Village, Co. Meath",
+    image:
+      "https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=1400&q=80",
+    blurb:
+      "A lighter floral direction with softer white space, framed hero imagery, and a more romantic header while keeping the same practical content structure.",
+    tone: "romantic",
+    accent: "Blush florals, soft ivory, and a more decorative editorial lead",
+    kicker: "Floral and airy"
+  },
+  {
+    sampleId: "manor-house",
     themeId: "maison-mosaic",
     title: "Maison Mosaic Edit",
     label: "Layered editorial mood",

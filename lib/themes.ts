@@ -14,6 +14,7 @@ export type ThemeDefinition = {
     | "split"
     | "full-bleed"
     | "editorial-frame"
+    | "floral-frame"
     | "panorama"
     | "collage"
     | "cinematic";
@@ -143,6 +144,48 @@ export const weddingThemes: ThemeDefinition[] = [
     heroImage:
       "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=80",
     heroLayout: "editorial-frame"
+  },
+  {
+    id: "petal-script",
+    name: "Petal Script",
+    label: "Floral and airy",
+    description: "A lighter floral-editorial direction with a framed photo lead, softer white space, and a romantic script-led header.",
+    season: "Spring / summer / romantic",
+    previewStyle: {
+      backgroundImage:
+        "linear-gradient(180deg, rgba(74,41,45,0.08), rgba(74,41,45,0.04)), url('https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=1200&q=80')",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    },
+    style: createThemeStyle({
+      background: "#fbf7f3",
+      foreground: "#342a26",
+      surface: "rgba(255, 253, 250, 0.92)",
+      surfaceStrong: "#fffdfa",
+      border: "rgba(163, 129, 123, 0.16)",
+      accent: "#b7838c",
+      accentSoft: "rgba(183, 131, 140, 0.12)",
+      accentStrong: "#7d5b63",
+      accentContrast: "#fff8f7",
+      muted: "#77665d",
+      gold: "#cfb18a",
+      shadow: "0 24px 74px rgba(89, 62, 54, 0.1)",
+      pageGradient:
+        "radial-gradient(circle at 10% 0%, rgba(255,255,255,0.96), transparent 24%), radial-gradient(circle at 90% 8%, rgba(195, 139, 149, 0.12), transparent 20%), linear-gradient(180deg, #fffdf9 0%, #fbf7f3 52%, #f2e9e3 100%)",
+      cardGlow:
+        "linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,247,245,0.08))",
+      heroGlow:
+        "radial-gradient(circle at top right, rgba(183,131,140,0.18), transparent 30%), radial-gradient(circle at 22% 16%, rgba(207,177,138,0.12), transparent 18%), linear-gradient(180deg, rgba(255,255,255,0.2), transparent)",
+      fontBody: "'Libre Baskerville', Georgia, serif",
+      fontDisplay: "'Cormorant Garamond', 'Hoefler Text', Garamond, serif",
+      fontScript:
+        "'Snell Roundhand', 'Apple Chancery', 'Zapfino', 'URW Chancery L', cursive"
+    }),
+    heroImage:
+      "https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=1600&q=80",
+    detailImage:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
+    heroLayout: "floral-frame"
   },
   {
     id: "summer-garden",

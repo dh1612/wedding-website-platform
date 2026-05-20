@@ -262,6 +262,60 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     );
   }
 
+  if (theme.heroLayout === "floral-frame") {
+    return (
+      <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-6 lg:px-8 lg:pb-18 lg:pt-8">
+        <div className="floral-hero-frame rounded-[2.4rem] border border-[var(--border)] bg-white/88 p-4 shadow-[var(--shadow)] sm:p-5">
+          <div className="relative min-h-[320px] overflow-hidden rounded-[1.8rem] sm:min-h-[420px] lg:min-h-[540px]">
+            <Image
+              src={heroImage}
+              alt={`${theme.name} hero`}
+              fill
+              priority
+              unoptimized={heroImageUnoptimized}
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(49,34,29,0.08)_100%)]" />
+          </div>
+        </div>
+        <div className="mx-auto -mt-8 max-w-4xl sm:-mt-10">
+          <div className="section-shell rounded-[2rem] px-8 py-8 text-center sm:px-10 sm:py-10">
+            {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
+            {showTagline ? (
+              <InlineCopy
+                html={wedding.taglineHtml}
+                text={wedding.tagline}
+                className="mx-auto mt-4 max-w-3xl text-xl leading-8 text-[var(--foreground)] sm:text-2xl sm:leading-10"
+              />
+            ) : null}
+            {showAnnouncement ? (
+              <AnnouncementCopy
+                html={wedding.announcementHtml}
+                text={wedding.announcement}
+                className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]"
+              />
+            ) : null}
+            {previewMode && showPreviewNote ? (
+              <div className="mx-auto mt-5 max-w-2xl">
+                <PreviewNote text={hero.previewNote} />
+              </div>
+            ) : null}
+            {showHeroActions ? (
+              <div className="mt-8 flex justify-center">
+                <SharedActions
+                  primaryActionLabel={hero.primaryActionLabel}
+                  primaryActionHref={hero.primaryActionHref}
+                  secondaryActionLabel={hero.secondaryActionLabel}
+                  secondaryActionHref={hero.secondaryActionHref}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (theme.heroLayout === "panorama") {
     return (
       <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-4 lg:px-8 lg:pb-18">
