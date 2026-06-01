@@ -46,7 +46,7 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
                 <div>
                   <div className="schedule-moment-pill accent-panel inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm uppercase tracking-[0.25em] text-[var(--accent-strong)]">
                     <span className="schedule-moment-arrow" aria-hidden="true">
-                      ↗
+                      ♡
                     </span>
                     <span>
                       {stepLabel} {index + 1}

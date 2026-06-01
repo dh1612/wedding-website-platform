@@ -43,6 +43,7 @@ export function SiteHeader({
   const wedding = weddingData ?? getWeddingData();
   const isFloralFrameTheme = themeId === "petal-script";
   const isSoftBlushTheme = themeId === "soft-blush";
+  const usesDecorativeHeader = isFloralFrameTheme || isSoftBlushTheme;
   const adminNavItems =
     adminNavItemsOverride ??
     (portalType === "operator" ? operatorNavItems : portalNavItems);
@@ -157,7 +158,11 @@ export function SiteHeader({
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_84%,white)]/95 backdrop-blur">
+    <header
+      className={`z-30 border-b border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_84%,white)]/95 backdrop-blur ${
+        usesDecorativeHeader ? "md:sticky md:top-0" : "sticky top-0"
+      }`}
+    >
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-8">
         <Link
           href={adminView ? buildModeHref("/", themeId, mode) : buildModeHref(siteBasePath, themeId, mode)}

@@ -16,7 +16,7 @@ export function SectionHeading({
   descriptionHtml
 }: SectionHeadingProps) {
   return (
-    <div className="max-w-2xl space-y-4">
+    <div className="section-heading-block max-w-2xl space-y-4">
       {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
       {titleHtml ? (
         <h2 className="section-title" dangerouslySetInnerHTML={{ __html: titleHtml }} />
