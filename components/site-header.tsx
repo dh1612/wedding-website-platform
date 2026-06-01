@@ -121,7 +121,7 @@ export function SiteHeader({
               >
                 {isSoftBlushTheme && softBlushNameParts.length === 2 ? (
                   <>
-                    <span className="romantic-mobile-stack sm:hidden">
+                    <span className="inline-flex flex-col gap-[0.05em] leading-[0.88] sm:hidden">
                       <span>{softBlushNameParts[0]}</span>
                       <span>&amp;</span>
                       <span>{softBlushNameParts[1]}</span>

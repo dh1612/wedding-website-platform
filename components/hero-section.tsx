@@ -239,21 +239,20 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             ) : null}
           </div>
         </div>
-        <div className="relative min-h-[580px] overflow-hidden soft-blush-hero-stack">
-          <div className="absolute inset-y-0 right-0 w-[88%] rounded-[2rem] border border-[var(--border)] bg-[var(--accent-soft)] shadow-[var(--shadow)]" />
-          <div className="absolute left-0 top-8 h-[86%] w-[82%] overflow-hidden rounded-[2rem] border border-white/40 bg-white p-3 shadow-[var(--shadow)] soft-blush-photo-frame">
-            <div className="relative h-full w-full overflow-hidden rounded-[1.4rem]">
+        <div className="soft-blush-hero-stack grid gap-5 lg:grid-rows-[minmax(0,1fr)_auto]">
+          <div className="soft-blush-photo-panel section-shell relative min-h-[340px] overflow-hidden rounded-[2rem] p-3 shadow-[var(--shadow)] sm:min-h-[420px]">
+            <div className="relative h-full min-h-[300px] w-full overflow-hidden rounded-[1.4rem] sm:min-h-[390px]">
               <Image
                 src={heroImage}
                 alt={`${theme.name} hero`}
                 fill
                 priority
                 unoptimized={heroImageUnoptimized}
-                className={themeId === "soft-blush" ? "object-cover object-[58%_22%]" : "object-cover"}
+                className={themeId === "soft-blush" ? "object-cover object-[56%_18%]" : "object-cover"}
               />
             </div>
           </div>
-          <div className="absolute bottom-[-0.75rem] right-2 max-w-[18rem] rounded-[1.6rem] border border-[var(--border)] bg-white/92 p-6 shadow-[var(--shadow)] backdrop-blur soft-blush-note-card sm:right-4 lg:right-0">
+          <div className="soft-blush-note-card section-shell rounded-[1.6rem] p-6 backdrop-blur">
             <p className="eyebrow">Welcome</p>
             <p className="mt-3 text-lg leading-7 text-[var(--foreground)]">
               Everything guests need for the day is gathered here, from timings and travel to key details for the celebration.

@@ -308,7 +308,7 @@ main[data-theme="soft-blush"] .section-shell {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.3), rgba(247, 240, 234, 0.08)),
     rgba(255, 251, 247, 0.86);
-  border-color: rgba(121, 97, 84, 0.18);
+  border-color: rgba(184, 149, 95, 0.28);
   box-shadow:
     0 24px 68px rgba(67, 45, 33, 0.09),
     0 0 0 1px rgba(255,255,255,0.38) inset;
@@ -331,7 +331,7 @@ main[data-theme="soft-blush"] .section-shell::after {
   position: absolute;
   inset: 0.85rem;
   border-radius: calc(inherit - 0.85rem);
-  border: 1px solid rgba(199, 165, 106, 0.14);
+  border: 1px solid rgba(199, 165, 106, 0.22);
   pointer-events: none;
 }
 
@@ -378,12 +378,26 @@ main[data-theme="soft-blush"] .eyebrow {
 }
 
 main[data-theme="soft-blush"] .accent-outline {
-  background: rgba(255, 249, 244, 0.88);
-  border-color: rgba(170, 136, 116, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(250, 243, 236, 0.92)),
+    rgba(255, 249, 244, 0.9);
+  border-color: rgba(184, 149, 95, 0.34);
+  color: #7c5b36;
+  box-shadow:
+    0 12px 24px rgba(124, 91, 54, 0.08),
+    0 0 0 1px rgba(255,255,255,0.58) inset;
 }
 
 main[data-theme="soft-blush"] .accent-button {
   box-shadow: 0 10px 24px rgba(93, 69, 55, 0.14);
+}
+
+main[data-theme="soft-blush"] .accent-outline:hover {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(252, 247, 241, 0.95)),
+    rgba(255, 250, 246, 0.95);
+  border-color: rgba(184, 149, 95, 0.44);
+  color: #6a4828;
 }
 
 main[data-theme="soft-blush"] .romantic-header-shell {
@@ -442,13 +456,6 @@ main[data-theme="soft-blush"] .romantic-title {
   letter-spacing: 0.01em;
 }
 
-main[data-theme="soft-blush"] .romantic-mobile-stack {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 0.05em;
-  line-height: 0.88;
-}
-
 main[data-theme="soft-blush"] .soft-blush-hero-title {
   letter-spacing: -0.03em;
   text-wrap: balance;
@@ -487,14 +494,14 @@ main[data-theme="soft-blush"] .soft-blush-note-card::before {
   position: absolute;
   inset: 0.8rem;
   border-radius: 1rem;
-  border: 1px solid rgba(199, 165, 106, 0.14);
+  border: 1px solid rgba(199, 165, 106, 0.18);
   pointer-events: none;
 }
 
-main[data-theme="soft-blush"] .soft-blush-hero-stack > div:first-child {
+main[data-theme="soft-blush"] .soft-blush-photo-panel {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.24), rgba(247, 236, 230, 0.08)),
-    rgba(242, 229, 219, 0.56);
+    rgba(255, 251, 247, 0.88);
 }
 
 main[data-theme="soft-blush"] .soft-blush-editorial .section-shell:first-child::before {
