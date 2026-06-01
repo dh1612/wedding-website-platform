@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getFontPresetById } from "@/lib/font-presets";
 import { type SiteMode } from "@/lib/site-navigation";
 import { type CSSProperties, type ReactNode } from "react";
 import type { WeddingData } from "@/types/wedding";
@@ -29,8 +30,16 @@ export function SiteFrame({
   weddingData,
   showFooter = true
 }: SiteFrameProps) {
+  const fontPresetStyle = weddingData
+    ? getFontPresetById(weddingData.fontPreset).style
+    : {};
+
   return (
-    <main data-theme={themeId} data-admin={adminView ? "true" : "false"} style={themeStyle}>
+    <main
+      data-theme={themeId}
+      data-admin={adminView ? "true" : "false"}
+      style={{ ...themeStyle, ...fontPresetStyle } as CSSProperties}
+    >
       <SiteHeader
         currentPath={currentPath}
         mode={mode}

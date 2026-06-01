@@ -110,6 +110,7 @@ export type WeddingData = {
   couple: string;
   date: string;
   theme: string;
+  fontPreset?: string;
   hero?: {
     eyebrow: string;
     previewNote: string;

@@ -5,6 +5,7 @@ import { PageHero } from "@/components/page-hero";
 import { RichTextEditorField } from "@/components/rich-text-editor-field";
 import { SiteFrame } from "@/components/site-frame";
 import { BRAND_DOMAIN } from "@/lib/brand";
+import { fontPresets, getFontPresetById } from "@/lib/font-presets";
 import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
 import { getThemeById, weddingThemes } from "@/lib/themes";
 import { coerceWeddingData } from "@/lib/wedding-data";
@@ -122,6 +123,7 @@ export function AdminWeddingEditor({
   };
   const portalUser = record.adminUsers?.[0] ?? null;
   const theme = getThemeById(weddingData.theme);
+  const selectedFontPreset = getFontPresetById(weddingData.fontPreset);
   const accommodationLines = weddingData.accommodation
     .map((item) => [item.name, item.link, item.note, item.linkLabel].filter(Boolean).join(" | "))
     .join("\n");
@@ -301,6 +303,7 @@ export function AdminWeddingEditor({
       adminView
       portalType="operator"
       adminNavItemsOverride={buildOperatorWeddingNavItems(record.slug)}
+      weddingData={weddingData}
       showFooter={false}
     >
       <PageHero
@@ -409,6 +412,23 @@ export function AdminWeddingEditor({
               <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--foreground)]">
                 Current template: <span className="font-medium">{theme.name}</span>
               </div>
+              <select
+                name="fontPreset"
+                defaultValue={selectedFontPreset.id}
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+              >
+                {fontPresets.map((preset) => (
+                  <option key={preset.id} value={preset.id}>
+                    {preset.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mt-4 rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3 text-sm text-[var(--muted)]">
+              Site-wide font style:{" "}
+              <span className="font-medium text-[var(--foreground)]">{selectedFontPreset.label}</span>
+              <br />
+              {selectedFontPreset.description}
             </div>
             <div className="mt-4 rounded-[1.3rem] border border-[var(--border)] bg-[#fafcfb] p-5">
               <p className="eyebrow">Current Links</p>

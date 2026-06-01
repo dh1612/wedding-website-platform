@@ -1,6 +1,36 @@
 import type { Metadata } from "next";
+import {
+  Cormorant_Garamond,
+  Great_Vibes,
+  Montserrat,
+  Playfair_Display
+} from "next/font/google";
 import { BRAND_DOMAIN, BRAND_NAME } from "@/lib/brand";
 import "./globals.css";
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"]
+});
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  weight: ["400", "500", "600", "700"]
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["400", "500", "600", "700"]
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  variable: "--font-great-vibes",
+  weight: "400"
+});
 
 export const metadata: Metadata = {
   title: BRAND_NAME,
@@ -14,7 +44,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body
+        className={`${playfairDisplay.variable} ${cormorantGaramond.variable} ${montserrat.variable} ${greatVibes.variable}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

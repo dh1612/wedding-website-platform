@@ -208,6 +208,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
     couple: source.couple ?? fallback.couple,
     date: source.date ?? fallback.date,
     theme: source.theme ?? fallback.theme,
+    fontPreset:
+      typeof source.fontPreset === "string" && source.fontPreset.trim()
+        ? source.fontPreset.trim()
+        : "theme-default",
     hero: {
       eyebrow: source.hero?.eyebrow ?? "Wedding Day",
       previewNote:

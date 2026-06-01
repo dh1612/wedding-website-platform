@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SuppliersSection } from "@/components/suppliers-section";
 import { TravelSection } from "@/components/travel-section";
+import { getFontPresetById } from "@/lib/font-presets";
 import type { SiteMode } from "@/lib/site-navigation";
 import type { ThemeDefinition } from "@/lib/themes";
 import type { WeddingData } from "@/types/wedding";
@@ -36,8 +37,10 @@ export function WeddingSitePage({
   demoMode = false,
   previewMode = false
 }: WeddingSitePageProps) {
+  const fontPresetStyle = getFontPresetById(weddingData.fontPreset).style;
+
   return (
-    <main data-theme={activeTheme.id} style={activeTheme.style}>
+    <main data-theme={activeTheme.id} style={{ ...activeTheme.style, ...fontPresetStyle }}>
       <SiteHeader
         currentPath={currentPath}
         mode={mode}

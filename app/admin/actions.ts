@@ -518,6 +518,8 @@ export async function updateWeddingContentAction(formData: FormData) {
     couple: String(formData.get("couple") || "").trim() || weddingData.couple,
     date: String(formData.get("date") || "").trim() || weddingData.date,
     theme: String(formData.get("theme") || "").trim() || weddingData.theme,
+    fontPreset:
+      String(formData.get("fontPreset") || "").trim() || weddingData.fontPreset || "theme-default",
     hero: {
       ...weddingData.hero,
       eyebrow:
