@@ -457,6 +457,8 @@ main[data-theme="soft-blush"] .romantic-title {
 }
 
 main[data-theme="soft-blush"] .soft-blush-hero-title {
+  font-family: var(--font-script);
+  font-weight: 400;
   letter-spacing: -0.03em;
   text-wrap: balance;
 }
