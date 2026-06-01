@@ -47,7 +47,7 @@ export function MobileSectionMenu({ items }: MobileSectionMenuProps) {
       </button>
 
       {open ? (
-        <div className="absolute right-0 top-[calc(100%+0.6rem)] z-40 w-[min(16rem,calc(100vw-3rem))] rounded-[1.25rem] border border-[var(--border)] bg-white/96 p-3 shadow-[0_20px_60px_rgba(21,36,31,0.16)] backdrop-blur">
+        <div className="absolute right-0 top-[calc(100%+0.6rem)] z-40 max-h-[70vh] w-[min(16rem,calc(100vw-3rem))] overflow-y-auto rounded-[1.25rem] border border-[var(--border)] bg-white/96 p-3 shadow-[0_20px_60px_rgba(21,36,31,0.16)] backdrop-blur">
           <p className="eyebrow px-3 pt-2">Jump To</p>
           <nav className="mt-2 flex flex-col gap-1">
             {items.map((item) => (

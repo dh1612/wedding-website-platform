@@ -114,7 +114,7 @@ export function SiteHeader({
                     ? "text-[clamp(2.8rem,7vw,5.5rem)] leading-none text-[var(--accent-strong)]"
                     : "romantic-title text-[clamp(3rem,6vw,5.2rem)] leading-none text-[var(--accent-strong)]"
                 }
-                style={{ fontFamily: isFloralFrameTheme ? "var(--font-script)" : "var(--font-display)" }}
+                style={{ fontFamily: isFloralFrameTheme || isSoftBlushTheme ? "var(--font-script)" : "var(--font-display)" }}
               >
                 {wedding.couple}
               </p>

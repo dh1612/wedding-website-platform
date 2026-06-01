@@ -239,7 +239,7 @@ main[data-theme="petal-script"] [data-section="rsvp"] .section-shell {
 
 main[data-theme="petal-script"] .floral-header-shell {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 main[data-theme="petal-script"] .floral-corner {
@@ -306,6 +306,10 @@ main[data-theme="soft-blush"]::before {
 
 main[data-theme="soft-blush"] .section-shell {
   background:
+    radial-gradient(circle at 8% 10%, rgba(244, 226, 229, 0.32) 0 1rem, transparent 1.05rem),
+    radial-gradient(circle at 11% 13%, rgba(159, 45, 72, 0.14) 0 0.58rem, transparent 0.62rem),
+    radial-gradient(circle at 91% 12%, rgba(248, 232, 234, 0.3) 0 0.95rem, transparent 1rem),
+    radial-gradient(circle at 88% 9%, rgba(123, 28, 48, 0.12) 0 0.5rem, transparent 0.56rem),
     linear-gradient(180deg, rgba(255,255,255,0.3), rgba(247, 240, 234, 0.08)),
     rgba(255, 251, 247, 0.86);
   border-color: rgba(121, 97, 84, 0.18);
@@ -376,7 +380,7 @@ main[data-theme="soft-blush"] .accent-button {
 
 main[data-theme="soft-blush"] .romantic-header-shell {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,250,245,0.86)),
     rgba(255,255,255,0.92);
@@ -511,6 +515,14 @@ main[data-theme="soft-blush"] .schedule-moment-card::before {
   pointer-events: none;
 }
 
+main[data-theme="soft-blush"] [data-section="schedule"] .section-shell:first-child {
+  background:
+    radial-gradient(circle at 9% 10%, rgba(244, 226, 229, 0.28) 0 0.9rem, transparent 0.95rem),
+    radial-gradient(circle at 91% 12%, rgba(247, 234, 236, 0.24) 0 0.82rem, transparent 0.88rem),
+    linear-gradient(180deg, rgba(255,255,255,0.3), rgba(247, 240, 234, 0.08)),
+    rgba(255, 251, 247, 0.9);
+}
+
 main[data-theme="soft-blush"] .schedule-moment-pill {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.52), rgba(248,241,236,0.88)),
@@ -569,6 +581,14 @@ main[data-theme="soft-blush"] .schedule-time::before {
   main[data-theme="soft-blush"] [data-section] .section-shell:first-child .section-heading-block::after {
     width: 3.8rem;
     left: 1.15rem;
+  }
+
+  main[data-theme="soft-blush"] .section-shell {
+    background:
+      radial-gradient(circle at 10% 10%, rgba(244, 226, 229, 0.18) 0 0.72rem, transparent 0.76rem),
+      radial-gradient(circle at 90% 10%, rgba(247, 234, 236, 0.16) 0 0.66rem, transparent 0.72rem),
+      linear-gradient(180deg, rgba(255,255,255,0.3), rgba(247, 240, 234, 0.08)),
+      rgba(255, 251, 247, 0.9);
   }
 }
 
