@@ -402,6 +402,11 @@ main[data-theme="soft-blush"] .romantic-title {
   letter-spacing: 0.01em;
 }
 
+main[data-theme="soft-blush"] .soft-blush-hero-title {
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
 main[data-theme="soft-blush"] .soft-blush-editorial .section-shell:first-child {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.34), rgba(247, 240, 234, 0.08)),
@@ -428,6 +433,89 @@ main[data-theme="soft-blush"] .soft-blush-note-card {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,250,247,0.82)),
     rgba(255,255,255,0.94);
+}
+
+main[data-theme="soft-blush"] .soft-blush-note-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.8rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(199, 165, 106, 0.14);
+  pointer-events: none;
+}
+
+main[data-theme="soft-blush"] .soft-blush-hero-stack > div:first-child {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), rgba(247, 236, 230, 0.08)),
+    rgba(242, 229, 219, 0.56);
+}
+
+main[data-theme="soft-blush"] .schedule-moment-card {
+  position: relative;
+  overflow: hidden;
+}
+
+main[data-theme="soft-blush"] .schedule-moment-card::after {
+  content: "";
+  position: absolute;
+  left: 1.25rem;
+  right: 1.25rem;
+  top: 1.15rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(199,165,106,0.22), rgba(199,165,106,0.06));
+  pointer-events: none;
+}
+
+main[data-theme="soft-blush"] .schedule-moment-pill {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.52), rgba(248,241,236,0.88)),
+    rgba(255,255,255,0.86);
+  border-color: rgba(176, 142, 122, 0.18);
+}
+
+main[data-theme="soft-blush"] .schedule-moment-arrow {
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  transform: translateY(-1px);
+  color: #b28a68;
+}
+
+main[data-theme="soft-blush"] .schedule-time {
+  position: relative;
+  padding-left: 1rem;
+}
+
+main[data-theme="soft-blush"] .schedule-time::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 72%, white);
+  box-shadow: 0 0 0 4px rgba(199, 165, 106, 0.12);
+}
+
+@media (max-width: 767px) {
+  main[data-theme="soft-blush"] .romantic-header-shell,
+  main[data-theme="petal-script"] .floral-header-shell {
+    margin-top: 0.35rem;
+  }
+
+  main[data-theme="soft-blush"] .romantic-corner {
+    width: 5rem;
+    height: 3.4rem;
+    top: 0.75rem;
+  }
+
+  main[data-theme="soft-blush"] .soft-blush-note-card {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin-top: 1rem;
+    max-width: none;
+  }
 }
 
 a {

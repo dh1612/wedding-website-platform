@@ -41,14 +41,19 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
             {wedding.schedule.map((item, index) => (
               <article
                 key={`${item.time}-${item.title}`}
-                className="accent-panel rounded-[1.3rem] p-5"
+                className="schedule-moment-card accent-panel rounded-[1.3rem] p-5"
               >
                 <div>
-                  <div className="accent-panel inline-flex rounded-full px-3 py-1 text-sm uppercase tracking-[0.25em] text-[var(--accent-strong)]">
-                    {stepLabel} {index + 1}
+                  <div className="schedule-moment-pill accent-panel inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm uppercase tracking-[0.25em] text-[var(--accent-strong)]">
+                    <span className="schedule-moment-arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                    <span>
+                      {stepLabel} {index + 1}
+                    </span>
                   </div>
                   {item.time ? (
-                    <p className="mt-3 text-lg font-semibold text-[var(--accent-strong)]">
+                    <p className="mt-3 text-lg font-semibold text-[var(--accent-strong)] schedule-time">
                       {item.time}
                     </p>
                   ) : null}

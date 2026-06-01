@@ -108,7 +108,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
 
   if (theme.heroLayout === "full-bleed") {
     return (
-      <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-4 lg:px-8 lg:pb-18">
+      <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-10 lg:px-8 lg:pb-18">
         <div className="relative min-h-[640px] overflow-hidden rounded-[2rem] border border-black/5 shadow-[var(--shadow)]">
           <Image
             src={heroImage}
@@ -191,7 +191,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     return (
       <section
         id="top"
-        className={`mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-4 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:pb-18 ${
+        className={`mx-auto grid w-full max-w-6xl gap-8 px-6 pb-10 pt-10 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:pb-18 ${
           themeId === "soft-blush" ? "soft-blush-editorial" : ""
         }`}
       >
@@ -200,7 +200,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="relative space-y-8">
             <div className="space-y-4">
               {showHeroEyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}
-              <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
+              <h1 className="soft-blush-hero-title text-5xl leading-none sm:text-6xl lg:text-7xl">
                 {wedding.couple}
               </h1>
               <div className="space-y-2 text-lg text-[var(--muted)] sm:text-xl">
@@ -239,7 +239,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             ) : null}
           </div>
         </div>
-        <div className="relative min-h-[520px] overflow-hidden">
+        <div className="relative min-h-[520px] overflow-hidden soft-blush-hero-stack">
           <div className="absolute inset-y-0 right-0 w-[88%] rounded-[2rem] border border-[var(--border)] bg-[var(--accent-soft)] shadow-[var(--shadow)]" />
           <div className="absolute left-0 top-8 h-[86%] w-[82%] overflow-hidden rounded-[2rem] border border-white/40 bg-white p-3 shadow-[var(--shadow)] soft-blush-photo-frame">
             <div className="relative h-full w-full overflow-hidden rounded-[1.4rem]">
@@ -266,7 +266,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
 
   if (theme.heroLayout === "floral-frame") {
     return (
-      <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-6 lg:px-8 lg:pb-18 lg:pt-8">
+      <section id="top" className="mx-auto w-full max-w-6xl px-6 pb-10 pt-10 lg:px-8 lg:pb-18 lg:pt-8">
         <div className="floral-hero-frame rounded-[2.4rem] border border-[var(--border)] bg-white/88 p-4 shadow-[var(--shadow)] sm:p-5">
           <div className="relative min-h-[320px] overflow-hidden rounded-[1.8rem] sm:min-h-[420px] lg:min-h-[540px]">
             <Image

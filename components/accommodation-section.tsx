@@ -45,7 +45,7 @@ export function AccommodationSection({
                     href={hotel.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="accent-outline shrink-0 rounded-full px-5 py-3 text-sm font-medium"
+                    className="accent-outline shrink-0 rounded-full px-5 py-3 text-sm font-semibold"
                   >
                     {hotel.linkLabel || "View hotel"}
                   </a>
