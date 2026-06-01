@@ -306,16 +306,24 @@ main[data-theme="soft-blush"]::before {
 
 main[data-theme="soft-blush"] .section-shell {
   background:
-    radial-gradient(circle at 8% 10%, rgba(244, 226, 229, 0.32) 0 1rem, transparent 1.05rem),
-    radial-gradient(circle at 11% 13%, rgba(159, 45, 72, 0.14) 0 0.58rem, transparent 0.62rem),
-    radial-gradient(circle at 91% 12%, rgba(248, 232, 234, 0.3) 0 0.95rem, transparent 1rem),
-    radial-gradient(circle at 88% 9%, rgba(123, 28, 48, 0.12) 0 0.5rem, transparent 0.56rem),
     linear-gradient(180deg, rgba(255,255,255,0.3), rgba(247, 240, 234, 0.08)),
     rgba(255, 251, 247, 0.86);
   border-color: rgba(121, 97, 84, 0.18);
   box-shadow:
     0 24px 68px rgba(67, 45, 33, 0.09),
     0 0 0 1px rgba(255,255,255,0.38) inset;
+}
+
+main[data-theme="soft-blush"] .section-shell::before {
+  background:
+    radial-gradient(circle at 1.6rem 1.4rem, rgba(255, 241, 243, 0.9) 0 0.92rem, transparent 0.96rem),
+    radial-gradient(circle at 2.15rem 1.15rem, rgba(159, 45, 72, 0.18) 0 0.5rem, transparent 0.56rem),
+    radial-gradient(circle at 2.8rem 1.85rem, rgba(255, 232, 236, 0.92) 0 0.82rem, transparent 0.88rem),
+    radial-gradient(circle at calc(100% - 1.5rem) calc(100% - 1.45rem), rgba(255, 241, 243, 0.88) 0 0.9rem, transparent 0.96rem),
+    radial-gradient(circle at calc(100% - 2.1rem) calc(100% - 1.15rem), rgba(123, 28, 48, 0.16) 0 0.46rem, transparent 0.52rem),
+    radial-gradient(circle at calc(100% - 2.8rem) calc(100% - 1.9rem), rgba(255, 232, 236, 0.86) 0 0.76rem, transparent 0.82rem),
+    linear-gradient(180deg, rgba(255,255,255,0.26), rgba(247, 240, 234, 0.08));
+  opacity: 0.95;
 }
 
 main[data-theme="soft-blush"] .section-shell::after {
@@ -432,6 +440,13 @@ main[data-theme="soft-blush"] .romantic-corner-right {
 
 main[data-theme="soft-blush"] .romantic-title {
   letter-spacing: 0.01em;
+}
+
+main[data-theme="soft-blush"] .romantic-mobile-stack {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.05em;
+  line-height: 0.88;
 }
 
 main[data-theme="soft-blush"] .soft-blush-hero-title {
@@ -585,10 +600,19 @@ main[data-theme="soft-blush"] .schedule-time::before {
 
   main[data-theme="soft-blush"] .section-shell {
     background:
-      radial-gradient(circle at 10% 10%, rgba(244, 226, 229, 0.18) 0 0.72rem, transparent 0.76rem),
-      radial-gradient(circle at 90% 10%, rgba(247, 234, 236, 0.16) 0 0.66rem, transparent 0.72rem),
       linear-gradient(180deg, rgba(255,255,255,0.3), rgba(247, 240, 234, 0.08)),
       rgba(255, 251, 247, 0.9);
+  }
+
+  main[data-theme="soft-blush"] .section-shell::before {
+    background:
+      radial-gradient(circle at 1.3rem 1.15rem, rgba(255, 241, 243, 0.82) 0 0.7rem, transparent 0.74rem),
+      radial-gradient(circle at 1.75rem 0.95rem, rgba(159, 45, 72, 0.14) 0 0.36rem, transparent 0.42rem),
+      radial-gradient(circle at 2.25rem 1.45rem, rgba(255, 232, 236, 0.82) 0 0.62rem, transparent 0.68rem),
+      radial-gradient(circle at calc(100% - 1.2rem) calc(100% - 1.15rem), rgba(255, 241, 243, 0.78) 0 0.68rem, transparent 0.72rem),
+      radial-gradient(circle at calc(100% - 1.7rem) calc(100% - 0.95rem), rgba(123, 28, 48, 0.12) 0 0.32rem, transparent 0.38rem),
+      radial-gradient(circle at calc(100% - 2.2rem) calc(100% - 1.45rem), rgba(255, 232, 236, 0.74) 0 0.58rem, transparent 0.64rem),
+      linear-gradient(180deg, rgba(255,255,255,0.26), rgba(247, 240, 234, 0.08));
   }
 }
 

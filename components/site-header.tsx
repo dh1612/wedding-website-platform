@@ -49,6 +49,9 @@ export function SiteHeader({
     (portalType === "operator" ? operatorNavItems : portalNavItems);
   const scrollNavItems = buildScrollNavItems(wedding);
   const displayDate = formatDisplayDate(wedding.date);
+  const softBlushNameParts = isSoftBlushTheme
+    ? wedding.couple.split(/\s*&\s*/).map((part) => part.trim()).filter(Boolean)
+    : [];
 
   const activeNavStyle = {
     backgroundColor: "var(--accent-strong)",
@@ -116,7 +119,18 @@ export function SiteHeader({
                 }
                 style={{ fontFamily: isFloralFrameTheme || isSoftBlushTheme ? "var(--font-script)" : "var(--font-display)" }}
               >
-                {wedding.couple}
+                {isSoftBlushTheme && softBlushNameParts.length === 2 ? (
+                  <>
+                    <span className="romantic-mobile-stack sm:hidden">
+                      <span>{softBlushNameParts[0]}</span>
+                      <span>&amp;</span>
+                      <span>{softBlushNameParts[1]}</span>
+                    </span>
+                    <span className="hidden sm:inline">{wedding.couple}</span>
+                  </>
+                ) : (
+                  wedding.couple
+                )}
               </p>
               <p className="mt-4 text-xs uppercase tracking-[0.34em] text-[var(--muted)] sm:text-sm">
                 {[displayDate, wedding.locationSummary].filter(Boolean).join(" • ")}

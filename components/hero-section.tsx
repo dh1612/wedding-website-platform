@@ -249,7 +249,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 fill
                 priority
                 unoptimized={heroImageUnoptimized}
-                className="object-cover"
+                className={themeId === "soft-blush" ? "object-cover object-[58%_22%]" : "object-cover"}
               />
             </div>
           </div>
