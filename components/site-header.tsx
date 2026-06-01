@@ -42,6 +42,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const wedding = weddingData ?? getWeddingData();
   const isFloralFrameTheme = themeId === "petal-script";
+  const isSoftBlushTheme = themeId === "soft-blush";
   const adminNavItems =
     adminNavItemsOverride ??
     (portalType === "operator" ? operatorNavItems : portalNavItems);
@@ -57,7 +58,7 @@ export function SiteHeader({
     color: "var(--muted)"
   };
 
-  if (!adminView && isFloralFrameTheme) {
+  if (!adminView && (isFloralFrameTheme || isSoftBlushTheme)) {
     const publicNavItems =
       mode === "pages"
         ? pageNavItems.map((item) => ({
@@ -73,9 +74,24 @@ export function SiteHeader({
 
     return (
       <header className="relative z-20 px-6 pt-6 lg:px-8 lg:pt-8">
-        <div className="floral-header-shell mx-auto w-full max-w-6xl rounded-[2.4rem] border border-[var(--border)] bg-white/90 px-6 py-8 shadow-[var(--shadow)] sm:px-10 lg:px-14 lg:py-10">
-          <span className="floral-corner floral-corner-left" aria-hidden="true" />
-          <span className="floral-corner floral-corner-right" aria-hidden="true" />
+        <div
+          className={
+            isFloralFrameTheme
+              ? "floral-header-shell mx-auto w-full max-w-6xl rounded-[2.4rem] border border-[var(--border)] bg-white/90 px-6 py-8 shadow-[var(--shadow)] sm:px-10 lg:px-14 lg:py-10"
+              : "romantic-header-shell mx-auto w-full max-w-6xl rounded-[2.4rem] border border-[var(--border)] bg-white/92 px-6 py-8 shadow-[var(--shadow)] sm:px-10 lg:px-14 lg:py-10"
+          }
+        >
+          {isFloralFrameTheme ? (
+            <>
+              <span className="floral-corner floral-corner-left" aria-hidden="true" />
+              <span className="floral-corner floral-corner-right" aria-hidden="true" />
+            </>
+          ) : (
+            <>
+              <span className="romantic-corner romantic-corner-left" aria-hidden="true" />
+              <span className="romantic-corner romantic-corner-right" aria-hidden="true" />
+            </>
+          )}
           <div className="relative">
             {mode === "scroll" && scrollNavItems.length ? (
               <div className="absolute right-0 top-0">
@@ -92,8 +108,12 @@ export function SiteHeader({
               className="mx-auto block max-w-4xl text-center"
             >
               <p
-                className="text-[clamp(2.8rem,7vw,5.5rem)] leading-none text-[var(--accent-strong)]"
-                style={{ fontFamily: "var(--font-script)" }}
+                className={
+                  isFloralFrameTheme
+                    ? "text-[clamp(2.8rem,7vw,5.5rem)] leading-none text-[var(--accent-strong)]"
+                    : "romantic-title text-[clamp(3rem,6vw,5.2rem)] leading-none text-[var(--accent-strong)]"
+                }
+                style={{ fontFamily: isFloralFrameTheme ? "var(--font-script)" : "var(--font-display)" }}
               >
                 {wedding.couple}
               </p>

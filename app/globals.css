@@ -286,6 +286,150 @@ main[data-theme="petal-script"] .floral-hero-frame::before {
     radial-gradient(circle at 82% 14%, rgba(183,131,140,0.12), transparent 18%);
 }
 
+main[data-theme="soft-blush"] {
+  position: relative;
+  isolation: isolate;
+}
+
+main[data-theme="soft-blush"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,0.92), transparent 22%),
+    radial-gradient(circle at 88% 10%, rgba(199, 165, 106, 0.12), transparent 20%),
+    radial-gradient(circle at 84% 22%, rgba(206, 183, 171, 0.14), transparent 16%),
+    linear-gradient(180deg, rgba(255,255,255,0.06), transparent 20%);
+}
+
+main[data-theme="soft-blush"] .section-shell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.3), rgba(247, 240, 234, 0.08)),
+    rgba(255, 251, 247, 0.86);
+  border-color: rgba(121, 97, 84, 0.18);
+  box-shadow:
+    0 24px 68px rgba(67, 45, 33, 0.09),
+    0 0 0 1px rgba(255,255,255,0.38) inset;
+}
+
+main[data-theme="soft-blush"] .section-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0.85rem;
+  border-radius: calc(inherit - 0.85rem);
+  border: 1px solid rgba(199, 165, 106, 0.14);
+  pointer-events: none;
+}
+
+main[data-theme="soft-blush"] .accent-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.26), transparent),
+    rgba(246, 236, 228, 0.72);
+  border-color: rgba(170, 136, 116, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 12px 28px rgba(94, 74, 62, 0.06);
+}
+
+main[data-theme="soft-blush"] .eyebrow {
+  color: #a98567;
+}
+
+main[data-theme="soft-blush"] .accent-outline {
+  background: rgba(255, 249, 244, 0.88);
+  border-color: rgba(170, 136, 116, 0.18);
+}
+
+main[data-theme="soft-blush"] .accent-button {
+  box-shadow: 0 10px 24px rgba(93, 69, 55, 0.14);
+}
+
+main[data-theme="soft-blush"] .romantic-header-shell {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,250,245,0.86)),
+    rgba(255,255,255,0.92);
+}
+
+main[data-theme="soft-blush"] .romantic-header-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255,255,255,0.55), transparent 22%),
+    radial-gradient(circle at 84% 12%, rgba(199, 165, 106, 0.08), transparent 18%);
+}
+
+main[data-theme="soft-blush"] .romantic-corner {
+  position: absolute;
+  top: 1.25rem;
+  width: 8rem;
+  height: 5rem;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+main[data-theme="soft-blush"] .romantic-corner::before,
+main[data-theme="soft-blush"] .romantic-corner::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(199, 165, 106, 0.28);
+}
+
+main[data-theme="soft-blush"] .romantic-corner::before {
+  inset: 0.7rem 1rem 2rem 1rem;
+}
+
+main[data-theme="soft-blush"] .romantic-corner::after {
+  inset: 1.7rem 2.1rem 1rem 2.1rem;
+}
+
+main[data-theme="soft-blush"] .romantic-corner-left {
+  left: 1.25rem;
+}
+
+main[data-theme="soft-blush"] .romantic-corner-right {
+  right: 1.25rem;
+  transform: scaleX(-1);
+}
+
+main[data-theme="soft-blush"] .romantic-title {
+  letter-spacing: 0.01em;
+}
+
+main[data-theme="soft-blush"] .soft-blush-editorial .section-shell:first-child {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.34), rgba(247, 240, 234, 0.08)),
+    rgba(255, 252, 249, 0.9);
+}
+
+main[data-theme="soft-blush"] .soft-blush-photo-frame {
+  box-shadow:
+    0 22px 52px rgba(67, 45, 33, 0.12),
+    0 0 0 1px rgba(255,255,255,0.42) inset;
+}
+
+main[data-theme="soft-blush"] .soft-blush-photo-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0.65rem;
+  border-radius: 1.45rem;
+  border: 1px solid rgba(199, 165, 106, 0.16);
+  pointer-events: none;
+  z-index: 1;
+}
+
+main[data-theme="soft-blush"] .soft-blush-note-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,250,247,0.82)),
+    rgba(255,255,255,0.94);
+}
+
 a {
   text-decoration: none;
 }
