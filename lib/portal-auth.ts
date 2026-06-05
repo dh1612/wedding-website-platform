@@ -58,8 +58,11 @@ export function getRequiredPortalScope(pathname: string): PortalSessionScope | n
     normalised === "/production" ||
     normalised.startsWith("/production/") ||
     normalised === "/couple-portal" ||
+    normalised.startsWith("/couple-portal/") ||
     normalised === "/rsvp-dashboard" ||
+    normalised.startsWith("/rsvp-dashboard/") ||
     normalised === "/plan-your-tables" ||
+    normalised.startsWith("/plan-your-tables/") ||
     normalised.startsWith("/api/portal/")
   ) {
     const weddingScopedPrefixes = [
