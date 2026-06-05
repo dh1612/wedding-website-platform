@@ -81,7 +81,7 @@ export default async function CouplePortalBySlugPage({
       portalType="couple"
       adminNavItemsOverride={navItems}
       weddingData={weddingData}
-      homeHref={publicHomeHref}
+      homeHref={portalBasePath}
     >
       <PageHero
         eyebrow="Couple Portal"
@@ -90,6 +90,7 @@ export default async function CouplePortalBySlugPage({
         themeId={theme.id}
         weddingData={weddingData}
         summaryActionHref={publicHomeHref}
+        summaryActionLabel="Open guest website"
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="mb-6 flex justify-end">

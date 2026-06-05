@@ -5,7 +5,7 @@ import { PortalLockedState } from "@/components/portal-locked-state";
 import { RSVPManager } from "@/components/rsvp-manager";
 import { SiteFrame } from "@/components/site-frame";
 import { getPortalCookieName, readPortalSessionScope } from "@/lib/portal-auth";
-import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
+import { buildOperatorWeddingNavItems, buildPortalNavItems } from "@/lib/site-navigation";
 import {
   getWeddingSiteBySlug,
   listPortalGuests
@@ -65,6 +65,7 @@ export default async function RSVPDashboardBySlugPage({
   }
 
   const guests = await listPortalGuests(weddingRecord.id);
+  const portalBasePath = `/couple-portal/${slug}`;
   const publicHomeHref = `/${slug}`;
   const customQuestionLabels = Object.fromEntries(
     (weddingData.rsvp.form?.customQuestions ?? []).map((question) => [
@@ -83,11 +84,13 @@ export default async function RSVPDashboardBySlugPage({
       themeId={theme.id}
       themeStyle={theme.style}
       adminView
-      portalType="operator"
-      adminNavItemsOverride={buildOperatorWeddingNavItems(slug)}
+      portalType={isOperatorView ? "operator" : "couple"}
+      adminNavItemsOverride={
+        isOperatorView ? buildOperatorWeddingNavItems(slug) : buildPortalNavItems(portalBasePath)
+      }
       showFooter={false}
       weddingData={weddingData}
-      homeHref={publicHomeHref}
+      homeHref={isOperatorView ? publicHomeHref : portalBasePath}
     >
       <PageHero
         eyebrow="RSVP Dashboard"
@@ -95,7 +98,10 @@ export default async function RSVPDashboardBySlugPage({
         description="Manage the guest list, review RSVP responses, and manually add or remove guests for this wedding."
         themeId={theme.id}
         weddingData={weddingData}
-        summaryActionHref={publicHomeHref}
+        summaryActionHref={isOperatorView ? publicHomeHref : portalBasePath}
+        summaryActionLabel={isOperatorView ? "Open guest website" : "Back to portal home"}
+        summarySecondaryActionHref={isOperatorView ? undefined : publicHomeHref}
+        summarySecondaryActionLabel={isOperatorView ? undefined : "Open guest website"}
       />
       <RSVPManager
         guests={guests}

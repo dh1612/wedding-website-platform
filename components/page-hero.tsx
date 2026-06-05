@@ -12,6 +12,8 @@ type PageHeroProps = {
   showWeddingSummary?: boolean;
   summaryActionHref?: string;
   summaryActionLabel?: string;
+  summarySecondaryActionHref?: string;
+  summarySecondaryActionLabel?: string;
 };
 
 export function PageHero({
@@ -22,7 +24,9 @@ export function PageHero({
   weddingData,
   showWeddingSummary = true,
   summaryActionHref,
-  summaryActionLabel = "Back to home"
+  summaryActionLabel = "Back to home",
+  summarySecondaryActionHref,
+  summarySecondaryActionLabel
 }: PageHeroProps) {
   const wedding = weddingData ?? getWeddingData();
 
@@ -41,12 +45,22 @@ export function PageHero({
               <p className="mt-3 text-3xl">{wedding.couple}</p>
               <p className="mt-3 text-base text-[var(--foreground)]">{wedding.date}</p>
               <p className="mt-1 text-base text-[var(--muted)]">{wedding.locationSummary}</p>
-              <Link
-                href={summaryActionHref ?? buildModeHref("/templates", themeId, "pages")}
-                className="accent-button mt-5 inline-flex rounded-full px-5 py-3 text-sm font-medium"
-              >
-                {summaryActionLabel}
-              </Link>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <Link
+                  href={summaryActionHref ?? buildModeHref("/templates", themeId, "pages")}
+                  className="accent-button inline-flex rounded-full px-5 py-3 text-sm font-medium"
+                >
+                  {summaryActionLabel}
+                </Link>
+                {summarySecondaryActionHref && summarySecondaryActionLabel ? (
+                  <Link
+                    href={summarySecondaryActionHref}
+                    className="accent-outline inline-flex rounded-full px-5 py-3 text-sm font-medium"
+                  >
+                    {summarySecondaryActionLabel}
+                  </Link>
+                ) : null}
+              </div>
             </div>
           ) : null}
         </div>

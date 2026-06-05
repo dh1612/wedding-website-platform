@@ -5,7 +5,7 @@ import { PortalLockedState } from "@/components/portal-locked-state";
 import { SeatingPlanner } from "@/components/seating-planner";
 import { SiteFrame } from "@/components/site-frame";
 import { getPortalCookieName, readPortalSessionScope } from "@/lib/portal-auth";
-import { buildOperatorWeddingNavItems } from "@/lib/site-navigation";
+import { buildOperatorWeddingNavItems, buildPortalNavItems } from "@/lib/site-navigation";
 import {
   getWeddingSiteBySlug,
   listPortalGuests
@@ -65,6 +65,7 @@ export default async function PlanYourTablesBySlugPage({
   }
 
   const guests = await listPortalGuests(weddingRecord.id);
+  const portalBasePath = `/couple-portal/${slug}`;
   const publicHomeHref = `/${slug}`;
 
   return (
@@ -74,11 +75,13 @@ export default async function PlanYourTablesBySlugPage({
       themeId={theme.id}
       themeStyle={theme.style}
       adminView
-      portalType="operator"
-      adminNavItemsOverride={buildOperatorWeddingNavItems(slug)}
+      portalType={isOperatorView ? "operator" : "couple"}
+      adminNavItemsOverride={
+        isOperatorView ? buildOperatorWeddingNavItems(slug) : buildPortalNavItems(portalBasePath)
+      }
       showFooter={false}
       weddingData={weddingData}
-      homeHref={publicHomeHref}
+      homeHref={isOperatorView ? publicHomeHref : portalBasePath}
     >
       <PageHero
         eyebrow="Plan Your Tables"
@@ -86,7 +89,10 @@ export default async function PlanYourTablesBySlugPage({
         description="A private seating workspace for this wedding. The guest list now comes from this wedding record, so you are only seeing guests tied to this couple."
         themeId={theme.id}
         weddingData={weddingData}
-        summaryActionHref={publicHomeHref}
+        summaryActionHref={isOperatorView ? publicHomeHref : portalBasePath}
+        summaryActionLabel={isOperatorView ? "Open guest website" : "Back to portal home"}
+        summarySecondaryActionHref={isOperatorView ? undefined : publicHomeHref}
+        summarySecondaryActionLabel={isOperatorView ? undefined : "Open guest website"}
       />
       <SeatingPlanner guests={guests} tables={[]} />
     </SiteFrame>
