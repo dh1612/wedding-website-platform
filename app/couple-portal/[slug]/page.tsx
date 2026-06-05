@@ -68,6 +68,7 @@ export default async function CouplePortalBySlugPage({
     listCalendarItems(weddingRecord.id)
   ]);
   const portalBasePath = `/couple-portal/${slug}`;
+  const publicHomeHref = `/${slug}`;
   const navItems = buildPortalNavItems(portalBasePath);
 
   return (
@@ -80,6 +81,7 @@ export default async function CouplePortalBySlugPage({
       portalType="couple"
       adminNavItemsOverride={navItems}
       weddingData={weddingData}
+      homeHref={publicHomeHref}
     >
       <PageHero
         eyebrow="Couple Portal"
@@ -87,6 +89,7 @@ export default async function CouplePortalBySlugPage({
         description="A private planning space for checklist progress, guest replies, key dates, and the seating plan."
         themeId={theme.id}
         weddingData={weddingData}
+        summaryActionHref={publicHomeHref}
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="mb-6 flex justify-end">

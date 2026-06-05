@@ -65,6 +65,7 @@ export default async function PlanYourTablesBySlugPage({
   }
 
   const guests = await listPortalGuests(weddingRecord.id);
+  const publicHomeHref = `/${slug}`;
 
   return (
     <SiteFrame
@@ -77,12 +78,15 @@ export default async function PlanYourTablesBySlugPage({
       adminNavItemsOverride={buildOperatorWeddingNavItems(slug)}
       showFooter={false}
       weddingData={weddingData}
+      homeHref={publicHomeHref}
     >
       <PageHero
         eyebrow="Plan Your Tables"
         title="Seating Planner Preview"
         description="A private seating workspace for this wedding. The guest list now comes from this wedding record, so you are only seeing guests tied to this couple."
         themeId={theme.id}
+        weddingData={weddingData}
+        summaryActionHref={publicHomeHref}
       />
       <SeatingPlanner guests={guests} tables={[]} />
     </SiteFrame>

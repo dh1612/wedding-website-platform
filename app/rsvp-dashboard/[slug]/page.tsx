@@ -65,6 +65,7 @@ export default async function RSVPDashboardBySlugPage({
   }
 
   const guests = await listPortalGuests(weddingRecord.id);
+  const publicHomeHref = `/${slug}`;
   const customQuestionLabels = Object.fromEntries(
     (weddingData.rsvp.form?.customQuestions ?? []).map((question) => [
       question.id,
@@ -86,6 +87,7 @@ export default async function RSVPDashboardBySlugPage({
       adminNavItemsOverride={buildOperatorWeddingNavItems(slug)}
       showFooter={false}
       weddingData={weddingData}
+      homeHref={publicHomeHref}
     >
       <PageHero
         eyebrow="RSVP Dashboard"
@@ -93,6 +95,7 @@ export default async function RSVPDashboardBySlugPage({
         description="Manage the guest list, review RSVP responses, and manually add or remove guests for this wedding."
         themeId={theme.id}
         weddingData={weddingData}
+        summaryActionHref={publicHomeHref}
       />
       <RSVPManager
         guests={guests}

@@ -25,6 +25,7 @@ type SiteHeaderProps = {
   adminNavItemsOverride?: Array<{ label: string; path: string }>;
   returnHref?: string;
   returnLabel?: string;
+  homeHref?: string;
 };
 
 export function SiteHeader({
@@ -38,7 +39,8 @@ export function SiteHeader({
   weddingData,
   adminNavItemsOverride,
   returnHref,
-  returnLabel = "Return to Home"
+  returnLabel = "Return to Home",
+  homeHref
 }: SiteHeaderProps) {
   const wedding = weddingData ?? getWeddingData();
   const isFloralFrameTheme = themeId === "petal-script";
@@ -61,6 +63,9 @@ export function SiteHeader({
   const inactiveNavStyle = {
     color: "var(--muted)"
   };
+  const resolvedHomeHref =
+    homeHref ??
+    (adminView ? buildModeHref("/", themeId, mode) : buildModeHref(siteBasePath, themeId, mode));
 
   if (!adminView && (isFloralFrameTheme || isSoftBlushTheme)) {
     const publicNavItems =
@@ -179,7 +184,7 @@ export function SiteHeader({
     >
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-8">
         <Link
-          href={adminView ? buildModeHref("/", themeId, mode) : buildModeHref(siteBasePath, themeId, mode)}
+          href={resolvedHomeHref}
           className="space-y-1 rounded-full px-1"
         >
           <p className="eyebrow">{adminView ? "Wedding Portal" : "Wedding Day"}</p>

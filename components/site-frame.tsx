@@ -16,6 +16,7 @@ type SiteFrameProps = {
   adminNavItemsOverride?: Array<{ label: string; path: string }>;
   weddingData?: WeddingData;
   showFooter?: boolean;
+  homeHref?: string;
 };
 
 export function SiteFrame({
@@ -28,7 +29,8 @@ export function SiteFrame({
   portalType = "couple",
   adminNavItemsOverride,
   weddingData,
-  showFooter = true
+  showFooter = true,
+  homeHref
 }: SiteFrameProps) {
   const fontPresetStyle = weddingData
     ? getFontPresetById(weddingData.fontPreset).style
@@ -48,6 +50,7 @@ export function SiteFrame({
         portalType={portalType}
         adminNavItemsOverride={adminNavItemsOverride}
         weddingData={weddingData}
+        homeHref={homeHref}
       />
       {children}
       {showFooter ? <SiteFooter weddingData={weddingData} /> : null}
