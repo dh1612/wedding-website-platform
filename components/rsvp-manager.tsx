@@ -52,6 +52,20 @@ export function RSVPManager({
   customSelectableQuestions = [],
   showMealChoice = true
 }: RSVPManagerProps) {
+  function isQuantityOption(option: string) {
+    return /^\d+\+?$/.test(option.trim());
+  }
+
+  function getQuantityBaseValue(option: string) {
+    const match = option.trim().match(/^(\d+)/);
+    return match ? Number(match[1]) : 0;
+  }
+
+  function isQuantityQuestion(question: RSVPFormQuestion) {
+    const options = question.options ?? [];
+    return options.length > 0 && options.every(isQuantityOption);
+  }
+
   function getCustomQuestionLabel(questionId: string) {
     return customQuestionLabels[questionId] || questionId;
   }
@@ -116,7 +130,9 @@ export function RSVPManager({
           : notesFilter === "has"
             ? hasNotes
             : !hasNotes;
-      const matchesCustomFilters = customSelectableQuestions.every((question) => {
+      const matchesCustomFilters = customSelectableQuestions
+        .filter((question) => !isQuantityQuestion(question))
+        .every((question) => {
         const selectedFilters = customFilters[question.id] ?? [];
 
         if (!selectedFilters.length) {
@@ -133,9 +149,8 @@ export function RSVPManager({
 
           return selectedFilters.every((filterValue) => selectedAnswers.includes(filterValue));
         }
-
-        return selectedFilters.includes(answer.trim());
-      });
+          return selectedFilters.includes(answer.trim());
+        });
 
       return (
         matchesSearch &&
@@ -343,9 +358,12 @@ export function RSVPManager({
     });
   }
 
-  const customQuestionSummaries = customSelectableQuestions.map((question) => ({
-    question,
-    options: (question.options ?? []).map((option) => ({
+  const filterableCustomQuestions = customSelectableQuestions.filter(
+    (question) => !isQuantityQuestion(question)
+  );
+
+  const customQuestionSummaries = customSelectableQuestions.map((question) => {
+    const options = (question.options ?? []).map((option) => ({
       option,
       count: guestList.filter((guest) => {
         const answer = guest.customAnswers?.[question.id] ?? "";
@@ -361,8 +379,24 @@ export function RSVPManager({
 
         return answer.trim() === option;
       }).length
-    }))
-  }));
+    }));
+
+    const totalResponses = options.reduce((total, item) => total + item.count, 0);
+    const estimatedGuests = isQuantityQuestion(question)
+      ? options.reduce(
+          (total, item) => total + getQuantityBaseValue(item.option) * item.count,
+          0
+        )
+      : 0;
+
+    return {
+      question,
+      options,
+      totalResponses,
+      estimatedGuests,
+      isQuantity: isQuantityQuestion(question)
+    };
+  });
 
   const dietaryValueOptions = Array.from(
     new Set(
@@ -396,10 +430,10 @@ export function RSVPManager({
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="eyebrow">Guest List</p>
-                <h2 className="mt-2 text-3xl">Manage Invitations & Replies</h2>
+                <h2 className="mt-2 text-3xl">Review Invitations & Replies</h2>
               </div>
               <div className="accent-panel rounded-full px-4 py-2 text-sm">
-                Couples can add and remove guests here
+                Review replies first, then update the guest list if needed
               </div>
             </div>
             {statusMessage ? (
@@ -485,9 +519,9 @@ export function RSVPManager({
               </div>
             ) : null}
 
-            {customSelectableQuestions.length ? (
+            {filterableCustomQuestions.length ? (
               <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {customSelectableQuestions.map((question) => {
+                {filterableCustomQuestions.map((question) => {
                   const selectedFilters = customFilters[question.id] ?? [];
 
                   return (
@@ -547,22 +581,55 @@ export function RSVPManager({
               <div className="mt-6 rounded-[1.5rem] border border-[var(--border)] bg-white/70 p-5">
                 <p className="eyebrow">Custom Question Counts</p>
                 <div className="mt-4 space-y-5">
-                  {customQuestionSummaries.map(({ question, options }) => (
-                    <div key={question.id}>
-                      <h3 className="text-lg">{question.label}</h3>
-                      <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                        {options.map(({ option, count }) => (
-                          <div
-                            key={option}
-                            className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3"
-                          >
-                            <p className="text-sm text-[var(--muted)]">{option}</p>
-                            <p className="mt-2 text-2xl">{count}</p>
+                  {customQuestionSummaries.map(
+                    ({ question, options, totalResponses, estimatedGuests, isQuantity }) => (
+                      <div key={question.id}>
+                        <h3 className="text-lg">{question.label}</h3>
+                        {isQuantity ? (
+                          <div className="mt-3 grid gap-3 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+                            <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
+                              <p className="text-sm text-[var(--muted)]">Summary</p>
+                              <p className="mt-2 text-2xl">
+                                {estimatedGuests} guest{estimatedGuests === 1 ? "" : "s"}
+                              </p>
+                              <p className="mt-1 text-sm text-[var(--muted)]">
+                                across {totalResponses} submission{totalResponses === 1 ? "" : "s"}
+                              </p>
+                            </div>
+                            <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
+                              <p className="text-sm text-[var(--muted)]">Breakdown</p>
+                              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                                {options.map(({ option, count }) => (
+                                  <div
+                                    key={option}
+                                    className="rounded-[0.9rem] border border-[var(--border)] bg-white px-3 py-3"
+                                  >
+                                    <p className="text-sm text-[var(--muted)]">{option}</p>
+                                    <p className="mt-2 text-xl">{count}</p>
+                                    <p className="mt-1 text-xs text-[var(--muted)]">
+                                      submission{count === 1 ? "" : "s"}
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
                           </div>
-                        ))}
+                        ) : (
+                          <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                            {options.map(({ option, count }) => (
+                              <div
+                                key={option}
+                                className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-3"
+                              >
+                                <p className="text-sm text-[var(--muted)]">{option}</p>
+                                <p className="mt-2 text-2xl">{count}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               </div>
             ) : null}
