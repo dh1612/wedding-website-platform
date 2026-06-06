@@ -161,11 +161,16 @@ export function RSVPManager({
   ]);
 
   const summary = useMemo(() => {
+    const sumPartySize = (status?: RSVPStatus) =>
+      guestList
+        .filter((guest) => (status ? guest.status === status : true))
+        .reduce((total, guest) => total + Math.max(guest.partySize || 1, 0), 0);
+
     return {
-      totalGuests: guestList.length,
-      attending: guestList.filter((guest) => guest.status === "attending").length,
-      declined: guestList.filter((guest) => guest.status === "declined").length,
-      pending: guestList.filter((guest) => guest.status === "pending").length,
+      totalGuests: sumPartySize(),
+      attending: sumPartySize("attending"),
+      declined: sumPartySize("declined"),
+      pending: sumPartySize("pending"),
       dietaryAlerts: guestList.filter(
         (guest) => guest.dietary && guest.dietary !== "Kids meal"
       ).length,
@@ -285,10 +290,36 @@ export function RSVPManager({
     { label: "Households", value: summary.households }
   ];
 
-  const groupedGuests: Array<{ status: RSVPStatus; label: string; guests: PortalGuest[] }> = [
-    { status: "attending", label: "Attending", guests: filteredGuests.filter((guest) => guest.status === "attending") },
-    { status: "pending", label: "Pending", guests: filteredGuests.filter((guest) => guest.status === "pending") },
-    { status: "declined", label: "Declined", guests: filteredGuests.filter((guest) => guest.status === "declined") }
+  const groupedGuests: Array<{
+    status: RSVPStatus;
+    label: string;
+    guests: PortalGuest[];
+    guestCount: number;
+  }> = [
+    {
+      status: "attending",
+      label: "Attending",
+      guests: filteredGuests.filter((guest) => guest.status === "attending"),
+      guestCount: filteredGuests
+        .filter((guest) => guest.status === "attending")
+        .reduce((total, guest) => total + Math.max(guest.partySize || 1, 0), 0)
+    },
+    {
+      status: "pending",
+      label: "Pending",
+      guests: filteredGuests.filter((guest) => guest.status === "pending"),
+      guestCount: filteredGuests
+        .filter((guest) => guest.status === "pending")
+        .reduce((total, guest) => total + Math.max(guest.partySize || 1, 0), 0)
+    },
+    {
+      status: "declined",
+      label: "Declined",
+      guests: filteredGuests.filter((guest) => guest.status === "declined"),
+      guestCount: filteredGuests
+        .filter((guest) => guest.status === "declined")
+        .reduce((total, guest) => total + Math.max(guest.partySize || 1, 0), 0)
+    }
   ];
 
   function toggleGroup(status: RSVPStatus) {
@@ -547,7 +578,7 @@ export function RSVPManager({
                     <div>
                       <p className="eyebrow">{group.label}</p>
                       <p className="mt-2 text-sm text-[var(--muted)]">
-                        {group.guests.length} guest{group.guests.length === 1 ? "" : "s"}
+                        {group.guestCount} guest{group.guestCount === 1 ? "" : "s"} · {group.guests.length} submission{group.guests.length === 1 ? "" : "s"}
                       </p>
                     </div>
                     <span className="text-sm font-medium text-[var(--accent-strong)]">
