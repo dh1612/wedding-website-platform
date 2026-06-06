@@ -19,6 +19,11 @@ const marketingNavItems = [
 
 export default async function CoupleAreaPage() {
   const wedding = getWeddingData("manor-house");
+  const previewWedding = {
+    ...wedding,
+    couple: "Private Couple Area",
+    locationSummary: "Premium planning portal preview"
+  };
   const theme = getThemeById("soft-blush");
   const portalWedding = await ensurePortalWedding();
   const [checklistItems, calendarItems] = await Promise.all([
@@ -27,11 +32,11 @@ export default async function CoupleAreaPage() {
   ]);
 
   const demoNavItems = [
-    { label: "Portal Home", path: `/couple-portal?theme=${theme.id}#portal-home` },
-    { label: "Checklist", path: `/couple-portal?theme=${theme.id}#checklist-demo` },
-    { label: "Calendar", path: `/couple-portal?theme=${theme.id}#calendar-demo` },
-    { label: "RSVPs", path: `/couple-portal?theme=${theme.id}#rsvp-demo` },
-    { label: "Seating", path: `/couple-portal?theme=${theme.id}#seating-demo` }
+    { label: "Portal Home", path: "/couple-area#portal-home" },
+    { label: "Checklist", path: "/couple-area#checklist-demo" },
+    { label: "Calendar", path: "/couple-area#calendar-demo" },
+    { label: "RSVPs", path: "/couple-area#rsvp-demo" },
+    { label: "Seating", path: "/couple-area#seating-demo" }
   ];
 
   return (
@@ -114,13 +119,14 @@ export default async function CoupleAreaPage() {
           className="mx-auto w-full max-w-6xl rounded-[2.4rem] border border-black/6 bg-white/50 shadow-[0_24px_70px_rgba(52,35,24,0.08)]"
         >
           <SiteHeader
-            currentPath="/couple-portal"
+            currentPath="/couple-area"
             mode="pages"
             themeId={theme.id}
             adminView
             portalType="couple"
             adminNavItemsOverride={demoNavItems}
-            weddingData={wedding}
+            weddingData={previewWedding}
+            homeHref="/couple-area"
           />
           <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-10">
             <div className="mb-6 flex justify-end">

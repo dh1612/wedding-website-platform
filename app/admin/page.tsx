@@ -136,7 +136,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           {record._count.guests} guests · {record._count.rsvpResponses} RSVP responses · {record._count.seatingPlans} seating plans
                         </p>
                       </div>
-                      <div className="flex gap-3">
+                      <div className="flex flex-wrap gap-3 sm:justify-end">
                         <Link
                           href={`/admin/weddings/${record.slug}`}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
