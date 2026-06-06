@@ -234,30 +234,14 @@ export default function MarketingHomePage() {
                 }}
               />
             </div>
-            <div className="grid gap-4">
-              <div className="overflow-hidden rounded-[1.4rem] border border-white/16 bg-white/10 sm:rounded-[1.7rem]">
-                <div
-                  className="h-[180px] w-full bg-cover bg-center sm:h-[280px]"
-                  style={{
-                    backgroundImage:
-                      "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
-                  }}
-                />
-              </div>
-              <div className="rounded-[1.4rem] border border-white/12 bg-white/92 p-5 shadow-[0_20px_60px_rgba(17,28,23,0.18)] sm:rounded-[1.7rem] sm:p-6">
-                <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">
-                  Tailored with you
-                </p>
-                <p className="mt-3 text-2xl leading-tight">
-                  A curated wedding website experience, from first draft through to the final live
-                  version.
-                </p>
-                <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                  We shape the wording, structure, styling, guest details, and support around the
-                  kind of experience you want to create, with package options for information-only
-                  websites right through to the full planning portal.
-                </p>
-              </div>
+            <div className="overflow-hidden rounded-[1.6rem] border border-white/16 bg-white/10 sm:rounded-[2rem]">
+              <div
+                className="h-[300px] w-full bg-cover bg-center sm:h-[500px]"
+                style={{
+                  backgroundImage:
+                    "url('https://images.pexels.com/photos/30268257/pexels-photo-30268257.jpeg?auto=compress&cs=tinysrgb&w=900')"
+                }}
+              />
             </div>
           </div>
         </div>
