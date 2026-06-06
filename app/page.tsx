@@ -26,11 +26,11 @@ const packageCards = [
     id: "smart",
     name: "Smart",
     price: "EUR395",
-    summary: "Adds RSVP collection, AI concierge access, and a guided walkthrough.",
+    summary: "Adds website RSVP with guest tracking and a guided walkthrough.",
     points: [
       "Everything in Basic",
-      "RSVP collection",
-      "AI concierge access",
+      "RSVP via the website",
+      "Guest tracking dashboard",
       "1-hour walkthrough call"
     ]
   },
@@ -38,10 +38,11 @@ const packageCards = [
     id: "premium",
     name: "Premium",
     price: "EUR645",
-    summary: "The full experience, including the private couple portal and every planning feature.",
+    summary: "The full experience, including the private couple portal, AI concierge, and every planning feature.",
     points: [
       "Everything in Smart",
       "Private couple portal",
+      "AI concierge access",
       "Checklist, RSVP and planning tools",
       "Seating plan and premium planning tools"
     ]
@@ -172,11 +173,12 @@ export default function MarketingHomePage() {
               Wedding websites tailored for you
             </p>
             <h1 className="max-w-3xl text-[3.1rem] leading-none sm:text-[4.4rem] lg:text-6xl">
-              A done-for-you wedding website, shaped around your style and your guests.
+              Wedding websites tailored to your style, your guests, and your day.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              This is not a DIY builder. We create the website with you, refine it around your
-              preferences, and match the level of support to the package that suits your day.
+              This is a done-for-you service. You tell us what you need, and we create the website
+              with you and for you. Choose the package that matches the level of support you want,
+              from a beautifully simple guest website to the full planning portal.
             </p>
           </div>
 
@@ -217,7 +219,7 @@ export default function MarketingHomePage() {
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
             Start with a strong first draft, then choose whether you want a simple guest website,
-            RSVP support, or the full private planning side as well.
+            RSVP through the website, or the full private planning side as well.
           </div>
         </div>
 
@@ -254,6 +256,160 @@ export default function MarketingHomePage() {
                   We shape the wording, structure, styling, guest details, and support around the
                   kind of experience you want to create, with package options for information-only
                   websites right through to the full planning portal.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="packages" className="mx-auto w-full max-w-6xl px-6 py-6 lg:px-8 lg:py-10">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-4">
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Pricing & Features</p>
+              <h2 className="text-4xl leading-none sm:text-5xl">Choose the level of support</h2>
+              <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
+                The website is always built for you. Higher packages add more support, RSVP tools,
+                and the private planning side.
+              </p>
+            </div>
+            <Link
+              href="/brochure"
+              className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+            >
+              See full package details
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+            {packageCards.map((pkg, index) => (
+              <div
+                key={pkg.name}
+                className={`rounded-[2rem] border p-7 shadow-[0_22px_70px_rgba(52,35,24,0.1)] ${
+                  index === 2
+                    ? "border-[#184b38] bg-[#184b38] text-white"
+                    : "border-black/6 bg-white/86 text-[#241f1b]"
+                }`}
+              >
+                <p className={`text-[11px] uppercase tracking-[0.32em] ${index === 2 ? "text-[#d9c39f]" : "text-[#9a7d64]"}`}>
+                  Package
+                </p>
+                <h3 className="mt-4 text-3xl leading-tight">{pkg.name}</h3>
+                <p className={`mt-4 text-3xl ${index === 2 ? "text-[#f0e6d8]" : "text-[#184b38]"}`}>{pkg.price}</p>
+                <p className={`mt-5 text-base leading-7 ${index === 2 ? "text-white/82" : "text-[#5f564e]"}`}>
+                  {pkg.summary}
+                </p>
+                <p className={`mt-3 text-sm leading-6 ${index === 2 ? "text-white/72" : "text-[#486159]"}`}>
+                  Every package includes a private curated review before the first version is
+                  shared for feedback.
+                </p>
+                <div className="mt-6 space-y-3">
+                  {pkg.points.map((point) => (
+                    <div key={point} className="flex gap-3">
+                      <span className={`mt-2 h-2.5 w-2.5 rounded-full ${index === 2 ? "bg-[#f0e6d8]" : "bg-[#b48c58]"}`} />
+                      <span className={`text-sm leading-6 ${index === 2 ? "text-white/88" : "text-[#423a34]"}`}>
+                        {point}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <Link
+                    href={`/get-started?package=${pkg.id}`}
+                    className={`inline-flex rounded-full px-5 py-3 text-sm font-medium transition ${
+                      index === 2
+                        ? "bg-white text-[#184b38] hover:bg-[#f3ece2]"
+                        : "bg-[#184b38] text-white hover:bg-[#215b45]"
+                    }`}
+                  >
+                    Get My Website Started
+                  </Link>
+                  <Link
+                    href={`/packages/${pkg.id}`}
+                    className={`inline-flex rounded-full border px-5 py-3 text-sm font-medium transition ${
+                      index === 2
+                        ? "border-white/18 bg-transparent text-white hover:bg-white/8"
+                        : "border-[#d8cfc5] bg-white text-[#4e453f] hover:bg-[#faf7f2]"
+                    }`}
+                  >
+                    See more
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-10">
+        <div className="rounded-[2.2rem] border border-black/6 bg-[#f6fbf8] p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+            <div className="space-y-4">
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+                Why this service
+              </p>
+              <h2 className="text-4xl leading-none sm:text-5xl">
+                A more personal alternative to doing it all in a builder
+              </h2>
+              <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
+                This is a small Irish business, and the support stays direct and hands-on. You are
+                not left inside a generic template builder or routed through a support queue. We
+                shape the website with you, keep the process manageable, and help you get it to a
+                version you feel happy to share.
+              </p>
+              <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-white px-5 py-4 text-sm leading-7 text-[#486159]">
+                If you would rather not spend evenings trying to bend a template builder into the
+                right shape, this is built for that exact couple.
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[1.6rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                  Direct support
+                </p>
+                <h3 className="mt-3 text-2xl leading-tight">You will always deal directly with me</h3>
+                <p className="mt-3 text-sm leading-7 text-[#5f564e]">
+                  Questions, edits, and support stay personal. The aim is to keep the process clear
+                  and responsive, without overcomplicating it or disappearing behind generic
+                  customer support.
+                </p>
+              </div>
+
+              <div className="rounded-[1.6rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                  Tailored around you
+                </p>
+                <h3 className="mt-3 text-2xl leading-tight">The website is shaped around your day</h3>
+                <p className="mt-3 text-sm leading-7 text-[#5f564e]">
+                  The wording, structure, guest details, and final styling are adjusted around what
+                  matters to you, rather than forcing everything into a rigid one-size-fits-all
+                  setup.
+                </p>
+              </div>
+
+              <div className="rounded-[1.6rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                  Boundaries built in
+                </p>
+                <h3 className="mt-3 text-2xl leading-tight">Support stays clear, calm, and package-led</h3>
+                <p className="mt-3 text-sm leading-7 text-[#5f564e]">
+                  The level of input and support is matched to the package chosen, so couples get
+                  real help without unclear expectations about what is included.
+                </p>
+              </div>
+
+              <div className="rounded-[1.6rem] border border-black/6 bg-[#184b38] p-6 text-white shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9c39f]">
+                  Built to be shared
+                </p>
+                <h3 className="mt-3 text-2xl leading-tight">
+                  The goal is a polished website you feel confident sending out
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-white/82">
+                  From a beautifully simple guest website to the full planning portal, the aim is
+                  the same: a wedding website that feels considered, useful, and genuinely yours.
                 </p>
               </div>
             </div>
@@ -371,84 +527,9 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      <section id="packages" className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+      <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-4">
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Pricing & Features</p>
-              <h2 className="text-4xl leading-none sm:text-5xl">Choose the level of support</h2>
-              <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-                The website is always built for you. Higher packages add more support and planning
-                tools.
-              </p>
-            </div>
-            <Link
-              href="/brochure"
-              className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
-            >
-              View Example Website
-            </Link>
-          </div>
-
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {packageCards.map((pkg, index) => (
-              <div
-                key={pkg.name}
-                className={`rounded-[2rem] border p-7 shadow-[0_22px_70px_rgba(52,35,24,0.1)] ${
-                  index === 2
-                    ? "border-[#184b38] bg-[#184b38] text-white"
-                    : "border-black/6 bg-white/86 text-[#241f1b]"
-                }`}
-              >
-                <p className={`text-[11px] uppercase tracking-[0.32em] ${index === 2 ? "text-[#d9c39f]" : "text-[#9a7d64]"}`}>
-                  Package
-                </p>
-                <h3 className="mt-4 text-3xl leading-tight">{pkg.name}</h3>
-                <p className={`mt-4 text-3xl ${index === 2 ? "text-[#f0e6d8]" : "text-[#184b38]"}`}>{pkg.price}</p>
-                <p className={`mt-5 text-base leading-7 ${index === 2 ? "text-white/82" : "text-[#5f564e]"}`}>
-                  {pkg.summary}
-                </p>
-                <p className={`mt-3 text-sm leading-6 ${index === 2 ? "text-white/72" : "text-[#486159]"}`}>
-                  Every package includes a private curated review before the first version is
-                  shared for feedback.
-                </p>
-                <div className="mt-6 space-y-3">
-                  {pkg.points.map((point) => (
-                    <div key={point} className="flex gap-3">
-                      <span className={`mt-2 h-2.5 w-2.5 rounded-full ${index === 2 ? "bg-[#f0e6d8]" : "bg-[#b48c58]"}`} />
-                      <span className={`text-sm leading-6 ${index === 2 ? "text-white/88" : "text-[#423a34]"}`}>
-                        {point}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  <Link
-                    href={`/get-started?package=${pkg.id}`}
-                    className={`inline-flex rounded-full px-5 py-3 text-sm font-medium transition ${
-                      index === 2
-                        ? "bg-white text-[#184b38] hover:bg-[#f3ece2]"
-                        : "bg-[#184b38] text-white hover:bg-[#215b45]"
-                    }`}
-                  >
-                    Get My Website Started
-                  </Link>
-                  <Link
-                    href={`/packages/${pkg.id}`}
-                    className={`inline-flex rounded-full border px-5 py-3 text-sm font-medium transition ${
-                      index === 2
-                        ? "border-white/18 bg-transparent text-white hover:bg-white/8"
-                        : "border-[#d8cfc5] bg-white text-[#4e453f] hover:bg-[#faf7f2]"
-                    }`}
-                  >
-                    See more
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1fr_0.95fr]">
+          <div className="mt-0 grid gap-6 lg:grid-cols-[1fr_1fr_0.95fr]">
             <div className="rounded-[1.5rem] border border-black/6 bg-[#fdfaf6] p-6">
               <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">How It Works</p>
               <p className="mt-2 text-sm leading-6 text-[#184b38]">No setup. No tools. No stress.</p>

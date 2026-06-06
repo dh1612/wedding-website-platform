@@ -158,15 +158,15 @@ export default async function PackagePage({ params }: PackagePageProps) {
               <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                 <div className="space-y-4">
                   <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-                    RSVP + Concierge Preview
+                    RSVP Preview
                   </p>
                   <h3 className="text-4xl leading-none sm:text-5xl">
                     The standout feature here is the guest-response side
                   </h3>
                   <p className="text-lg leading-8 text-[#5f564e]">
-                    Smart brings the RSVP experience and AI concierge much closer to the front. It
-                    helps couples collect replies cleanly, while guests can still get quick answers
-                    without turning every small question into a message thread.
+                    Smart brings the RSVP experience much closer to the front. It helps couples
+                    collect replies cleanly through the website, keep track of guests in one place,
+                    and still have a calm walkthrough of how it all works.
                   </p>
                   <Link
                     href={buildSampleWebsiteHref(
@@ -181,7 +181,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                 </div>
                 <div className="rounded-[1.7rem] border border-[#184b38]/12 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
                   <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                    Ask the concierge
+                    Website RSVP flow
                   </p>
                   <div className="mt-5 space-y-4">
                     <div className="rounded-[1.1rem] bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#4e453f]">
@@ -192,7 +192,8 @@ export default async function PackagePage({ params }: PackagePageProps) {
                       through the RSVP form on the website.
                     </div>
                     <div className="rounded-[1.1rem] border border-[#e8ddd0] bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6d655d]">
-                      A guest gets a quick answer without having to message the couple directly.
+                      A guest can reply directly through the website, and the couple can track it
+                      cleanly in the dashboard.
                     </div>
                   </div>
                 </div>

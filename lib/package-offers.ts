@@ -59,28 +59,28 @@ export const packageOffers: PackageOffer[] = [
     id: "smart",
     name: "Smart",
     price: "EUR395",
-    summary: "Adds RSVP collection, AI concierge access, and a guided walkthrough.",
-    brochureCopy: "Adds RSVP collection, AI concierge access, and a guided walkthrough call.",
+    summary: "Adds website RSVP with guest tracking and a guided walkthrough.",
+    brochureCopy: "Adds RSVP through the website, guest tracking, and a guided walkthrough call.",
     heroTitle: "A more complete guest website, with RSVP and smarter support built in",
     heroCopy:
-      "Smart keeps the done-for-you feel of Basic, but adds the pieces most couples actually need once guest questions begin: RSVP collection, AI concierge support, and a walkthrough call so everything feels clear.",
-    valueNote: "Best for couples who want guest replies, smarter support, and a clearer handover without moving up to the full planning portal.",
+      "Smart keeps the done-for-you feel of Basic, but adds the pieces most couples actually need once replies begin: website RSVP, guest tracking, and a walkthrough call so everything feels clear.",
+    valueNote: "Best for couples who want guest replies and a clearer handover without moving up to the full planning portal.",
     included: [
       "Everything in Basic",
-      "RSVP collection",
-      "AI concierge access",
+      "RSVP via the website",
+      "Guest tracking dashboard",
       "1-hour walkthrough call"
     ],
     features: [
       {
-        title: "Guest replies without extra tools",
+        title: "Website RSVP without extra tools",
         copy:
           "Smart adds the RSVP experience directly into the website, so guests can respond in one place without the couple having to bolt on another system."
       },
       {
-        title: "AI concierge support",
+        title: "A clearer guest tracking view",
         copy:
-          "Guests can get quick help with common questions, which reduces how many routine messages end up coming back to the couple."
+          "Replies are collected through the website and shown back in the dashboard, so the couple can keep track of guest numbers and notes in one place."
       },
       {
         title: "A real walkthrough still included",
@@ -94,8 +94,8 @@ export const packageOffers: PackageOffer[] = [
     id: "premium",
     name: "Premium",
     price: "EUR645",
-    summary: "The full experience, including the private couple portal and every planning feature.",
-    brochureCopy: "Includes the website, the private couple portal, and the full planning side.",
+    summary: "The full experience, including the private couple portal, AI concierge, and every planning feature.",
+    brochureCopy: "Includes the website, the private couple portal, AI concierge access, and the full planning side.",
     heroTitle: "The full wedding website and planning setup, handled in one place",
     heroCopy:
       "Premium combines the guest-facing website with the full private couple portal. It is for couples who want the website sorted and also want the planning side — RSVPs, deadlines, seating and organisation — to live in one calmer system.",
@@ -103,6 +103,7 @@ export const packageOffers: PackageOffer[] = [
     included: [
       "Everything in Smart",
       "Private couple portal",
+      "AI concierge access",
       "Checklist, seating plan and planning tools",
       "Full premium access"
     ],
