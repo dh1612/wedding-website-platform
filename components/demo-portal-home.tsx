@@ -26,7 +26,7 @@ export function DemoPortalHome({
   checklistItems,
   calendarItems
 }: DemoPortalHomeProps) {
-  const { openTitle, openModal, closeModal } = useDemoPortalModal();
+  const { openTitle, openDescription, openDetail, openModal, closeModal } = useDemoPortalModal();
 
   return (
     <>
@@ -43,8 +43,14 @@ export function DemoPortalHome({
             eyebrow="Start Here"
             title="Checklist"
             copy="Tick off planning jobs, leave comments, and keep all your to-dos in one place."
-            buttonLabel="Open Checklist"
-            onOpen={() => openModal("Checklist demo")}
+            buttonLabel="See Checklist Preview"
+            onOpen={() =>
+              openModal(
+                "Checklist preview",
+                "See how Premium keeps planning tasks, notes, and next steps together in one calmer place.",
+                "Ideal for couples who want something more structured than scattered notes, screenshots, and message threads."
+              )
+            }
           />
 
           <DemoPortalActionCard
@@ -52,8 +58,14 @@ export function DemoPortalHome({
             eyebrow="Timeline"
             title="Calendar Planner"
             copy="Add key dates, map them against the wedding, and generate a clean timeline summary that feels closer to project planning."
-            buttonLabel="Open Calendar"
-            onOpen={() => openModal("Calendar demo")}
+            buttonLabel="See Calendar Preview"
+            onOpen={() =>
+              openModal(
+                "Calendar planner preview",
+                "This view shows how Premium can hold payments, fittings, supplier deadlines, and wedding-week timings in one timeline.",
+                "It is there to give couples a clearer overview of what is coming up, rather than leaving key dates spread across different tools."
+              )
+            }
           />
 
           <DemoPortalActionCard
@@ -61,8 +73,14 @@ export function DemoPortalHome({
             eyebrow="Guests"
             title="RSVP Dashboard"
             copy="See who is attending, who still needs a reply, and any dietary requirements or notes."
-            buttonLabel="Open RSVPs"
-            onOpen={() => openModal("RSVP dashboard demo")}
+            buttonLabel="See RSVP Preview"
+            onOpen={() =>
+              openModal(
+                "RSVP dashboard preview",
+                "This is where guest replies, dietary notes, and attendance numbers are gathered back together after RSVPs come through the website.",
+                "It gives couples a clearer live picture of responses without having to piece everything together manually."
+              )
+            }
           />
         </div>
 
@@ -72,8 +90,14 @@ export function DemoPortalHome({
             eyebrow="Seating"
             title="Plan Your Tables"
             copy="Build the room layout, place tables, and decide where each guest should sit."
-            buttonLabel="Open Seating Plan"
-            onOpen={() => openModal("Seating plan demo")}
+            buttonLabel="See Seating Preview"
+            onOpen={() =>
+              openModal(
+                "Seating plan preview",
+                "This shows the kind of planning view Premium can offer when couples are ready to think through tables and guest groups.",
+                "It is designed as a more visual way to work through seating than keeping table notes separately."
+              )
+            }
           />
 
           <div className="section-shell rounded-[2rem] p-8">
@@ -107,10 +131,16 @@ export function DemoPortalHome({
             </div>
             <button
               type="button"
-              onClick={() => openModal("Checklist demo")}
+              onClick={() =>
+                openModal(
+                  "Checklist preview",
+                  "See how Premium keeps planning tasks, notes, and next steps together in one calmer place.",
+                  "Ideal for couples who want something more structured than scattered notes, screenshots, and message threads."
+                )
+              }
               className="accent-button mt-6 rounded-full px-5 py-3 text-sm font-medium"
             >
-              Open Demo Popup
+              See Checklist Preview
             </button>
           </div>
 
@@ -132,15 +162,27 @@ export function DemoPortalHome({
             </div>
             <button
               type="button"
-              onClick={() => openModal("Calendar demo")}
+              onClick={() =>
+                openModal(
+                  "Calendar planner preview",
+                  "This view shows how Premium can hold payments, fittings, supplier deadlines, and wedding-week timings in one timeline.",
+                  "It is there to give couples a clearer overview of what is coming up, rather than leaving key dates spread across different tools."
+                )
+              }
               className="accent-button mt-6 rounded-full px-5 py-3 text-sm font-medium"
             >
-              Open Demo Popup
+              See Calendar Preview
             </button>
           </div>
         </div>
       </section>
-      <DemoPortalModal open={Boolean(openTitle)} title={openTitle} onClose={closeModal} />
+      <DemoPortalModal
+        open={Boolean(openTitle)}
+        title={openTitle}
+        description={openDescription}
+        detail={openDetail}
+        onClose={closeModal}
+      />
     </>
   );
 }

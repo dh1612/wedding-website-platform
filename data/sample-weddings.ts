@@ -131,16 +131,16 @@ export const sampleWeddingVariants: Record<string, WeddingData> = {
     travel: {
       heading: "Venue & Travel",
       description:
-        "Everything guests need to find the venue, stay nearby, and move through the weekend without stress.",
+        "The key details guests need for finding the venue, arriving easily, and staying nearby.",
       mapUtilityEyebrow: "Map & Area",
       mapUtilityTitle: "Useful locations at a glance",
       mapUtilityDescription:
-        "A quick guide to the places guests are most likely to need before and during the wedding weekend.",
+        "A quick guide to the places guests are most likely to need over the weekend.",
       locationOverviewTitle: "Around Ballymagarvey",
       locationOverviewHtml:
-        "<p>Ballymagarvey is close to Navan and within easy reach of Dublin Airport, which makes it a very straightforward weekend for guests travelling in.</p>",
+        "<p>Ballymagarvey is close to Navan and within easy reach of Dublin Airport, which makes the weekend very straightforward for guests travelling in.</p>",
       relaxedNote:
-        "The nicest thing about this venue is that once you arrive, you can properly switch off and enjoy the day.",
+        "Once you arrive, the rest of the day is easy to enjoy without much moving around.",
       mapSpots: [
         {
           label: "Airport",
@@ -156,18 +156,14 @@ export const sampleWeddingVariants: Record<string, WeddingData> = {
         {
           label: "Navan",
           detail: "The nearest town for taxis, groceries, and last-minute essentials."
-        },
-        {
-          label: "After Party Base",
-          detail: "The on-site accommodation and nearby houses are the easiest options if you want a late night."
         }
       ],
       transport:
-        "Most guests will travel by car or taxi. If you are staying nearby, arranging your return journey in advance is a good idea.",
+        "Most guests will travel by car or taxi, so arranging your return in advance is a good idea if you are staying nearby.",
       parking:
         "Parking is available on site, with plenty of space for guests driving to the venue.",
       directions:
-        "The estate is around 45 minutes from Dublin Airport and just outside Navan, which makes arrivals and check-ins quite straightforward.",
+        "The estate is around 45 minutes from Dublin Airport and just outside Navan, which keeps arrivals very straightforward.",
       mapLink:
         "https://maps.google.com/?q=Ballymagarvey+Village+Balrath+Navan+Co+Meath",
       sneakPeekImage:

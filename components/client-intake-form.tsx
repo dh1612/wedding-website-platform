@@ -51,6 +51,10 @@ function isLikelyImageUrl(value: string) {
   }
 }
 
+function isLikelyEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
 export function ClientIntakeForm({
   initialPackage = "smart"
 }: ClientIntakeFormProps) {
@@ -116,14 +120,16 @@ export function ClientIntakeForm({
 
   const hasMissingCouple = !values.couple.trim();
   const hasMissingEmail = !values.email.trim();
-  const hasMissingBasics = hasMissingCouple || hasMissingEmail;
+  const hasInvalidEmail = !!values.email.trim() && !isLikelyEmail(values.email);
+  const hasMissingBasics = hasMissingCouple || hasMissingEmail || hasInvalidEmail;
 
   const missingBasics = useMemo(() => {
     const missing: string[] = [];
     if (hasMissingCouple) missing.push("couple names");
     if (hasMissingEmail) missing.push("contact email");
+    if (!hasMissingEmail && hasInvalidEmail) missing.push("a valid email address");
     return missing;
-  }, [hasMissingCouple, hasMissingEmail]);
+  }, [hasMissingCouple, hasMissingEmail, hasInvalidEmail]);
 
   const selectedTheme = useMemo(
     () =>
@@ -258,12 +264,6 @@ export function ClientIntakeForm({
             <p className="mt-4 text-base font-medium leading-7 text-[#486159]">
               Send us rough details — we&apos;ll turn it into a polished wedding website.
             </p>
-            <p className="mt-4 text-base leading-7 text-[#5f564e]">
-              Most couples complete this in under 2 minutes.
-            </p>
-            <p className="mt-2 text-sm leading-6 text-[#184b38]">
-              Rough answers are perfect — we&apos;ll polish everything.
-            </p>
             <p className="mt-2 text-sm leading-6 text-[#486159]">
               Progress is saved while you move around, so nothing already typed should disappear.
             </p>
@@ -341,16 +341,23 @@ export function ClientIntakeForm({
               <div className="space-y-2">
                 <input
                   ref={emailInputRef}
+                  type="email"
+                  required
+                  autoComplete="email"
                   value={values.email}
                   onChange={(event) => updateField("email", event.target.value)}
                   placeholder="Your email (we’ll send your preview here)"
-                  aria-invalid={hasMissingEmail}
+                  aria-invalid={hasMissingEmail || hasInvalidEmail}
                   className={`w-full rounded-[1rem] border bg-white px-4 py-3 text-sm text-[#1f1d1a] ${
-                    hasMissingEmail ? "border-[#b86a53] ring-2 ring-[#b86a53]/15" : "border-black/8"
+                    hasMissingEmail || hasInvalidEmail
+                      ? "border-[#b86a53] ring-2 ring-[#b86a53]/15"
+                      : "border-black/8"
                   }`}
                 />
                 {hasMissingEmail ? (
                   <p className="text-sm leading-6 text-[#8a4c3a]">Add an email so the first version can be shared back.</p>
+                ) : hasInvalidEmail ? (
+                  <p className="text-sm leading-6 text-[#8a4c3a]">Please use a valid email address.</p>
                 ) : null}
               </div>
               <label className="space-y-2">

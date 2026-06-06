@@ -93,25 +93,39 @@ export const packageOffers: PackageOffer[] = [
   {
     id: "premium",
     name: "Premium",
-    price: "EUR645",
-    summary: "The full experience, including the private couple portal, AI concierge, and every planning feature.",
-    brochureCopy: "Includes the website, the private couple portal, AI concierge access, and the full planning side.",
-    heroTitle: "The full wedding website and planning setup, handled in one place",
+    price: "EUR745",
+    summary:
+      "The full experience, including the private couple portal, digital invites, AI concierge, and dedicated premium support.",
+    brochureCopy:
+      "Includes the website, digital invite generation, the private couple portal, AI concierge access, and the full planning side.",
+    heroTitle: "The full wedding website, digital invite, and planning setup in one place",
     heroCopy:
-      "Premium combines the guest-facing website with the full private couple portal. It is for couples who want the website sorted and also want the planning side — RSVPs, deadlines, seating and organisation — to live in one calmer system.",
-    valueNote: "Best value if the couple wants access to everything, not just the public-facing website.",
+      "Premium combines the guest-facing website with the full private couple portal, digital invite generation, and the most hands-on level of support. It is for couples who want the website sorted beautifully, the guest side polished properly, and the planning side kept together in one calmer system.",
+    valueNote:
+      "Best for couples who want the most complete version of the service, with the strongest support, digital invites, and the full private planning side included.",
     included: [
       "Everything in Smart",
+      "Digital invite generation",
       "Private couple portal",
       "AI concierge access",
       "Checklist, seating plan and planning tools",
-      "Full premium access"
+      "Dedicated premium support"
     ],
     features: [
+      {
+        title: "Digital invites matched to the website",
+        copy:
+          "Premium includes a digital invitation that is styled to sit alongside the couple's website, so the guest-facing experience feels more considered from the very start."
+      },
       {
         title: "The full private portal",
         copy:
           "Premium opens the couple portal properly, so the website, guest replies, and planning tools are all connected rather than scattered."
+      },
+      {
+        title: "More dedicated hands-on support",
+        copy:
+          "Premium is the highest-touch package, with more direct help shaping the final version, polishing the guest experience, and supporting the couple through the final setup."
       },
       {
         title: "A private checklist and key-dates planner",
@@ -119,17 +133,12 @@ export const packageOffers: PackageOffer[] = [
           "Important tasks, reminders, supplier deadlines and wedding-week timings stay in one place, which helps the final stretch feel calmer."
       },
       {
-        title: "Desktop-first seating planner",
-        copy:
-          "The seating plan gives a visual way to think through tables and guest groups, with the strongest experience on desktop or tablet when the couple is ready to sit down and map it out properly."
-      },
-      {
         title: "Everything from Smart still included",
         copy:
-          "Premium still includes the RSVP setup, AI concierge access, and guided walkthrough — it simply adds the fuller planning side on top."
+          "Premium still includes the RSVP setup, guest tracking, and guided walkthrough from Smart — it simply adds the fuller planning side and the more premium level of support on top."
       }
     ],
-    accentLabel: "Premium planning support"
+    accentLabel: "Full-service premium support"
   }
 ];
 

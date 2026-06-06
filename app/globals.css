@@ -43,6 +43,60 @@ body {
   font-family: var(--font-body);
 }
 
+main[data-theme] .section-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+main[data-theme] .section-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0.9rem;
+  border-radius: calc(2rem - 0.9rem);
+  border: 1px solid color-mix(in srgb, var(--gold) 24%, transparent);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+main[data-theme] .section-heading-block {
+  position: relative;
+  padding-top: 2rem;
+}
+
+main[data-theme] .section-heading-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8.5rem;
+  height: 1.8rem;
+  border: 1px solid color-mix(in srgb, var(--gold) 24%, transparent);
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+  opacity: 0.92;
+}
+
+main[data-theme] .section-heading-block::after {
+  content: "";
+  position: absolute;
+  top: 1.1rem;
+  left: 1.55rem;
+  width: 5.4rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--gold) 34%, transparent),
+    color-mix(in srgb, var(--gold) 8%, transparent)
+  );
+}
+
+main[data-theme] .section-title {
+  font-family: var(--font-script);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+
 main[data-theme="christmas-candlelight"] {
   position: relative;
   isolation: isolate;
@@ -333,34 +387,6 @@ main[data-theme="soft-blush"] .section-shell::after {
   border-radius: calc(inherit - 0.85rem);
   border: 1px solid rgba(199, 165, 106, 0.22);
   pointer-events: none;
-}
-
-main[data-theme="soft-blush"] [data-section] .section-shell:first-child .section-heading-block {
-  position: relative;
-  padding-top: 2rem;
-}
-
-main[data-theme="soft-blush"] [data-section] .section-shell:first-child .section-heading-block::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 8.5rem;
-  height: 1.8rem;
-  border: 1px solid rgba(199, 165, 106, 0.2);
-  border-bottom: none;
-  border-radius: 999px 999px 0 0;
-  opacity: 0.9;
-}
-
-main[data-theme="soft-blush"] [data-section] .section-shell:first-child .section-heading-block::after {
-  content: "";
-  position: absolute;
-  top: 1.1rem;
-  left: 1.55rem;
-  width: 5.4rem;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(199,165,106,0.3), rgba(199,165,106,0.08));
 }
 
 main[data-theme="soft-blush"] .accent-panel {

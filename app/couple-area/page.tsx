@@ -93,16 +93,16 @@ export default async function CoupleAreaPage() {
             Premium Couple Portal Preview
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            A read-only look inside the private planning side
+            See what the private planning side adds
           </h1>
           <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-            This shows the actual couple portal layout in preview mode, so couples can see the
-            checklist, RSVP dashboard, calendar, and seating tools without needing to click around
-            or unlock anything first.
+            This is a customer-facing preview of the Premium couple portal, so couples can see how
+            the checklist, RSVP dashboard, key dates, and seating view fit alongside the wedding
+            website before deciding if they want the fuller planning side.
           </p>
           <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-sm leading-7 text-[#486159]">
-            Premium includes RSVP collection, AI concierge access, the full private planning area,
-            and a 1-hour walkthrough call once everything is unlocked.
+            Premium includes digital invites, the full private planning area, AI concierge access,
+            and a more dedicated level of support while everything is being finalised.
           </div>
         </div>
       </section>
@@ -125,7 +125,7 @@ export default async function CoupleAreaPage() {
           <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-10">
             <div className="mb-6 flex justify-end">
               <div className="rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-4 py-2 text-sm font-medium text-[var(--accent-strong)]">
-                Preview only
+                Preview mode
               </div>
             </div>
             <DemoPortalHome

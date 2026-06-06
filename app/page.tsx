@@ -2,10 +2,7 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { buildSampleWebsiteHref } from "@/lib/brand";
-import {
-  defaultSampleWebsiteShowcase,
-  sampleWebsiteShowcases
-} from "@/lib/sample-websites";
+import { defaultSampleWebsiteShowcase } from "@/lib/sample-websites";
 
 const exampleHref = buildSampleWebsiteHref();
 
@@ -37,14 +34,16 @@ const packageCards = [
   {
     id: "premium",
     name: "Premium",
-    price: "EUR645",
-    summary: "The full experience, including the private couple portal, AI concierge, and every planning feature.",
+    price: "EUR745",
+    summary:
+      "The full experience, including digital invites, the private couple portal, AI concierge, and dedicated premium support.",
     points: [
       "Everything in Smart",
+      "Digital invite generation",
       "Private couple portal",
       "AI concierge access",
       "Checklist, RSVP and planning tools",
-      "Seating plan and premium planning tools"
+      "Dedicated premium support"
     ]
   }
 ];
@@ -223,7 +222,7 @@ export default function MarketingHomePage() {
           </div>
         </div>
 
-        <div className="rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.2)] sm:rounded-[2.4rem] sm:p-5">
+        <div className="self-start rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.2)] sm:rounded-[2.4rem] sm:p-5">
           <div className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
             <div className="overflow-hidden rounded-[1.6rem] border border-white/16 bg-white/10 sm:rounded-[2rem]">
               <div
@@ -254,8 +253,8 @@ export default function MarketingHomePage() {
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Pricing & Features</p>
               <h2 className="text-4xl leading-none sm:text-5xl">Choose the level of support</h2>
               <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-                The website is always built for you. Higher packages add more support, RSVP tools,
-                and the private planning side.
+                Choose between an information-only guest website, website RSVP with guest
+                tracking, or the full planning side with digital invites and premium support.
               </p>
             </div>
             <Link
@@ -283,10 +282,6 @@ export default function MarketingHomePage() {
                 <p className={`mt-4 text-3xl ${index === 2 ? "text-[#f0e6d8]" : "text-[#184b38]"}`}>{pkg.price}</p>
                 <p className={`mt-5 text-base leading-7 ${index === 2 ? "text-white/82" : "text-[#5f564e]"}`}>
                   {pkg.summary}
-                </p>
-                <p className={`mt-3 text-sm leading-6 ${index === 2 ? "text-white/72" : "text-[#486159]"}`}>
-                  Every package includes a private curated review before the first version is
-                  shared for feedback.
                 </p>
                 <div className="mt-6 space-y-3">
                   {pkg.points.map((point) => (
@@ -468,9 +463,9 @@ export default function MarketingHomePage() {
                   </span>
                 </div>
                 <p className="mt-4 text-base leading-7 text-[#5f564e]">
-                  Premium adds the full couple portal, plus a 1-hour walkthrough call, so the
-                  couple is shown exactly how to use it rather than being left to figure it out
-                  alone.
+                  Premium adds the full couple portal, digital invites styled to match the
+                  website, and the most dedicated level of support, so the couple is guided more
+                  closely through the final setup rather than left figuring it all out alone.
                 </p>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {portalPreviewCards.map((card) => (
@@ -506,57 +501,6 @@ export default function MarketingHomePage() {
                   Includes a guided 1-hour video call to walk through the premium area together.
                 </div>
               </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
-        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="mt-0 grid gap-6 lg:grid-cols-[1fr_1fr_0.95fr]">
-            <div className="rounded-[1.5rem] border border-black/6 bg-[#fdfaf6] p-6">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">How It Works</p>
-              <p className="mt-2 text-sm leading-6 text-[#184b38]">No setup. No tools. No stress.</p>
-              <div className="mt-4 space-y-3">
-                {flowSteps.map((step, index) => (
-                  <div key={step.title} className="flex gap-3">
-                    <span className="mt-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#184b38] text-xs font-medium text-white">
-                      {index + 1}
-                    </span>
-                    <p className="text-sm leading-6 text-[#4e453f]">{step.title}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[1.5rem] border border-black/6 bg-[#fdfaf6] p-6">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Done-For-You</p>
-              <div className="mt-4 rounded-[1rem] border border-black/6 bg-white/80 px-4 py-4 text-sm leading-7 text-[#2d241f]">
-                You tell us what your guests need. We handle everything else.
-              </div>
-            </div>
-
-            <div className="rounded-[1.5rem] border border-black/6 bg-[#f7fbf8] p-6">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-[#9a7d64]">Three Style Directions</p>
-              <div className="mt-4 space-y-3">
-                {sampleWebsiteShowcases.map((theme) => (
-                  <Link
-                    key={`${theme.sampleId}-${theme.themeId}`}
-                    href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
-                    className="block overflow-hidden rounded-[1rem] border border-black/6 bg-white transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(52,35,24,0.12)]"
-                  >
-                    <div
-                      className="h-24 w-full bg-cover bg-center"
-                      style={{ backgroundImage: `url('${theme.image}')` }}
-                    />
-                    <div className="px-4 py-3">
-                      <p className="text-sm font-medium text-[#241f1b]">{theme.title}</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.24em] text-[#9a7d64]">{theme.label}</p>
-                      <p className="mt-2 text-xs leading-5 text-[#5f564e]">{theme.accent}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
             </div>
           </div>
         </div>

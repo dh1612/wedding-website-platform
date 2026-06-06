@@ -213,12 +213,13 @@ export default async function PackagePage({ params }: PackagePageProps) {
                   </h3>
                   <p className="text-lg leading-8 text-[#5f564e]">
                     This is where the visual sell matters. The demo shows the checklist, RSVP
-                    overview, key dates and seating-plan layout in a read-only format, so couples
-                    can understand the value without needing to click around or edit anything.
+                    overview, key dates, seating-plan layout, and the broader premium side in a
+                    read-only format, so couples can understand the value without needing to click
+                    around or edit anything.
                   </p>
                   <p className="text-base leading-7 text-[#184b38]">
-                    It is purely a demo view. No edits, no drag-and-drop, just a clearer sense of
-                    what Premium actually gives them.
+                    Premium also includes digital invites styled to match the website, plus a more
+                    dedicated level of direct support while everything is being finalised.
                   </p>
                   <Link
                     href="/couple-area"

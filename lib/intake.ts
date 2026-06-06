@@ -41,13 +41,13 @@ export const intakePackages: Array<{
     id: "smart",
     name: "Smart",
     price: "EUR395",
-    summary: "Website plus RSVP collection, AI concierge access, and a walkthrough call."
+    summary: "Website plus RSVP through the site, guest tracking, and a walkthrough call."
   },
   {
     id: "premium",
     name: "Premium",
-    price: "EUR645",
-    summary: "Website plus the full couple portal and every premium planning feature."
+    price: "EUR745",
+    summary: "Website plus digital invites, the full couple portal, and premium planning support."
   }
 ];
 

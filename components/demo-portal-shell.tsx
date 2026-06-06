@@ -39,12 +39,16 @@ export function DemoPortalActionCard({
 type DemoPortalModalProps = {
   open: boolean;
   title: string;
+  description?: string;
+  detail?: string;
   onClose: () => void;
 };
 
 export function DemoPortalModal({
   open,
   title,
+  description,
+  detail,
   onClose
 }: DemoPortalModalProps) {
   if (!open) {
@@ -57,13 +61,14 @@ export function DemoPortalModal({
         <p className="eyebrow">Demo View</p>
         <h2 className="mt-3 text-3xl">{title}</h2>
         <p className="prose-copy mt-4 text-lg">
-          This is a read-only couple portal demo. The live planning tools unlock after the website
-          has been approved and the premium package has been activated.
+          {description ??
+            "This is a read-only preview of the couple portal, so you can see what Premium adds before deciding whether it is the right fit."}
         </p>
-        <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/75 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
-          Couples can review the layout here, but checklist edits, RSVP management, calendar
-          planning, and seating tools are only opened once the operator unlocks them.
-        </div>
+        {detail ? (
+          <div className="mt-6 rounded-[1.3rem] border border-[var(--border)] bg-white/75 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+            {detail}
+          </div>
+        ) : null}
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             type="button"
@@ -79,11 +84,18 @@ export function DemoPortalModal({
 }
 
 export function useDemoPortalModal() {
-  const [openTitle, setOpenTitle] = useState("");
+  const [openState, setOpenState] = useState<{
+    title: string;
+    description?: string;
+    detail?: string;
+  } | null>(null);
 
   return {
-    openTitle,
-    openModal: (title: string) => setOpenTitle(title),
-    closeModal: () => setOpenTitle("")
+    openTitle: openState?.title ?? "",
+    openDescription: openState?.description,
+    openDetail: openState?.detail,
+    openModal: (title: string, description?: string, detail?: string) =>
+      setOpenState({ title, description, detail }),
+    closeModal: () => setOpenState(null)
   };
 }
