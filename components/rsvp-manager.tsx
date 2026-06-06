@@ -595,8 +595,8 @@ export function RSVPManager({
                               key={guest.id}
                               className={`grid gap-5 px-5 py-5 ${
                                 showMealChoice
-                                  ? "lg:grid-cols-[minmax(0,1.1fr)_140px_140px_180px_minmax(0,1.4fr)_100px]"
-                                  : "lg:grid-cols-[minmax(0,1.1fr)_140px_180px_minmax(0,1.4fr)_100px]"
+                                  ? "lg:grid-cols-[minmax(0,1.1fr)_140px_120px_140px_180px_minmax(0,1.4fr)_100px]"
+                                  : "lg:grid-cols-[minmax(0,1.1fr)_140px_120px_180px_minmax(0,1.4fr)_100px]"
                               }`}
                             >
                               <div>
@@ -610,6 +610,12 @@ export function RSVPManager({
                                 <span className="mt-2 inline-flex accent-panel rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
                                   {guest.status}
                                 </span>
+                              </div>
+                              <div>
+                                <p className="eyebrow">Guests</p>
+                                <p className="mt-2 text-sm text-[var(--foreground)]">
+                                  {guest.partySize}
+                                </p>
                               </div>
                               {showMealChoice ? (
                                 <div>
