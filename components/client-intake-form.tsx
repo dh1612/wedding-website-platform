@@ -285,7 +285,7 @@ export function ClientIntakeForm({
         <div className="mt-4 rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-3 text-sm leading-6 text-[#6f665e]">
           This first preview is meant to show the direction, design, and potential of your website.
           If your details are still light, we keep the draft focused and refine the fuller version
-          with you later.
+          with you later. You will receive the preview and the next-step payment link by email.
         </div>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -632,8 +632,9 @@ export function ClientIntakeForm({
                 the look, structure, and direction before the final version is refined.
               </p>
               <div className="mt-5 rounded-[1.2rem] border border-[#184b38]/12 bg-white px-4 py-4 text-sm leading-6 text-[#486159]">
-                Light details are completely fine. We intentionally keep early drafts focused, then
-                polish the final guest version with your wording, timings, travel notes, and finishing touches.
+                Check your email for the private preview and next steps. The preview is the free
+                first draft. If you would like to move forward, payment for your selected package is
+                the point where the hands-on refinement stage begins.
               </div>
               <p className="mt-5 text-[12px] uppercase tracking-[0.28em] text-[#9a7d64]">
                 This is what your guests will see

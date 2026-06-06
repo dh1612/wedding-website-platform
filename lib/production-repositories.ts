@@ -203,6 +203,8 @@ export async function updateWeddingAccessState(input: {
   paymentStatus?: "unpaid" | "payment_requested" | "paid";
   paymentRequestedAt?: string | null;
   paymentCompletedAt?: string | null;
+  termsAcceptedAt?: string | null;
+  previewAcknowledgedAt?: string | null;
 }) {
   const wedding = await prisma.wedding.findUnique({
     where: { slug: input.slug },
@@ -233,6 +235,13 @@ export async function updateWeddingAccessState(input: {
       : {}),
     ...(typeof input.paymentCompletedAt !== "undefined"
       ? { paymentCompletedAt: input.paymentCompletedAt }
+      : {})
+    ,
+    ...(typeof input.termsAcceptedAt !== "undefined"
+      ? { termsAcceptedAt: input.termsAcceptedAt }
+      : {}),
+    ...(typeof input.previewAcknowledgedAt !== "undefined"
+      ? { previewAcknowledgedAt: input.previewAcknowledgedAt }
       : {})
   };
 

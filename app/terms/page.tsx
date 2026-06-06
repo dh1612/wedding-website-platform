@@ -42,8 +42,10 @@ export default function TermsPage() {
             <section>
               <h2 className="text-2xl text-[#1f1d1a]">Payment and timing</h2>
               <p className="mt-3 text-base leading-7">
-                Payment terms, delivery timelines, and any staged work should be confirmed in the
-                client agreement or invoice before work begins.
+                The private preview is the first draft stage. Payment confirms the selected package
+                and is the point where hands-on refinement work begins. Delivery timelines, calls,
+                and any extra rounds of work depend on the package purchased and the speed of client
+                feedback.
               </p>
             </section>
             <section>

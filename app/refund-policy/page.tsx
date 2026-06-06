@@ -12,22 +12,23 @@ export default function RefundPolicyPage() {
             <div>
               <h1 className="text-4xl leading-none text-[#1f1d1a] sm:text-5xl">Refund Policy</h1>
               <p className="mt-4 text-base leading-7">
-                This policy should be finalised before taking live payments. The wording below is a
-                practical placeholder that can be reviewed with a solicitor or policy tool.
+                This policy explains how refunds are handled for website bookings, refinement work,
+                and related support.
               </p>
             </div>
             <section>
               <h2 className="text-2xl text-[#1f1d1a]">Before work begins</h2>
               <p className="mt-3 text-base leading-7">
-                If a client changes their mind before any meaningful work has started, a full refund
-                may be offered.
+                If a client changes their mind before any meaningful refinement work has started
+                after payment, a full refund may be offered.
               </p>
             </section>
             <section>
               <h2 className="text-2xl text-[#1f1d1a]">After drafting has started</h2>
               <p className="mt-3 text-base leading-7">
-                Once work has started on the first version, refunds may be partial rather than
-                full, to reflect time already spent preparing the site and content.
+                The private preview is the free first draft. Once payment has been made and
+                refinement work has started, refunds may be partial rather than full, to reflect
+                time already spent preparing the site, content, and support.
               </p>
             </section>
             <section>
@@ -40,7 +41,7 @@ export default function RefundPolicyPage() {
             <section>
               <h2 className="text-2xl text-[#1f1d1a]">Questions</h2>
               <p className="mt-3 text-base leading-7">
-                Replace this section with the business contact email before launch, for example
+                Questions about refunds or cancellations can be sent to
                 <span className="font-medium text-[#184b38]"> {SUPPORT_EMAIL}</span>.
               </p>
             </section>

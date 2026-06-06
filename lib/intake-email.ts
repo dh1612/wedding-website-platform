@@ -1,11 +1,13 @@
 import { intakePackages, type IntakePackage } from "@/lib/intake";
 import { BRAND_NAME, SUPPORT_EMAIL } from "@/lib/brand";
+import { getPackageDisplayPrice } from "@/lib/payment";
 
 type SendIntakeConfirmationEmailInput = {
   to: string;
   couple: string;
   packageTier: IntakePackage;
   previewUrl: string;
+  unlockUrl: string;
   styleName: string;
 };
 
@@ -37,44 +39,44 @@ function getPackageEmailContent(packageTier: IntakePackage) {
           "This is the cleanest starting point if you want a beautiful guest website without the extra planning tools.",
         included: [
           "A private first-draft website preview to review.",
-          "Core guest information pages shaped around your details.",
-          "A final refinement pass before the guest website goes live."
+          "A beautifully simple guest website shaped around your details.",
+          "A final refinement pass after booking, before the guest website goes live."
         ],
         nextSteps: [
-          "Review the private preview and note any wording or layout changes you want.",
-          "If you would like to proceed, use the unlock option on the preview page.",
-          "Once approved, we refine the final guest website and prepare it for launch."
+          "Review the private preview and decide if you would like to move forward with this direction.",
+          "If you would like to proceed, use the payment link below to confirm your booking for the Basic package.",
+          "Once payment is in place, the refinement stage begins and the final guest website is prepared for launch."
         ]
       };
     case "premium":
       return {
         supportLine:
-          "This includes the fullest support level, including the private couple portal experience once your website is unlocked.",
+          "This includes the fullest support level, including digital invites, the private couple portal, and more dedicated hands-on support once your booking is confirmed.",
         included: [
           "A private first-draft website preview to review.",
-          "Premium planning features and access to the couple portal after unlock.",
-          "A fuller refinement and setup pass before launch."
+          "Digital invite generation and access to the private couple portal after unlock.",
+          "A fuller refinement and setup pass once the package has been booked."
         ],
         nextSteps: [
-          "Review the private preview and note any wording, layout, or planning features you want adjusted.",
-          "If you would like to proceed, use the unlock option on the preview page.",
-          "Once approved, we unlock the website, prepare the portal, and help shape the final version."
+          "Review the private preview and note any initial reactions you have to the direction.",
+          "If you would like to proceed, use the payment link below to confirm your Premium booking.",
+          "Once payment is in place, the refinement stage begins and we shape the final website, invites, and portal with you."
         ]
       };
     case "smart":
     default:
       return {
         supportLine:
-          "This gives you a stronger refinement layer, including AI-assisted content polishing and a more guided final version.",
+          "This gives you a stronger refinement layer, with website RSVP, guest tracking, and a more guided final version.",
         included: [
           "A private first-draft website preview to review.",
-          "Extra content-polish support before the final version is prepared.",
-          "A refined guest website ready for approval before launch."
+          "Website RSVP with guest tracking and a guided walkthrough call.",
+          "A refined guest website prepared after booking and before launch."
         ],
         nextSteps: [
-          "Review the private preview and note any changes you want.",
-          "If you would like to proceed, use the unlock option on the preview page.",
-          "Once approved, we refine the wording and structure, then prepare the final guest website."
+          "Review the private preview and decide if you would like to move forward with this direction.",
+          "If you would like to proceed, use the payment link below to confirm your Smart booking.",
+          "Once payment is in place, the refinement stage begins and we prepare the final guest website with you."
         ]
       };
   }
@@ -96,8 +98,10 @@ export async function sendIntakeConfirmationEmail(
 
   const packageInfo = getPackageLabel(input.packageTier);
   const packageContent = getPackageEmailContent(input.packageTier);
+  const packagePrice = getPackageDisplayPrice(input.packageTier);
   const safeCouple = escapeHtml(input.couple);
   const safePreviewUrl = escapeHtml(input.previewUrl);
+  const safeUnlockUrl = escapeHtml(input.unlockUrl);
   const safeStyleName = escapeHtml(input.styleName);
 
   const html = `
@@ -119,6 +123,7 @@ export async function sendIntakeConfirmationEmail(
         <p style="margin: 0; font-size: 24px;">
           ${escapeHtml(packageInfo.name)} package
         </p>
+        ${packagePrice ? `<p style="margin: 10px 0 0; font-size: 18px; color: #184b38; font-weight: 600;">${escapeHtml(packagePrice)}</p>` : ""}
         <p style="margin: 10px 0 0; color: #6d655d;">
           ${escapeHtml(packageInfo.summary)}
         </p>
@@ -130,9 +135,15 @@ export async function sendIntakeConfirmationEmail(
         </p>
       </div>
 
-      <div style="margin: 0 0 28px;">
+      <div style="margin: 0 0 18px;">
         <a href="${safePreviewUrl}" style="display: inline-block; background: #184b38; color: white; text-decoration: none; padding: 14px 22px; border-radius: 999px; font-weight: 600;">
           Open your website preview
+        </a>
+      </div>
+
+      <div style="margin: 0 0 28px;">
+        <a href="${safeUnlockUrl}" style="display: inline-block; background: white; color: #184b38; text-decoration: none; padding: 14px 22px; border-radius: 999px; border: 1px solid #184b38; font-weight: 600;">
+          Continue with ${escapeHtml(packageInfo.name)} booking
         </a>
       </div>
 
@@ -155,12 +166,20 @@ export async function sendIntakeConfirmationEmail(
         </ol>
       </div>
 
+      <div style="border: 1px solid #e2d6c8; border-radius: 20px; background: #faf7f2; padding: 20px; margin: 0 0 24px;">
+        <p style="margin: 0 0 10px; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #9a7d64;">
+          Important to know
+        </p>
+        <p style="margin: 0; color: #5f564e;">
+          This preview is the free first draft. The hands-on refinement stage begins once you confirm payment for the package you selected.
+        </p>
+      </div>
+
       <p style="margin: 0; color: #6d655d;">
-        If the button above does not work, copy this link into your browser:
+        If the buttons above do not work, copy these links into your browser:
       </p>
-      <p style="margin: 10px 0 0; word-break: break-all;">
-        <a href="${safePreviewUrl}" style="color: #184b38;">${safePreviewUrl}</a>
-      </p>
+      <p style="margin: 10px 0 0; word-break: break-all;"><a href="${safePreviewUrl}" style="color: #184b38;">Preview: ${safePreviewUrl}</a></p>
+      <p style="margin: 10px 0 0; word-break: break-all;"><a href="${safeUnlockUrl}" style="color: #184b38;">Booking and payment: ${safeUnlockUrl}</a></p>
     </div>
   `;
 
@@ -173,12 +192,16 @@ export async function sendIntakeConfirmationEmail(
     `Chosen style: ${input.styleName}`,
     packageContent.supportLine,
     `Preview link: ${input.previewUrl}`,
+    `Booking and payment: ${input.unlockUrl}`,
     "",
     "What happens next:",
     ...packageContent.included.map((item) => `- ${item}`),
     "",
     "Next steps:",
-    ...packageContent.nextSteps.map((item, index) => `${index + 1}. ${item}`)
+    ...packageContent.nextSteps.map((item, index) => `${index + 1}. ${item}`),
+    "",
+    "Important to know:",
+    "The preview is the free first draft. Hands-on refinement begins once you confirm payment for the package you selected."
   ].join("\n");
 
   const response = await fetch("https://api.resend.com/emails", {

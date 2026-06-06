@@ -1,7 +1,11 @@
 import Link from "next/link";
 import type { Route } from "next";
 import { WeddingSitePage } from "@/components/wedding-site-page";
-import { getPackagePaymentLink } from "@/lib/payment";
+import {
+  getPackageDisplayName,
+  getPackageDisplayPrice,
+  getPackagePaymentLink
+} from "@/lib/payment";
 import { getThemeById } from "@/lib/themes";
 import {
   getWeddingSiteBySlug
@@ -29,6 +33,8 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
     packageTier?: "basic" | "smart" | "premium";
   };
   const packageTier = plannerSettings.packageTier ?? "smart";
+  const packageName = getPackageDisplayName(packageTier);
+  const packagePrice = getPackageDisplayPrice(packageTier);
   const paymentLink = getPackagePaymentLink(packageTier);
 
   return (
@@ -51,6 +57,11 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 If some details were still missing when the builder was completed, the draft may stay
                 intentionally focused rather than filling space with weak placeholder sections.
               </p>
+              <div className="mt-4 rounded-[1.1rem] border border-white/12 bg-white/8 px-4 py-3 text-sm leading-6 text-white/78">
+                You selected the <span className="font-medium text-white">{packageName}</span>
+                {packagePrice ? ` (${packagePrice})` : ""}. If you would like to move forward, the next
+                step is payment. Hands-on refinement begins once your booking is confirmed.
+              </div>
             </div>
             <div className="flex flex-wrap gap-3">
               {packageTier === "premium" ? (

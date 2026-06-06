@@ -14,21 +14,33 @@ import { coerceWeddingData } from "@/lib/wedding-data";
 
 type UnlockPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams?: Promise<{ requested?: string }>;
+  searchParams?: Promise<{ requested?: string; error?: string }>;
 };
 
 async function requestUnlockAction(formData: FormData) {
   "use server";
 
   const slug = String(formData.get("slug") || "").trim();
+  const acceptedTerms = formData.get("acceptedTerms") === "on";
+  const acknowledgedPayment = formData.get("acknowledgedPayment") === "on";
 
   if (!slug) {
     return;
   }
 
+  if (!acknowledgedPayment) {
+    redirect(`/unlock/${slug}?error=ack`);
+  }
+
+  if (!acceptedTerms) {
+    redirect(`/unlock/${slug}?error=terms`);
+  }
+
   await updateWeddingAccessState({
     slug,
-    unlockRequestedAt: new Date().toISOString()
+    unlockRequestedAt: new Date().toISOString(),
+    termsAcceptedAt: new Date().toISOString(),
+    previewAcknowledgedAt: new Date().toISOString()
   });
 
   redirect(`/unlock/${slug}?requested=1`);
@@ -42,9 +54,19 @@ async function startPaymentAction(formData: FormData) {
     | "basic"
     | "smart"
     | "premium";
+  const acceptedTerms = formData.get("acceptedTerms") === "on";
+  const acknowledgedPayment = formData.get("acknowledgedPayment") === "on";
 
   if (!slug || !packageTier) {
     return;
+  }
+
+  if (!acknowledgedPayment) {
+    redirect(`/unlock/${slug}?error=ack`);
+  }
+
+  if (!acceptedTerms) {
+    redirect(`/unlock/${slug}?error=terms`);
   }
 
   const paymentLink = getPackagePaymentLink(packageTier);
@@ -53,7 +75,9 @@ async function startPaymentAction(formData: FormData) {
     slug,
     paymentStatus: "payment_requested",
     paymentRequestedAt: new Date().toISOString(),
-    unlockRequestedAt: new Date().toISOString()
+    unlockRequestedAt: new Date().toISOString(),
+    termsAcceptedAt: new Date().toISOString(),
+    previewAcknowledgedAt: new Date().toISOString()
   });
 
   if (paymentLink) {
@@ -92,6 +116,13 @@ export default async function UnlockPage({
   const paymentLink = getPackagePaymentLink(packageTier);
   const paymentStatus = plannerSettings.paymentStatus ?? "unpaid";
   const requested = query?.requested === "1" || Boolean(plannerSettings.unlockRequestedAt);
+  const error = query?.error;
+  const errorMessage =
+    error === "terms"
+      ? "Please agree to the Terms of Service and Refund Policy before continuing."
+      : error === "ack"
+        ? "Please confirm that you understand payment starts the refinement stage before continuing."
+        : "";
 
   return (
     <SiteFrame
@@ -106,16 +137,17 @@ export default async function UnlockPage({
           <p className="eyebrow">Unlock Your Website</p>
           <h1 className="mt-4 text-4xl">Final approval and unlock happen here</h1>
           <p className="prose-copy mt-4 max-w-3xl text-lg">
-            Your preview is private while everything is being reviewed. When you are ready, continue to payment or send an unlock request. The operator can then approve the website and open the final guest link.
+            Your preview is private while everything is being reviewed. When you are ready to move forward, confirm payment for the package you selected. Once payment is in place, the refinement stage begins and the final guest link can be prepared for launch.
           </p>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
             <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/78 p-6">
               <p className="eyebrow">What happens next</p>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--muted)]">
-                <li>Review the private preview and decide what changes you want.</li>
-                <li>Use the payment button when you are ready to move forward.</li>
-                <li>The operator unlocks the live website after payment has been confirmed.</li>
+                <li>Review the private preview and decide if you would like to move forward.</li>
+                <li>Use the payment button to confirm the package you already selected.</li>
+                <li>Once payment is confirmed, the hands-on refinement stage begins.</li>
+                <li>The final guest website is then prepared and unlocked for sharing.</li>
               </ul>
             </div>
             <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/78 p-6">
@@ -137,11 +169,17 @@ export default async function UnlockPage({
                 {paymentStatus === "paid"
                   ? "Payment has been marked as received. The operator can now unlock the website and portal."
                   : paymentLink
-                    ? "A secure payment link is ready for this package. Payment completion is still confirmed manually before anything goes live."
+                    ? "A secure payment link is ready for this package. Payment confirms your booking and is the point where the refinement stage begins."
                     : "A payment link has not been connected yet, so the operator can handle approval and payment manually for now."}
               </p>
             </div>
           </div>
+
+          {errorMessage ? (
+            <div className="mt-6 rounded-[1.4rem] border border-[#b86a53]/18 bg-[#fff3ef] px-5 py-4 text-sm leading-6 text-[#8a4c3a]">
+              {errorMessage}
+            </div>
+          ) : null}
 
           {requested ? (
             <div className="mt-6 rounded-[1.4rem] border border-[#184b38]/14 bg-[#f6fbf8] px-5 py-4 text-sm leading-6 text-[#486159]">
@@ -149,24 +187,61 @@ export default async function UnlockPage({
             </div>
           ) : null}
 
+          <div className="mt-6 space-y-3 rounded-[1.5rem] border border-[var(--border)] bg-white/78 p-6">
+            <p className="eyebrow">Before you continue</p>
+            <label className="flex items-start gap-3 text-sm leading-6 text-[var(--muted)]">
+              <input
+                form="unlock-payment-form"
+                type="checkbox"
+                name="acknowledgedPayment"
+                className="mt-1 h-4 w-4 rounded border border-[var(--border)]"
+              />
+              <span>
+                I understand this preview is the first draft and that hands-on refinement begins once payment for my selected package has been confirmed.
+              </span>
+            </label>
+            <label className="flex items-start gap-3 text-sm leading-6 text-[var(--muted)]">
+              <input
+                form="unlock-payment-form"
+                type="checkbox"
+                name="acceptedTerms"
+                className="mt-1 h-4 w-4 rounded border border-[var(--border)]"
+              />
+              <span>
+                I agree to the{" "}
+                <Link href="/terms" className="font-medium text-[var(--accent-strong)] underline underline-offset-2">
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link href="/refund-policy" className="font-medium text-[var(--accent-strong)] underline underline-offset-2">
+                  Refund Policy
+                </Link>
+                .
+              </span>
+            </label>
+          </div>
+
           <div className="mt-6 flex flex-wrap gap-3">
-            {paymentLink && paymentStatus !== "paid" ? (
-              <form action={startPaymentAction}>
-                <input type="hidden" name="slug" value={slug} />
-                <input type="hidden" name="packageTier" value={packageTier} />
-                <button className="accent-button rounded-full px-6 py-3 text-sm font-medium">
-                  Pay Now To Unlock
+            <form id="unlock-payment-form" className="contents">
+              <input type="hidden" name="slug" value={slug} />
+              <input type="hidden" name="packageTier" value={packageTier} />
+              {paymentLink && paymentStatus !== "paid" ? (
+                <button
+                  formAction={startPaymentAction}
+                  className="accent-button rounded-full px-6 py-3 text-sm font-medium"
+                >
+                  Continue To Payment
                 </button>
-              </form>
-            ) : null}
-            {!requested ? (
-              <form action={requestUnlockAction}>
-                <input type="hidden" name="slug" value={slug} />
-                <button className="accent-panel rounded-full px-6 py-3 text-sm font-medium">
-                  Send Unlock Request
+              ) : null}
+              {!requested ? (
+                <button
+                  formAction={requestUnlockAction}
+                  className="accent-panel rounded-full px-6 py-3 text-sm font-medium"
+                >
+                  Request Manual Booking Help
                 </button>
-              </form>
-            ) : null}
+              ) : null}
+            </form>
             <Link
               href={`/preview/${slug}`}
               className="accent-outline rounded-full px-6 py-3 text-sm font-medium"

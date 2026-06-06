@@ -41,9 +41,9 @@ function getReadableErrorMessage(error: unknown) {
 export async function POST(request: Request) {
   const submission = stripUndefined((await request.json()) as IntakeSubmission);
 
-  if (!submission.couple?.trim() || !submission.email?.trim() || !submission.date?.trim()) {
+  if (!submission.couple?.trim() || !submission.email?.trim()) {
     return NextResponse.json(
-      { error: "Couple, contact email, and date are required." },
+      { error: "Couple names and a contact email are required." },
       { status: 400 }
     );
   }
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     const created = await createWeddingDraft({
       slug,
       title: `${submission.couple} Wedding`,
-      eventDate: new Date(submission.date),
+      eventDate: submission.date?.trim() ? new Date(submission.date) : undefined,
       contentJson: stripUndefined(weddingData),
       plannerSettingsJson: stripUndefined({
         packageTier: submission.packageTier,
@@ -73,6 +73,7 @@ export async function POST(request: Request) {
 
     const requestUrl = new URL(request.url);
     const previewUrl = new URL(previewPath, requestUrl.origin).toString();
+    const unlockUrl = new URL(`/unlock/${slug}`, requestUrl.origin).toString();
     const styleName = getThemeById(weddingData.theme).name;
 
     try {
@@ -81,6 +82,7 @@ export async function POST(request: Request) {
         couple: submission.couple.trim(),
         packageTier: submission.packageTier,
         previewUrl,
+        unlockUrl,
         styleName
       });
     } catch (emailError) {
@@ -94,7 +96,7 @@ export async function POST(request: Request) {
       previewUrl: previewPath,
       liveUrl: `/${created.slug}`,
       message:
-        "Thank you. Your details are in and the first version is now being prepared. A private review link will be shared once it has been checked."
+        "Thank you. Your details are in and your private preview plus next steps are on the way to your inbox."
     });
   } catch (error) {
     console.error("Intake submission failed", error);
