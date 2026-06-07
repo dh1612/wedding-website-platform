@@ -1063,8 +1063,8 @@ main[data-preview-context="sample"][data-theme="champagne-aegean"] .section-shel
     radial-gradient(circle at 1.7rem 1.5rem, rgba(255, 247, 229, 0.95) 0 0.9rem, transparent 0.96rem),
     radial-gradient(circle at 2.35rem 1.18rem, rgba(214, 176, 108, 0.48) 0 0.46rem, transparent 0.52rem),
     radial-gradient(circle at 3.05rem 1.9rem, rgba(255, 237, 201, 0.92) 0 0.72rem, transparent 0.78rem),
-    linear-gradient(146deg, transparent 0 48%, rgba(184, 141, 74, 0.58) 48% 50%, transparent 50%),
-    linear-gradient(172deg, transparent 0 56%, rgba(223, 193, 133, 0.62) 56% 58%, transparent 58%),
+    radial-gradient(circle at 1.18rem 2.55rem, rgba(223, 193, 133, 0.34) 0 0.42rem, transparent 0.48rem),
+    radial-gradient(circle at 3.42rem 0.98rem, rgba(184, 141, 74, 0.26) 0 0.32rem, transparent 0.38rem),
     linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,244,226,0.08));
 }
 
@@ -1122,8 +1122,8 @@ main[data-preview-context="sample"][data-theme="summer-garden"] .section-shell::
     radial-gradient(circle at 1.7rem 1.5rem, rgba(239, 247, 236, 0.94) 0 0.86rem, transparent 0.92rem),
     radial-gradient(circle at 2.45rem 1.18rem, rgba(216, 189, 125, 0.52) 0 0.46rem, transparent 0.52rem),
     radial-gradient(circle at 3.15rem 1.95rem, rgba(204, 224, 198, 0.94) 0 0.72rem, transparent 0.78rem),
-    linear-gradient(142deg, transparent 0 46%, rgba(109, 145, 98, 0.62) 46% 48%, transparent 48%),
-    linear-gradient(170deg, transparent 0 58%, rgba(216, 189, 125, 0.6) 58% 60%, transparent 60%),
+    radial-gradient(circle at 1.16rem 2.5rem, rgba(109, 145, 98, 0.3) 0 0.42rem, transparent 0.48rem),
+    radial-gradient(circle at 3.48rem 0.98rem, rgba(216, 189, 125, 0.26) 0 0.32rem, transparent 0.38rem),
     linear-gradient(180deg, rgba(255,255,255,0.18), rgba(234, 244, 240, 0.08));
 }
 
@@ -1181,8 +1181,8 @@ main[data-preview-context="sample"][data-theme="summer-coast"] .section-shell::b
     radial-gradient(circle at 1.66rem 1.42rem, rgba(236, 247, 250, 0.95) 0 0.84rem, transparent 0.9rem),
     radial-gradient(circle at 2.34rem 1.15rem, rgba(94, 144, 162, 0.42) 0 0.44rem, transparent 0.5rem),
     radial-gradient(circle at 3.02rem 1.86rem, rgba(215, 176, 108, 0.64) 0 0.58rem, transparent 0.66rem),
-    linear-gradient(144deg, transparent 0 46%, rgba(94, 144, 162, 0.56) 46% 48%, transparent 48%),
-    linear-gradient(170deg, transparent 0 58%, rgba(215, 176, 108, 0.58) 58% 60%, transparent 60%),
+    radial-gradient(circle at 1.14rem 2.42rem, rgba(94, 144, 162, 0.28) 0 0.4rem, transparent 0.46rem),
+    radial-gradient(circle at 3.34rem 1.02rem, rgba(215, 176, 108, 0.28) 0 0.3rem, transparent 0.36rem),
     linear-gradient(180deg, rgba(255,255,255,0.18), rgba(221, 236, 242, 0.08));
 }
 
@@ -1229,8 +1229,8 @@ main[data-preview-context="sample"][data-theme="maison-mosaic"] .section-shell::
     radial-gradient(circle at 1.72rem 1.46rem, rgba(255,255,255,0.94) 0 0.84rem, transparent 0.9rem),
     radial-gradient(circle at 2.44rem 1.18rem, rgba(160, 190, 202, 0.38) 0 0.46rem, transparent 0.52rem),
     radial-gradient(circle at 3.08rem 1.94rem, rgba(208, 172, 115, 0.54) 0 0.54rem, transparent 0.62rem),
-    linear-gradient(144deg, transparent 0 46%, rgba(160, 190, 202, 0.54) 46% 48%, transparent 48%),
-    linear-gradient(172deg, transparent 0 58%, rgba(208, 172, 115, 0.54) 58% 60%, transparent 60%),
+    radial-gradient(circle at 1.18rem 2.48rem, rgba(160, 190, 202, 0.28) 0 0.4rem, transparent 0.46rem),
+    radial-gradient(circle at 3.42rem 1.06rem, rgba(208, 172, 115, 0.24) 0 0.3rem, transparent 0.36rem),
     linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,249,243,0.08));
 }
 
@@ -1251,8 +1251,8 @@ main[data-preview-context="sample"][data-theme="petal-script"] .section-shell::b
     radial-gradient(circle at 1.74rem 1.44rem, rgba(255, 246, 247, 0.98) 0 0.88rem, transparent 0.94rem),
     radial-gradient(circle at 2.34rem 1.18rem, rgba(183, 131, 140, 0.36) 0 0.42rem, transparent 0.48rem),
     radial-gradient(circle at 3.04rem 1.88rem, rgba(255, 232, 236, 0.94) 0 0.74rem, transparent 0.8rem),
-    linear-gradient(146deg, transparent 0 46%, rgba(91, 127, 90, 0.58) 46% 48%, transparent 48%),
-    linear-gradient(172deg, transparent 0 58%, rgba(183, 131, 140, 0.5) 58% 60%, transparent 60%),
+    radial-gradient(circle at 1.16rem 2.48rem, rgba(91, 127, 90, 0.24) 0 0.4rem, transparent 0.46rem),
+    radial-gradient(circle at 3.34rem 1.02rem, rgba(183, 131, 140, 0.24) 0 0.3rem, transparent 0.36rem),
     linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,247,245,0.08));
 }
 
@@ -1287,8 +1287,8 @@ main[data-preview-context="sample"][data-theme="winter-velvet"] .section-shell::
     radial-gradient(circle at 1.72rem 1.44rem, color-mix(in srgb, var(--accent-contrast) 88%, white) 0 0.84rem, transparent 0.9rem),
     radial-gradient(circle at 2.36rem 1.16rem, color-mix(in srgb, var(--accent) 62%, transparent) 0 0.42rem, transparent 0.48rem),
     radial-gradient(circle at 3rem 1.9rem, color-mix(in srgb, var(--gold) 56%, transparent) 0 0.52rem, transparent 0.6rem),
-    linear-gradient(144deg, transparent 0 46%, color-mix(in srgb, var(--accent) 62%, transparent) 46% 48%, transparent 48%),
-    linear-gradient(172deg, transparent 0 58%, color-mix(in srgb, var(--gold) 58%, transparent) 58% 60%, transparent 60%),
+    radial-gradient(circle at 1.14rem 2.48rem, color-mix(in srgb, var(--accent) 42%, transparent) 0 0.38rem, transparent 0.44rem),
+    radial-gradient(circle at 3.36rem 1.02rem, color-mix(in srgb, var(--gold) 42%, transparent) 0 0.28rem, transparent 0.34rem),
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent);
 }
 
