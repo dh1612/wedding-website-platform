@@ -31,19 +31,20 @@ export default async function GetStartedPage({
             Start Your Website
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            Skip the stress of building a wedding website.
+            Start with the heart of the day, and we&apos;ll shape the website around it.
           </h1>
           <p className="text-lg leading-8 text-[#5f564e]">
-            We build it for you. Just tell us what your guests need to know — we handle the rest.
+            You don&apos;t need to build this alone. Share the essentials, and we&apos;ll turn them
+            into a wedding website that feels thoughtful, personal, and ready to share.
           </p>
           <p className="max-w-3xl text-base leading-7 text-[#5f564e]">
-            No DIY. No setup. No pressure to have every detail ready. Start with the essentials and
-            we&apos;ll shape a strong first draft around what matters most.
+            There&apos;s no pressure to have every detail perfectly written. Start with what you know,
+            and we&apos;ll shape a strong first draft around the parts that matter most to your guests.
           </p>
           <div className="space-y-2 text-sm leading-6 text-[#6d655d]">
             <p>• Most couples complete this in under 2 minutes</p>
-            <p>• Light details are fine — sparse drafts stay clean and focused</p>
-            <p>• Private review before anything is shared</p>
+            <p>• Light details are absolutely fine for the first draft</p>
+            <p>• Nothing is shared publicly before you have reviewed it</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <a

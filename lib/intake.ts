@@ -369,7 +369,7 @@ export async function buildWeddingDataFromIntake(
         ? "If you need anything before the wedding, please get in touch."
         : "This first draft focuses on the essentials. Final guest-facing details can be refined before the site goes live."
     },
-    aiConciergeEnabled: submission.packageTier !== "basic",
+    aiConciergeEnabled: submission.packageTier === "premium",
     gallery: {
       heading: defaults.gallery.heading,
       description: defaults.gallery.description,
@@ -406,7 +406,7 @@ export async function buildWeddingDataFromIntake(
       registry: false,
       rsvp: true,
       faq: hasFaq,
-      aiConcierge: submission.packageTier !== "basic"
+      aiConcierge: submission.packageTier === "premium"
     }
   });
 }

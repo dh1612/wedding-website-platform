@@ -33,7 +33,7 @@ function SharedActions({
       </a>
       <a
         href={secondaryActionHref}
-        className="accent-outline rounded-full px-6 py-3 text-center text-sm font-medium transition hover:bg-white/80"
+        className="accent-outline rounded-full bg-white/90 px-6 py-3 text-center text-sm font-medium shadow-[0_10px_26px_rgba(34,24,20,0.12)] backdrop-blur-sm transition hover:bg-white"
       >
         {secondaryActionLabel}
       </a>
@@ -248,7 +248,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 fill
                 priority
                 unoptimized={heroImageUnoptimized}
-                className={themeId === "soft-blush" ? "object-cover object-[56%_18%]" : "object-cover"}
+                className={
+                  themeId === "soft-blush"
+                    ? "object-cover object-[56%_18%] brightness-[1.12] contrast-[1.04] saturate-[1.05]"
+                    : "object-cover"
+                }
               />
             </div>
           </div>

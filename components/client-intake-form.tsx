@@ -295,7 +295,7 @@ export function ClientIntakeForm({
           </div>
           <div className="rounded-[1.2rem] border border-black/6 bg-[#faf7f2] px-4 py-4 text-sm leading-6 text-[#6f665e]">
             <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Optional</p>
-            <p className="mt-2">Wedding date, location, style, story, schedule, travel notes, FAQ, and images.</p>
+            <p className="mt-2">Wedding date, location, style, story, schedule, travel notes, and FAQ.</p>
           </div>
         </div>
 
@@ -452,25 +452,14 @@ export function ClientIntakeForm({
               <textarea
                 value={values.storyText}
                 onChange={(event) => updateField("storyText", event.target.value)}
-                placeholder="Share the couple story in raw notes, short phrases, or rough paragraphs."
+                placeholder="Tell us a little about you both in raw notes, short phrases, or rough paragraphs."
                 rows={5}
                 className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
               />
-              <textarea
-                value={(values.imageUrls ?? []).join("\n")}
-                onChange={(event) =>
-                  updateField(
-                    "imageUrls",
-                    event.target.value
-                      .split("\n")
-                      .map((line) => line.trim())
-                      .filter(Boolean)
-                  )
-                }
-                placeholder={"Image URLs, one per line\nhttps://..."}
-                rows={4}
-                className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
-              />
+              <div className="rounded-[1rem] border border-[#184b38]/12 bg-[#f6fbf8] px-4 py-3 text-sm leading-6 text-[#486159]">
+                If you have favourite photos in mind, don&apos;t worry about adding them here. We can
+                shape the visual side with you once the first draft is in place.
+              </div>
             </div>
           </details>
 
