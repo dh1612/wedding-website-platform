@@ -109,7 +109,10 @@ export default async function UnlockPage({
       mode="pages"
       themeId={theme.id}
       themeStyle={theme.style}
+      weddingData={weddingData}
       showFooter={false}
+      homeHref={`/preview/${slug}`}
+      publicNavItemsOverride={[]}
     >
       <section className="mx-auto w-full max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10 lg:p-12">

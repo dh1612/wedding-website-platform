@@ -26,6 +26,7 @@ type SiteHeaderProps = {
   returnHref?: string;
   returnLabel?: string;
   homeHref?: string;
+  publicNavItemsOverride?: Array<{ label: string; href: string }>;
 };
 
 export function SiteHeader({
@@ -40,7 +41,8 @@ export function SiteHeader({
   adminNavItemsOverride,
   returnHref,
   returnLabel = "Return to Home",
-  homeHref
+  homeHref,
+  publicNavItemsOverride
 }: SiteHeaderProps) {
   const wedding = weddingData ?? getWeddingData();
   const isFloralFrameTheme = themeId === "petal-script";
@@ -66,15 +68,22 @@ export function SiteHeader({
   const resolvedHomeHref =
     homeHref ??
     (adminView ? buildModeHref("/", themeId, mode) : buildModeHref(siteBasePath, themeId, mode));
+  const pageModePublicNavItems = publicNavItemsOverride
+    ? publicNavItemsOverride.map((item) => ({
+        label: item.label,
+        href: item.href,
+        active: item.href === currentPath
+      }))
+    : pageNavItems.map((item) => ({
+        label: item.label,
+        href: buildModeHref(item.path, themeId, "pages"),
+        active: item.path === currentPath
+      }));
 
   if (!adminView && (isFloralFrameTheme || isSoftBlushTheme)) {
     const publicNavItems =
       mode === "pages"
-        ? pageNavItems.map((item) => ({
-            label: item.label,
-            href: buildModeHref(item.path, themeId, "pages"),
-            active: item.path === currentPath
-          }))
+        ? pageModePublicNavItems
         : scrollNavItems.map((item) => ({
             label: item.label,
             href: buildModeHref(siteBasePath, themeId, "scroll") + item.href,
@@ -204,7 +213,7 @@ export function SiteHeader({
             }))}
           />
         ) : null}
-        {adminNavItems.length ? (
+        {adminView || mode !== "pages" || pageModePublicNavItems.length ? (
           <div className="hidden flex-1 items-center justify-center md:flex">
             <nav className="flex flex-wrap items-center justify-center gap-2 text-sm">
               {adminView
@@ -230,13 +239,13 @@ export function SiteHeader({
                   );
                 })
                 : mode === "pages"
-                ? pageNavItems.map((item) => {
-                    const isActive = item.path === currentPath;
+                ? pageModePublicNavItems.map((item) => {
+                    const isActive = item.active;
 
                     return (
                       <Link
-                        key={item.path}
-                        href={buildModeHref(item.path, themeId, "pages")}
+                        key={item.href}
+                        href={item.href}
                         data-active={isActive ? "true" : "false"}
                         className={
                           isActive

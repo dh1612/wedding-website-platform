@@ -17,6 +17,7 @@ type SiteFrameProps = {
   weddingData?: WeddingData;
   showFooter?: boolean;
   homeHref?: string;
+  publicNavItemsOverride?: Array<{ label: string; href: string }>;
 };
 
 export function SiteFrame({
@@ -30,7 +31,8 @@ export function SiteFrame({
   adminNavItemsOverride,
   weddingData,
   showFooter = true,
-  homeHref
+  homeHref,
+  publicNavItemsOverride
 }: SiteFrameProps) {
   const fontPresetStyle = weddingData
     ? getFontPresetById(weddingData.fontPreset).style
@@ -51,6 +53,7 @@ export function SiteFrame({
         adminNavItemsOverride={adminNavItemsOverride}
         weddingData={weddingData}
         homeHref={homeHref}
+        publicNavItemsOverride={publicNavItemsOverride}
       />
       {children}
       {showFooter ? <SiteFooter weddingData={weddingData} /> : null}
