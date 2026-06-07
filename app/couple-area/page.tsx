@@ -14,6 +14,7 @@ import { getWeddingData } from "@/lib/wedding-data";
 const marketingNavItems = [
   { href: "/#example", label: "View Example Website" },
   { href: "/couple-area", label: "View Premium Couple Area Demo" },
+  { href: "/contact", label: "Contact" },
   { href: "/#packages", label: "Packages" }
 ];
 

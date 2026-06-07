@@ -118,6 +118,12 @@ export default function MarketingHomePage() {
             >
               View Premium Couple Area Demo
             </Link>
+            <Link
+              href="/contact"
+              className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
+            >
+              Contact
+            </Link>
             <a href="#packages" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Packages
             </a>
@@ -146,6 +152,12 @@ export default function MarketingHomePage() {
                   className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
                 >
                   View Premium Couple Area Demo
+                </Link>
+                <Link
+                  href="/contact"
+                  className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
+                >
+                  Contact
                 </Link>
                 <a href="#how-it-works" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
                   How It Works

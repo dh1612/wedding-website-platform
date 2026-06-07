@@ -40,6 +40,12 @@ export default function BrochurePage() {
               Couple Area
             </a>
             <Link
+              href="/contact"
+              className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
+            >
+              Contact
+            </Link>
+            <Link
               href="/get-started"
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-2.5 text-sm font-medium text-white"
               style={{ color: "#ffffff", backgroundColor: "#184b38" }}

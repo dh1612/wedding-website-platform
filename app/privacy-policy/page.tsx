@@ -50,7 +50,8 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-2xl text-[#1f1d1a]">Contact</h2>
               <p className="mt-3 text-base leading-7">
-                Replace this section with the business contact email before launch, for example
+                If you have any questions about how information is handled, you can reach the
+                business at
                 <span className="font-medium text-[#184b38]"> {SUPPORT_EMAIL}</span>.
               </p>
             </section>
