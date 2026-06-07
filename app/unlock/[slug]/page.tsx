@@ -135,9 +135,15 @@ export default async function UnlockPage({
       <section className="mx-auto w-full max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
         <div className="section-shell rounded-[2rem] p-8 sm:p-10 lg:p-12">
           <p className="eyebrow">Unlock Your Website</p>
-          <h1 className="mt-4 text-4xl">Final approval and unlock happen here</h1>
+          <h1 className="mt-4 text-4xl">Continue when you are ready</h1>
           <p className="prose-copy mt-4 max-w-3xl text-lg">
-            Your preview is private while everything is being reviewed. When you are ready to move forward, confirm payment for the package you selected. Once payment is in place, the refinement stage begins and the final guest link can be prepared for launch.
+            Your preview stays private while everything is being reviewed. If the direction feels right and
+            you would like to move ahead, this is where you confirm the package you already selected. Once
+            booking is in place, the refinement stage begins and the final guest link can be prepared for launch.
+          </p>
+          <p className="prose-copy mt-3 max-w-3xl text-base text-[var(--muted)]">
+            If you would rather ask a quick question first, you can simply reply to the preview email before
+            taking the next step.
           </p>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
@@ -145,7 +151,7 @@ export default async function UnlockPage({
               <p className="eyebrow">What happens next</p>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--muted)]">
                 <li>Review the private preview and decide if you would like to move forward.</li>
-                <li>Use the payment button to confirm the package you already selected.</li>
+                <li>Use the button below only when you are happy to move into the paid refinement stage.</li>
                 <li>Once payment is confirmed, the hands-on refinement stage begins.</li>
                 <li>The final guest website is then prepared and unlocked for sharing.</li>
               </ul>
@@ -169,7 +175,7 @@ export default async function UnlockPage({
                 {paymentStatus === "paid"
                   ? "Payment has been marked as received. The operator can now unlock the website and portal."
                   : paymentLink
-                    ? "A secure payment link is ready for this package. Payment confirms your booking and is the point where the refinement stage begins."
+                    ? "A secure payment link is ready for this package whenever you are happy to proceed. Payment confirms your booking and is the point where the refinement stage begins."
                     : "A payment link has not been connected yet, so the operator can handle approval and payment manually for now."}
               </p>
             </div>
@@ -230,7 +236,7 @@ export default async function UnlockPage({
                   formAction={startPaymentAction}
                   className="accent-button rounded-full px-6 py-3 text-sm font-medium"
                 >
-                  Continue To Payment
+                  Continue To Booking
                 </button>
               ) : null}
               {!requested ? (
@@ -238,7 +244,7 @@ export default async function UnlockPage({
                   formAction={requestUnlockAction}
                   className="accent-panel rounded-full px-6 py-3 text-sm font-medium"
                 >
-                  Request Manual Booking Help
+                  Ask About Next Steps
                 </button>
               ) : null}
             </form>

@@ -37,14 +37,18 @@ function getPackageEmailContent(packageTier: IntakePackage) {
       return {
         supportLine:
           "This is the cleanest starting point if you want a beautiful guest website without the extra planning tools.",
+        replyLine:
+          "If you have one or two quick questions before deciding, you are very welcome to reply to this email.",
+        continueLabel: "Continue with Basic",
         included: [
           "A private first-draft website preview to review.",
           "A beautifully simple guest website shaped around your details.",
           "A final refinement pass after booking, before the guest website goes live."
         ],
         nextSteps: [
-          "Review the private preview and decide if you would like to move forward with this direction.",
-          "If you would like to proceed, use the payment link below to confirm your booking for the Basic package.",
+          "Review the private preview and see how the overall direction feels to you.",
+          "If you would like to talk anything through first, you are very welcome to reply to this email before taking the next step.",
+          "If you decide you would like to move forward, use the link below to confirm your Basic booking and start the refinement stage.",
           "Once payment is in place, the refinement stage begins and the final guest website is prepared for launch."
         ]
       };
@@ -52,6 +56,9 @@ function getPackageEmailContent(packageTier: IntakePackage) {
       return {
         supportLine:
           "This includes the fullest support level, including digital invites, the private couple portal, and more dedicated hands-on support once your booking is confirmed.",
+        replyLine:
+          "If you would like to sense-check anything first, just reply here and we can talk through the direction before you decide.",
+        continueLabel: "Continue with Premium",
         included: [
           "A private first-draft website preview to review.",
           "Digital invite generation and access to the private couple portal after unlock.",
@@ -59,7 +66,8 @@ function getPackageEmailContent(packageTier: IntakePackage) {
         ],
         nextSteps: [
           "Review the private preview and note any initial reactions you have to the direction.",
-          "If you would like to proceed, use the payment link below to confirm your Premium booking.",
+          "If you would like to ask a question or sense-check anything first, just reply to this email.",
+          "If you decide you would like to move forward, use the link below to confirm your Premium booking and begin the refinement stage.",
           "Once payment is in place, the refinement stage begins and we shape the final website, invites, and portal with you."
         ]
       };
@@ -68,14 +76,18 @@ function getPackageEmailContent(packageTier: IntakePackage) {
       return {
         supportLine:
           "This gives you a stronger refinement layer, with website RSVP, guest tracking, and a more guided final version.",
+        replyLine:
+          "If you would like to ask anything before moving ahead, you are very welcome to reply to this email.",
+        continueLabel: "Continue with Smart",
         included: [
           "A private first-draft website preview to review.",
           "Website RSVP with guest tracking and a guided walkthrough call.",
           "A refined guest website prepared after booking and before launch."
         ],
         nextSteps: [
-          "Review the private preview and decide if you would like to move forward with this direction.",
-          "If you would like to proceed, use the payment link below to confirm your Smart booking.",
+          "Review the private preview and see how the overall direction feels to you.",
+          "If you would like to ask anything before moving ahead, you are very welcome to reply to this email.",
+          "If you decide you would like to move forward, use the link below to confirm your Smart booking and begin the refinement stage.",
           "Once payment is in place, the refinement stage begins and we prepare the final guest website with you."
         ]
       };
@@ -141,11 +153,15 @@ export async function sendIntakeConfirmationEmail(
         </a>
       </div>
 
-      <div style="margin: 0 0 28px;">
+      <div style="margin: 0 0 12px;">
         <a href="${safeUnlockUrl}" style="display: inline-block; background: white; color: #184b38; text-decoration: none; padding: 14px 22px; border-radius: 999px; border: 1px solid #184b38; font-weight: 600;">
-          Continue with ${escapeHtml(packageInfo.name)} booking
+          ${escapeHtml(packageContent.continueLabel)}
         </a>
       </div>
+
+      <p style="margin: 0 0 28px; color: #6d655d;">
+        ${escapeHtml(packageContent.replyLine)}
+      </p>
 
       <div style="border: 1px solid #e2d6c8; border-radius: 20px; background: white; padding: 20px; margin: 0 0 24px;">
         <p style="margin: 0 0 10px; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #9a7d64;">
@@ -171,7 +187,7 @@ export async function sendIntakeConfirmationEmail(
           Important to know
         </p>
         <p style="margin: 0; color: #5f564e;">
-          This preview is the free first draft. The hands-on refinement stage begins once you confirm payment for the package you selected.
+          This preview is the free first draft. There is no pressure to decide immediately, but hands-on refinement begins once you confirm payment for the package you selected.
         </p>
       </div>
 
@@ -192,7 +208,7 @@ export async function sendIntakeConfirmationEmail(
     `Chosen style: ${input.styleName}`,
     packageContent.supportLine,
     `Preview link: ${input.previewUrl}`,
-    `Booking and payment: ${input.unlockUrl}`,
+    `Continue if you would like to proceed: ${input.unlockUrl}`,
     "",
     "What happens next:",
     ...packageContent.included.map((item) => `- ${item}`),
@@ -201,7 +217,9 @@ export async function sendIntakeConfirmationEmail(
     ...packageContent.nextSteps.map((item, index) => `${index + 1}. ${item}`),
     "",
     "Important to know:",
-    "The preview is the free first draft. Hands-on refinement begins once you confirm payment for the package you selected."
+    "The preview is the free first draft. There is no pressure to decide immediately, but hands-on refinement begins once you confirm payment for the package you selected.",
+    "",
+    "If you would like to ask anything before moving ahead, just reply to this email."
   ].join("\n");
 
   const response = await fetch("https://api.resend.com/emails", {

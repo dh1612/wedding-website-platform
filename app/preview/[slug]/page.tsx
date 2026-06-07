@@ -59,9 +59,14 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
               </p>
               <div className="mt-4 rounded-[1.1rem] border border-white/12 bg-white/8 px-4 py-3 text-sm leading-6 text-white/78">
                 You selected the <span className="font-medium text-white">{packageName}</span>
-                {packagePrice ? ` (${packagePrice})` : ""}. If you would like to move forward, the next
-                step is payment. Hands-on refinement begins once your booking is confirmed.
+                {packagePrice ? ` (${packagePrice})` : ""}. Take your time reviewing the direction first.
+                If you would like to move forward, the next step is to confirm your booking. Hands-on
+                refinement begins once that booking is in place.
               </div>
+              <p className="mt-3 text-sm text-white/65">
+                If you would prefer to ask a quick question before going any further, you can simply reply
+                to the email that came with your preview.
+              </p>
             </div>
             <div className="flex flex-wrap gap-3">
               {packageTier === "premium" ? (
@@ -80,7 +85,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 href={`/unlock/${slug}`}
                 className="rounded-full border border-white/18 bg-white px-5 py-3 text-sm font-medium text-[#17313c]"
               >
-                {paymentLink ? "Unlock My Website" : "Request Unlock"}
+                {paymentLink ? "Continue If You'd Like To Proceed" : "Ask About Next Steps"}
               </Link>
               {weddingRecord.status === "live" ? (
                 <Link
