@@ -38,9 +38,21 @@ export function WeddingSitePage({
   previewMode = false
 }: WeddingSitePageProps) {
   const fontPresetStyle = getFontPresetById(weddingData.fontPreset).style;
+  const previewContext = previewMode ? "draft" : demoMode ? "sample" : "live";
+  const visibility = weddingData.sectionVisibility;
+  const showTravel = previewMode || (visibility?.travel ?? true);
+  const showAccommodation = previewMode || (visibility?.accommodation ?? true);
+  const showSchedule = previewMode || (visibility?.schedule ?? true);
+  const showDayTwo = visibility?.dayTwo ?? false;
+  const showRsvp = previewMode || (visibility?.rsvp ?? true);
+  const showSuppliers = visibility?.suppliers ?? false;
 
   return (
-    <main data-theme={activeTheme.id} style={{ ...activeTheme.style, ...fontPresetStyle }}>
+    <main
+      data-theme={activeTheme.id}
+      data-preview-context={previewContext}
+      style={{ ...activeTheme.style, ...fontPresetStyle }}
+    >
       <SiteHeader
         currentPath={currentPath}
         mode={mode}
@@ -60,33 +72,52 @@ export function WeddingSitePage({
         </section>
       ) : null}
       <HeroSection themeId={activeTheme.id} weddingData={weddingData} previewMode={previewMode} />
-      {(weddingData.sectionVisibility?.travel ?? true) ? (
-        <TravelSection weddingData={weddingData} />
+      {showTravel ? (
+        <TravelSection
+          weddingData={weddingData}
+          previewMode={previewMode}
+          themeId={activeTheme.id}
+        />
       ) : null}
-      {(weddingData.sectionVisibility?.accommodation ?? true) ? (
-        <AccommodationSection weddingData={weddingData} />
+      {showAccommodation ? (
+        <AccommodationSection
+          weddingData={weddingData}
+          previewMode={previewMode}
+          themeId={activeTheme.id}
+        />
       ) : null}
-      {(weddingData.sectionVisibility?.schedule ?? true) ? (
-        <ScheduleSection weddingData={weddingData} />
+      {showSchedule ? (
+        <ScheduleSection
+          weddingData={weddingData}
+          previewMode={previewMode}
+          themeId={activeTheme.id}
+        />
       ) : null}
-      {(weddingData.sectionVisibility?.dayTwo ?? false) ? (
+      {showDayTwo ? (
         <DayTwoSection weddingData={weddingData} />
       ) : null}
-      {(weddingData.sectionVisibility?.rsvp ?? true) ? (
+      {showRsvp ? (
         <RSVPSection
           weddingData={weddingData}
           demoMode={demoMode}
           previewMode={previewMode}
           rsvpApiPath={rsvpApiPath}
+          themeId={activeTheme.id}
         />
       ) : null}
-      {(weddingData.sectionVisibility?.suppliers ?? false) ? (
+      {showSuppliers ? (
         <SuppliersSection weddingData={weddingData} />
       ) : null}
-      <GalleryRegistrySection weddingData={weddingData} />
+      <GalleryRegistrySection
+        weddingData={weddingData}
+        previewMode={previewMode}
+        themeId={activeTheme.id}
+      />
       <FAQSection
         weddingData={weddingData}
         conciergeApiPath={conciergeApiPath}
+        previewMode={previewMode}
+        themeId={activeTheme.id}
       />
       <SiteFooter weddingData={weddingData} demoMode={demoMode} />
     </main>

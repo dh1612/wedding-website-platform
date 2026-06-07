@@ -1,15 +1,24 @@
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { SectionHeading } from "@/components/section-heading";
 
 type AccommodationSectionProps = {
   weddingData?: WeddingData;
+  previewMode?: boolean;
+  themeId?: string;
 };
 
 export function AccommodationSection({
-  weddingData
+  weddingData,
+  previewMode = false,
+  themeId
 }: AccommodationSectionProps) {
   const wedding = weddingData ?? getWeddingData();
+  const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
+  const items = wedding.accommodation.length ? wedding.accommodation : fallback?.accommodation ?? [];
+  const description =
+    wedding.accommodationDescription?.trim() || fallback?.accommodationDescription || "";
 
   return (
     <section
@@ -23,17 +32,17 @@ export function AccommodationSection({
             eyebrow={wedding.accommodationEyebrow}
             title={wedding.accommodationTitle}
             titleHtml={wedding.accommodationTitleHtml}
-            description={wedding.accommodationDescription}
+            description={description}
             descriptionHtml={wedding.accommodationDescriptionHtml}
           />
         </div>
         <div className="section-shell rounded-[1.75rem] p-6 sm:p-8">
           <div className="space-y-4">
-            {wedding.accommodation.map((hotel, index) => (
+            {items.map((hotel, index) => (
               <article
                 key={hotel.name}
                 className={`flex flex-col gap-4 py-1 sm:flex-row sm:items-start sm:justify-between ${
-                  index !== wedding.accommodation.length - 1 ? "border-b border-[var(--border)] pb-4" : ""
+                  index !== items.length - 1 ? "border-b border-[var(--border)] pb-4" : ""
                 }`}
               >
                 <div className="min-w-0">

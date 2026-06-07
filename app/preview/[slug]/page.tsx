@@ -54,8 +54,9 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 structure, and overall direction of the website before the polished final version is refined.
               </p>
               <p className="mt-2 text-sm text-white/65">
-                If some details were still missing when the builder was completed, the draft may stay
-                intentionally focused rather than filling space with weak placeholder sections.
+                If some details were still missing when the builder was completed, parts of the
+                draft may use polished sample structure so you can still see the style, rhythm, and
+                overall potential of the final website clearly.
               </p>
               <div className="mt-4 rounded-[1.1rem] border border-white/12 bg-white/8 px-4 py-3 text-sm leading-6 text-white/78">
                 You selected the <span className="font-medium text-white">{packageName}</span>

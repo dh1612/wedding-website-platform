@@ -168,6 +168,7 @@ export type WeddingData = {
     description: string;
     descriptionHtml?: string;
     url: string;
+    interactiveFormEnabled?: boolean;
     deadlineEyebrow?: string;
     deadline: string;
     panelDescription?: string;

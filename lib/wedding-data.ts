@@ -532,6 +532,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.rsvp.descriptionHtml
           : undefined,
       url: source.rsvp?.url ?? fallback.rsvp.url,
+      interactiveFormEnabled: source.rsvp?.interactiveFormEnabled ?? true,
       deadlineEyebrow:
         typeof source.rsvp?.deadlineEyebrow === "string"
           ? source.rsvp.deadlineEyebrow.trim()

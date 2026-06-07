@@ -1,5 +1,6 @@
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { SectionHeading } from "@/components/section-heading";
 import { PublicRSVPForm } from "@/components/public-rsvp-form";
 
@@ -8,16 +9,26 @@ type RSVPSectionProps = {
   demoMode?: boolean;
   previewMode?: boolean;
   rsvpApiPath?: string;
+  themeId?: string;
 };
 
 export function RSVPSection({
   weddingData,
   demoMode = false,
   previewMode = false,
-  rsvpApiPath
+  rsvpApiPath,
+  themeId
 }: RSVPSectionProps) {
   const wedding = weddingData ?? getWeddingData();
-  const showInteractiveForm = Boolean(rsvpApiPath) && !demoMode;
+  const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
+  const showInteractiveForm =
+    Boolean(rsvpApiPath) &&
+    !demoMode &&
+    (wedding.rsvp.interactiveFormEnabled ?? true);
+  const resolvedDescription =
+    wedding.rsvp.description?.trim() || fallback?.rsvpDescription || "";
+  const resolvedPanelDescription =
+    wedding.rsvp.panelDescription?.trim() || fallback?.rsvpPanelDescription || "";
 
   return (
     <section
@@ -34,7 +45,7 @@ export function RSVPSection({
             description={
               demoMode
                 ? "In the finished version, this becomes the couple's RSVP form and response flow, shaped around exactly what they want guests to answer."
-                : wedding.rsvp.description
+                : resolvedDescription
             }
             descriptionHtml={demoMode ? undefined : wedding.rsvp.descriptionHtml}
           />
@@ -51,8 +62,8 @@ export function RSVPSection({
                 dangerouslySetInnerHTML={{ __html: wedding.rsvp.panelDescriptionHtml }}
               />
             ) : (
-              wedding.rsvp.panelDescription ? (
-                <p className="prose-copy mt-4">{wedding.rsvp.panelDescription}</p>
+              resolvedPanelDescription ? (
+                <p className="prose-copy mt-4">{resolvedPanelDescription}</p>
               ) : null
             )}
             {showInteractiveForm && rsvpApiPath ? (
@@ -66,6 +77,12 @@ export function RSVPSection({
             ) : demoMode ? (
               <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/65 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
                 Example only: the final RSVP form and wording are prepared around the couple's guest list and preferences.
+              </div>
+            ) : previewMode ? (
+              <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/65 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
+                {wedding.rsvp.interactiveFormEnabled === false
+                  ? "For information-only websites, this area can instead direct guests to the couple's chosen contact route for questions or updates."
+                  : "In the fuller version, this space becomes the guest reply area once the couple is ready to collect attendance and extra details."}
               </div>
             ) : (
               <a

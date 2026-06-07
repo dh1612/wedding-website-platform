@@ -151,7 +151,7 @@ function filterImageUrls(values?: string[]) {
 function chooseTheme(submission: IntakeSubmission) {
   const location = `${submission.locationSummary} ${submission.ceremonyLocation} ${submission.receptionLocation}`.toLowerCase();
   if (location.includes("greece") || location.includes("santorini") || location.includes("mykonos")) {
-    return "aegean-romance";
+    return "champagne-aegean";
   }
 
   return submission.themePreference || getWeddingData().theme;
@@ -376,11 +376,20 @@ export async function buildWeddingDataFromIntake(
       images: imageUrls
     },
     rsvp: {
-      label: "Contact Us",
+      eyebrow: submission.packageTier === "basic" ? "Questions" : "RSVP",
+      title:
+        submission.packageTier === "basic"
+          ? "Questions & Updates"
+          : "Let Us Know If You Can Make It",
+      label: submission.packageTier === "basic" ? "Email The Couple" : "Send RSVP",
       description:
-        "Please get in touch with any questions, updates, or changes before the wedding.",
+        submission.packageTier === "basic"
+          ? "This version is focused on guest information. If guests need to ask anything before the wedding, they can get in touch here."
+          : "Guests can reply here with attendance, dietary notes, and the practical details the couple wants collected.",
       url: `mailto:${submission.email}`,
-      deadline: "As soon as possible"
+      interactiveFormEnabled: submission.packageTier !== "basic",
+      deadline:
+        submission.packageTier === "basic" ? "Questions can be sent any time" : "As soon as possible"
     },
     registry: {
       message: "",

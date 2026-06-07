@@ -1,14 +1,26 @@
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
 
 type ScheduleSectionProps = {
   weddingData?: WeddingData;
+  previewMode?: boolean;
+  themeId?: string;
 };
 
-export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
+export function ScheduleSection({
+  weddingData,
+  previewMode = false,
+  themeId
+}: ScheduleSectionProps) {
   const wedding = weddingData ?? getWeddingData();
+  const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
+  const scheduleItems = wedding.schedule.length ? wedding.schedule : fallback?.schedule ?? [];
+  const description =
+    wedding.scheduleDescription?.trim() || fallback?.scheduleDescription || "";
+  const note = wedding.scheduleNote?.trim() || fallback?.scheduleNote || "";
   const stepLabel = typeof wedding.scheduleStepLabel === "string" ? wedding.scheduleStepLabel.trim() : "Moment";
 
   return (
@@ -23,22 +35,22 @@ export function ScheduleSection({ weddingData }: ScheduleSectionProps) {
             eyebrow={wedding.scheduleEyebrow}
             title={wedding.scheduleHeading}
             titleHtml={wedding.scheduleHeadingHtml}
-            description={wedding.scheduleDescription}
+            description={description}
             descriptionHtml={wedding.scheduleDescriptionHtml}
           />
-          {(wedding.scheduleNoteHtml || wedding.scheduleNote?.trim()) ? (
+          {(wedding.scheduleNoteHtml || note) ? (
             <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
               {wedding.scheduleNoteHtml ? (
                 <RichTextContent html={wedding.scheduleNoteHtml} className="text-sm leading-6" />
               ) : (
-                wedding.scheduleNote
+                note
               )}
             </div>
           ) : null}
         </div>
         <div className="section-shell rounded-[2rem] p-8 sm:p-10">
           <div className="grid gap-4 sm:grid-cols-2">
-            {wedding.schedule.map((item, index) => (
+            {scheduleItems.map((item, index) => (
               <article
                 key={`${item.time}-${item.title}`}
                 className="schedule-moment-card accent-panel rounded-[1.3rem] p-5"

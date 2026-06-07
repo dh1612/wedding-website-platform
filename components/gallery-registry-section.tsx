@@ -2,19 +2,25 @@ import Image from "next/image";
 import { shouldBypassImageOptimization } from "@/lib/image-utils";
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
 
 type GalleryRegistrySectionProps = {
   weddingData?: WeddingData;
+  previewMode?: boolean;
+  themeId?: string;
 };
 
 export function GalleryRegistrySection({
-  weddingData
+  weddingData,
+  previewMode = false,
+  themeId
 }: GalleryRegistrySectionProps) {
   const wedding = weddingData ?? getWeddingData();
-  const showStory = wedding.sectionVisibility?.story ?? true;
-  const showGallery = wedding.sectionVisibility?.gallery ?? true;
+  const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
+  const showStory = previewMode || (wedding.sectionVisibility?.story ?? true);
+  const showGallery = previewMode || (wedding.sectionVisibility?.gallery ?? true);
   const showRegistry = wedding.sectionVisibility?.registry ?? true;
   const storyImages =
     wedding.story.featureImages?.length
@@ -22,8 +28,13 @@ export function GalleryRegistrySection({
       : wedding.story.featureImage
         ? [wedding.story.featureImage]
         : [];
-  const hasStoryImage = storyImages.length > 0;
-  const hasGalleryImages = wedding.gallery.images.length > 0;
+  const previewStoryImages = storyImages.length ? storyImages : fallback?.storyImages ?? [];
+  const storyParagraphs =
+    wedding.story.paragraphs.length ? wedding.story.paragraphs : fallback?.storyParagraphs ?? [];
+  const galleryImages =
+    wedding.gallery.images.length ? wedding.gallery.images : previewMode ? previewStoryImages.slice(0, 2) : [];
+  const hasStoryImage = previewStoryImages.length > 0;
+  const hasGalleryImages = galleryImages.length > 0;
 
   if (!showStory && !showGallery && !showRegistry) {
     return null;
@@ -52,7 +63,7 @@ export function GalleryRegistrySection({
                       {wedding.story.html ? (
                         <RichTextContent html={wedding.story.html} className="text-lg leading-8" />
                       ) : (
-                        wedding.story.paragraphs.map((paragraph) => (
+                        storyParagraphs.map((paragraph) => (
                           <p key={paragraph} className="prose-copy text-lg">
                             {paragraph}
                           </p>
@@ -75,28 +86,28 @@ export function GalleryRegistrySection({
                   {hasStoryImage ? (
                     <div
                       className={`grid gap-4 ${
-                        storyImages.length === 1
+                        previewStoryImages.length === 1
                           ? ""
-                          : storyImages.length === 2
+                          : previewStoryImages.length === 2
                             ? "sm:grid-cols-2"
                             : "sm:grid-cols-[1.1fr_0.9fr]"
                       }`}
                     >
                       <div className="relative min-h-[340px] overflow-hidden rounded-[1.6rem]">
                         <Image
-                          src={storyImages[0]!}
+                          src={previewStoryImages[0]!}
                           alt={`${wedding.story.heading} image 1`}
                           fill
-                          unoptimized={shouldBypassImageOptimization(storyImages[0])}
+                          unoptimized={shouldBypassImageOptimization(previewStoryImages[0])}
                           className="object-cover"
                         />
                       </div>
-                      {storyImages.length > 1 ? (
-                        <div className={`grid gap-4 ${storyImages.length === 2 ? "" : "grid-rows-2"}`}>
-                          {storyImages.slice(1, 3).map((image, index) => (
+                      {previewStoryImages.length > 1 ? (
+                        <div className={`grid gap-4 ${previewStoryImages.length === 2 ? "" : "grid-rows-2"}`}>
+                          {previewStoryImages.slice(1, 3).map((image, index) => (
                             <div
                               key={image}
-                              className={`relative overflow-hidden rounded-[1.5rem] ${storyImages.length === 2 ? "min-h-[340px]" : "min-h-[160px]"}`}
+                              className={`relative overflow-hidden rounded-[1.5rem] ${previewStoryImages.length === 2 ? "min-h-[340px]" : "min-h-[160px]"}`}
                             >
                               <Image
                                 src={image}
@@ -113,7 +124,7 @@ export function GalleryRegistrySection({
                   ) : null}
                   {showGallery && hasGalleryImages ? (
                     <div className={`grid gap-4 ${hasStoryImage ? "mt-4 sm:grid-cols-2" : "mt-1 sm:grid-cols-3"}`}>
-                      {wedding.gallery.images.map((image, index) => (
+                      {galleryImages.map((image, index) => (
                         <div
                           key={image}
                           className="relative min-h-[220px] overflow-hidden rounded-[1.5rem]"

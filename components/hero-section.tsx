@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getThemeById } from "@/lib/themes";
+import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { RichTextContent } from "@/components/rich-text-content";
 import { shouldBypassImageOptimization } from "@/lib/image-utils";
 import { formatDisplayDate } from "@/lib/utils";
@@ -89,6 +90,7 @@ function InlineCopy({
 export function HeroSection({ themeId, weddingData, previewMode = false }: HeroSectionProps) {
   const wedding = weddingData ?? getWeddingData();
   const theme = getThemeById(themeId);
+  const previewFallback = previewMode ? getPreviewFallbackContent(themeId, wedding) : null;
   const heroImage = wedding.heroImage || theme.heroImage;
   const detailImage = theme.detailImage;
   const heroImageUnoptimized = shouldBypassImageOptimization(heroImage);
@@ -110,6 +112,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
   const showAnnouncement = visibility?.announcement ?? true;
   const showPreviewNote = visibility?.previewNote ?? true;
   const showHeroActions = visibility?.heroActions ?? true;
+  const resolvedTagline = wedding.tagline?.trim() || previewFallback?.heroTagline || "";
+  const resolvedAnnouncement =
+    wedding.announcement?.trim() || previewFallback?.heroAnnouncement || "";
+  const shouldShowResolvedTagline = showTagline && Boolean(resolvedTagline);
+  const shouldShowResolvedAnnouncement = showAnnouncement && Boolean(resolvedAnnouncement);
   const softBlushSecondaryButtonClassName =
     themeId === "soft-blush"
       ? "rounded-full border border-white/58 bg-white/96 px-6 py-3 text-center text-sm font-semibold text-[#5e3c1f] shadow-[0_14px_32px_rgba(42,28,18,0.18)] backdrop-blur-sm transition hover:bg-white"
@@ -160,17 +167,17 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                   />
                 ) : null}
               </div>
-              {showTagline ? (
+              {shouldShowResolvedTagline ? (
                 <InlineCopy
                   html={wedding.taglineHtml}
-                  text={wedding.tagline}
+                  text={resolvedTagline}
                   className="mt-6 max-w-xl text-base leading-8 text-white/82 sm:text-lg"
                 />
               ) : null}
-              {showAnnouncement ? (
+              {shouldShowResolvedAnnouncement ? (
                 <AnnouncementCopy
                   html={wedding.announcementHtml}
-                  text={wedding.announcement}
+                  text={resolvedAnnouncement}
                   className="mt-4 max-w-xl text-base leading-7 text-white/76"
                 />
               ) : null}
@@ -224,17 +231,17 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 ) : null}
               </div>
             </div>
-            {showTagline ? (
+            {shouldShowResolvedTagline ? (
               <InlineCopy
                 html={wedding.taglineHtml}
-                text={wedding.tagline}
+                text={resolvedTagline}
                 className="max-w-xl text-lg leading-8 text-[var(--muted)]"
               />
             ) : null}
-            {showAnnouncement ? (
+            {shouldShowResolvedAnnouncement ? (
               <AnnouncementCopy
                 html={wedding.announcementHtml}
-                text={wedding.announcement}
+                text={resolvedAnnouncement}
                 className="max-w-xl text-base leading-7 text-[var(--muted)]"
               />
             ) : null}

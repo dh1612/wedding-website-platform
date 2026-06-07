@@ -1,21 +1,28 @@
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { SectionHeading } from "@/components/section-heading";
 import { ConciergeCard } from "@/components/concierge-card";
 
 type FAQSectionProps = {
   weddingData?: WeddingData;
   conciergeApiPath?: string;
+  previewMode?: boolean;
+  themeId?: string;
 };
 
 export function FAQSection({
   weddingData,
-  conciergeApiPath
+  conciergeApiPath,
+  previewMode = false,
+  themeId
 }: FAQSectionProps) {
   const wedding = weddingData ?? getWeddingData();
-  const showFaq = wedding.sectionVisibility?.faq ?? true;
+  const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
+  const showFaq = previewMode || (wedding.sectionVisibility?.faq ?? true);
   const showConcierge =
     wedding.aiConciergeEnabled && (wedding.sectionVisibility?.aiConcierge ?? true);
+  const faqItems = wedding.faq.length ? wedding.faq : fallback?.faq ?? [];
 
   if (!showFaq && !showConcierge) {
     return null;
@@ -48,12 +55,16 @@ export function FAQSection({
               <SectionHeading
                 eyebrow="FAQ"
                 title="Questions Guests Usually Ask"
-                description="A quick place to check the details guests usually want before travelling."
+                description={
+                  previewMode
+                    ? "Even when the first draft is still light, this section can show the kind of clear guest guidance the finished website can hold."
+                    : "A quick place to check the details guests usually want before travelling."
+                }
               />
             </div>
             <div className="section-shell rounded-[2rem] p-8 sm:p-10">
               <div className="space-y-4">
-                {wedding.faq.map((item) => (
+                {faqItems.map((item) => (
                   <details
                     key={item.q}
                     className="rounded-[1.5rem] border border-[var(--border)] bg-white/70 p-5 open:bg-[var(--accent-soft)]"

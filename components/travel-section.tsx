@@ -1,27 +1,66 @@
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
+import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
 import { VenueSneakPeek } from "@/components/venue-sneak-peek";
 
 type TravelSectionProps = {
   weddingData?: WeddingData;
+  previewMode?: boolean;
+  themeId?: string;
 };
 
-export function TravelSection({ weddingData }: TravelSectionProps) {
+export function TravelSection({
+  weddingData,
+  previewMode = false,
+  themeId
+}: TravelSectionProps) {
   const wedding = weddingData ?? getWeddingData();
+  const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
   const visibility = wedding.sectionVisibility;
-  const showCeremony = visibility?.ceremonyCard ?? true;
-  const showReception = visibility?.receptionCard ?? true;
-  const showTransport = visibility?.transportCard ?? true;
-  const showDirections = visibility?.directionsCard ?? true;
+  const hasCeremonyDetails = Boolean(
+    wedding.ceremony.location?.trim() || wedding.ceremony.time?.trim() || wedding.ceremony.address?.trim()
+  );
+  const hasReceptionDetails = Boolean(
+    wedding.reception.location?.trim() || wedding.reception.time?.trim() || wedding.reception.address?.trim()
+  );
+  const hasTransportDetails = Boolean(wedding.travel.transport?.trim());
+  const hasDirectionsDetails = Boolean(wedding.travel.parking?.trim() || wedding.travel.directions?.trim());
+  const hasLocationOverview = Boolean(
+    wedding.travel.locationOverviewTitle || wedding.travel.locationOverviewHtml
+  );
+  const showCeremony = previewMode || (visibility?.ceremonyCard ?? true);
+  const showReception = previewMode || (visibility?.receptionCard ?? true);
+  const showTransport = previewMode || (visibility?.transportCard ?? true);
+  const showDirections = previewMode || (visibility?.directionsCard ?? true);
   const showRelaxedNote = (visibility?.relaxedNote ?? true) && Boolean(wedding.travel.relaxedNote);
   const showMapUtility =
     Boolean(wedding.travel.mapLink) ||
     showRelaxedNote ||
-    Boolean(wedding.travel.mapSpots?.length);
+    Boolean(wedding.travel.mapSpots?.length) ||
+    previewMode;
 
-  if (!showCeremony && !showReception && !showTransport && !showDirections && !showMapUtility) {
+  const resolvedDescription =
+    wedding.travel.description?.trim() || fallback?.travelDescription || "";
+  const resolvedLocationOverviewTitle =
+    wedding.travel.locationOverviewTitle || fallback?.travelLocationOverviewTitle;
+  const resolvedLocationOverviewText = fallback?.travelLocationOverviewText;
+  const resolvedMapUtilityTitle =
+    wedding.travel.mapUtilityTitle || fallback?.travelMapUtilityTitle;
+  const resolvedMapUtilityDescription =
+    wedding.travel.mapUtilityDescription || fallback?.travelMapUtilityDescription;
+  const resolvedMapSpots =
+    wedding.travel.mapSpots?.length ? wedding.travel.mapSpots : fallback?.mapSpots ?? [];
+
+  if (
+    !previewMode &&
+    !showCeremony &&
+    !showReception &&
+    !showTransport &&
+    !showDirections &&
+    !showMapUtility
+  ) {
     return null;
   }
 
@@ -38,20 +77,22 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
               eyebrow="Venue & Travel"
               title={wedding.travel.heading}
               titleHtml={wedding.travel.headingHtml}
-              description={wedding.travel.description}
+              description={resolvedDescription}
               descriptionHtml={wedding.travel.descriptionHtml}
             />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
-            {wedding.travel.locationOverviewTitle || wedding.travel.locationOverviewHtml ? (
+            {hasLocationOverview || previewMode ? (
               <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
                 <SectionHeading
                   eyebrow="About The Location"
-                  title={wedding.travel.locationOverviewTitle || "About the area"}
+                  title={resolvedLocationOverviewTitle || "About the area"}
                   titleHtml={wedding.travel.locationOverviewTitleHtml}
                 />
                 {wedding.travel.locationOverviewHtml ? (
                   <RichTextContent html={wedding.travel.locationOverviewHtml} className="mt-4" />
+                ) : resolvedLocationOverviewText ? (
+                  <p className="prose-copy mt-4">{resolvedLocationOverviewText}</p>
                 ) : null}
               </article>
             ) : null}
@@ -73,10 +114,10 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                     <div className="space-y-4">
                       <SectionHeading
                         eyebrow={wedding.travel.mapUtilityEyebrow || "Map & Area"}
-                        title={wedding.travel.mapUtilityTitle || "Useful locations at a glance"}
+                        title={resolvedMapUtilityTitle || "Useful locations at a glance"}
                         titleHtml={wedding.travel.mapUtilityTitleHtml}
                         description={
-                          wedding.travel.mapUtilityDescription ||
+                          resolvedMapUtilityDescription ||
                           "A quick guide to the places guests are most likely to need before and during the wedding weekend."
                         }
                         descriptionHtml={wedding.travel.mapUtilityDescriptionHtml}
@@ -103,7 +144,7 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {(wedding.travel.mapSpots ?? []).map((spot) => (
+                    {resolvedMapSpots.map((spot) => (
                       <div
                         key={`${spot.label}-${spot.detail}`}
                         className="rounded-[1.2rem] border border-[var(--border)] bg-white/78 p-5"
@@ -128,19 +169,25 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                 </div>
               </article>
             ) : null}
-            {showCeremony ? (
+            {showCeremony && (hasCeremonyDetails || previewMode) ? (
               <article className="accent-panel rounded-[1.5rem] p-6">
                 <p className="eyebrow">Ceremony</p>
-                <h3 className="mt-3 text-2xl">{wedding.ceremony.location}</h3>
-                <p className="prose-copy mt-3">{wedding.ceremony.time}</p>
-                <p className="prose-copy">{wedding.ceremony.address}</p>
+                <h3 className="mt-3 text-2xl">
+                  {wedding.ceremony.location || fallback?.ceremony.location}
+                </h3>
+                <p className="prose-copy mt-3">{wedding.ceremony.time || fallback?.ceremony.time}</p>
+                <p className="prose-copy">
+                  {wedding.ceremony.address || fallback?.ceremony.address}
+                </p>
                 {wedding.ceremony.descriptionHtml ? (
                   <RichTextContent
                     html={wedding.ceremony.descriptionHtml}
                     className="mt-3"
                   />
-                ) : wedding.ceremony.description ? (
-                  <p className="prose-copy mt-3">{wedding.ceremony.description}</p>
+                ) : wedding.ceremony.description || fallback?.ceremony.description ? (
+                  <p className="prose-copy mt-3">
+                    {wedding.ceremony.description || fallback?.ceremony.description}
+                  </p>
                 ) : null}
                 {wedding.ceremony.mapLink ? (
                   <a
@@ -154,19 +201,27 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                 ) : null}
               </article>
             ) : null}
-            {showReception ? (
+            {showReception && (hasReceptionDetails || previewMode) ? (
               <article className="accent-panel rounded-[1.5rem] p-6">
                 <p className="eyebrow">Reception</p>
-                <h3 className="mt-3 text-2xl">{wedding.reception.location}</h3>
-                <p className="prose-copy mt-3">{wedding.reception.time}</p>
-                <p className="prose-copy">{wedding.reception.address}</p>
+                <h3 className="mt-3 text-2xl">
+                  {wedding.reception.location || fallback?.reception.location}
+                </h3>
+                <p className="prose-copy mt-3">
+                  {wedding.reception.time || fallback?.reception.time}
+                </p>
+                <p className="prose-copy">
+                  {wedding.reception.address || fallback?.reception.address}
+                </p>
                 {wedding.reception.descriptionHtml ? (
                   <RichTextContent
                     html={wedding.reception.descriptionHtml}
                     className="mt-3"
                   />
-                ) : wedding.reception.description ? (
-                  <p className="prose-copy mt-3">{wedding.reception.description}</p>
+                ) : wedding.reception.description || fallback?.reception.description ? (
+                  <p className="prose-copy mt-3">
+                    {wedding.reception.description || fallback?.reception.description}
+                  </p>
                 ) : null}
                 {wedding.reception.mapLink ? (
                   <a
@@ -180,37 +235,45 @@ export function TravelSection({ weddingData }: TravelSectionProps) {
                 ) : null}
               </article>
             ) : null}
-            {showTransport ? (
+            {showTransport && (hasTransportDetails || previewMode) ? (
               <article className="accent-panel rounded-[1.5rem] p-6">
                 <p className="eyebrow">Transport</p>
                 {wedding.travel.transportHtml ? (
                   <RichTextContent html={wedding.travel.transportHtml} className="mt-3" />
                 ) : (
-                  <p className="prose-copy mt-3">{wedding.travel.transport}</p>
+                  <p className="prose-copy mt-3">
+                    {wedding.travel.transport || fallback?.transport}
+                  </p>
                 )}
               </article>
             ) : null}
-            {showDirections ? (
+            {showDirections && (hasDirectionsDetails || previewMode) ? (
               <article className="accent-panel rounded-[1.5rem] p-6">
                 <p className="eyebrow">Parking & Directions</p>
                 {wedding.travel.parkingHtml ? (
                   <RichTextContent html={wedding.travel.parkingHtml} className="mt-3" />
                 ) : (
-                  <p className="prose-copy mt-3">{wedding.travel.parking}</p>
+                  <p className="prose-copy mt-3">
+                    {wedding.travel.parking || fallback?.parking}
+                  </p>
                 )}
                 {wedding.travel.directionsHtml ? (
                   <RichTextContent html={wedding.travel.directionsHtml} className="mt-2" />
                 ) : (
-                  <p className="prose-copy mt-2">{wedding.travel.directions}</p>
+                  <p className="prose-copy mt-2">
+                    {wedding.travel.directions || fallback?.directions}
+                  </p>
                 )}
-                <a
-                  href={wedding.travel.mapLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-flex text-sm font-medium text-[var(--accent-strong)]"
-                >
-                  Open map
-                </a>
+                {wedding.travel.mapLink ? (
+                  <a
+                    href={wedding.travel.mapLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex text-sm font-medium text-[var(--accent-strong)]"
+                  >
+                    Open map
+                  </a>
+                ) : null}
               </article>
             ) : null}
           </div>
