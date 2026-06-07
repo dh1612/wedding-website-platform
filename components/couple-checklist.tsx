@@ -13,11 +13,13 @@ type ChecklistItem = {
 type CoupleChecklistProps = {
   initialItems: ChecklistItem[];
   apiBasePath?: string;
+  demoMode?: boolean;
 };
 
 export function CoupleChecklist({
   initialItems,
-  apiBasePath = "/api/portal"
+  apiBasePath = "/api/portal",
+  demoMode = false
 }: CoupleChecklistProps) {
   const [items, setItems] = useState<ChecklistItem[]>(initialItems);
   const [draftTitle, setDraftTitle] = useState("");
@@ -53,6 +55,11 @@ export function CoupleChecklist({
         item.id === id ? { ...item, completed: nextCompleted } : item
       )
     );
+
+    if (demoMode) {
+      setStatusMessage("Demo mode: changes can be explored here, but they are not saved.");
+      return;
+    }
 
     const response = await fetch(`${apiBasePath}/checklist/${id}`, {
       method: "PATCH",
@@ -90,6 +97,11 @@ export function CoupleChecklist({
       return;
     }
 
+    if (demoMode) {
+      setStatusMessage("Demo mode: notes can be edited here, but they are not saved.");
+      return;
+    }
+
     const response = await fetch(`${apiBasePath}/checklist/${id}`, {
       method: "PATCH",
       headers: {
@@ -107,6 +119,23 @@ export function CoupleChecklist({
 
   async function addItem() {
     if (!draftTitle.trim()) return;
+
+    if (demoMode) {
+      const createdItem = {
+        id: `demo-checklist-${Date.now()}`,
+        title: draftTitle.trim(),
+        category: draftCategory,
+        completed: false,
+        notes: draftNote.trim()
+      };
+
+      setItems((current) => [createdItem, ...current]);
+      setDraftTitle("");
+      setDraftCategory("Planning");
+      setDraftNote("");
+      setStatusMessage("Demo mode: new tasks can be explored here, but they are not saved.");
+      return;
+    }
 
     const response = await fetch(`${apiBasePath}/checklist`, {
       method: "POST",
@@ -142,6 +171,11 @@ export function CoupleChecklist({
     const previousItems = items;
     setItems((current) => current.filter((item) => item.id !== id));
 
+    if (demoMode) {
+      setStatusMessage("Demo mode: removals are only for preview and will reset on refresh.");
+      return;
+    }
+
     const response = await fetch(`${apiBasePath}/checklist/${id}`, {
       method: "DELETE"
     });
@@ -167,6 +201,11 @@ export function CoupleChecklist({
           <p className="prose-copy mt-4 text-lg">
             Keep wedding tasks, reminders, and planning notes together so it is easy to see what is done and what still needs attention.
           </p>
+          {demoMode ? (
+            <p className="mt-4 rounded-[1rem] border border-[var(--border)] bg-white/70 px-4 py-3 text-sm text-[var(--muted)]">
+              Interactive demo: you can tick things off, add notes, and add tasks here. Nothing is saved once you leave the page.
+            </p>
+          ) : null}
           {statusMessage ? (
             <p className="mt-4 rounded-[1rem] border border-[var(--border)] bg-white/70 px-4 py-3 text-sm text-[var(--muted)]">
               {statusMessage}

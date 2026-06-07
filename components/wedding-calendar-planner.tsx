@@ -15,6 +15,7 @@ type WeddingCalendarPlannerProps = {
   weddingDateLabel: string;
   initialItems: CalendarTask[];
   apiBasePath?: string;
+  demoMode?: boolean;
 };
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -78,7 +79,8 @@ function startOfMonth(date: Date) {
 export function WeddingCalendarPlanner({
   weddingDateLabel,
   initialItems,
-  apiBasePath = "/api/portal"
+  apiBasePath = "/api/portal",
+  demoMode = false
 }: WeddingCalendarPlannerProps) {
   const [tasks, setTasks] = useState<CalendarTask[]>(initialItems);
   const [draftTitle, setDraftTitle] = useState("");
@@ -201,6 +203,28 @@ export function WeddingCalendarPlanner({
       return;
     }
 
+    if (demoMode) {
+      const createdItem = {
+        id: `demo-calendar-${Date.now()}`,
+        title: draftTitle.trim(),
+        category: draftCategory,
+        startDate: draftStartDate,
+        endDate: draftEndDate,
+        notes: draftNotes.trim()
+      };
+
+      setTasks((current) =>
+        [...current, createdItem].sort((a, b) => a.startDate.localeCompare(b.startDate))
+      );
+      setDraftTitle("");
+      setDraftCategory("Planning");
+      setDraftStartDate("");
+      setDraftEndDate("");
+      setDraftNotes("");
+      setStatusMessage("Demo mode: timeline updates are for preview only and are not saved.");
+      return;
+    }
+
     const response = await fetch(`${apiBasePath}/calendar`, {
       method: "POST",
       headers: {
@@ -240,6 +264,11 @@ export function WeddingCalendarPlanner({
     const previousTasks = tasks;
     setTasks((current) => current.filter((task) => task.id !== id));
 
+    if (demoMode) {
+      setStatusMessage("Demo mode: removed dates return when the page is refreshed.");
+      return;
+    }
+
     const response = await fetch(`${apiBasePath}/calendar/${id}`, {
       method: "DELETE"
     });
@@ -255,6 +284,9 @@ export function WeddingCalendarPlanner({
 
   function generateSummary() {
     setGeneratedAt(getGeneratedLabel());
+    if (demoMode) {
+      setStatusMessage("Demo mode: the calendar summary updates here, but nothing is stored.");
+    }
   }
 
   return (
@@ -270,6 +302,11 @@ export function WeddingCalendarPlanner({
             <p className="prose-copy text-lg">
               Add key dates for the wedding, then create a clear planning overview you can use to stay on top of the months ahead.
             </p>
+            {demoMode ? (
+              <p className="rounded-[1rem] border border-[var(--border)] bg-white/70 px-4 py-3 text-sm text-[var(--muted)]">
+                Interactive demo: add dates, remove them, and regenerate the timeline to see how the Premium portal feels in practice.
+              </p>
+            ) : null}
           </div>
           <div className="accent-panel rounded-[1.4rem] px-5 py-4 text-sm">
             Calendar status: {generatedAt}

@@ -27,6 +27,7 @@ type RSVPManagerProps = {
   customQuestionLabels?: Record<string, string>;
   customSelectableQuestions?: RSVPFormQuestion[];
   showMealChoice?: boolean;
+  demoMode?: boolean;
 };
 
 type DraftGuest = {
@@ -50,7 +51,8 @@ export function RSVPManager({
   apiBasePath = "/api/portal",
   customQuestionLabels = {},
   customSelectableQuestions = [],
-  showMealChoice = true
+  showMealChoice = true,
+  demoMode = false
 }: RSVPManagerProps) {
   function isQuantityOption(option: string) {
     return /^\d+\+?$/.test(option.trim());
@@ -252,6 +254,25 @@ export function RSVPManager({
       return;
     }
 
+    if (demoMode) {
+      const newGuest: PortalGuest = {
+        id: `demo-guest-${Date.now()}`,
+        name: draft.name.trim(),
+        household: draft.household.trim(),
+        status: draft.status,
+        side: "guest list",
+        meal: showMealChoice ? draft.meal : undefined,
+        dietary: draft.dietary.trim(),
+        partySize: 1,
+        note: ""
+      };
+
+      setGuestList((current) => [newGuest, ...current]);
+      setDraft(emptyDraft);
+      setStatusMessage("Demo mode: guest changes can be explored here, but they are not saved.");
+      return;
+    }
+
     const response = await fetch(`${apiBasePath}/guests`, {
       method: "POST",
       headers: {
@@ -282,6 +303,11 @@ export function RSVPManager({
   async function removeGuest(id: string) {
     const previousGuests = guestList;
     setGuestList((current) => current.filter((guest) => guest.id !== id));
+
+    if (demoMode) {
+      setStatusMessage("Demo mode: removals are only for preview and reset on refresh.");
+      return;
+    }
 
     const response = await fetch(`${apiBasePath}/guests/${id}`, {
       method: "DELETE"
@@ -436,6 +462,11 @@ export function RSVPManager({
                 Review replies first, then update the guest list if needed
               </div>
             </div>
+            {demoMode ? (
+              <p className="mt-6 rounded-[1rem] border border-[var(--border)] bg-white/70 px-4 py-3 text-sm text-[var(--muted)]">
+                Interactive demo: filters, counts, and guest updates work here for preview purposes, but nothing is stored after you leave this page.
+              </p>
+            ) : null}
             {statusMessage ? (
               <p className="mt-6 rounded-[1rem] border border-[var(--border)] bg-white/70 px-4 py-3 text-sm text-[var(--muted)]">
                 {statusMessage}
