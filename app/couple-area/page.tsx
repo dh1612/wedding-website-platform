@@ -1,15 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
-import { DemoPortalHome } from "@/components/demo-portal-home";
 import { MarketingFooter } from "@/components/marketing-footer";
-import { SiteHeader } from "@/components/site-header";
-import {
-  ensurePortalWedding,
-  listCalendarItems,
-  listChecklistItems
-} from "@/lib/production-repositories";
-import { getThemeById } from "@/lib/themes";
-import { getWeddingData } from "@/lib/wedding-data";
 
 const marketingNavItems = [
   { href: "/#example", label: "View Example Website" },
@@ -19,27 +10,6 @@ const marketingNavItems = [
 ];
 
 export default async function CoupleAreaPage() {
-  const wedding = getWeddingData("manor-house");
-  const previewWedding = {
-    ...wedding,
-    couple: "Private Couple Area",
-    locationSummary: "Premium planning portal preview"
-  };
-  const theme = getThemeById("soft-blush");
-  const portalWedding = await ensurePortalWedding();
-  const [checklistItems, calendarItems] = await Promise.all([
-    listChecklistItems(portalWedding.id),
-    listCalendarItems(portalWedding.id)
-  ]);
-
-  const demoNavItems = [
-    { label: "Portal Home", path: "/couple-area#portal-home" },
-    { label: "Checklist", path: "/couple-area#checklist-demo" },
-    { label: "Calendar", path: "/couple-area#calendar-demo" },
-    { label: "RSVPs", path: "/couple-area#rsvp-demo" },
-    { label: "Seating", path: "/couple-area#seating-demo" }
-  ];
-
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
       <header className="sticky top-0 z-30 border-b border-black/5 bg-white/90 backdrop-blur">
@@ -96,64 +66,76 @@ export default async function CoupleAreaPage() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-10 pt-14 lg:px-8">
         <div className="space-y-4 rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-12">
           <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-            Premium Couple Portal Preview
+            Premium Couple Portal
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            See what the private planning side adds
+            A calm private planning space, alongside the wedding website
           </h1>
           <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-            This is a customer-facing preview of the Premium couple portal, so couples can see how
-            the checklist, RSVP dashboard, key dates, and seating view fit alongside the wedding
-            website before deciding if they want the fuller planning side.
+            Premium adds a private couple area for the planning side of the wedding. It is where
+            couples can review RSVPs, keep key dates together, work through a checklist, and see a
+            clearer live picture of what still needs attention.
           </p>
           <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-sm leading-7 text-[#486159]">
             Premium includes digital invites, the full private planning area, AI concierge access,
-            and a more dedicated level of support while everything is being finalised.
+            and a more dedicated level of support while everything is being finalised. You can
+            explore the live demo below without affecting any real wedding data.
+          </div>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Link
+              href="/couple-area/demo"
+              className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#215b45]"
+            >
+              Open Live Portal Demo
+            </Link>
+            <Link
+              href="/get-started?package=premium"
+              className="inline-flex items-center justify-center rounded-full border border-[#d9c7b5] bg-white px-6 py-3 text-sm font-medium text-[#5f564e] transition hover:bg-[#faf7f2]"
+            >
+              Start A Premium Draft
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="pb-16">
-        <div
-          data-theme={theme.id}
-          style={theme.style}
-          className="mx-auto w-full max-w-6xl rounded-[2.4rem] border border-black/6 bg-white/50 shadow-[0_24px_70px_rgba(52,35,24,0.08)]"
-        >
-          <SiteHeader
-            currentPath="/couple-area"
-            mode="pages"
-            themeId={theme.id}
-            adminView
-            portalType="couple"
-            adminNavItemsOverride={demoNavItems}
-            weddingData={previewWedding}
-            homeHref="/couple-area"
-          />
-          <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-10">
-            <div className="mb-6 flex justify-end">
-              <div className="rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-4 py-2 text-sm font-medium text-[var(--accent-strong)]">
-                Preview mode
+      <section className="mx-auto grid w-full max-w-6xl gap-6 px-6 pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+        <div className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+          <p className="text-[12px] uppercase tracking-[0.32em] text-[#9a7d64]">What It Includes</p>
+          <h2 className="mt-4 text-4xl leading-tight">A better view of the planning side</h2>
+          <div className="mt-6 space-y-5 text-[15px] leading-7 text-[#5f564e]">
+            <p>
+              Instead of leaving planning spread across notes, screenshots, and message threads,
+              the Premium portal gathers the practical side of the wedding into one private space.
+            </p>
+            <p>
+              Couples can review guest replies, keep track of next steps, map key dates, and work
+              through seating with a clearer live overview of what is done and what still needs
+              attention.
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+          <p className="text-[12px] uppercase tracking-[0.32em] text-[#9a7d64]">Inside The Demo</p>
+          <div className="mt-6 grid gap-4">
+            {[
+              "Checklist with sample planning tasks and notes",
+              "Calendar timeline with realistic wedding milestones",
+              "RSVP dashboard with sample guest numbers, filters, and dietary notes",
+              "Seating view to show how the room-planning side feels"
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-[1.25rem] border border-[#eadac9] bg-[#fffaf5] px-4 py-4 text-sm leading-7 text-[#5f564e]"
+              >
+                {item}
               </div>
-            </div>
-            <DemoPortalHome
-              checklistItems={checklistItems.map((item) => ({
-                id: item.id,
-                title: item.title,
-                category: item.category,
-                completed: item.completed,
-                notes: item.notes ?? ""
-              }))}
-              calendarItems={calendarItems.map((item) => ({
-                id: item.id,
-                title: item.title,
-                category: item.category,
-                startDate: item.startDate.toISOString().slice(0, 10),
-                endDate: item.endDate.toISOString().slice(0, 10),
-                notes: item.notes ?? ""
-              }))}
-              weddingDateLabel={wedding.date}
-            />
-          </section>
+            ))}
+          </div>
+          <p className="mt-6 text-sm leading-7 text-[#7b6d62]">
+            The live demo is fully explorable, but any edits inside it are only for preview and
+            reset when you leave the page.
+          </p>
         </div>
       </section>
       <MarketingFooter />

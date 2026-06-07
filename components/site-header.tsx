@@ -218,9 +218,7 @@ export function SiteHeader({
             <nav className="flex flex-wrap items-center justify-center gap-2 text-sm">
               {adminView
                 ? adminNavItems.map((item) => {
-                  const isActive =
-                    item.path === currentPath ||
-                    (item.path.includes("#") && currentPath === item.path.split("#")[0]);
+                  const isActive = item.path === currentPath;
 
                   return (
                     <Link
