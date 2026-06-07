@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { SiteFrame } from "@/components/site-frame";
+import { SUPPORT_EMAIL } from "@/lib/brand";
 import {
   getPackageDisplayName,
   getPackageDisplayPrice,
@@ -16,35 +17,6 @@ type UnlockPageProps = {
   params: Promise<{ slug: string }>;
   searchParams?: Promise<{ requested?: string; error?: string }>;
 };
-
-async function requestUnlockAction(formData: FormData) {
-  "use server";
-
-  const slug = String(formData.get("slug") || "").trim();
-  const acceptedTerms = formData.get("acceptedTerms") === "on";
-  const acknowledgedPayment = formData.get("acknowledgedPayment") === "on";
-
-  if (!slug) {
-    return;
-  }
-
-  if (!acknowledgedPayment) {
-    redirect(`/unlock/${slug}?error=ack`);
-  }
-
-  if (!acceptedTerms) {
-    redirect(`/unlock/${slug}?error=terms`);
-  }
-
-  await updateWeddingAccessState({
-    slug,
-    unlockRequestedAt: new Date().toISOString(),
-    termsAcceptedAt: new Date().toISOString(),
-    previewAcknowledgedAt: new Date().toISOString()
-  });
-
-  redirect(`/unlock/${slug}?requested=1`);
-}
 
 async function startPaymentAction(formData: FormData) {
   "use server";
@@ -116,6 +88,13 @@ export default async function UnlockPage({
   const paymentLink = getPackagePaymentLink(packageTier);
   const paymentStatus = plannerSettings.paymentStatus ?? "unpaid";
   const requested = query?.requested === "1" || Boolean(plannerSettings.unlockRequestedAt);
+  const nextStepsSubject = encodeURIComponent(
+    `Question about ${packageName} package for ${weddingData.couple}`
+  );
+  const nextStepsBody = encodeURIComponent(
+    `Hi,\n\nI'd like to ask a quick question before moving ahead with the ${packageName} package for ${weddingData.couple}.\n\nPreview link: ${`https://craftedweddingsites.ie/preview/${slug}`}\n\nThanks`
+  );
+  const nextStepsMailto = `mailto:${SUPPORT_EMAIL}?subject=${nextStepsSubject}&body=${nextStepsBody}`;
   const error = query?.error;
   const errorMessage =
     error === "terms"
@@ -239,15 +218,13 @@ export default async function UnlockPage({
                   Continue To Booking
                 </button>
               ) : null}
-              {!requested ? (
-                <button
-                  formAction={requestUnlockAction}
-                  className="accent-panel rounded-full px-6 py-3 text-sm font-medium"
-                >
-                  Ask About Next Steps
-                </button>
-              ) : null}
             </form>
+            <a
+              href={nextStepsMailto}
+              className="accent-panel rounded-full px-6 py-3 text-sm font-medium"
+            >
+              Ask About Next Steps
+            </a>
             <Link
               href={`/preview/${slug}`}
               className="accent-outline rounded-full px-6 py-3 text-sm font-medium"

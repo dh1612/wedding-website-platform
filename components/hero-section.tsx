@@ -16,12 +16,14 @@ function SharedActions({
   primaryActionLabel,
   primaryActionHref,
   secondaryActionLabel,
-  secondaryActionHref
+  secondaryActionHref,
+  secondaryButtonClassName
 }: {
   primaryActionLabel: string;
   primaryActionHref: string;
   secondaryActionLabel: string;
   secondaryActionHref: string;
+  secondaryButtonClassName?: string;
 }) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
@@ -33,7 +35,10 @@ function SharedActions({
       </a>
       <a
         href={secondaryActionHref}
-        className="accent-outline rounded-full bg-white/90 px-6 py-3 text-center text-sm font-medium shadow-[0_10px_26px_rgba(34,24,20,0.12)] backdrop-blur-sm transition hover:bg-white"
+        className={
+          secondaryButtonClassName ??
+          "accent-outline rounded-full bg-white/90 px-6 py-3 text-center text-sm font-medium shadow-[0_10px_26px_rgba(34,24,20,0.12)] backdrop-blur-sm transition hover:bg-white"
+        }
       >
         {secondaryActionLabel}
       </a>
@@ -105,6 +110,10 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
   const showAnnouncement = visibility?.announcement ?? true;
   const showPreviewNote = visibility?.previewNote ?? true;
   const showHeroActions = visibility?.heroActions ?? true;
+  const softBlushSecondaryButtonClassName =
+    themeId === "soft-blush"
+      ? "rounded-full border border-white/58 bg-white/96 px-6 py-3 text-center text-sm font-semibold text-[#5e3c1f] shadow-[0_14px_32px_rgba(42,28,18,0.18)] backdrop-blur-sm transition hover:bg-white"
+      : undefined;
 
   if (theme.heroLayout === "full-bleed") {
     return (
@@ -177,6 +186,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                     primaryActionHref={hero.primaryActionHref}
                     secondaryActionLabel={hero.secondaryActionLabel}
                     secondaryActionHref={hero.secondaryActionHref}
+                    secondaryButtonClassName={softBlushSecondaryButtonClassName}
                   />
                 </div>
               ) : null}
@@ -235,6 +245,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 primaryActionHref={hero.primaryActionHref}
                 secondaryActionLabel={hero.secondaryActionLabel}
                 secondaryActionHref={hero.secondaryActionHref}
+                secondaryButtonClassName={softBlushSecondaryButtonClassName}
               />
             ) : null}
           </div>
@@ -312,6 +323,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                   primaryActionHref={hero.primaryActionHref}
                   secondaryActionLabel={hero.secondaryActionLabel}
                   secondaryActionHref={hero.secondaryActionHref}
+                  secondaryButtonClassName={softBlushSecondaryButtonClassName}
                 />
               </div>
             ) : null}
