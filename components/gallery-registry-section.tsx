@@ -18,6 +18,7 @@ export function GalleryRegistrySection({
   themeId
 }: GalleryRegistrySectionProps) {
   const wedding = weddingData ?? getWeddingData();
+  const canUseThemeFallbackImages = !weddingData;
   const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
   const showStory = previewMode || (wedding.sectionVisibility?.story ?? true);
   const showGallery = previewMode || (wedding.sectionVisibility?.gallery ?? true);
@@ -28,7 +29,11 @@ export function GalleryRegistrySection({
       : wedding.story.featureImage
         ? [wedding.story.featureImage]
         : [];
-  const previewStoryImages = storyImages.length ? storyImages : fallback?.storyImages ?? [];
+  const previewStoryImages = storyImages.length
+    ? storyImages
+    : canUseThemeFallbackImages
+      ? fallback?.storyImages ?? []
+      : [];
   const storyParagraphs =
     wedding.story.paragraphs.length ? wedding.story.paragraphs : fallback?.storyParagraphs ?? [];
   const galleryImages =
