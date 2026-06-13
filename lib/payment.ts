@@ -22,6 +22,29 @@ export function getPackageDisplayPrice(packageTier: IntakePackage) {
   return packageOfferMap[packageTier]?.price ?? "";
 }
 
+export function getPackageAmountCents(packageTier: IntakePackage) {
+  const displayPrice = getPackageDisplayPrice(packageTier);
+  const numericPrice = Number(displayPrice.replace(/[^\d.]/g, ""));
+
+  if (!Number.isFinite(numericPrice) || numericPrice <= 0) {
+    return null;
+  }
+
+  return Math.round(numericPrice * 100);
+}
+
+export function getPackageTierByAmountCents(amountTotal?: number | null) {
+  if (!amountTotal || amountTotal <= 0) {
+    return null;
+  }
+
+  const packageTiers: IntakePackage[] = ["basic", "smart", "premium"];
+
+  return (
+    packageTiers.find((tier) => getPackageAmountCents(tier) === amountTotal) ?? null
+  );
+}
+
 export function getPaymentStatusLabel(status: PaymentStatus) {
   switch (status) {
     case "paid":

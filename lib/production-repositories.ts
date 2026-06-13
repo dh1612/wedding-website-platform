@@ -124,6 +124,43 @@ export async function getWeddingSiteBySlug(slug: string) {
   });
 }
 
+export async function findWeddingForCompletedPayment(input: {
+  email: string;
+  packageTier: "basic" | "smart" | "premium";
+}) {
+  const weddings = await prisma.wedding.findMany({
+    where: {
+      deletedAt: null
+    },
+    orderBy: {
+      createdAt: "desc"
+    },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      contentJson: true,
+      plannerSettingsJson: true
+    }
+  });
+
+  return (
+    weddings.find((wedding) => {
+      const plannerSettings = (wedding.plannerSettingsJson ?? {}) as {
+        packageTier?: "basic" | "smart" | "premium";
+        paymentStatus?: "unpaid" | "payment_requested" | "paid";
+        intake?: { email?: string };
+      };
+      const intakeEmail = plannerSettings.intake?.email?.trim().toLowerCase();
+      const packageMatches = (plannerSettings.packageTier ?? "smart") === input.packageTier;
+      const emailMatches = intakeEmail === input.email.trim().toLowerCase();
+      const statusMatches = plannerSettings.paymentStatus !== "paid";
+
+      return packageMatches && emailMatches && statusMatches;
+    }) ?? null
+  );
+}
+
 export async function getWeddingRecordForAdmin(slug: string) {
   return prisma.wedding.findFirst({
     where: {
