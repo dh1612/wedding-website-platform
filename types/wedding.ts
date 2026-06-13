@@ -106,6 +106,18 @@ export type RSVPMealOption = {
   enabled: boolean;
 };
 
+export type InvitationContent = {
+  eyebrow?: string;
+  hostLine: string;
+  invitationLine: string;
+  celebrationLine: string;
+  receptionLine: string;
+  websiteLine: string;
+  detailsCardTitle: string;
+  stayTitle: string;
+  dayTwoTitle: string;
+};
+
 export type WeddingData = {
   couple: string;
   date: string;
@@ -202,6 +214,7 @@ export type WeddingData = {
     message: string;
     links: LinkItem[];
   };
+  invitation?: InvitationContent;
   contact: {
     email: string;
     note: string;

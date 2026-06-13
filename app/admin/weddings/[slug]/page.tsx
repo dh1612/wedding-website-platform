@@ -112,9 +112,9 @@ export default async function AdminWeddingWorkspacePage({
     {
       eyebrow: "Stationery",
       title: "Invitations",
-      description: "Generate a theme-matched invitation suite using the wedding details already saved on the website.",
+      description: "Open the admin-only digital invitation suite, refine the wording, and print or save it as a PDF before sharing it manually with the couple.",
       href: getAdminWeddingInvitationPath(slug),
-      button: "Generate Invitations"
+      button: "Open Invitation Suite"
     },
     {
       eyebrow: "Draft Review",

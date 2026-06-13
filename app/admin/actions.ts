@@ -726,6 +726,44 @@ export async function updateWeddingContentAction(formData: FormData) {
       suppliersDescriptionRichText || undefined,
     suppliers: supplierItems,
     faq: faqItems.length ? faqItems : weddingData.faq,
+    invitation: {
+      eyebrow:
+        String(formData.get("invitationEyebrow") || "").trim() ||
+        weddingData.invitation?.eyebrow ||
+        "Wedding Invitation",
+      hostLine:
+        String(formData.get("invitationHostLine") || "").trim() ||
+        weddingData.invitation?.hostLine ||
+        "Together with their families",
+      invitationLine:
+        String(formData.get("invitationLine") || "").trim() ||
+        weddingData.invitation?.invitationLine ||
+        "request the pleasure of your company",
+      celebrationLine:
+        String(formData.get("invitationCelebrationLine") || "").trim() ||
+        weddingData.invitation?.celebrationLine ||
+        "to celebrate their marriage",
+      receptionLine:
+        String(formData.get("invitationReceptionLine") || "").trim() ||
+        weddingData.invitation?.receptionLine ||
+        "Reception to follow",
+      websiteLine:
+        String(formData.get("invitationWebsiteLine") || "").trim() ||
+        weddingData.invitation?.websiteLine ||
+        "Please visit our wedding website for full details and RSVP",
+      detailsCardTitle:
+        String(formData.get("invitationDetailsTitle") || "").trim() ||
+        weddingData.invitation?.detailsCardTitle ||
+        "For the day",
+      stayTitle:
+        String(formData.get("invitationStayTitle") || "").trim() ||
+        weddingData.invitation?.stayTitle ||
+        "Stay",
+      dayTwoTitle:
+        String(formData.get("invitationDayTwoTitle") || "").trim() ||
+        weddingData.invitation?.dayTwoTitle ||
+        "Keep the celebrations going"
+    },
     contact: {
       ...weddingData.contact,
       email: String(formData.get("contactEmail") || "").trim() || weddingData.contact.email,

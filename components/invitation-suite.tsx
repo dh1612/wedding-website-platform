@@ -84,6 +84,7 @@ export function InvitationSuite({
   weddingData
 }: InvitationSuiteProps) {
   const theme = getThemeById(weddingData.theme);
+  const invitation = weddingData.invitation;
   const liveUrlDisplay = `${BRAND_DOMAIN}/${slug}`;
   const inviteDate = formatInviteDate(weddingData.date);
   const body = buildInvitationBody(weddingData);
@@ -115,14 +116,12 @@ export function InvitationSuite({
               <div className="text-center">
                 <div className="mx-auto mb-6 h-px w-20 bg-[var(--border)]" />
                 <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                  Wedding Invitation
+                  {invitation?.eyebrow || "Wedding Invitation"}
                 </p>
                 <div className="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--accent-soft)] text-xs uppercase tracking-[0.24em] text-[var(--accent-strong)]">
                   {monogram}
                 </div>
-                <p className="mt-8 text-base italic text-[var(--muted)]">
-                  Together with their families
-                </p>
+                <p className="mt-8 text-base italic text-[var(--muted)]">{invitation?.hostLine}</p>
 
                 <div className="mt-7 space-y-4">
                   <p
@@ -148,8 +147,8 @@ export function InvitationSuite({
                 </div>
 
                 <div className="mt-8 space-y-3 text-[var(--muted)]">
-                  <p className="text-lg italic">request the pleasure of your company</p>
-                  <p className="text-lg italic">to celebrate their marriage</p>
+                  <p className="text-lg italic">{invitation?.invitationLine}</p>
+                  <p className="text-lg italic">{invitation?.celebrationLine}</p>
                 </div>
 
                 <div className="mt-10 space-y-3 text-lg">
@@ -164,7 +163,7 @@ export function InvitationSuite({
 
                 <div className="mt-10 border-t border-[var(--border)] pt-8">
                   <p className="text-sm uppercase tracking-[0.26em] text-[var(--muted)]">
-                    Reception to follow
+                    {invitation?.receptionLine}
                   </p>
                   <div className="mt-5 space-y-2 text-[1.05rem] leading-8 text-[var(--muted)]">
                     {body.receptionLocation ? <p>{body.receptionLocation}</p> : null}
@@ -173,7 +172,7 @@ export function InvitationSuite({
                 </div>
 
                 <div className="mt-10 border-t border-[var(--border)] pt-8 text-[0.98rem] leading-8 text-[var(--muted)]">
-                  <p>Please visit our wedding website for full details and RSVP</p>
+                  <p>{invitation?.websiteLine}</p>
                   <p className="mt-2 text-[var(--foreground)]">{liveUrlDisplay}</p>
                   {weddingData.rsvp.deadline?.trim() ? (
                     <p className="mt-2">Please RSVP by {weddingData.rsvp.deadline}</p>
@@ -221,7 +220,7 @@ export function InvitationSuite({
             <div className="space-y-6">
               <div>
                 <p className="eyebrow">Details Card</p>
-                <h2 className="mt-4 text-4xl sm:text-5xl">For the day</h2>
+                <h2 className="mt-4 text-4xl sm:text-5xl">{invitation?.detailsCardTitle}</h2>
               </div>
 
               <div className="grid gap-4">
@@ -257,7 +256,7 @@ export function InvitationSuite({
 
                 {accommodationItems.length ? (
                   <div className="accent-panel rounded-[1.5rem] p-5">
-                    <p className="eyebrow">Stay</p>
+                    <p className="eyebrow">{invitation?.stayTitle}</p>
                     <div className="mt-3 space-y-3">
                       {accommodationItems.map((item) => (
                         <div key={`${item.name}-${item.link ?? "stay"}`}>
@@ -281,7 +280,7 @@ export function InvitationSuite({
               <div>
                 <p className="eyebrow">{weddingData.dayTwo?.eyebrow || "Day Two"}</p>
                 <h2 className="mt-4 text-5xl sm:text-6xl">
-                  {weddingData.dayTwo?.title || "Keep the celebrations going"}
+                  {weddingData.dayTwo?.title || invitation?.dayTwoTitle || "Keep the celebrations going"}
                 </h2>
                 {weddingData.dayTwo?.description?.trim() ? (
                   <p className="mt-6 text-lg leading-8 text-[var(--muted)]">

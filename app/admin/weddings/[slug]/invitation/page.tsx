@@ -45,7 +45,7 @@ export default async function AdminWeddingInvitationPage({
         <PageHero
           eyebrow="Invitation Suite"
           title={`Print invitations for ${record.title}`}
-          description="Generated from the wedding website details and matched to the couple’s chosen theme. Use this page to print or save the invitation suite as a PDF."
+          description="This admin-only invitation suite is generated from the saved wedding details and matched to the couple’s chosen theme. Use it to refine the wording, then print or save a PDF before sharing it manually with the couple."
           themeId={theme.id}
           weddingData={weddingData}
           showWeddingSummary={false}

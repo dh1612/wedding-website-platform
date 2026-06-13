@@ -122,6 +122,7 @@ export function AdminWeddingEditor({
   }
 
   const weddingData = coerceWeddingData(record.contentJson);
+  const invitation = weddingData.invitation;
   const plannerSettings = (record.plannerSettingsJson ?? {}) as {
     packageTier?: "basic" | "smart" | "premium";
   };
@@ -285,6 +286,7 @@ export function AdminWeddingEditor({
   const editorSections = [
     { id: "core-setup", label: "Core setup" },
     { id: "hero-copy", label: "Opening section" },
+    { id: "invitation-suite", label: "Invitations" },
     { id: "images", label: "Images" },
     { id: "venue-travel", label: "Venue & travel" },
     { id: "accommodation", label: "Accommodation" },
@@ -335,6 +337,9 @@ export function AdminWeddingEditor({
           </Link>
           <Link href={`/plan-your-tables/${record.slug}`} className="accent-panel rounded-full px-4 py-2 text-sm">
             Manage Seating
+          </Link>
+          <Link href={`${getAdminWeddingWorkspacePath(record.slug)}/invitation`} className="accent-panel rounded-full px-4 py-2 text-sm">
+            Open Invitation Suite
           </Link>
         </div>
 
@@ -584,6 +589,86 @@ export function AdminWeddingEditor({
                   placeholder="#faq"
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                 />
+              </div>
+            </div>
+          </EditorAccordionSection>
+
+          <EditorAccordionSection
+            id="invitation-suite"
+            eyebrow="Invitation Suite"
+            title="Shape the digital invitation before you send it"
+            description="These fields control the invitation wording used on the admin-only invitation suite. Couples do not see this in their portal."
+          >
+            <div className="grid gap-4">
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-[#fafcfb] p-5 text-sm leading-6 text-[var(--muted)]">
+                The invitation suite stays operator-only. Use it to refine the formal invite wording,
+                then print or save a PDF and share it with the couple manually when it is ready.
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  name="invitationEyebrow"
+                  defaultValue={invitation?.eyebrow ?? "Wedding Invitation"}
+                  placeholder="Wedding Invitation"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationHostLine"
+                  defaultValue={invitation?.hostLine ?? "Together with their families"}
+                  placeholder="Together with their families"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationLine"
+                  defaultValue={invitation?.invitationLine ?? "request the pleasure of your company"}
+                  placeholder="request the pleasure of your company"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationCelebrationLine"
+                  defaultValue={invitation?.celebrationLine ?? "to celebrate their marriage"}
+                  placeholder="to celebrate their marriage"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationReceptionLine"
+                  defaultValue={invitation?.receptionLine ?? "Reception to follow"}
+                  placeholder="Reception to follow"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationWebsiteLine"
+                  defaultValue={
+                    invitation?.websiteLine ?? "Please visit our wedding website for full details and RSVP"
+                  }
+                  placeholder="Please visit our wedding website for full details and RSVP"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationDetailsTitle"
+                  defaultValue={invitation?.detailsCardTitle ?? "For the day"}
+                  placeholder="For the day"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationStayTitle"
+                  defaultValue={invitation?.stayTitle ?? "Stay"}
+                  placeholder="Stay"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="invitationDayTwoTitle"
+                  defaultValue={invitation?.dayTwoTitle ?? "Keep the celebrations going"}
+                  placeholder="Keep the celebrations going"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none md:col-span-2"
+                />
+              </div>
+              <div>
+                <Link
+                  href={`${getAdminWeddingWorkspacePath(record.slug)}/invitation`}
+                  className="accent-button inline-flex rounded-full px-5 py-3 text-sm font-medium"
+                >
+                  Open Invitation Suite
+                </Link>
               </div>
             </div>
           </EditorAccordionSection>

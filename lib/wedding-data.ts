@@ -606,6 +606,21 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.registry.links
           : fallback.registry.links
     },
+    invitation: {
+      eyebrow: source.invitation?.eyebrow ?? "Wedding Invitation",
+      hostLine: source.invitation?.hostLine ?? "Together with their families",
+      invitationLine:
+        source.invitation?.invitationLine ?? "request the pleasure of your company",
+      celebrationLine:
+        source.invitation?.celebrationLine ?? "to celebrate their marriage",
+      receptionLine: source.invitation?.receptionLine ?? "Reception to follow",
+      websiteLine:
+        source.invitation?.websiteLine ??
+        "Please visit our wedding website for full details and RSVP",
+      detailsCardTitle: source.invitation?.detailsCardTitle ?? "For the day",
+      stayTitle: source.invitation?.stayTitle ?? "Stay",
+      dayTwoTitle: source.invitation?.dayTwoTitle ?? "Keep the celebrations going"
+    },
     contact: {
       email: source.contact?.email ?? fallback.contact.email,
       note: source.contact?.note ?? fallback.contact.note,
