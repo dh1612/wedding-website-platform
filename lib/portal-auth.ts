@@ -8,16 +8,28 @@ export function getPortalCookieName() {
   return portalCookieName;
 }
 
-export function getDefaultCouplePortalPassword() {
-  return process.env.COUPLE_PORTAL_PASSWORD ?? "john-sarah-portal";
-}
-
 export function hasConfiguredCouplePortalPassword() {
   return Boolean(process.env.COUPLE_PORTAL_PASSWORD?.trim());
 }
 
+export function getConfiguredCouplePortalPassword() {
+  const password = process.env.COUPLE_PORTAL_PASSWORD?.trim();
+
+  if (!password) {
+    throw new Error("COUPLE_PORTAL_PASSWORD is not configured.");
+  }
+
+  return password;
+}
+
 export function getOperatorPortalPassword() {
-  return process.env.ADMIN_PORTAL_PASSWORD ?? getDefaultCouplePortalPassword();
+  const password = process.env.ADMIN_PORTAL_PASSWORD?.trim();
+
+  if (!password) {
+    throw new Error("ADMIN_PORTAL_PASSWORD is not configured.");
+  }
+
+  return password;
 }
 
 export function hasConfiguredOperatorPortalPassword() {
@@ -25,7 +37,13 @@ export function hasConfiguredOperatorPortalPassword() {
 }
 
 export function getPortalSecret() {
-  return process.env.PORTAL_SESSION_SECRET ?? getOperatorPortalPassword();
+  const secret = process.env.PORTAL_SESSION_SECRET?.trim();
+
+  if (!secret) {
+    throw new Error("PORTAL_SESSION_SECRET is not configured.");
+  }
+
+  return secret;
 }
 
 export function hasConfiguredPortalSecret() {
@@ -37,19 +55,19 @@ export function getPortalSecurityWarnings() {
 
   if (!hasConfiguredOperatorPortalPassword()) {
     warnings.push(
-      "ADMIN_PORTAL_PASSWORD is not configured, so operator access is currently falling back to a weaker password path."
+      "ADMIN_PORTAL_PASSWORD is not configured, so operator access cannot be opened until it is set."
     );
   }
 
   if (!hasConfiguredPortalSecret()) {
     warnings.push(
-      "PORTAL_SESSION_SECRET is not configured, so portal sessions are currently signed with a fallback secret."
+      "PORTAL_SESSION_SECRET is not configured, so portal sessions cannot be created until it is set."
     );
   }
 
   if (!hasConfiguredCouplePortalPassword()) {
     warnings.push(
-      "COUPLE_PORTAL_PASSWORD is not configured, so any fallback couple password path is less secure than it should be."
+      "COUPLE_PORTAL_PASSWORD is not configured, so fallback couple portal access cannot be used until it is set."
     );
   }
 

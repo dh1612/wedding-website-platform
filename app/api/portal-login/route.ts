@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   createPortalSessionToken,
-  getDefaultCouplePortalPassword,
+  getConfiguredCouplePortalPassword,
   getPortalCookieName,
   getOperatorPortalPassword,
   getRequiredPortalScope,
@@ -191,7 +191,7 @@ export async function POST(request: Request) {
       }
     } else {
       const weddingPassword =
-        plannerSettings.portalPassword?.trim() || getDefaultCouplePortalPassword();
+        plannerSettings.portalPassword?.trim() || getConfiguredCouplePortalPassword();
 
       if (password !== weddingPassword) {
         recordFailedAttempt(rateLimitKeys);
@@ -229,7 +229,7 @@ export async function POST(request: Request) {
     name: getPortalCookieName(),
     value: await createPortalSessionToken(grantedScope),
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: 60 * 60 * 12
