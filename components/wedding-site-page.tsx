@@ -63,15 +63,6 @@ export function WeddingSitePage({
         returnHref={demoMode ? "/" : undefined}
         returnLabel={demoMode ? "Return to Home" : undefined}
       />
-      {previewMode ? (
-        <section className="mx-auto w-full max-w-6xl px-6 pt-6 lg:px-8">
-          <div className="rounded-[1.5rem] border border-[var(--border)] bg-[var(--accent-soft)] px-6 py-5 text-sm leading-7 text-[var(--foreground)]">
-            Private preview: this first draft shows the direction of your website. Sample content
-            may appear where details are still missing. If you&apos;d like to proceed, use the booking
-            link below and we&apos;ll refine everything together before the guest version goes live.
-          </div>
-        </section>
-      ) : null}
       <HeroSection themeId={activeTheme.id} weddingData={weddingData} previewMode={previewMode} />
       {showTravel ? (
         <TravelSection
@@ -120,6 +111,25 @@ export function WeddingSitePage({
         previewMode={previewMode}
         themeId={activeTheme.id}
       />
+      {previewMode ? (
+        <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-10">
+          <div className="rounded-[1.5rem] border border-[var(--border)] bg-[var(--accent-soft)] px-6 py-5 text-sm leading-7 text-[var(--foreground)]">
+            <p>
+              Private preview: this first draft shows the direction of your website. Sample content
+              may appear where details are still missing. If you&apos;d like to proceed, use the booking
+              link below and we&apos;ll refine everything together before the guest version goes live.
+            </p>
+            <div className="mt-4">
+              <a
+                href={`/unlock/${currentPath.split("/").pop()}`}
+                className="inline-flex rounded-full border border-[var(--accent-strong)] bg-[var(--accent-strong)] px-5 py-3 text-sm font-medium text-[var(--accent-contrast)] transition hover:opacity-90"
+              >
+                Continue If You&apos;d Like To Proceed
+              </a>
+            </div>
+          </div>
+        </section>
+      ) : null}
       <SiteFooter weddingData={weddingData} demoMode={demoMode} />
     </main>
   );
