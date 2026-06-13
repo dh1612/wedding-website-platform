@@ -23,8 +23,8 @@ export function StorySection({ weddingData, previewMode = false }: StorySectionP
           <div className="space-y-5">
             {previewMode ? (
               <div className="rounded-[1.2rem] border border-[var(--border)] bg-[var(--accent-soft)] px-5 py-4 text-sm leading-6 text-[var(--muted)]">
-                This is sample story wording for review. The couple can replace it with their own
-                version before the site goes live.
+                This first draft may use sample story wording where fuller details are still being
+                gathered. The final version is refined before anything goes live to guests.
               </div>
             ) : null}
             {wedding.story.html ? (
