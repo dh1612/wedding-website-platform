@@ -388,7 +388,7 @@ export function ClientIntakeForm({
 
           <details className="group rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4">
             <summary className="cursor-pointer list-none">
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
                   <h3 className="mt-2 text-2xl">Add a few more details for a stronger first draft</h3>
@@ -398,7 +398,7 @@ export function ClientIntakeForm({
                     of padding out thin areas.
                   </p>
                 </div>
-                <div className="shrink-0 rounded-full border border-[#184b38]/12 bg-white px-4 py-2 text-sm font-medium text-[#184b38] transition group-open:bg-[#184b38] group-open:text-white">
+                <div className="w-fit shrink-0 rounded-full border border-[#184b38]/12 bg-white px-4 py-2 text-sm font-medium text-[#184b38] transition group-open:bg-[#184b38] group-open:text-white">
                   <span className="group-open:hidden">Tap to add more</span>
                   <span className="hidden group-open:inline">Hide optional details</span>
                 </div>
