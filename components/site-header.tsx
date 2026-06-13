@@ -110,7 +110,7 @@ export function SiteHeader({
               <span className="romantic-corner romantic-corner-right" aria-hidden="true" />
             </>
           )}
-          <div className="relative">
+          <div className="relative min-w-0 overflow-hidden">
             {mode === "scroll" && scrollNavItems.length ? (
               <div className="absolute right-0 top-0">
                 <MobileSectionMenu
@@ -123,13 +123,13 @@ export function SiteHeader({
             ) : null}
             <Link
               href={buildModeHref(siteBasePath, themeId, mode)}
-              className="mx-auto block max-w-4xl text-center"
+              className="mx-auto block min-w-0 max-w-4xl text-center"
             >
               <p
                 className={
                   isFloralFrameTheme
-                    ? "text-[clamp(2.8rem,7vw,5.5rem)] leading-none text-[var(--accent-strong)]"
-                    : "romantic-title text-[clamp(3rem,6vw,5.2rem)] leading-none text-[var(--accent-strong)]"
+                    ? "text-[clamp(2.8rem,7vw,5.5rem)] leading-none text-[var(--accent-strong)] break-words [text-wrap:balance]"
+                    : "romantic-title text-[clamp(3rem,6vw,5.2rem)] leading-none text-[var(--accent-strong)] break-words [text-wrap:balance]"
                 }
                 style={{ fontFamily: isFloralFrameTheme || isSoftBlushTheme ? "var(--font-script)" : "var(--font-display)" }}
               >
@@ -146,7 +146,7 @@ export function SiteHeader({
                   wedding.couple
                 )}
               </p>
-              <p className="mt-4 text-xs uppercase tracking-[0.34em] text-[var(--muted)] sm:text-sm">
+              <p className="mx-auto mt-4 max-w-[22rem] break-words text-xs uppercase tracking-[0.28em] text-[var(--muted)] [text-wrap:balance] sm:max-w-3xl sm:text-sm sm:tracking-[0.34em]">
                 {[displayDate, wedding.locationSummary].filter(Boolean).join(" • ")}
               </p>
             </Link>
