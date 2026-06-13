@@ -190,12 +190,6 @@ export async function sendIntakeConfirmationEmail(
           This preview is the free first draft. There is no pressure to decide immediately, but hands-on refinement begins once you confirm payment for the package you selected.
         </p>
       </div>
-
-      <p style="margin: 0; color: #6d655d;">
-        If the buttons above do not work, copy these links into your browser:
-      </p>
-      <p style="margin: 10px 0 0; word-break: break-all;"><a href="${safePreviewUrl}" style="color: #184b38;">Preview: ${safePreviewUrl}</a></p>
-      <p style="margin: 10px 0 0; word-break: break-all;"><a href="${safeUnlockUrl}" style="color: #184b38;">Booking and payment: ${safeUnlockUrl}</a></p>
     </div>
   `;
 
