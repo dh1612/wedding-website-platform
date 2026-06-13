@@ -41,8 +41,8 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
     <>
       <section className="mx-auto w-full max-w-6xl px-6 pt-6 lg:px-8">
         <div className="rounded-[1.8rem] border border-black/8 bg-[#17313c] px-6 py-5 text-white shadow-[0_18px_60px_rgba(23,49,60,0.16)]">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
               <p className="text-[11px] uppercase tracking-[0.34em] text-white/65">
                 Private Review
               </p>
@@ -50,26 +50,17 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 {weddingRecord.title}
               </h1>
               <p className="mt-2 text-sm text-white/75">
-                This page is a private first draft for review only. It is designed to show the look,
-                structure, and overall direction of the website before the polished final version is refined.
-              </p>
-              <p className="mt-2 text-sm text-white/65">
-                If some details were still missing when the builder was completed, parts of the
-                draft may use polished sample structure so you can still see the style, rhythm, and
-                overall potential of the final website clearly.
+                This private preview is here to show the direction of your website. If some details
+                are still missing, sample content may appear for now. If you&apos;d like to proceed,
+                we refine everything together before the guest version goes live.
               </p>
               <div className="mt-4 rounded-[1.1rem] border border-white/12 bg-white/8 px-4 py-3 text-sm leading-6 text-white/78">
-                You selected the <span className="font-medium text-white">{packageName}</span>
-                {packagePrice ? ` (${packagePrice})` : ""}. Take your time reviewing the direction first.
-                If you would like to move forward, the next step is to confirm your booking. Hands-on
-                refinement begins once that booking is in place.
+                <span className="font-medium text-white">{packageName}</span>
+                {packagePrice ? ` · ${packagePrice}` : ""} selected. If the direction feels right,
+                the next step is to confirm your booking below.
               </div>
-              <p className="mt-3 text-sm text-white/65">
-                If you would prefer to ask a quick question before going any further, you can simply reply
-                to the email that came with your preview.
-              </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 lg:max-w-[30rem] lg:justify-end">
               {packageTier === "premium" ? (
                 <Link
                   href={`/couple-portal?theme=${activeTheme.id}`}
@@ -77,11 +68,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 >
                   View Couple Portal Demo Area
                 </Link>
-              ) : (
-                <div className="rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm text-white/72">
-                  Private couple portal is a premium-only feature
-                </div>
-              )}
+              ) : null}
               <Link
                 href={`/unlock/${slug}`}
                 className="rounded-full border border-white/18 bg-white px-5 py-3 text-sm font-medium text-[#17313c]"
@@ -95,11 +82,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 >
                   Open Public Website
                 </Link>
-              ) : (
-                <div className="rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm text-white/72">
-                  The shareable guest link appears after you unlock and publish it from admin
-                </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
