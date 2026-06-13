@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { buildSampleWebsiteHref } from "@/lib/brand";
-import { defaultSampleWebsiteShowcase } from "@/lib/sample-websites";
+import { defaultSampleWebsiteShowcase, sampleWebsiteShowcases } from "@/lib/sample-websites";
 
 const exampleHref = buildSampleWebsiteHref();
 
@@ -124,6 +124,9 @@ export default function MarketingHomePage() {
             >
               Contact
             </Link>
+            <a href="#designs" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
+              Designs
+            </a>
             <a href="#packages" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Packages
             </a>
@@ -159,6 +162,9 @@ export default function MarketingHomePage() {
                 >
                   Contact
                 </Link>
+                <a href="#designs" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
+                  Designs
+                </a>
                 <a href="#how-it-works" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
                   How It Works
                 </a>
@@ -254,6 +260,59 @@ export default function MarketingHomePage() {
                 }}
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="designs" className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-4">
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+                Design Examples
+              </p>
+              <h2 className="text-4xl leading-none sm:text-5xl">
+                Explore a few richer design directions first
+              </h2>
+              <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
+                Couples found it much easier to imagine the final result when they could browse a few
+                complete example websites. These are the fuller, finished-feeling versions rather than
+                sparse starter drafts.
+              </p>
+            </div>
+            <Link
+              href="/get-started"
+              className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45]"
+            >
+              Start your own first draft
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-3">
+            {sampleWebsiteShowcases.map((theme) => (
+              <Link
+                key={`${theme.sampleId}-${theme.themeId}`}
+                href={buildSampleWebsiteHref(theme.themeId, undefined, theme.sampleId)}
+                className="overflow-hidden rounded-[1.9rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
+              >
+                <div
+                  className="h-56 w-full bg-cover bg-center"
+                  style={{ backgroundImage: `url('${theme.image}')` }}
+                />
+                <div className="p-6">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-3xl leading-tight">{theme.title}</h3>
+                    <span className="text-[11px] uppercase tracking-[0.26em] text-[#9a7d64]">
+                      {theme.kicker}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-base font-medium text-[#184b38]">{theme.label}</p>
+                  <p className="mt-2 text-sm leading-6 text-[#486159]">{theme.accent}</p>
+                  <p className="mt-3 text-base leading-7 text-[#5f564e]">{theme.blurb}</p>
+                  <p className="mt-5 text-sm font-medium text-[#184b38]">Open this example</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -412,53 +471,25 @@ export default function MarketingHomePage() {
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div className="space-y-4">
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-                Real Example
-              </p>
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Private Planning Side</p>
               <h2 className="text-4xl leading-none sm:text-5xl">
-                See exactly what you&apos;ll get
+                See the planning side as well
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-                The quickest way to understand the service is to open a fuller example website and
-                see how the guest-facing experience actually comes together.
+                Once the guest website side makes sense, Premium also adds the private couple area
+                for RSVPs, checklists, key dates, and planning support behind the scenes.
               </p>
               <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-sm leading-7 text-[#486159]">
-                This sample includes accommodation suggestions, local suppliers, RSVP, and a
-                second-day section, so couples can see the richer version of what the website can
-                become.
+                This is kept separate from the public guest website, so couples can keep planning
+                details organised privately while the guest-facing side stays polished and simple.
               </div>
               <div className="pt-1">
-                <Link
-                  href="/get-started"
-                  className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white"
-                >
-                  Let us build your website
+                <Link href="/couple-area" className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white">
+                  View Premium Couple Area
                 </Link>
               </div>
             </div>
             <div className="grid gap-5">
-              <Link
-                href={exampleHref}
-                className="overflow-hidden rounded-[2rem] border border-black/6 bg-[#fcfaf7] shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
-              >
-                <div
-                  className="h-[240px] w-full bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url('${defaultSampleWebsiteShowcase.image}')`
-                  }}
-                />
-                <div className="p-6">
-                  <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                    Public Website Example
-                  </p>
-                  <h3 className="mt-3 text-3xl">{defaultSampleWebsiteShowcase.title}</h3>
-                  <p className="mt-3 text-base leading-7 text-[#5f564e]">
-                    {defaultSampleWebsiteShowcase.blurb}
-                  </p>
-                  <p className="mt-5 text-sm font-medium text-[#184b38]">View Example Website</p>
-                </div>
-              </Link>
-
               <Link
                 href="/couple-area"
                 className="rounded-[2rem] border border-black/6 bg-[#f7fbf8] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(52,35,24,0.12)]"
