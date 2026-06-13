@@ -2,6 +2,10 @@
 
 import { put } from "@vercel/blob";
 import { redirect } from "next/navigation";
+import {
+  getAdminDashboardPath,
+  getAdminWeddingEditPath
+} from "@/lib/admin-path";
 import { hashPassword } from "@/lib/passwords";
 import { coerceWeddingData } from "@/lib/wedding-data";
 import {
@@ -219,31 +223,31 @@ export async function createWeddingDraftAction(formData: FormData) {
     eventDate: date ? new Date(date) : undefined
   });
 
-  redirect("/admin");
+  redirect(getAdminDashboardPath());
 }
 
 export async function deleteWeddingDraftAction(formData: FormData) {
   const slug = String(formData.get("slug") || "").trim();
 
   if (!slug) {
-    redirect("/admin");
+    redirect(getAdminDashboardPath());
   }
 
   await deleteWeddingDraftBySlug(slug);
 
-  redirect(`/admin?deleted=${encodeURIComponent(slug)}`);
+  redirect(`${getAdminDashboardPath()}?deleted=${encodeURIComponent(slug)}`);
 }
 
 export async function restoreWeddingAction(formData: FormData) {
   const slug = String(formData.get("slug") || "").trim();
 
   if (!slug) {
-    redirect("/admin");
+    redirect(getAdminDashboardPath());
   }
 
   await restoreWeddingBySlug(slug);
 
-  redirect(`/admin?restored=${encodeURIComponent(slug)}`);
+  redirect(`${getAdminDashboardPath()}?restored=${encodeURIComponent(slug)}`);
 }
 
 export async function updateWeddingContentAction(formData: FormData) {
@@ -253,13 +257,13 @@ export async function updateWeddingContentAction(formData: FormData) {
   const publishLive = String(formData.get("publishLive") || "").trim() === "true";
 
   if (!currentSlug || !nextSlug || !title) {
-    redirect("/admin");
+    redirect(getAdminDashboardPath());
   }
 
   const existing = await getWeddingRecordForAdmin(currentSlug);
 
   if (!existing?.contentJson) {
-    redirect("/admin");
+    redirect(getAdminDashboardPath());
   }
 
   const weddingData = coerceWeddingData(existing.contentJson);
@@ -509,7 +513,7 @@ export async function updateWeddingContentAction(formData: FormData) {
     );
   } catch (error) {
     console.error("Image upload failed", error);
-    redirect(`/admin/weddings/${currentSlug}/edit?error=upload`);
+    redirect(`${getAdminWeddingEditPath(currentSlug)}?error=upload`);
   }
 
   const mergedGalleryImages =
@@ -857,5 +861,5 @@ export async function updateWeddingContentAction(formData: FormData) {
     });
   }
 
-  redirect(`/admin/weddings/${nextSlug}/edit?saved=1${publishLive ? "&published=1" : ""}`);
+  redirect(`${getAdminWeddingEditPath(nextSlug)}?saved=1${publishLive ? "&published=1" : ""}`);
 }

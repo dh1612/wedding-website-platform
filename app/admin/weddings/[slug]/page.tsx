@@ -1,6 +1,11 @@
 import Link from "next/link";
 import type { Route } from "next";
 import { notFound, redirect } from "next/navigation";
+import {
+  getAdminWeddingEditPath,
+  getAdminWeddingInvitationPath,
+  getAdminWeddingWorkspacePath
+} from "@/lib/admin-path";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
 import { getPackagePaymentLink, getPaymentStatusLabel, type PaymentStatus } from "@/lib/payment";
@@ -58,7 +63,7 @@ async function updateWeddingAccessAction(formData: FormData) {
         : undefined
   });
 
-  redirect(`/admin/weddings/${slug}`);
+  redirect(getAdminWeddingWorkspacePath(slug));
 }
 
 export default async function AdminWeddingWorkspacePage({
@@ -101,14 +106,14 @@ export default async function AdminWeddingWorkspacePage({
       eyebrow: "Website",
       title: "Edit Wedding",
       description: "Update wording, venues, accommodation links, section visibility, and template choice.",
-      href: `/admin/weddings/${slug}/edit`,
+      href: getAdminWeddingEditPath(slug),
       button: "Open Editor"
     },
     {
       eyebrow: "Stationery",
       title: "Invitations",
       description: "Generate a theme-matched invitation suite using the wedding details already saved on the website.",
-      href: `/admin/weddings/${slug}/invitation`,
+      href: getAdminWeddingInvitationPath(slug),
       button: "Generate Invitations"
     },
     {
@@ -155,7 +160,7 @@ export default async function AdminWeddingWorkspacePage({
 
   return (
     <SiteFrame
-      currentPath={`/admin/weddings/${slug}`}
+      currentPath={getAdminWeddingWorkspacePath(slug)}
       mode="pages"
       themeId={theme.id}
       themeStyle={theme.style}

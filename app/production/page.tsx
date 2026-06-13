@@ -1,5 +1,6 @@
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
+import { getAdminProductionPath } from "@/lib/admin-path";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
 
@@ -34,7 +35,7 @@ export default async function ProductionPage({
 
   return (
     <SiteFrame
-      currentPath="/production"
+      currentPath={getAdminProductionPath()}
       mode="pages"
       themeId={theme.id}
       themeStyle={theme.style}

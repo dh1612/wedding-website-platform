@@ -1,4 +1,11 @@
 import type { WeddingData } from "@/types/wedding";
+import {
+  getAdminDashboardPath,
+  getAdminProductionPath,
+  getAdminWeddingEditPath,
+  getAdminWeddingInvitationPath,
+  getAdminWeddingWorkspacePath
+} from "@/lib/admin-path";
 
 export type SiteMode = "scroll" | "pages";
 
@@ -80,16 +87,16 @@ export function buildPortalNavItems(basePath: string) {
 }
 
 export const operatorNavItems = [
-  { label: "Dashboard", path: "/admin" },
-  { label: "Production", path: "/production" }
+  { label: "Dashboard", path: getAdminDashboardPath() },
+  { label: "Production", path: getAdminProductionPath() }
 ];
 
 export function buildOperatorWeddingNavItems(slug: string) {
   return [
-    { label: "Dashboard", path: "/admin" },
-    { label: "Workspace", path: `/admin/weddings/${slug}` },
-    { label: "Edit Wedding", path: `/admin/weddings/${slug}/edit` },
-    { label: "Invitations", path: `/admin/weddings/${slug}/invitation` },
+    { label: "Dashboard", path: getAdminDashboardPath() },
+    { label: "Workspace", path: getAdminWeddingWorkspacePath(slug) },
+    { label: "Edit Wedding", path: getAdminWeddingEditPath(slug) },
+    { label: "Invitations", path: getAdminWeddingInvitationPath(slug) },
     { label: "Preview", path: `/preview/${slug}` },
     { label: "Portal", path: `/couple-portal/${slug}` },
     { label: "RSVPs", path: `/rsvp-dashboard/${slug}` },

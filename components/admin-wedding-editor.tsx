@@ -1,5 +1,9 @@
 import Link from "next/link";
 import type { Route } from "next";
+import {
+  getAdminDashboardPath,
+  getAdminWeddingWorkspacePath
+} from "@/lib/admin-path";
 import { updateWeddingContentAction } from "@/app/admin/actions";
 import { PageHero } from "@/components/page-hero";
 import { RichTextEditorField } from "@/components/rich-text-editor-field";
@@ -296,7 +300,7 @@ export function AdminWeddingEditor({
 
   return (
     <SiteFrame
-      currentPath={`/admin/weddings/${record.slug}/edit`}
+      currentPath={getAdminWeddingWorkspacePath(record.slug) + "/edit"}
       mode="pages"
       themeId={theme.id}
       themeStyle={theme.style}
@@ -314,10 +318,10 @@ export function AdminWeddingEditor({
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="mb-6 flex flex-wrap gap-3">
-          <Link href="/admin" className="accent-panel rounded-full px-4 py-2 text-sm">
+          <Link href={getAdminDashboardPath()} className="accent-panel rounded-full px-4 py-2 text-sm">
             Back To Admin
           </Link>
-          <Link href={`/admin/weddings/${record.slug}`} className="accent-panel rounded-full px-4 py-2 text-sm">
+          <Link href={getAdminWeddingWorkspacePath(record.slug)} className="accent-panel rounded-full px-4 py-2 text-sm">
             Wedding Workspace
           </Link>
           <Link href={`/preview/${record.slug}`} className="accent-panel rounded-full px-4 py-2 text-sm">

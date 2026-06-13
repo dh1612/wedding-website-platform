@@ -8,7 +8,13 @@ import {
   deleteWeddingDraftAction,
   restoreWeddingAction
 } from "@/app/admin/actions";
+import {
+  getAdminDashboardPath,
+  getAdminWeddingEditPath,
+  getAdminWeddingWorkspacePath
+} from "@/lib/admin-path";
 import { listRecentlyDeletedWeddings, listWeddings } from "@/lib/production-repositories";
+import { getPortalSecurityWarnings } from "@/lib/portal-auth";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
@@ -36,10 +42,11 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     status: statusFilter
   }).catch(() => []);
   const recentlyDeletedWeddings = await listRecentlyDeletedWeddings().catch(() => []);
+  const securityWarnings = getPortalSecurityWarnings();
 
   return (
     <SiteFrame
-      currentPath="/admin"
+      currentPath={getAdminDashboardPath()}
       mode="pages"
       themeId={theme.id}
       themeStyle={theme.style}
@@ -59,6 +66,22 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <div className="flex justify-end">
           <LogoutButton />
         </div>
+        {securityWarnings.length ? (
+          <div className="mt-6 rounded-[1.5rem] border border-[#b86a53]/18 bg-[#fff3ef] px-5 py-4 text-sm leading-6 text-[#8a4c3a]">
+            <p className="font-medium">Security action needed</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              {securityWarnings.map((warning) => (
+                <li key={warning}>{warning}</li>
+              ))}
+            </ul>
+            <p className="mt-3">
+              Set these values in Vercel before pushing the admin area harder:{" "}
+              <span className="font-medium">ADMIN_PORTAL_PASSWORD</span>,{" "}
+              <span className="font-medium">PORTAL_SESSION_SECRET</span>, and{" "}
+              <span className="font-medium">COUPLE_PORTAL_PASSWORD</span>.
+            </p>
+          </div>
+        ) : null}
         <div className="mt-6 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="section-shell rounded-[2rem] p-8">
             <p className="eyebrow">Manual Draft</p>
@@ -155,13 +178,13 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       </div>
                       <div className="flex flex-wrap gap-3 sm:justify-end">
                         <Link
-                          href={`/admin/weddings/${record.slug}`}
+                          href={getAdminWeddingWorkspacePath(record.slug)}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >
                           Open Wedding Workspace
                         </Link>
                         <Link
-                          href={`/admin/weddings/${record.slug}/edit`}
+                          href={getAdminWeddingEditPath(record.slug)}
                           className="accent-panel rounded-full px-4 py-2 text-sm"
                         >
                           Edit Website

@@ -1,3 +1,5 @@
+import { normaliseAdminInternalPath } from "@/lib/admin-path";
+
 const portalCookieName = "wedding_portal_session";
 
 export type PortalSessionScope = "admin" | `wedding:${string}`;
@@ -10,12 +12,62 @@ export function getDefaultCouplePortalPassword() {
   return process.env.COUPLE_PORTAL_PASSWORD ?? "john-sarah-portal";
 }
 
+export function hasConfiguredCouplePortalPassword() {
+  return Boolean(process.env.COUPLE_PORTAL_PASSWORD?.trim());
+}
+
 export function getOperatorPortalPassword() {
   return process.env.ADMIN_PORTAL_PASSWORD ?? getDefaultCouplePortalPassword();
 }
 
+export function hasConfiguredOperatorPortalPassword() {
+  return Boolean(process.env.ADMIN_PORTAL_PASSWORD?.trim());
+}
+
 export function getPortalSecret() {
   return process.env.PORTAL_SESSION_SECRET ?? getOperatorPortalPassword();
+}
+
+export function hasConfiguredPortalSecret() {
+  return Boolean(process.env.PORTAL_SESSION_SECRET?.trim());
+}
+
+export function getPortalSecurityWarnings() {
+  const warnings: string[] = [];
+
+  if (!hasConfiguredOperatorPortalPassword()) {
+    warnings.push(
+      "ADMIN_PORTAL_PASSWORD is not configured, so operator access is currently falling back to a weaker password path."
+    );
+  }
+
+  if (!hasConfiguredPortalSecret()) {
+    warnings.push(
+      "PORTAL_SESSION_SECRET is not configured, so portal sessions are currently signed with a fallback secret."
+    );
+  }
+
+  if (!hasConfiguredCouplePortalPassword()) {
+    warnings.push(
+      "COUPLE_PORTAL_PASSWORD is not configured, so any fallback couple password path is less secure than it should be."
+    );
+  }
+
+  return warnings;
+}
+
+function constantTimeEqual(a: string, b: string) {
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  let result = 0;
+
+  for (let index = 0; index < a.length; index += 1) {
+    result |= a.charCodeAt(index) ^ b.charCodeAt(index);
+  }
+
+  return result === 0;
 }
 
 export function sanitisePortalNextPath(value?: string | null) {
@@ -50,7 +102,8 @@ function extractSlug(pathname: string, prefix: string) {
 }
 
 export function getRequiredPortalScope(pathname: string): PortalSessionScope | null {
-  const normalised = normalisePathname(pathname);
+  const adminNormalised = normaliseAdminInternalPath(pathname);
+  const normalised = normalisePathname(adminNormalised ?? pathname);
 
   if (
     normalised === "/admin" ||
@@ -125,7 +178,7 @@ export async function readPortalSessionScope(token?: string | null) {
   const scope = decodeURIComponent(rawScope) as PortalSessionScope;
   const expectedSignature = await signPortalScope(scope);
 
-  if (signature !== expectedSignature) {
+  if (!constantTimeEqual(signature, expectedSignature)) {
     return null;
   }
 
