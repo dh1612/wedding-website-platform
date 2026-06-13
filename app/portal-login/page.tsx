@@ -2,6 +2,7 @@ import { PortalLoginForm } from "@/components/portal-login-form";
 import { getRequiredPortalScope, sanitisePortalNextPath } from "@/lib/portal-auth";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
+import { redirect } from "next/navigation";
 
 type PortalLoginPageProps = {
   searchParams?: Promise<{
@@ -15,9 +16,20 @@ export default async function PortalLoginPage({
 }: PortalLoginPageProps) {
   const wedding = getWeddingData();
   const params = searchParams ? await searchParams : undefined;
+  const rawNext = params?.next?.trim();
+
+  if (!rawNext) {
+    redirect("/");
+  }
+
   const theme = getThemeById(params?.theme ?? wedding.theme);
-  const next = sanitisePortalNextPath(params?.next);
+  const next = sanitisePortalNextPath(rawNext);
   const requiredScope = getRequiredPortalScope(next);
+
+  if (!requiredScope) {
+    redirect("/");
+  }
+
   const isCouplePortal = Boolean(requiredScope?.startsWith("wedding:"));
   const requireEmail = isCouplePortal;
   const eyebrow = isCouplePortal ? "Private Access" : "Operator Access";
