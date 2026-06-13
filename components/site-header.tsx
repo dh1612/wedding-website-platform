@@ -191,13 +191,13 @@ export function SiteHeader({
         usesDecorativeHeader ? "md:sticky md:top-0" : "sticky top-0"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-nowrap items-start justify-between gap-4 px-6 py-4 md:flex-wrap md:items-center lg:px-8">
         <Link
           href={resolvedHomeHref}
-          className="space-y-1 rounded-full px-1"
+          className="min-w-0 flex-1 space-y-1 rounded-full px-1"
         >
           <p className="eyebrow">{adminView ? "Wedding Portal" : "Wedding Day"}</p>
-          <p className="text-lg font-semibold">
+          <p className="break-words text-lg font-semibold [text-wrap:balance]">
             {adminView
               ? portalType === "operator"
                 ? "Operator Backend"
