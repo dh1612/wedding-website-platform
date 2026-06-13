@@ -99,7 +99,8 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
   const visibility = wedding.sectionVisibility;
   const hero = wedding.hero ?? {
     eyebrow: "Wedding Day",
-    previewNote: "Sample wording is shown here for review. The couple can change all text before the site goes live.",
+    previewNote:
+      "This first draft is here to show the direction of your website. Final wording and guest-facing details will be refined before anything goes live.",
     primaryActionLabel: "RSVP Details",
     primaryActionHref: "#rsvp",
     secondaryActionLabel: "Wedding Details",

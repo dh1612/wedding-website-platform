@@ -50,20 +50,20 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
                 {weddingRecord.title}
               </h1>
               <p className="mt-2 text-sm text-white/75">
-                This private preview is here to show the direction of your website. If some details
-                are still missing, sample content may appear for now. If you&apos;d like to proceed,
-                we refine everything together before the guest version goes live.
+                This first draft is here to show the direction of your website. Sample content may
+                appear where details are still missing.
               </p>
               <div className="mt-4 rounded-[1.1rem] border border-white/12 bg-white/8 px-4 py-3 text-sm leading-6 text-white/78">
                 <span className="font-medium text-white">{packageName}</span>
-                {packagePrice ? ` · ${packagePrice}` : ""} selected. If the direction feels right,
-                the next step is to confirm your booking below.
+                {packagePrice ? ` · ${packagePrice}` : ""}. If the direction feels right, use the
+                booking link below and we&apos;ll refine the content and style together before
+                anything goes live.
               </div>
             </div>
             <div className="flex flex-wrap gap-3 lg:max-w-[30rem] lg:justify-end">
               {packageTier === "premium" ? (
                 <Link
-                  href={`/couple-portal?theme=${activeTheme.id}`}
+                  href="/couple-area/demo"
                   className="rounded-full border border-white/18 bg-transparent px-5 py-3 text-sm font-medium text-white"
                 >
                   View Couple Portal Demo Area

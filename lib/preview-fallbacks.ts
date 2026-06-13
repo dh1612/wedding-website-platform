@@ -154,7 +154,7 @@ export function getPreviewFallbackContent(
         heroAnnouncement:
           "This draft is designed to show the atmosphere and structure first, then the couple's own final wording and imagery can be layered in afterwards.",
         storyParagraphs: [
-          `${coupleName} can use this area for a short, elegant version of their story, a welcome note, or a little of the feeling behind the day.`,
+          `This space can become a short, elegant version of ${coupleName}'s story, a welcome note, or a little of the feeling behind the day.`,
           "Even with only a few details shared so far, the preview is meant to feel romantic and finished enough to show the potential of the final website."
         ],
         travelDescription:
@@ -224,7 +224,7 @@ export function getPreviewFallbackContent(
         heroAnnouncement:
           "The first preview is there to show the atmosphere of the website as much as the structure, especially when the couple is still gathering the final guest details.",
         storyParagraphs: [
-          `${coupleName} can use this area for the story of the wedding weekend, a short welcome note, or just enough atmosphere to make the website feel personal.`,
+          `This space can hold the story of the wedding weekend, a short welcome note, or just enough atmosphere to make ${coupleName}'s website feel personal.`,
           "The final version can carry stronger local detail too, especially if guests are travelling in and want a better feel for the place around the celebration."
         ],
         travelDescription:
@@ -294,7 +294,7 @@ export function getPreviewFallbackContent(
         heroAnnouncement:
           "This preview is designed to show how the website can hold the key guest information beautifully, even before every line of content has been fully written.",
         storyParagraphs: [
-          `${coupleName} can use this space for a short welcome, a little context about the day, or simply a gentler introduction to the celebration.`,
+          `This space can become a short welcome, a little context about the day, or simply a gentler introduction to the celebration.`,
           "The finished website can stay understated while still feeling rich, useful, and much more complete once the couple's final details are folded in."
         ],
         travelDescription:
@@ -364,7 +364,7 @@ export function getPreviewFallbackContent(
         heroAnnouncement:
           "This draft is especially about showing tone and structure: how the story, schedule, stay guide, and guest information can feel more elevated once refined.",
         storyParagraphs: [
-          `${coupleName} can use this story area as a welcome note, a short introduction, or a more editorial version of the background to the day.`,
+          `This story area can become a welcome note, a short introduction, or a more editorial version of the background to ${coupleName}'s day.`,
           "The final website can stay clean and modern while still feeling warm, personal, and much more considered than a template left half-filled."
         ],
         travelDescription:
@@ -435,7 +435,7 @@ export function getPreviewFallbackContent(
         heroAnnouncement:
           "This first draft is here to show the shape, tone, and potential of the website. Final wording, guest information, and imagery are refined later before anything goes live.",
         storyParagraphs: [
-          `${coupleName} can use this space for a short welcome note, a little of their story, or simply enough personality to make the website feel like them.`,
+          `This space can become a short welcome note, a little of ${coupleName}'s story, or simply enough personality to make the website feel like them.`,
           "The final version is usually fuller and more tailored than the first draft. This preview is meant to show the direction beautifully, even while some details are still being gathered."
         ],
         travelDescription:

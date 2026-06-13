@@ -529,7 +529,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       previewNote:
         String(formData.get("heroPreviewNote") || "").trim() ||
         weddingData.hero?.previewNote ||
-        "Sample wording is shown here for review. The couple can change all text before the site goes live.",
+        "This first draft is here to show the direction of your website. Final wording and guest-facing details will be refined before anything goes live.",
       primaryActionLabel:
         String(formData.get("heroPrimaryActionLabel") || "").trim() ||
         weddingData.hero?.primaryActionLabel ||

@@ -216,7 +216,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
       eyebrow: source.hero?.eyebrow ?? "Wedding Day",
       previewNote:
         source.hero?.previewNote ??
-        "Sample wording is shown here for review. The couple can change all text before the site goes live.",
+        "This first draft is here to show the direction of your website. Final wording and guest-facing details will be refined before anything goes live.",
       primaryActionLabel: source.hero?.primaryActionLabel ?? "RSVP Details",
       primaryActionHref: source.hero?.primaryActionHref ?? "#rsvp",
       secondaryActionLabel: source.hero?.secondaryActionLabel ?? "Wedding Details",
