@@ -613,20 +613,21 @@ export function ClientIntakeForm({
           {result ? (
             <div ref={feedbackRef} className="mt-8 rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6 sm:p-7">
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">
-                First version started
+                Your first draft is ready
               </p>
               <h3 className="mt-3 text-3xl">Thank you</h3>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[#486159]">
-                Your first tailored draft is being prepared 🎉 This is a private preview to review
-                the look, structure, and direction before the final version is refined.
+                Your first tailored draft is on its way 🎉 This private preview is designed to show
+                the look, structure, and overall direction of your website before the final version
+                is refined with you.
               </p>
               <div className="mt-5 rounded-[1.2rem] border border-[#184b38]/12 bg-white px-4 py-4 text-sm leading-6 text-[#486159]">
-                Check your email for the private preview and next steps. The preview is the free
-                first draft. If you would like to move forward, payment for your selected package is
-                the point where the hands-on refinement stage begins.
+                Check your email for your private preview and next steps. The first version is free
+                to review, and if you would like to move forward from there, booking your selected
+                package is the point where the hands-on refinement stage begins.
               </div>
               <p className="mt-5 text-[12px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                This is what your guests will see
+                A first look at your guest website
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
