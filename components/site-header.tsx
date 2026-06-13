@@ -110,7 +110,7 @@ export function SiteHeader({
               <span className="romantic-corner romantic-corner-right" aria-hidden="true" />
             </>
           )}
-          <div className="relative min-w-0 overflow-hidden">
+          <div className="relative min-w-0">
             {mode === "scroll" && scrollNavItems.length ? (
               <div className="absolute right-0 top-0">
                 <MobileSectionMenu
