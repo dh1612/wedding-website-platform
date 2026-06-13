@@ -273,7 +273,7 @@ export function ClientIntakeForm({
             }}
             className="rounded-full border border-black/8 px-4 py-2 text-sm text-[#5f564e]"
           >
-            Clear
+            Restart form
           </button>
         </div>
 
@@ -386,15 +386,23 @@ export function ClientIntakeForm({
             before anything goes live.
           </div>
 
-          <details className="rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4">
+          <details className="group rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-4">
             <summary className="cursor-pointer list-none">
-              <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
-              <h3 className="mt-2 text-2xl">Add a few more details for a stronger first draft</h3>
-              <p className="mt-2 text-sm leading-6 text-[#6d655d]">
-                Even two or three extra details can make a big difference. If details are still
-                coming together, the first draft will stay focused on the strongest sections instead
-                of padding out thin areas.
-              </p>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Optional details</p>
+                  <h3 className="mt-2 text-2xl">Add a few more details for a stronger first draft</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#6d655d]">
+                    Even two or three extra details can make a big difference. If details are still
+                    coming together, the first draft will stay focused on the strongest sections instead
+                    of padding out thin areas.
+                  </p>
+                </div>
+                <div className="shrink-0 rounded-full border border-[#184b38]/12 bg-white px-4 py-2 text-sm font-medium text-[#184b38] transition group-open:bg-[#184b38] group-open:text-white">
+                  <span className="group-open:hidden">Tap to add more</span>
+                  <span className="hidden group-open:inline">Hide optional details</span>
+                </div>
+              </div>
             </summary>
             <div className="mt-5 space-y-5">
               <div className="grid gap-3 md:grid-cols-2">
@@ -529,7 +537,7 @@ export function ClientIntakeForm({
           <div className="space-y-3">
             <div>
               <p className="text-[12px] uppercase tracking-[0.3em] text-[#9a7d64]">Pricing and support</p>
-              <h3 className="mt-2 text-2xl">Choose the support level last</h3>
+              <h3 className="mt-2 text-2xl">Choose the support level</h3>
               <p className="mt-2 text-sm leading-6 text-[#6d655d]">
                 Once the basics are in, choose the level of support that feels right.
               </p>

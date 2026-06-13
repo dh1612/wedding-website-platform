@@ -70,9 +70,9 @@ export const weddingThemes: ThemeDefinition[] = [
   {
     id: "champagne-aegean",
     name: "Champagne Aegean",
-    label: "Summer in Greece",
-    description: "A champagne-and-neutral destination look with rich golden outlines, warm light, and a polished island-summer feel.",
-    season: "Summer / Greece / destination",
+    label: "Destination wedding",
+    description: "A champagne-and-neutral look for a destination wedding, with rich golden outlines, warm light, and a polished away-from-home feel.",
+    season: "Summer / destination / abroad",
     previewStyle: {
       backgroundImage:
         "linear-gradient(180deg, rgba(82,58,28,0.14), rgba(82,58,28,0.08)), url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1600&q=80')",
