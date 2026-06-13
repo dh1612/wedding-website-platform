@@ -42,7 +42,7 @@ export function PortalLoginForm({
       }
 
       const data = (await response.json()) as { next?: string };
-      router.push(data.next || next);
+      router.replace(data.next || next);
       router.refresh();
     } catch (submissionError) {
       setError(

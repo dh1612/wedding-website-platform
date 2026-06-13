@@ -149,11 +149,6 @@ export function ClientIntakeForm({
   }
 
   function handleBack() {
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      window.history.back();
-      return;
-    }
-
     if (typeof window !== "undefined") {
       window.location.href = "/";
     }

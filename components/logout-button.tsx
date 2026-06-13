@@ -21,7 +21,7 @@ export function LogoutButton({ redirectTo }: LogoutButtonProps) {
       const nextDestination = redirectTo?.trim()
         ? `/portal-login?next=${encodeURIComponent(redirectTo.trim())}`
         : "/";
-      router.push(nextDestination);
+      router.replace(nextDestination);
       router.refresh();
     } finally {
       setIsLoading(false);
