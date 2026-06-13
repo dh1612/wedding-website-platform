@@ -6,9 +6,16 @@ import { useRouter } from "next/navigation";
 type PortalLoginFormProps = {
   next: string;
   requireEmail?: boolean;
+  submitLabel?: string;
+  errorFallback?: string;
 };
 
-export function PortalLoginForm({ next, requireEmail = false }: PortalLoginFormProps) {
+export function PortalLoginForm({
+  next,
+  requireEmail = false,
+  submitLabel = "Open Private Area",
+  errorFallback = "Unable to open the private area."
+}: PortalLoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +38,7 @@ export function PortalLoginForm({ next, requireEmail = false }: PortalLoginFormP
 
       if (!response.ok) {
         const data = (await response.json()) as { error?: string };
-        throw new Error(data.error || "Unable to open the private area.");
+        throw new Error(data.error || errorFallback);
       }
 
       const data = (await response.json()) as { next?: string };
@@ -41,7 +48,7 @@ export function PortalLoginForm({ next, requireEmail = false }: PortalLoginFormP
       setError(
         submissionError instanceof Error
           ? submissionError.message
-          : "Unable to open the private area."
+          : errorFallback
       );
     } finally {
       setIsLoading(false);
@@ -79,7 +86,7 @@ export function PortalLoginForm({ next, requireEmail = false }: PortalLoginFormP
         disabled={isLoading}
         className="accent-button rounded-full px-6 py-3 text-sm font-medium disabled:opacity-60"
       >
-        {isLoading ? "Opening..." : "Open Private Area"}
+        {isLoading ? "Opening..." : submitLabel}
       </button>
       {error ? <p className="text-sm text-red-700">{error}</p> : null}
     </form>
