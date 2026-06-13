@@ -66,8 +66,9 @@ export function WeddingSitePage({
       {previewMode ? (
         <section className="mx-auto w-full max-w-6xl px-6 pt-6 lg:px-8">
           <div className="rounded-[1.5rem] border border-[var(--border)] bg-[var(--accent-soft)] px-6 py-5 text-sm leading-7 text-[var(--foreground)]">
-            This is a private draft preview. Sample wording and details can be edited before the
-            couple makes the site live for guests.
+            Private preview: this first draft shows the direction of your website. Sample content
+            may appear where details are still missing. If you&apos;d like to proceed, use the booking
+            link below and we&apos;ll refine everything together before the guest version goes live.
           </div>
         </section>
       ) : null}
