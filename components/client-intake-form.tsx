@@ -355,7 +355,7 @@ export function ClientIntakeForm({
                   <p className="text-sm leading-6 text-[#8a4c3a]">Please use a valid email address.</p>
                 ) : null}
               </div>
-              <label className="space-y-2">
+              <label className="min-w-0 space-y-2">
                 <span className="text-xs font-medium uppercase tracking-[0.24em] text-[#9a7d64]">
                   Wedding date (optional)
                 </span>
@@ -364,10 +364,10 @@ export function ClientIntakeForm({
                   value={values.date}
                   onChange={(event) => updateField("date", event.target.value)}
                   aria-label="Wedding date (optional)"
-                  className="w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a]"
+                  className="block min-w-0 w-full max-w-full rounded-[1rem] border border-black/8 bg-white px-4 py-3 text-sm text-[#1f1d1a] [appearance:textfield]"
                 />
               </label>
-              <label className="space-y-2">
+              <label className="min-w-0 space-y-2">
                 <span className="text-xs font-medium uppercase tracking-[0.24em] text-[#9a7d64]">
                   Location (optional)
                 </span>
