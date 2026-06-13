@@ -8,6 +8,7 @@ import {
   createWeddingDraft,
   deleteWeddingDraftBySlug,
   getWeddingRecordForAdmin,
+  restoreWeddingBySlug,
   updateWeddingBySlug,
   upsertWeddingPortalUser
 } from "@/lib/production-repositories";
@@ -230,7 +231,19 @@ export async function deleteWeddingDraftAction(formData: FormData) {
 
   await deleteWeddingDraftBySlug(slug);
 
-  redirect("/admin");
+  redirect(`/admin?deleted=${encodeURIComponent(slug)}`);
+}
+
+export async function restoreWeddingAction(formData: FormData) {
+  const slug = String(formData.get("slug") || "").trim();
+
+  if (!slug) {
+    redirect("/admin");
+  }
+
+  await restoreWeddingBySlug(slug);
+
+  redirect(`/admin?restored=${encodeURIComponent(slug)}`);
 }
 
 export async function updateWeddingContentAction(formData: FormData) {

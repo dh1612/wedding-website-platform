@@ -301,6 +301,16 @@ export function RSVPManager({
   }
 
   async function removeGuest(id: string) {
+    if (typeof window !== "undefined") {
+      const confirmed = window.confirm(
+        "Are you sure you want to remove this guest? This also removes their RSVP response from this wedding."
+      );
+
+      if (!confirmed) {
+        return;
+      }
+    }
+
     const previousGuests = guestList;
     setGuestList((current) => current.filter((guest) => guest.id !== id));
 

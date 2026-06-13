@@ -5,17 +5,21 @@ import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
 import {
   createWeddingDraftAction,
-  deleteWeddingDraftAction
+  deleteWeddingDraftAction,
+  restoreWeddingAction
 } from "@/app/admin/actions";
-import { listWeddings } from "@/lib/production-repositories";
+import { listRecentlyDeletedWeddings, listWeddings } from "@/lib/production-repositories";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
+import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 
 type AdminPageProps = {
   searchParams?: Promise<{
     theme?: string;
     q?: string;
     status?: "draft" | "approved" | "live" | "all";
+    deleted?: string;
+    restored?: string;
   }>;
 };
 
@@ -25,10 +29,13 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   const theme = getThemeById(params?.theme ?? wedding.theme);
   const searchQuery = params?.q?.trim() ?? "";
   const statusFilter = params?.status ?? "all";
+  const deletedSlug = params?.deleted?.trim() ?? "";
+  const restoredSlug = params?.restored?.trim() ?? "";
   const weddings = await listWeddings({
     query: searchQuery,
     status: statusFilter
   }).catch(() => []);
+  const recentlyDeletedWeddings = await listRecentlyDeletedWeddings().catch(() => []);
 
   return (
     <SiteFrame
@@ -87,11 +94,21 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               </div>
             </div>
             <div className="mt-6 space-y-4">
+              {deletedSlug ? (
+                <div className="rounded-[1.4rem] border border-[#b86a53]/18 bg-[#fff3ef] px-5 py-4 text-sm leading-6 text-[#8a4c3a]">
+                  Wedding deleted. It can be restored for 7 days from the recently deleted list below.
+                </div>
+              ) : null}
+              {restoredSlug ? (
+                <div className="rounded-[1.4rem] border border-[#184b38]/14 bg-[#f6fbf8] px-5 py-4 text-sm leading-6 text-[#486159]">
+                  Wedding restored successfully.
+                </div>
+              ) : null}
               <form className="grid gap-3 rounded-[1.3rem] border border-[var(--border)] bg-white/75 p-4 md:grid-cols-[1fr_220px_auto]">
                 <input
                   name="q"
                   defaultValue={searchQuery}
-                  placeholder="Search by couple name or slug"
+                  placeholder="Search by couple name, slug, or wedding code"
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                 />
                 <select
@@ -115,7 +132,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       <div>
                         <p className="text-xl font-medium">{record.title}</p>
                         <p className="mt-1 text-sm text-[var(--muted)]">
-                          {record.slug} · {record.status}
+                          Wedding {record.referenceCode} · {record.slug} · {record.status}
                           {record.eventDate
                             ? ` · ${new Date(record.eventDate).toLocaleDateString("en-IE")}`
                             : ""}
@@ -179,17 +196,15 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                         >
                           Live Page
                         </Link>
-                        {record.status === "draft" ? (
-                          <form action={deleteWeddingDraftAction}>
-                            <input type="hidden" name="slug" value={record.slug} />
-                            <button
-                              type="submit"
-                              className="rounded-full border border-[#b86a53]/25 bg-[#fff3ef] px-4 py-2 text-sm text-[#8a4c3a] transition hover:bg-[#fde8e2]"
-                            >
-                              Delete Draft
-                            </button>
-                          </form>
-                        ) : null}
+                        <form action={deleteWeddingDraftAction}>
+                          <input type="hidden" name="slug" value={record.slug} />
+                          <ConfirmSubmitButton
+                            message={`Delete wedding ${record.referenceCode}? It will be hidden immediately and can be restored for 7 days from the admin area.`}
+                            className="rounded-full border border-[#b86a53]/25 bg-[#fff3ef] px-4 py-2 text-sm text-[#8a4c3a] transition hover:bg-[#fde8e2]"
+                          >
+                            Delete Wedding
+                          </ConfirmSubmitButton>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -199,6 +214,33 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   No client submissions yet. Once someone shares their details, the draft will appear here for review.
                 </div>
               )}
+              {recentlyDeletedWeddings.length ? (
+                <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/75 p-5">
+                  <p className="eyebrow">Recently Deleted</p>
+                  <h3 className="mt-3 text-2xl">Undo Window</h3>
+                  <div className="mt-4 space-y-3">
+                    {recentlyDeletedWeddings.map((record) => (
+                      <div
+                        key={record.id}
+                        className="flex flex-col gap-3 rounded-[1.2rem] border border-[var(--border)] bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
+                      >
+                        <div>
+                          <p className="font-medium">{record.title}</p>
+                          <p className="mt-1 text-sm text-[var(--muted)]">
+                            Wedding {record.referenceCode} · deleted {new Date(record.deletedAt!).toLocaleDateString("en-IE")} · restore until {new Date(record.restoreUntilAt!).toLocaleDateString("en-IE")}
+                          </p>
+                        </div>
+                        <form action={restoreWeddingAction}>
+                          <input type="hidden" name="slug" value={record.slug} />
+                          <button className="accent-outline rounded-full px-4 py-2 text-sm font-medium">
+                            Restore Wedding
+                          </button>
+                        </form>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

@@ -49,6 +49,7 @@ enum TableShape {
 
 model Wedding {
   id                  String             @id @default(cuid())
+  referenceCode       Int                @unique @default(autoincrement())
   slug                String             @unique
   title               String
   status              WeddingStatus      @default(draft)
@@ -58,6 +59,8 @@ model Wedding {
   liveContentJson     Json?
   plannerSettingsJson Json?
   publishedAt         DateTime?
+  deletedAt           DateTime?
+  restoreUntilAt      DateTime?
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
 
@@ -67,6 +70,9 @@ model Wedding {
   seatingPlans        SeatingPlan[]
   checklistItems      ChecklistItem[]
   calendarItems       CalendarItem[]
+
+  @@index([deletedAt])
+  @@index([restoreUntilAt])
 }
 
 model WeddingAdminUser {

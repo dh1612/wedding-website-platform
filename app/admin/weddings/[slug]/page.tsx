@@ -278,7 +278,9 @@ export default async function AdminWeddingWorkspacePage({
           <div className="section-shell rounded-[1.6rem] p-5">
             <p className="eyebrow">Status</p>
             <p className="mt-3 text-3xl capitalize">{record.status}</p>
-            <p className="mt-2 text-sm text-[var(--muted)]">{record.slug}</p>
+            <p className="mt-2 text-sm text-[var(--muted)]">
+              Wedding {record.referenceCode} · {record.slug}
+            </p>
           </div>
           <div className="section-shell rounded-[1.6rem] p-5">
             <p className="eyebrow">Guests</p>

@@ -15,13 +15,16 @@ export async function listWeddings(input?: {
   status?: "draft" | "approved" | "live" | "all";
 }) {
   const query = input?.query?.trim();
+  const numericQuery = query && /^\d+$/.test(query) ? Number(query) : undefined;
   const where: Prisma.WeddingWhereInput = {
+    deletedAt: null,
     ...(input?.status && input.status !== "all" ? { status: input.status } : {}),
     ...(query
       ? {
           OR: [
             { title: { contains: query, mode: "insensitive" } },
-            { slug: { contains: query, mode: "insensitive" } }
+            { slug: { contains: query, mode: "insensitive" } },
+            ...(numericQuery ? [{ referenceCode: numericQuery }] : [])
           ]
         }
       : {})
@@ -34,6 +37,7 @@ export async function listWeddings(input?: {
     },
     select: {
       id: true,
+      referenceCode: true,
       slug: true,
       title: true,
       status: true,
@@ -52,9 +56,37 @@ export async function listWeddings(input?: {
   });
 }
 
+export async function listRecentlyDeletedWeddings() {
+  return prisma.wedding.findMany({
+    where: {
+      deletedAt: {
+        not: null
+      },
+      restoreUntilAt: {
+        gt: new Date()
+      }
+    },
+    orderBy: {
+      deletedAt: "desc"
+    },
+    select: {
+      id: true,
+      referenceCode: true,
+      slug: true,
+      title: true,
+      status: true,
+      deletedAt: true,
+      restoreUntilAt: true
+    }
+  });
+}
+
 export async function getWeddingBySlug(slug: string) {
-  return prisma.wedding.findUnique({
-    where: { slug },
+  return prisma.wedding.findFirst({
+    where: {
+      slug,
+      deletedAt: null
+    },
     include: {
       guests: true,
       rsvpResponses: true,
@@ -72,10 +104,14 @@ export async function getWeddingBySlug(slug: string) {
 }
 
 export async function getWeddingSiteBySlug(slug: string) {
-  return prisma.wedding.findUnique({
-    where: { slug },
+  return prisma.wedding.findFirst({
+    where: {
+      slug,
+      deletedAt: null
+    },
     select: {
       id: true,
+      referenceCode: true,
       slug: true,
       title: true,
       status: true,
@@ -89,10 +125,14 @@ export async function getWeddingSiteBySlug(slug: string) {
 }
 
 export async function getWeddingRecordForAdmin(slug: string) {
-  return prisma.wedding.findUnique({
-    where: { slug },
+  return prisma.wedding.findFirst({
+    where: {
+      slug,
+      deletedAt: null
+    },
     select: {
       id: true,
+      referenceCode: true,
       slug: true,
       title: true,
       status: true,
@@ -118,8 +158,11 @@ export async function getWeddingRecordForAdmin(slug: string) {
 }
 
 export async function getWeddingPortalUserBySlug(slug: string) {
-  const wedding = await prisma.wedding.findUnique({
-    where: { slug },
+  const wedding = await prisma.wedding.findFirst({
+    where: {
+      slug,
+      deletedAt: null
+    },
     select: {
       id: true,
       adminUsers: {
@@ -326,20 +369,57 @@ export async function upsertWeddingPortalUser(input: {
 }
 
 export async function deleteWeddingDraftBySlug(slug: string) {
-  const wedding = await prisma.wedding.findUnique({
-    where: { slug },
+  const wedding = await prisma.wedding.findFirst({
+    where: {
+      slug,
+      deletedAt: null
+    },
     select: {
-      id: true,
-      status: true
+      id: true
     }
   });
 
-  if (!wedding || wedding.status !== "draft") {
+  if (!wedding) {
     return false;
   }
 
-  await prisma.wedding.delete({
-    where: { id: wedding.id }
+  const restoreUntilAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  await prisma.wedding.update({
+    where: { id: wedding.id },
+    data: {
+      deletedAt: new Date(),
+      restoreUntilAt
+    }
+  });
+
+  return true;
+}
+
+export async function restoreWeddingBySlug(slug: string) {
+  const wedding = await prisma.wedding.findFirst({
+    where: {
+      slug,
+      deletedAt: {
+        not: null
+      }
+    },
+    select: {
+      id: true,
+      restoreUntilAt: true
+    }
+  });
+
+  if (!wedding || !wedding.restoreUntilAt || wedding.restoreUntilAt <= new Date()) {
+    return false;
+  }
+
+  await prisma.wedding.update({
+    where: { id: wedding.id },
+    data: {
+      deletedAt: null,
+      restoreUntilAt: null
+    }
   });
 
   return true;
