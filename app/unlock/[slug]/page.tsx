@@ -100,7 +100,7 @@ export default async function UnlockPage({
     error === "terms"
       ? "Please agree to the Terms of Service and Refund Policy before continuing."
       : error === "ack"
-        ? "Please confirm that you understand payment starts the refinement stage before continuing."
+        ? "Please confirm that you understand this is a personalised digital service and that payment starts the refinement stage before continuing."
         : "";
 
   return (
@@ -185,7 +185,7 @@ export default async function UnlockPage({
                 className="mt-1 h-4 w-4 rounded border border-[var(--border)]"
               />
               <span>
-                I understand this preview is the first draft and that hands-on refinement begins once payment for my selected package has been confirmed.
+                I understand this is a personalised digital service, that work may begin shortly after payment, and that refund rights may be limited once the hands-on refinement stage has started.
               </span>
             </label>
             <label className="flex items-start gap-3 text-sm leading-6 text-[var(--muted)]">
