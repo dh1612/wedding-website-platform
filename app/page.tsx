@@ -127,6 +127,12 @@ export default function MarketingHomePage() {
             <a href="#designs" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Designs
             </a>
+            <a
+              href="#how-it-works"
+              className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
+            >
+              How It Works
+            </a>
             <a href="#packages" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Packages
             </a>
@@ -199,7 +205,7 @@ export default function MarketingHomePage() {
             </p>
           </div>
 
-          <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 sm:p-6">
+          <div id="how-it-works" className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 sm:p-6">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it works</p>
             <h2 className="mt-3 text-2xl leading-tight text-[#184b38] sm:text-3xl">
               A guided, curated process from first draft to final website
