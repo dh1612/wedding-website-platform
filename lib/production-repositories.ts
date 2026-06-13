@@ -186,6 +186,93 @@ export async function getWeddingPortalUserBySlug(slug: string) {
   };
 }
 
+export async function getWeddingPortalUserByEmailAndSlug(input: {
+  slug: string;
+  email: string;
+}) {
+  const wedding = await prisma.wedding.findFirst({
+    where: {
+      slug: input.slug,
+      deletedAt: null
+    },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      contentJson: true,
+      adminUsers: {
+        where: {
+          email: input.email
+        },
+        take: 1,
+        select: {
+          id: true,
+          email: true
+        }
+      }
+    }
+  });
+
+  return {
+    weddingId: wedding?.id ?? null,
+    slug: wedding?.slug ?? null,
+    title: wedding?.title ?? null,
+    contentJson: wedding?.contentJson ?? null,
+    user: wedding?.adminUsers[0] ?? null
+  };
+}
+
+export async function storeWeddingPortalResetToken(input: {
+  userId: string;
+  tokenHash: string;
+  expiresAt: Date;
+}) {
+  return prisma.weddingAdminUser.update({
+    where: { id: input.userId },
+    data: {
+      resetTokenHash: input.tokenHash,
+      resetTokenExpiresAt: input.expiresAt,
+      resetRequestedAt: new Date()
+    }
+  });
+}
+
+export async function getWeddingPortalUserByResetTokenHash(tokenHash: string) {
+  return prisma.weddingAdminUser.findFirst({
+    where: {
+      resetTokenHash: tokenHash,
+      resetTokenExpiresAt: {
+        gt: new Date()
+      }
+    },
+    select: {
+      id: true,
+      email: true,
+      weddingId: true,
+      wedding: {
+        select: {
+          slug: true
+        }
+      }
+    }
+  });
+}
+
+export async function resetWeddingPortalPassword(input: {
+  userId: string;
+  passwordHash: string;
+}) {
+  return prisma.weddingAdminUser.update({
+    where: { id: input.userId },
+    data: {
+      passwordHash: input.passwordHash,
+      resetTokenHash: null,
+      resetTokenExpiresAt: null,
+      resetRequestedAt: null
+    }
+  });
+}
+
 export async function createWeddingDraft(input: {
   slug: string;
   title: string;
@@ -363,7 +450,10 @@ export async function upsertWeddingPortalUser(input: {
     where: { id: existing.id },
     data: {
       email: input.email,
-      ...(input.passwordHash ? { passwordHash: input.passwordHash } : {})
+      ...(input.passwordHash ? { passwordHash: input.passwordHash } : {}),
+      resetTokenHash: null,
+      resetTokenExpiresAt: null,
+      resetRequestedAt: null
     }
   });
 }

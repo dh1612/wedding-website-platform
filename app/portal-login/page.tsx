@@ -1,4 +1,6 @@
 import { PortalLoginForm } from "@/components/portal-login-form";
+import Link from "next/link";
+import { SUPPORT_EMAIL } from "@/lib/brand";
 import { getRequiredPortalScope, sanitisePortalNextPath } from "@/lib/portal-auth";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
@@ -68,6 +70,26 @@ export default async function PortalLoginPage({
                 submitLabel={submitLabel}
                 errorFallback={errorFallback}
               />
+              {isCouplePortal ? (
+                <div className="space-y-3 text-sm text-[var(--muted)]">
+                  <Link
+                    href={`/portal-reset?next=${encodeURIComponent(next)}&theme=${encodeURIComponent(theme.id)}`}
+                    className="inline-flex text-[#184b38] underline underline-offset-2"
+                  >
+                    Forgot password?
+                  </Link>
+                  <p>
+                    If you no longer have access to the wedding email address on file, please{" "}
+                    <a
+                      href={`mailto:${SUPPORT_EMAIL}`}
+                      className="text-[#184b38] underline underline-offset-2"
+                    >
+                      contact me
+                    </a>{" "}
+                    and I'll help you reset access manually.
+                  </p>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

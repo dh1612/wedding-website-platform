@@ -81,6 +81,9 @@ model WeddingAdminUser {
   email        String
   name         String?
   passwordHash String
+  resetTokenHash      String?
+  resetTokenExpiresAt DateTime?
+  resetRequestedAt    DateTime?
   role         Role     @default(owner)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
