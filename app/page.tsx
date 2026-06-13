@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
+import { MarketingMobileMenu } from "@/components/marketing-mobile-menu";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { buildSampleWebsiteHref } from "@/lib/brand";
 import { defaultSampleWebsiteShowcase, sampleWebsiteShowcases } from "@/lib/sample-websites";
@@ -144,48 +145,18 @@ export default function MarketingHomePage() {
             </Link>
           </nav>
 
-          <details className="relative md:hidden">
-            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-black/8 bg-white text-[#184b38] [&::-webkit-details-marker]:hidden">
-              <span className="text-2xl leading-none">≡</span>
-            </summary>
-            <div className="absolute right-0 top-[calc(100%+0.75rem)] w-72 rounded-[1.5rem] border border-black/6 bg-white p-4 shadow-[0_20px_50px_rgba(52,35,24,0.12)]">
-              <div className="flex flex-col gap-2">
-                <Link
-                  href={exampleHref}
-                  className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
-                >
-                  View Example Website
-                </Link>
-                <Link
-                  href="/couple-area"
-                  className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
-                >
-                  View Premium Couple Area Demo
-                </Link>
-                <Link
-                  href="/contact"
-                  className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]"
-                >
-                  Contact
-                </Link>
-                <a href="#designs" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
-                  Designs
-                </a>
-                <a href="#how-it-works" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
-                  How It Works
-                </a>
-                <a href="#packages" className="rounded-xl px-4 py-3 text-sm text-[#4e453f] hover:bg-[#faf7f2]">
-                  Packages
-                </a>
-                <Link
-                  href="/get-started"
-                  className="mt-2 inline-flex items-center justify-center rounded-full bg-[#184b38] px-5 py-3 text-sm font-medium text-white"
-                >
-                  Get My Website Started
-                </Link>
-              </div>
-            </div>
-          </details>
+          <MarketingMobileMenu
+            items={[
+              { href: exampleHref, label: "View Example Website" },
+              { href: "/couple-area", label: "View Premium Couple Area Demo" },
+              { href: "/contact", label: "Contact" },
+              { href: "#designs", label: "Designs" },
+              { href: "#how-it-works", label: "How It Works" },
+              { href: "#packages", label: "Packages" }
+            ]}
+            ctaHref="/get-started"
+            ctaLabel="Get My Website Started"
+          />
         </div>
       </header>
 
