@@ -3,7 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function LogoutButton() {
+type LogoutButtonProps = {
+  redirectTo?: string;
+};
+
+export function LogoutButton({ redirectTo }: LogoutButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +18,10 @@ export function LogoutButton() {
       await fetch("/api/portal-logout", {
         method: "POST"
       });
-      router.push("/portal-login");
+      const nextDestination = redirectTo?.trim()
+        ? `/portal-login?next=${encodeURIComponent(redirectTo.trim())}`
+        : "/";
+      router.push(nextDestination);
       router.refresh();
     } finally {
       setIsLoading(false);

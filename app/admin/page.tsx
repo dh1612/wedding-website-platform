@@ -64,7 +64,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="flex justify-end">
-          <LogoutButton />
+          <LogoutButton redirectTo={getAdminDashboardPath()} />
         </div>
         {securityWarnings.length ? (
           <div className="mt-6 rounded-[1.5rem] border border-[#b86a53]/18 bg-[#fff3ef] px-5 py-4 text-sm leading-6 text-[#8a4c3a]">

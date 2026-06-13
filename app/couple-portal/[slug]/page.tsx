@@ -94,7 +94,7 @@ export default async function CouplePortalBySlugPage({
       />
       <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
         <div className="mb-6 flex justify-end">
-          <LogoutButton />
+          <LogoutButton redirectTo={portalBasePath} />
         </div>
         <div className="section-shell rounded-[2rem] p-8 sm:p-10 lg:p-12">
           <p className="eyebrow">Portal Home</p>
