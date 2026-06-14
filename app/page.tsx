@@ -99,6 +99,13 @@ const portalPreviewCards = [
   }
 ];
 
+const featuredTestimonial = {
+  quote:
+    "The website felt elegant, personal and genuinely reflective of us as a couple, while also making everything much easier for our guests. Having support on hand for questions and amendments made the whole process feel calm and well looked after, and the one-hour couple portal call was especially helpful for understanding how everything worked.",
+  couple: "Fiona & David",
+  href: "/showcase/fionadavid2026"
+};
+
 export default function MarketingHomePage() {
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] pb-24 text-[#1f1d1a] md:pb-0">
@@ -521,6 +528,42 @@ export default function MarketingHomePage() {
                   Includes a guided 1-hour video call to walk through the premium area together.
                 </div>
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-10">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+            <div className="space-y-4">
+              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Kind Words</p>
+              <h2 className="text-4xl leading-none sm:text-5xl">
+                A website that felt personal, polished, and properly supported
+              </h2>
+              <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
+                The service is not just about the design itself. It is about shaping the details
+                with the couple, being available for changes, and making sure the final website
+                feels ready to send out with confidence.
+              </p>
+            </div>
+
+            <div className="rounded-[2rem] border border-[#eadac9] bg-[#fffaf5] p-7 shadow-[0_18px_50px_rgba(52,35,24,0.08)]">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                Featured Couple
+              </p>
+              <blockquote className="mt-4 text-2xl leading-relaxed text-[#2d241f] sm:text-[2rem]">
+                “{featuredTestimonial.quote}”
+              </blockquote>
+              <p className="mt-6 text-base font-medium text-[#184b38]">{featuredTestimonial.couple}</p>
+              <div className="mt-5">
+                <Link
+                  href={featuredTestimonial.href}
+                  className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-5 py-3 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+                >
+                  View their website
+                </Link>
+              </div>
             </div>
           </div>
         </div>
