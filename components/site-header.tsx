@@ -191,10 +191,10 @@ export function SiteHeader({
         usesDecorativeHeader ? "md:sticky md:top-0" : "sticky top-0"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-nowrap items-start justify-between gap-4 px-6 py-4 md:flex-wrap md:items-center lg:px-8">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-nowrap items-start justify-between gap-4 px-6 py-4 md:flex-wrap md:items-center lg:px-8">
         <Link
           href={resolvedHomeHref}
-          className="min-w-0 flex-1 space-y-1 rounded-full px-1"
+          className="min-w-0 flex-1 space-y-1 rounded-full px-1 pr-16 md:pr-1"
         >
           <p className="eyebrow">{adminView ? "Wedding Portal" : "Wedding Day"}</p>
           <p className="break-words text-lg font-semibold [text-wrap:balance]">
@@ -206,12 +206,14 @@ export function SiteHeader({
           </p>
         </Link>
         {!adminView && mode === "scroll" && scrollNavItems.length ? (
-          <MobileSectionMenu
-            items={scrollNavItems.map((item) => ({
-              label: item.label,
-              href: buildModeHref(siteBasePath, themeId, "scroll") + item.href
-            }))}
-          />
+          <div className="absolute right-6 top-4 md:static md:right-auto md:top-auto">
+            <MobileSectionMenu
+              items={scrollNavItems.map((item) => ({
+                label: item.label,
+                href: buildModeHref(siteBasePath, themeId, "scroll") + item.href
+              }))}
+            />
+          </div>
         ) : null}
         {adminView || mode !== "pages" || pageModePublicNavItems.length ? (
           <div className="hidden flex-1 items-center justify-center md:flex">

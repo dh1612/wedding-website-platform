@@ -101,24 +101,26 @@ export async function POST(request: Request, context: Context) {
     "";
 
   if (notificationEmail) {
-    sendRsvpNotificationEmail({
-      to: notificationEmail,
-      weddingSlug: slug,
-      couple: weddingData?.couple || wedding.title || "Wedding Couple",
-      guestName: guest.invitationName,
-      guestEmail: guest.email || email,
-      status: response.status,
-      attendingCount: response.attendingCount,
-      meal: response.mealChoice ?? guest.defaultMeal ?? undefined,
-      dietary: response.dietaryNotes ?? guest.dietaryNotes ?? undefined,
-      songRequest: response.songRequest ?? undefined,
-      messageToCouple: response.messageToCouple ?? undefined,
-      customAnswers:
-        (response.customAnswersJson as Record<string, string> | null | undefined) ?? undefined,
-      customQuestionLabels
-    }).catch((error) => {
+    try {
+      await sendRsvpNotificationEmail({
+        to: notificationEmail,
+        weddingSlug: slug,
+        couple: weddingData?.couple || wedding.title || "Wedding Couple",
+        guestName: guest.invitationName,
+        guestEmail: guest.email || email,
+        status: response.status,
+        attendingCount: response.attendingCount,
+        meal: response.mealChoice ?? guest.defaultMeal ?? undefined,
+        dietary: response.dietaryNotes ?? guest.dietaryNotes ?? undefined,
+        songRequest: response.songRequest ?? undefined,
+        messageToCouple: response.messageToCouple ?? undefined,
+        customAnswers:
+          (response.customAnswersJson as Record<string, string> | null | undefined) ?? undefined,
+        customQuestionLabels
+      });
+    } catch (error) {
       console.error("RSVP notification email failed", error);
-    });
+    }
   }
 
   return NextResponse.json({
