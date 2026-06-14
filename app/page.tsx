@@ -177,9 +177,8 @@ export default function MarketingHomePage() {
               Wedding websites tailored to your style, your guests, and your day.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              This is a done-for-you service. You tell us what you need, and we create the website
-              with you and for you. Choose the package that matches the level of support you want,
-              from a beautifully simple guest website to the full planning portal.
+              Everything you and your guests need, gathered in one polished place, with dedicated
+              support and without the friction of a restrictive template builder.
             </p>
           </div>
 
