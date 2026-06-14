@@ -533,12 +533,12 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-10">
+      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div className="space-y-4">
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Kind Words</p>
-              <h2 className="text-4xl leading-none sm:text-5xl">
+              <h2 className="text-3xl leading-none sm:text-4xl">
                 A website that felt personal, polished, and properly supported
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
@@ -548,18 +548,18 @@ export default function MarketingHomePage() {
               </p>
             </div>
 
-            <div className="rounded-[2rem] border border-[#eadac9] bg-[#fffaf5] p-7 shadow-[0_18px_50px_rgba(52,35,24,0.08)]">
+            <div className="rounded-[1.75rem] border border-[#eadac9] bg-[#fffaf5] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)]">
               <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
                 Featured Couple
               </p>
-              <blockquote className="mt-4 text-2xl leading-relaxed text-[#2d241f] sm:text-[2rem]">
+              <blockquote className="mt-4 text-lg leading-8 text-[#2d241f] sm:text-xl sm:leading-9">
                 “{featuredTestimonial.quote}”
               </blockquote>
-              <p className="mt-6 text-base font-medium text-[#184b38]">{featuredTestimonial.couple}</p>
-              <div className="mt-5">
+              <p className="mt-5 text-base font-medium text-[#184b38]">{featuredTestimonial.couple}</p>
+              <div className="mt-4">
                 <Link
                   href={featuredTestimonial.href}
-                  className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-5 py-3 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+                  className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-4 py-2.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
                 >
                   View their website
                 </Link>
