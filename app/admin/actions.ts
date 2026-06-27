@@ -538,6 +538,7 @@ export async function updateWeddingContentAction(formData: FormData) {
   let uploadedStoryFeatureImage: string | null = null;
   let uploadedStoryFeatureImageTwo: string | null = null;
   let uploadedStoryFeatureImageThree: string | null = null;
+  let uploadedTravelMapImage: string | null = null;
   let uploadedSneakPeekImage: string | null = null;
   let uploadedGalleryImages: string[] = [];
 
@@ -568,6 +569,13 @@ export async function updateWeddingContentAction(formData: FormData) {
       weddingSlug: nextSlug,
       folder: "story",
       fallbackLabel: "feature-3"
+    });
+
+    uploadedTravelMapImage = await uploadImageFile({
+      file: formData.get("travelMapImageFile") as File | null,
+      weddingSlug: nextSlug,
+      folder: "travel",
+      fallbackLabel: "map"
     });
 
     uploadedSneakPeekImage = await uploadImageFile({
@@ -612,6 +620,7 @@ export async function updateWeddingContentAction(formData: FormData) {
     .map((item) => item.trim())
     .filter(Boolean)
     .filter(isValidImageSource);
+  const travelMapImageField = String(formData.get("travelMapImage") || "").trim();
 
   const nextContent = {
     ...weddingData,
@@ -766,6 +775,8 @@ export async function updateWeddingContentAction(formData: FormData) {
         locationOverviewTitleRichText || weddingData.travel.locationOverviewTitleHtml,
       locationOverviewHtml:
         locationOverviewRichText || weddingData.travel.locationOverviewHtml,
+      mapImage:
+        uploadedTravelMapImage || (isValidImageSource(travelMapImageField) ? travelMapImageField : "") || undefined,
       sneakPeekImage:
         uploadedSneakPeekImage || travelSneakPeekImageField || undefined,
       relaxedNote:

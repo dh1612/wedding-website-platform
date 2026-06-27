@@ -940,6 +940,24 @@ export function AdminWeddingEditor({
                 <label className="text-sm font-medium text-[#2f473f]">Map link</label>
                 <input name="travelMapLink" defaultValue={weddingData.travel.mapLink} placeholder="https://maps.google.com/..." className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none" />
               </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-[#2f473f]">Custom weekend map image</label>
+                <input
+                  name="travelMapImageFile"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/avif"
+                  className="w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+                />
+                <input
+                  name="travelMapImage"
+                  defaultValue={weddingData.travel.mapImage ?? ""}
+                  placeholder="https://... or /uploaded-map.png"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <p className="text-sm leading-6 text-[var(--muted)]">
+                  If this is filled, the website will show the uploaded map graphic here instead of the experimental coded map layout.
+                </p>
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#2f473f]">Map & area eyebrow</label>
                 <input

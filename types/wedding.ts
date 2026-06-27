@@ -59,6 +59,7 @@ export type TravelInfo = {
   locationOverviewTitle?: string;
   locationOverviewTitleHtml?: string;
   locationOverviewHtml?: string;
+  mapImage?: string;
   sneakPeekImage?: string;
   relaxedNote?: string;
   mapSpots?: MapSpot[];

@@ -522,6 +522,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.travel?.locationOverviewHtml === "string" && source.travel.locationOverviewHtml.trim()
           ? source.travel.locationOverviewHtml
           : undefined,
+      mapImage:
+        typeof source.travel?.mapImage === "string" && isValidImageSource(source.travel.mapImage)
+          ? source.travel.mapImage
+          : undefined,
       sneakPeekImage:
         typeof source.travel?.sneakPeekImage === "string" && isValidImageSource(source.travel.sneakPeekImage)
           ? source.travel.sneakPeekImage
