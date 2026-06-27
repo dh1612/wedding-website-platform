@@ -42,28 +42,29 @@ export function TravelMapImageLightbox({
 
       {open ? (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(24,20,17,0.72)] px-4 py-6 backdrop-blur-sm"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(24,20,17,0.78)] px-4 py-5 backdrop-blur-sm sm:px-6 sm:py-8"
           onClick={() => setOpen(false)}
         >
           <div
-            className="relative max-h-full w-full max-w-5xl"
+            className="relative flex h-full w-full max-w-5xl items-center justify-center"
             onClick={(event) => event.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="absolute right-3 top-3 z-10 rounded-full bg-white/92 px-3 py-2 text-sm font-medium text-[var(--foreground)] shadow-[0_12px_24px_rgba(67,45,33,0.12)]"
+              className="absolute right-2 top-2 z-10 rounded-full bg-white/95 px-3 py-2 text-sm font-medium text-[var(--foreground)] shadow-[0_12px_24px_rgba(67,45,33,0.12)] sm:right-3 sm:top-3"
             >
               Close
             </button>
-            <div className="overflow-hidden rounded-[1.4rem] border border-white/20 bg-white shadow-[0_28px_60px_rgba(20,16,12,0.28)]">
+            <div className="flex w-full items-center justify-center rounded-[1.4rem] border border-white/20 bg-white/96 p-3 shadow-[0_28px_60px_rgba(20,16,12,0.28)] sm:p-4">
               <Image
                 src={src}
                 alt={alt}
                 width={1800}
                 height={1200}
                 unoptimized={shouldBypassImageOptimization(src)}
-                className="h-auto max-h-[85vh] w-full object-contain bg-[#f8f6f1]"
+                priority
+                className="mx-auto h-auto max-h-[82vh] w-auto max-w-full rounded-[1rem] bg-[#f8f6f1] object-contain shadow-[0_10px_30px_rgba(20,16,12,0.12)] sm:max-h-[84vh]"
               />
             </div>
           </div>
