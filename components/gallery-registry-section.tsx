@@ -36,6 +36,7 @@ export function GalleryRegistrySection({
       : [];
   const storyParagraphs =
     wedding.story.paragraphs.length ? wedding.story.paragraphs : fallback?.storyParagraphs ?? [];
+  const storyTimeline = wedding.story.timeline ?? [];
   const galleryImages =
     wedding.gallery.images.length ? wedding.gallery.images : previewMode ? previewStoryImages.slice(0, 2) : [];
   const hasStoryImage = previewStoryImages.length > 0;
@@ -72,9 +73,34 @@ export function GalleryRegistrySection({
                           <p key={paragraph} className="prose-copy text-lg">
                             {paragraph}
                           </p>
-                        ))
+                          ))
                       )}
                     </div>
+                    {storyTimeline.length ? (
+                      <div className="mt-8 space-y-4">
+                        {storyTimeline.map((item, index) => (
+                          <article
+                            key={`${item.dateLabel}-${item.title}-${index}`}
+                            className="accent-panel rounded-[1.35rem] p-5"
+                          >
+                            {item.image ? (
+                              <div className="relative mb-4 min-h-[180px] overflow-hidden rounded-[1.1rem]">
+                                <Image
+                                  src={item.image}
+                                  alt={`${item.title} photo`}
+                                  fill
+                                  unoptimized={shouldBypassImageOptimization(item.image)}
+                                  className="object-cover"
+                                />
+                              </div>
+                            ) : null}
+                            <p className="eyebrow">{item.dateLabel}</p>
+                            <h3 className="mt-3 text-2xl">{item.title}</h3>
+                            {item.note ? <p className="prose-copy mt-2">{item.note}</p> : null}
+                          </article>
+                        ))}
+                      </div>
+                    ) : null}
                   </>
                 ) : (
                   <SectionHeading

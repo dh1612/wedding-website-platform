@@ -51,6 +51,7 @@ export function WeddingSitePage({
     <main
       data-theme={activeTheme.id}
       data-preview-context={previewContext}
+      data-section-ornaments={weddingData.styleOptions?.disableSectionOrnaments ? "off" : "on"}
       style={{ ...activeTheme.style, ...fontPresetStyle }}
     >
       <SiteHeader

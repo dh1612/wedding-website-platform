@@ -4,7 +4,10 @@ import type {
   MapSpot,
   RSVPFormQuestion,
   RSVPMealOption,
+  StoryTimelineItem,
   SupplierItem,
+  TravelVisualMapConnection,
+  TravelVisualMapNode,
   WeddingData
 } from "@/types/wedding";
 
@@ -165,6 +168,87 @@ function coerceMapSpots(input: unknown, fallback: MapSpot[]) {
   return mapped.length ? mapped : fallback;
 }
 
+function coerceStoryTimeline(input: unknown): StoryTimelineItem[] {
+  if (!Array.isArray(input)) {
+    return [];
+  }
+
+  return input
+    .map<StoryTimelineItem | null>((item) => {
+      const source = item as Partial<StoryTimelineItem>;
+      const dateLabel = typeof source.dateLabel === "string" ? source.dateLabel.trim() : "";
+      const title = typeof source.title === "string" ? source.title.trim() : "";
+      const note = typeof source.note === "string" ? source.note.trim() : "";
+      const image = isValidRemoteImageUrl(source.image) ? source.image : undefined;
+
+      if (!dateLabel || !title) {
+        return null;
+      }
+
+      return {
+        dateLabel,
+        title,
+        note: note || undefined,
+        image
+      };
+    })
+    .filter((item): item is StoryTimelineItem => item !== null);
+}
+
+function coerceVisualMapNodes(input: unknown): TravelVisualMapNode[] {
+  if (!Array.isArray(input)) {
+    return [];
+  }
+
+  return input
+    .map<TravelVisualMapNode | null>((item, index) => {
+      const source = item as Partial<TravelVisualMapNode>;
+      const id = typeof source.id === "string" && source.id.trim() ? source.id.trim() : `node-${index + 1}`;
+      const label = typeof source.label === "string" ? source.label.trim() : "";
+
+      if (!label || typeof source.x !== "number" || typeof source.y !== "number") {
+        return null;
+      }
+
+      return {
+        id,
+        label,
+        detail: typeof source.detail === "string" && source.detail.trim() ? source.detail.trim() : undefined,
+        x: source.x,
+        y: source.y,
+        tone:
+          source.tone === "highlight" || source.tone === "secondary" || source.tone === "neutral"
+            ? source.tone
+            : "neutral"
+      };
+    })
+    .filter((item): item is TravelVisualMapNode => item !== null);
+}
+
+function coerceVisualMapConnections(input: unknown): TravelVisualMapConnection[] {
+  if (!Array.isArray(input)) {
+    return [];
+  }
+
+  return input
+    .map<TravelVisualMapConnection | null>((item) => {
+      const source = item as Partial<TravelVisualMapConnection>;
+      const from = typeof source.from === "string" ? source.from.trim() : "";
+      const to = typeof source.to === "string" ? source.to.trim() : "";
+
+      if (!from || !to) {
+        return null;
+      }
+
+      return {
+        from,
+        to,
+        label: typeof source.label === "string" && source.label.trim() ? source.label.trim() : undefined
+      };
+    })
+    .filter((item): item is TravelVisualMapConnection => item !== null);
+}
+
 function coerceSuppliers(input: unknown): SupplierItem[] {
   if (!Array.isArray(input)) {
     return [];
@@ -260,6 +344,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
           : typeof source.story?.featureImage === "string" && isValidRemoteImageUrl(source.story.featureImage)
             ? [source.story.featureImage]
             : [],
+      timeline: coerceStoryTimeline(source.story?.timeline),
       paragraphs:
         Array.isArray(source.story?.paragraphs) ? source.story.paragraphs : fallback.story.paragraphs
     },
@@ -428,6 +513,28 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.travel.relaxedNote.trim()
           : fallback.travel.relaxedNote,
       mapSpots: coerceMapSpots(source.travel?.mapSpots, fallback.travel.mapSpots ?? []),
+      visualMap:
+        source.travel?.visualMap
+          ? {
+              eyebrow:
+                typeof source.travel.visualMap.eyebrow === "string" &&
+                source.travel.visualMap.eyebrow.trim()
+                  ? source.travel.visualMap.eyebrow.trim()
+                  : undefined,
+              title:
+                typeof source.travel.visualMap.title === "string" &&
+                source.travel.visualMap.title.trim()
+                  ? source.travel.visualMap.title.trim()
+                  : undefined,
+              description:
+                typeof source.travel.visualMap.description === "string" &&
+                source.travel.visualMap.description.trim()
+                  ? source.travel.visualMap.description.trim()
+                  : undefined,
+              nodes: coerceVisualMapNodes(source.travel.visualMap.nodes),
+              connections: coerceVisualMapConnections(source.travel.visualMap.connections)
+            }
+          : undefined,
       transport: source.travel?.transport ?? fallback.travel.transport,
       transportHtml:
         typeof source.travel?.transportHtml === "string" && source.travel.transportHtml.trim()
@@ -631,6 +738,20 @@ export function coerceWeddingData(input: unknown): WeddingData {
     },
     aiConciergeEnabled:
       source.aiConciergeEnabled ?? fallback.aiConciergeEnabled,
+    styleOptions: {
+      disableSectionOrnaments: Boolean(source.styleOptions?.disableSectionOrnaments),
+      compactSplitHero: Boolean(source.styleOptions?.compactSplitHero),
+      heroImageBrightness:
+        typeof source.styleOptions?.heroImageBrightness === "number"
+          ? source.styleOptions.heroImageBrightness
+          : undefined,
+      heroImageObjectPosition:
+        typeof source.styleOptions?.heroImageObjectPosition === "string" &&
+        source.styleOptions.heroImageObjectPosition.trim()
+          ? source.styleOptions.heroImageObjectPosition.trim()
+          : undefined,
+      hideHeaderCorners: Boolean(source.styleOptions?.hideHeaderCorners)
+    },
     sectionVisibility: {
       heroEyebrow: source.sectionVisibility?.heroEyebrow ?? true,
       date: source.sectionVisibility?.date ?? true,

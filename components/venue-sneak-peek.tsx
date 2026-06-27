@@ -6,9 +6,15 @@ import { shouldBypassImageOptimization } from "@/lib/image-utils";
 
 type VenueSneakPeekProps = {
   imageUrl: string;
+  title?: string;
+  eyebrow?: string;
 };
 
-export function VenueSneakPeek({ imageUrl }: VenueSneakPeekProps) {
+export function VenueSneakPeek({
+  imageUrl,
+  title = "A first look at the venue",
+  eyebrow = "Venue Sneak Peek"
+}: VenueSneakPeekProps) {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((current) => !current);
 
@@ -16,15 +22,15 @@ export function VenueSneakPeek({ imageUrl }: VenueSneakPeekProps) {
     <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/80 p-4 shadow-[var(--shadow)]">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <p className="eyebrow">Sneak Peek</p>
-          <h3 className="mt-2 text-2xl">Take a look behind the door</h3>
+          <p className="eyebrow">{eyebrow}</p>
+          <h3 className="mt-2 text-2xl">{title}</h3>
         </div>
         <button
           type="button"
           onClick={toggleOpen}
           className="accent-button rounded-full px-4 py-2 text-sm font-medium"
         >
-          {open ? "Close door" : "Open door"}
+          {open ? "Close venue view" : "Open venue view"}
         </button>
       </div>
 
@@ -74,7 +80,7 @@ export function VenueSneakPeek({ imageUrl }: VenueSneakPeekProps) {
 
           {!open ? (
             <div className="absolute inset-x-0 bottom-4 text-center text-sm font-medium tracking-[0.18em] text-white/88">
-              Tap to reveal
+              Tap to reveal the venue
             </div>
           ) : null}
         </div>

@@ -18,10 +18,32 @@ export type LinkItem = {
   href: string;
 };
 
+export type StoryTimelineItem = {
+  dateLabel: string;
+  title: string;
+  note?: string;
+  image?: string;
+};
+
 export type MapSpot = {
   label: string;
   detail: string;
   href?: string;
+};
+
+export type TravelVisualMapNode = {
+  id: string;
+  label: string;
+  detail?: string;
+  x: number;
+  y: number;
+  tone?: "neutral" | "highlight" | "secondary";
+};
+
+export type TravelVisualMapConnection = {
+  from: string;
+  to: string;
+  label?: string;
 };
 
 export type TravelInfo = {
@@ -40,6 +62,13 @@ export type TravelInfo = {
   sneakPeekImage?: string;
   relaxedNote?: string;
   mapSpots?: MapSpot[];
+  visualMap?: {
+    eyebrow?: string;
+    title?: string;
+    description?: string;
+    nodes: TravelVisualMapNode[];
+    connections?: TravelVisualMapConnection[];
+  };
   transport: string;
   transportHtml?: string;
   parking: string;
@@ -145,6 +174,7 @@ export type WeddingData = {
     html?: string;
     featureImage?: string;
     featureImages?: string[];
+    timeline?: StoryTimelineItem[];
   };
   ceremony: WeddingEvent;
   reception: WeddingEvent;
@@ -221,6 +251,13 @@ export type WeddingData = {
     rsvpNotificationEmail?: string;
   };
   aiConciergeEnabled: boolean;
+  styleOptions?: {
+    disableSectionOrnaments?: boolean;
+    compactSplitHero?: boolean;
+    heroImageBrightness?: number;
+    heroImageObjectPosition?: string;
+    hideHeaderCorners?: boolean;
+  };
   sectionVisibility?: {
     heroEyebrow: boolean;
     date: boolean;

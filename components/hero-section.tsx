@@ -118,6 +118,13 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     wedding.announcement?.trim() || previewFallback?.heroAnnouncement || "";
   const shouldShowResolvedTagline = showTagline && Boolean(resolvedTagline);
   const shouldShowResolvedAnnouncement = showAnnouncement && Boolean(resolvedAnnouncement);
+  const heroImageStyle = {
+    objectPosition: wedding.styleOptions?.heroImageObjectPosition,
+    filter:
+      typeof wedding.styleOptions?.heroImageBrightness === "number"
+        ? `brightness(${wedding.styleOptions.heroImageBrightness})`
+        : undefined
+  };
   const softBlushSecondaryButtonClassName =
     themeId === "soft-blush"
       ? "rounded-full border border-white/58 bg-white/96 px-6 py-3 text-center text-sm font-semibold text-[#5e3c1f] shadow-[0_14px_32px_rgba(42,28,18,0.18)] backdrop-blur-sm transition hover:bg-white"
@@ -508,10 +515,15 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             priority
             unoptimized={heroImageUnoptimized}
             className="object-cover"
+            style={heroImageStyle}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,28,24,0.2)_0%,rgba(17,28,24,0.5)_100%)]" />
         </div>
-        <div className="section-shell relative overflow-hidden rounded-[1.6rem] p-5 sm:rounded-[2rem] sm:p-8 lg:p-14">
+        <div
+          className={`section-shell relative overflow-hidden rounded-[1.6rem] p-5 sm:rounded-[2rem] sm:p-8 lg:p-14 ${
+            wedding.styleOptions?.compactSplitHero ? "self-start lg:p-10" : ""
+          }`}
+        >
           <div
             className="absolute inset-0 opacity-100"
             style={{

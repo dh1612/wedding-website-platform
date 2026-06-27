@@ -139,6 +139,13 @@ export function AdminWeddingEditor({
   const mapSpotLines = (weddingData.travel.mapSpots ?? [])
     .map((spot) => [spot.label, spot.detail, spot.href].filter(Boolean).join(" | "))
     .join("\n");
+  const visualMapNodeLines = (weddingData.travel.visualMap?.nodes ?? [])
+    .map((node) => [node.id, node.label, node.detail ?? "", String(node.x), String(node.y), node.tone ?? "neutral"].join(" | "))
+    .join("\n");
+  const visualMapConnectionLines = (weddingData.travel.visualMap?.connections ?? [])
+    .map((connection) => [connection.from, connection.to, connection.label ?? ""].filter(Boolean).join(" | "))
+    .join("\n");
+  const styleOptions = weddingData.styleOptions ?? {};
   const visibility = weddingData.sectionVisibility;
   const websiteUrl = `https://${BRAND_DOMAIN}/${record.slug}`;
   const previewUrl = `https://${BRAND_DOMAIN}/preview/${record.slug}`;
@@ -590,6 +597,43 @@ export function AdminWeddingEditor({
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                 />
               </div>
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Presentation Controls</p>
+                <p className="prose-copy mt-3">
+                  Use these only when a couple wants a slightly more tailored look without changing the overall template.
+                </p>
+                <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  <SectionToggle
+                    name="compactSplitHero"
+                    label="Compact top hero panel"
+                    checked={styleOptions.compactSplitHero ?? false}
+                  />
+                  <SectionToggle
+                    name="disableSectionOrnaments"
+                    label="Remove section ornaments"
+                    checked={styleOptions.disableSectionOrnaments ?? false}
+                  />
+                  <SectionToggle
+                    name="hideHeaderCorners"
+                    label="Remove header corner ornaments"
+                    checked={styleOptions.hideHeaderCorners ?? false}
+                  />
+                </div>
+                <div className="mt-4 grid gap-4 md:grid-cols-2">
+                  <input
+                    name="heroImageBrightness"
+                    defaultValue={styleOptions.heroImageBrightness ?? ""}
+                    placeholder="Hero image brightness e.g. 1.1"
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                  />
+                  <input
+                    name="heroImageObjectPosition"
+                    defaultValue={styleOptions.heroImageObjectPosition ?? ""}
+                    placeholder="Hero crop position e.g. 52% 34%"
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                  />
+                </div>
+              </div>
             </div>
           </EditorAccordionSection>
 
@@ -946,6 +990,53 @@ export function AdminWeddingEditor({
                   placeholder={`Airport | Chania International Airport for arrivals and taxis\nVenue | En Kipo for the ceremony and celebrations | https://maps.google.com/...`}
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
                 />
+              </div>
+              <div className="space-y-2 md:col-span-2 rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Optional visual weekend map</p>
+                <p className="prose-copy mt-3">
+                  This powers the custom visual map card. Use one node per line in this format:
+                  <span className="font-medium text-[var(--foreground)]"> id | label | detail | x | y | tone</span>.
+                  Tones can be <span className="font-medium text-[var(--foreground)]">neutral</span>, <span className="font-medium text-[var(--foreground)]">highlight</span>, or <span className="font-medium text-[var(--foreground)]">secondary</span>.
+                </p>
+                <div className="mt-4 grid gap-4">
+                  <input
+                    name="travelVisualMapEyebrow"
+                    defaultValue={weddingData.travel.visualMap?.eyebrow ?? ""}
+                    placeholder="Weekend map"
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                  />
+                  <input
+                    name="travelVisualMapTitle"
+                    defaultValue={weddingData.travel.visualMap?.title ?? ""}
+                    placeholder="Where each part of the weekend sits"
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                  />
+                  <textarea
+                    name="travelVisualMapDescription"
+                    defaultValue={weddingData.travel.visualMap?.description ?? ""}
+                    rows={3}
+                    placeholder="A simple visual guide to the key bases, airports, and celebrations across the weekend."
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                  />
+                  <textarea
+                    name="travelVisualMapNodes"
+                    defaultValue={visualMapNodeLines}
+                    rows={8}
+                    placeholder={`chania-airport | Chania Airport | Main arrival point for most guests. | 18 | 18 | secondary\nagia-marina | Agia Marina | Likely transport base for the main wedding day. | 46 | 40 | highlight`}
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                  />
+                  <p className="text-sm leading-6 text-[var(--muted)]">
+                    Connections use this format:
+                    <span className="font-medium text-[var(--foreground)]"> from-id | to-id | label (optional)</span>.
+                  </p>
+                  <textarea
+                    name="travelVisualMapConnections"
+                    defaultValue={visualMapConnectionLines}
+                    rows={5}
+                    placeholder={`chania-airport | chania-old-town | arrivals\nagia-marina | day-2 | wedding day`}
+                    className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                  />
+                </div>
               </div>
             </div>
 

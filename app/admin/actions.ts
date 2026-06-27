@@ -156,6 +156,60 @@ function parseMapSpotLine(line: string) {
   };
 }
 
+function parseVisualMapNodeLine(line: string) {
+  const parts = line
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (parts.length < 5) {
+    return null;
+  }
+
+  const [id, label, detail, xValue, yValue, tone] = parts;
+  const x = Number(xValue);
+  const y = Number(yValue);
+
+  if (!id || !label || Number.isNaN(x) || Number.isNaN(y)) {
+    return null;
+  }
+
+  return {
+    id,
+    label,
+    detail: detail || undefined,
+    x,
+    y,
+    tone:
+      tone === "highlight" || tone === "secondary" || tone === "neutral"
+        ? tone
+        : undefined
+  };
+}
+
+function parseVisualMapConnectionLine(line: string) {
+  const parts = line
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (parts.length < 2) {
+    return null;
+  }
+
+  const [from, to, label] = parts;
+
+  if (!from || !to) {
+    return null;
+  }
+
+  return {
+    from,
+    to,
+    label: label || undefined
+  };
+}
+
 function isValidRemoteImageUrl(value: string) {
   try {
     const parsed = new URL(value);
@@ -303,6 +357,9 @@ export async function updateWeddingContentAction(formData: FormData) {
   const travelTransportRichText = String(formData.get("travelTransport") || "").trim();
   const travelParkingRichText = String(formData.get("travelParking") || "").trim();
   const travelDirectionsRichText = String(formData.get("travelDirections") || "").trim();
+  const travelVisualMapEyebrow = String(formData.get("travelVisualMapEyebrow") || "").trim();
+  const travelVisualMapTitle = String(formData.get("travelVisualMapTitle") || "").trim();
+  const travelVisualMapDescription = String(formData.get("travelVisualMapDescription") || "").trim();
   const rsvpFormIntroRichText = String(formData.get("rsvpFormIntro") || "").trim();
   const rsvpTitleRichText = String(formData.get("rsvpSectionTitle") || "").trim();
   const rsvpDescriptionRichText = String(formData.get("rsvpSectionDescription") || "").trim();
@@ -404,6 +461,18 @@ export async function updateWeddingContentAction(formData: FormData) {
     .map((item) => item.trim())
     .filter(Boolean)
     .filter(isValidRemoteImageUrl);
+  const visualMapNodes = String(formData.get("travelVisualMapNodes") || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map(parseVisualMapNodeLine)
+    .filter((item): item is NonNullable<ReturnType<typeof parseVisualMapNodeLine>> => Boolean(item));
+  const visualMapConnections = String(formData.get("travelVisualMapConnections") || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map(parseVisualMapConnectionLine)
+    .filter((item): item is NonNullable<ReturnType<typeof parseVisualMapConnectionLine>> => Boolean(item));
 
   const questionLabels = formData.getAll("rsvpQuestionLabel").map((value) => String(value));
   const questionIds = formData.getAll("rsvpQuestionId").map((value) => String(value));
@@ -688,6 +757,15 @@ export async function updateWeddingContentAction(formData: FormData) {
       relaxedNote:
         String(formData.get("travelRelaxedNote") || "").trim() || weddingData.travel.relaxedNote,
       mapSpots: mapSpots.length ? mapSpots : weddingData.travel.mapSpots,
+      visualMap: visualMapNodes.length
+        ? {
+            eyebrow: travelVisualMapEyebrow || undefined,
+            title: travelVisualMapTitle || undefined,
+            description: travelVisualMapDescription || undefined,
+            nodes: visualMapNodes,
+            connections: visualMapConnections
+          }
+        : undefined,
       transport:
         stripHtml(travelTransportRichText) || weddingData.travel.transport,
       transportHtml:
@@ -828,6 +906,14 @@ export async function updateWeddingContentAction(formData: FormData) {
       }
     },
     aiConciergeEnabled: String(formData.get("packageTier") || "") !== "basic",
+    styleOptions: {
+      disableSectionOrnaments: formData.has("disableSectionOrnaments"),
+      hideHeaderCorners: formData.has("hideHeaderCorners"),
+      compactSplitHero: formData.has("compactSplitHero"),
+      heroImageBrightness: Number(String(formData.get("heroImageBrightness") || "").trim()) || undefined,
+      heroImageObjectPosition:
+        String(formData.get("heroImageObjectPosition") || "").trim() || undefined
+    },
     sectionVisibility: {
       heroEyebrow: formData.has("showHeroEyebrow"),
       date: formData.has("showDate"),

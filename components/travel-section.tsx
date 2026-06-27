@@ -3,6 +3,7 @@ import { getWeddingData } from "@/lib/wedding-data";
 import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
+import { TravelVisualMap } from "@/components/travel-visual-map";
 import { VenueSneakPeek } from "@/components/venue-sneak-peek";
 
 type TravelSectionProps = {
@@ -96,11 +97,6 @@ export function TravelSection({
                 ) : null}
               </article>
             ) : null}
-            {wedding.travel.sneakPeekImage ? (
-              <article className="sm:col-span-2">
-                <VenueSneakPeek imageUrl={wedding.travel.sneakPeekImage} />
-              </article>
-            ) : null}
             {showMapUtility ? (
               <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
                 <div className="space-y-6">
@@ -144,6 +140,11 @@ export function TravelSection({
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    {wedding.travel.visualMap?.nodes?.length ? (
+                      <div className="md:col-span-2 xl:col-span-3">
+                        <TravelVisualMap visualMap={wedding.travel.visualMap} />
+                      </div>
+                    ) : null}
                     {resolvedMapSpots.map((spot) => (
                       <div
                         key={`${spot.label}-${spot.detail}`}
@@ -274,6 +275,15 @@ export function TravelSection({
                     Open map
                   </a>
                 ) : null}
+              </article>
+            ) : null}
+            {wedding.travel.sneakPeekImage ? (
+              <article className="sm:col-span-2">
+                <VenueSneakPeek
+                  imageUrl={wedding.travel.sneakPeekImage}
+                  eyebrow="Venue Sneak Peek"
+                  title={`A first look at ${wedding.reception.location || wedding.ceremony.location || "the venue"}`}
+                />
               </article>
             ) : null}
           </div>

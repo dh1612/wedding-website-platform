@@ -48,6 +48,7 @@ export function SiteHeader({
   const isFloralFrameTheme = themeId === "petal-script";
   const isSoftBlushTheme = themeId === "soft-blush";
   const usesDecorativeHeader = isFloralFrameTheme || isSoftBlushTheme;
+  const hideHeaderCorners = Boolean(wedding.styleOptions?.hideHeaderCorners);
   const adminNavItems =
     adminNavItemsOverride ??
     (portalType === "operator" ? operatorNavItems : portalNavItems);
@@ -99,17 +100,17 @@ export function SiteHeader({
               : "romantic-header-shell mx-auto w-full max-w-6xl rounded-[2.4rem] border border-[var(--border)] bg-white/92 px-6 py-8 shadow-[var(--shadow)] sm:px-10 lg:px-14 lg:py-10"
           }
         >
-          {isFloralFrameTheme ? (
+          {!hideHeaderCorners && isFloralFrameTheme ? (
             <>
               <span className="floral-corner floral-corner-left" aria-hidden="true" />
               <span className="floral-corner floral-corner-right" aria-hidden="true" />
             </>
-          ) : (
+          ) : !hideHeaderCorners ? (
             <>
               <span className="romantic-corner romantic-corner-left" aria-hidden="true" />
               <span className="romantic-corner romantic-corner-right" aria-hidden="true" />
             </>
-          )}
+          ) : null}
           <div className="relative min-w-0">
             {mode === "scroll" && scrollNavItems.length ? (
               <div className="absolute right-0 top-0">

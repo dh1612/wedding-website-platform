@@ -104,7 +104,7 @@ export function PublicRSVPForm({
       (question) => question.required && !customAnswers[question.id]?.trim()
     );
 
-    if (missingCustomQuestion) {
+    if (isAttending && missingCustomQuestion) {
       setErrorMessage(`Please answer: ${missingCustomQuestion.label}`);
       return;
     }
@@ -372,7 +372,7 @@ export function PublicRSVPForm({
         </div>
       ) : null}
 
-      {settings.customQuestions.length ? (
+      {isAttending && settings.customQuestions.length ? (
         <div className="space-y-4">
           {settings.customQuestions.map((question) => (
             <label key={question.id} className="space-y-2">

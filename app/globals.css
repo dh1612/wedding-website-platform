@@ -58,6 +58,11 @@ main[data-theme] .section-shell::before {
   opacity: 0.8;
 }
 
+main[data-section-ornaments="off"] .section-shell::before,
+main[data-section-ornaments="off"] .section-shell::after {
+  display: none;
+}
+
 main[data-theme] .section-heading-block {
   position: relative;
   padding-top: 2rem;
