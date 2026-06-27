@@ -152,7 +152,7 @@ function parseMapSpotLine(line: string) {
   return {
     label,
     detail,
-    href: href && isValidRemoteImageUrl(href) ? href : undefined
+    href: href && isValidExternalUrl(href) ? href : undefined
   };
 }
 
@@ -210,13 +210,27 @@ function parseVisualMapConnectionLine(line: string) {
   };
 }
 
-function isValidRemoteImageUrl(value: string) {
+function isValidExternalUrl(value: string) {
   try {
     const parsed = new URL(value);
     return parsed.protocol === "http:" || parsed.protocol === "https:";
   } catch {
     return false;
   }
+}
+
+function isValidImageSource(value: string) {
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return false;
+  }
+
+  if (trimmed.startsWith("/")) {
+    return true;
+  }
+
+  return isValidExternalUrl(trimmed);
 }
 
 function sanitizeFilenamePart(value: string) {
@@ -460,7 +474,7 @@ export async function updateWeddingContentAction(formData: FormData) {
     .split("\n")
     .map((item) => item.trim())
     .filter(Boolean)
-    .filter(isValidRemoteImageUrl);
+    .filter(isValidImageSource);
   const visualMapNodes = String(formData.get("travelVisualMapNodes") || "")
     .split("\n")
     .map((item) => item.trim())
@@ -597,7 +611,7 @@ export async function updateWeddingContentAction(formData: FormData) {
   ]
     .map((item) => item.trim())
     .filter(Boolean)
-    .filter(isValidRemoteImageUrl);
+    .filter(isValidImageSource);
 
   const nextContent = {
     ...weddingData,

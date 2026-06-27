@@ -13,7 +13,7 @@ import type {
 
 const defaultWeddingData = weddingData as unknown as WeddingData;
 
-function isValidRemoteImageUrl(value: unknown): value is string {
+function isValidExternalUrl(value: unknown): value is string {
   if (typeof value !== "string" || !value.trim()) {
     return false;
   }
@@ -26,12 +26,30 @@ function isValidRemoteImageUrl(value: unknown): value is string {
   }
 }
 
+function isValidImageSource(value: unknown): value is string {
+  if (typeof value !== "string") {
+    return false;
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return false;
+  }
+
+  if (trimmed.startsWith("/")) {
+    return true;
+  }
+
+  return isValidExternalUrl(trimmed);
+}
+
 function coerceImageList(input: unknown, fallback: string[]) {
   if (!Array.isArray(input)) {
     return fallback;
   }
 
-  const validImages = input.filter(isValidRemoteImageUrl);
+  const validImages = input.filter(isValidImageSource);
   return validImages.length ? validImages : fallback;
 }
 
@@ -179,7 +197,7 @@ function coerceStoryTimeline(input: unknown): StoryTimelineItem[] {
       const dateLabel = typeof source.dateLabel === "string" ? source.dateLabel.trim() : "";
       const title = typeof source.title === "string" ? source.title.trim() : "";
       const note = typeof source.note === "string" ? source.note.trim() : "";
-      const image = isValidRemoteImageUrl(source.image) ? source.image : undefined;
+      const image = isValidImageSource(source.image) ? source.image : undefined;
 
       if (!dateLabel || !title) {
         return null;
@@ -270,7 +288,7 @@ function coerceSuppliers(input: unknown): SupplierItem[] {
         name,
         category: category || undefined,
         note: note || "A trusted local recommendation for the wedding weekend.",
-        link: isValidRemoteImageUrl(link) ? link : undefined
+        link: isValidExternalUrl(link) ? link : undefined
       };
     })
     .filter((item): item is SupplierItem => item !== null);
@@ -321,7 +339,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
       typeof source.announcementHtml === "string" && source.announcementHtml.trim()
         ? source.announcementHtml
         : undefined,
-    heroImage: isValidRemoteImageUrl(source.heroImage)
+    heroImage: isValidImageSource(source.heroImage)
       ? source.heroImage
       : fallback.heroImage,
     story: {
@@ -335,13 +353,13 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.story.html
           : undefined,
       featureImage:
-        typeof source.story?.featureImage === "string" && isValidRemoteImageUrl(source.story.featureImage)
+        typeof source.story?.featureImage === "string" && isValidImageSource(source.story.featureImage)
           ? source.story.featureImage
           : undefined,
       featureImages:
         Array.isArray(source.story?.featureImages)
-          ? source.story.featureImages.filter(isValidRemoteImageUrl)
-          : typeof source.story?.featureImage === "string" && isValidRemoteImageUrl(source.story.featureImage)
+          ? source.story.featureImages.filter(isValidImageSource)
+          : typeof source.story?.featureImage === "string" && isValidImageSource(source.story.featureImage)
             ? [source.story.featureImage]
             : [],
       timeline: coerceStoryTimeline(source.story?.timeline),
@@ -505,7 +523,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
           ? source.travel.locationOverviewHtml
           : undefined,
       sneakPeekImage:
-        typeof source.travel?.sneakPeekImage === "string" && isValidRemoteImageUrl(source.travel.sneakPeekImage)
+        typeof source.travel?.sneakPeekImage === "string" && isValidImageSource(source.travel.sneakPeekImage)
           ? source.travel.sneakPeekImage
           : "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80",
       relaxedNote:
@@ -591,7 +609,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
             return {
               name: name || "Guest accommodation",
               note: note || "Recommended for guests travelling to the wedding.",
-              link: isValidRemoteImageUrl(link) ? link : undefined,
+              link: isValidExternalUrl(link) ? link : undefined,
               linkLabel: linkLabel || undefined
             };
           })
