@@ -1,12 +1,11 @@
-import Image from "next/image";
 import type { WeddingData } from "@/types/wedding";
 import { getWeddingData } from "@/lib/wedding-data";
 import { getPreviewFallbackContent } from "@/lib/preview-fallbacks";
 import { RichTextContent } from "@/components/rich-text-content";
 import { SectionHeading } from "@/components/section-heading";
 import { TravelVisualMap } from "@/components/travel-visual-map";
+import { TravelMapImageLightbox } from "@/components/travel-map-image-lightbox";
 import { VenueSneakPeek } from "@/components/venue-sneak-peek";
-import { shouldBypassImageOptimization } from "@/lib/image-utils";
 
 type TravelSectionProps = {
   weddingData?: WeddingData;
@@ -145,18 +144,7 @@ export function TravelSection({
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {hasMapImage ? (
                       <div className="md:col-span-2 xl:col-span-3">
-                        <div className="overflow-hidden rounded-[1.35rem] border border-[var(--border)] bg-white/82 p-3 sm:p-4">
-                          <div className="relative overflow-hidden rounded-[1rem] border border-[var(--border)] bg-[#f8f6f1]">
-                            <Image
-                              src={wedding.travel.mapImage!}
-                              alt="Weekend map for guests"
-                              width={1600}
-                              height={1000}
-                              unoptimized={shouldBypassImageOptimization(wedding.travel.mapImage)}
-                              className="h-auto w-full object-cover"
-                            />
-                          </div>
-                        </div>
+                        <TravelMapImageLightbox src={wedding.travel.mapImage!} />
                       </div>
                     ) : wedding.travel.visualMap?.nodes?.length ? (
                       <div className="md:col-span-2 xl:col-span-3">

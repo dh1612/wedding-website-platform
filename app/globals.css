@@ -73,6 +73,19 @@ main[data-section-ornaments="off"] .romantic-corner::after {
   content: none !important;
 }
 
+main[data-section-ornaments="off"] .section-shell::before,
+main[data-section-ornaments="off"] .section-shell::after,
+main[data-section-ornaments="off"][data-preview-context="draft"] .section-shell::before,
+main[data-section-ornaments="off"][data-preview-context="draft"] .section-shell::after,
+main[data-section-ornaments="off"][data-preview-context="sample"] .section-shell::before,
+main[data-section-ornaments="off"][data-preview-context="sample"] .section-shell::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
 main[data-theme] .section-heading-block {
   position: relative;
   padding-top: 2rem;
