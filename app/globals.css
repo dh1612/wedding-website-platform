@@ -63,6 +63,16 @@ main[data-section-ornaments="off"] .section-shell::after {
   display: none;
 }
 
+main[data-section-ornaments="off"] .section-heading-block::before,
+main[data-section-ornaments="off"] .section-heading-block::after,
+main[data-section-ornaments="off"] .floral-corner,
+main[data-section-ornaments="off"] .romantic-corner,
+main[data-section-ornaments="off"] .romantic-corner::before,
+main[data-section-ornaments="off"] .romantic-corner::after {
+  display: none !important;
+  content: none !important;
+}
+
 main[data-theme] .section-heading-block {
   position: relative;
   padding-top: 2rem;
