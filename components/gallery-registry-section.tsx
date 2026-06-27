@@ -21,25 +21,34 @@ export function GalleryRegistrySection({
   const canUseThemeFallbackImages = !weddingData;
   const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
   const showStory = previewMode || (wedding.sectionVisibility?.story ?? true);
-  const showGallery = previewMode || (wedding.sectionVisibility?.gallery ?? true);
+  const storyTimeline = wedding.story.timeline ?? [];
+  const timelineOnly = Boolean(wedding.story.timelineOnly) && storyTimeline.length > 0;
+  const showGallery = timelineOnly ? false : previewMode || (wedding.sectionVisibility?.gallery ?? true);
   const showRegistry = wedding.sectionVisibility?.registry ?? true;
-  const storyImages =
-    wedding.story.featureImages?.length
+  const storyImages = timelineOnly
+    ? []
+    : wedding.story.featureImages?.length
       ? wedding.story.featureImages
       : wedding.story.featureImage
         ? [wedding.story.featureImage]
         : [];
-  const previewStoryImages = storyImages.length
-    ? storyImages
-    : canUseThemeFallbackImages
-      ? fallback?.storyImages ?? []
-      : [];
+  const previewStoryImages = timelineOnly
+    ? []
+    : storyImages.length
+      ? storyImages
+      : canUseThemeFallbackImages
+        ? fallback?.storyImages ?? []
+        : [];
   const storyParagraphs =
     wedding.story.paragraphs.length ? wedding.story.paragraphs : fallback?.storyParagraphs ?? [];
-  const storyTimeline = wedding.story.timeline ?? [];
-  const timelineOnly = Boolean(wedding.story.timelineOnly) && storyTimeline.length > 0;
   const galleryImages =
-    wedding.gallery.images.length ? wedding.gallery.images : previewMode ? previewStoryImages.slice(0, 2) : [];
+    timelineOnly
+      ? []
+      : wedding.gallery.images.length
+        ? wedding.gallery.images
+        : previewMode
+          ? previewStoryImages.slice(0, 2)
+          : [];
   const hasStoryImage = previewStoryImages.length > 0;
   const hasGalleryImages = galleryImages.length > 0;
 
