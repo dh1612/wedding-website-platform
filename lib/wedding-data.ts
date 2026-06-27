@@ -362,6 +362,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
           : typeof source.story?.featureImage === "string" && isValidImageSource(source.story.featureImage)
             ? [source.story.featureImage]
             : [],
+      timelineOnly: Boolean(source.story?.timelineOnly),
       timeline: coerceStoryTimeline(source.story?.timeline),
       paragraphs:
         Array.isArray(source.story?.paragraphs) ? source.story.paragraphs : fallback.story.paragraphs

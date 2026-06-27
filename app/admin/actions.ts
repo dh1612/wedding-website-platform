@@ -713,6 +713,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       html: storyRichText || weddingData.story.html,
       featureImage: mergedStoryFeatureImages[0] || undefined,
       featureImages: mergedStoryFeatureImages,
+      timelineOnly: formData.has("storyTimelineOnly"),
       timeline: storyTimeline
     },
     gallery: {

@@ -37,6 +37,7 @@ export function GalleryRegistrySection({
   const storyParagraphs =
     wedding.story.paragraphs.length ? wedding.story.paragraphs : fallback?.storyParagraphs ?? [];
   const storyTimeline = wedding.story.timeline ?? [];
+  const timelineOnly = Boolean(wedding.story.timelineOnly) && storyTimeline.length > 0;
   const galleryImages =
     wedding.gallery.images.length ? wedding.gallery.images : previewMode ? previewStoryImages.slice(0, 2) : [];
   const hasStoryImage = previewStoryImages.length > 0;
@@ -59,23 +60,27 @@ export function GalleryRegistrySection({
               <div className="space-y-5">
                 {showStory ? (
                   <>
-                    <SectionHeading
-                      eyebrow="Our Story"
-                      title={wedding.story.heading}
-                      titleHtml={wedding.story.headingHtml}
-                      description="A few favourite moments and a little of the story behind the day."
-                    />
-                    <div className="space-y-4">
-                      {wedding.story.html ? (
-                        <RichTextContent html={wedding.story.html} className="text-lg leading-8" />
-                      ) : (
-                        storyParagraphs.map((paragraph) => (
-                          <p key={paragraph} className="prose-copy text-lg">
-                            {paragraph}
-                          </p>
-                          ))
-                      )}
-                    </div>
+                    {!timelineOnly ? (
+                      <>
+                        <SectionHeading
+                          eyebrow="Our Story"
+                          title={wedding.story.heading}
+                          titleHtml={wedding.story.headingHtml}
+                          description="A few favourite moments and a little of the story behind the day."
+                        />
+                        <div className="space-y-4">
+                          {wedding.story.html ? (
+                            <RichTextContent html={wedding.story.html} className="text-lg leading-8" />
+                          ) : (
+                            storyParagraphs.map((paragraph) => (
+                              <p key={paragraph} className="prose-copy text-lg">
+                                {paragraph}
+                              </p>
+                              ))
+                          )}
+                        </div>
+                      </>
+                    ) : null}
                     {storyTimeline.length ? (
                       <div className="mt-10 rounded-[1.6rem] border border-[var(--border)] bg-white/60 px-4 py-6 sm:px-6 sm:py-8">
                         <div className="relative space-y-6 sm:space-y-7">
@@ -148,7 +153,7 @@ export function GalleryRegistrySection({
               </div>
               {(hasStoryImage || (showGallery && hasGalleryImages)) ? (
                 <div>
-                  {hasStoryImage ? (
+                  {!timelineOnly && hasStoryImage ? (
                     <div
                       className={`grid gap-4 ${
                         previewStoryImages.length === 1

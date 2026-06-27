@@ -175,6 +175,7 @@ export type WeddingData = {
     html?: string;
     featureImage?: string;
     featureImages?: string[];
+    timelineOnly?: boolean;
     timeline?: StoryTimelineItem[];
   };
   ceremony: WeddingEvent;

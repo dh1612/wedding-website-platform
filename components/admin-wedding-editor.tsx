@@ -1291,6 +1291,11 @@ export function AdminWeddingEditor({
                   label="Show gallery images"
                   checked={visibility?.gallery ?? true}
                 />
+                <SectionToggle
+                  name="storyTimelineOnly"
+                  label="Use timeline-only layout"
+                  checked={weddingData.story.timelineOnly ?? false}
+                />
               </div>
               <RichTextEditorField
                 name="storyHeading"
