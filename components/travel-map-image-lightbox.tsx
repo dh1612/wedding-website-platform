@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { shouldBypassImageOptimization } from "@/lib/image-utils";
 
@@ -14,6 +15,11 @@ export function TravelMapImageLightbox({
   alt = "Weekend map for guests"
 }: TravelMapImageLightboxProps) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) {
@@ -21,10 +27,22 @@ export function TravelMapImageLightbox({
     }
 
     const previousOverflow = document.body.style.overflow;
+    const previousPosition = document.body.style.position;
+    const previousTop = document.body.style.top;
+    const previousWidth = document.body.style.width;
+    const scrollY = window.scrollY;
+
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.style.position = previousPosition;
+      document.body.style.top = previousTop;
+      document.body.style.width = previousWidth;
+      window.scrollTo(0, scrollY);
     };
   }, [open]);
 
@@ -53,36 +71,37 @@ export function TravelMapImageLightbox({
         </div>
       </button>
 
-      {open ? (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(24,20,17,0.84)] px-3 py-3 backdrop-blur-sm sm:px-6 sm:py-6"
-          onClick={() => setOpen(false)}
-        >
-          <div
-            className="relative flex h-full w-full items-center justify-center"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
+      {mounted && open
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-[rgba(24,20,17,0.88)] px-3 py-3 backdrop-blur-sm sm:px-6 sm:py-6"
               onClick={() => setOpen(false)}
-              className="absolute right-1 top-1 z-10 rounded-full bg-white/92 px-3 py-2 text-sm font-medium text-[var(--foreground)] shadow-[0_12px_24px_rgba(67,45,33,0.18)] sm:right-3 sm:top-3"
             >
-              Close
-            </button>
-            <div className="flex h-full w-full items-center justify-center">
-              <Image
-                src={src}
-                alt={alt}
-                width={1800}
-                height={1200}
-                unoptimized={shouldBypassImageOptimization(src)}
-                priority
-                className="mx-auto h-auto max-h-[92dvh] w-auto max-w-[94vw] rounded-[0.9rem] object-contain shadow-[0_20px_50px_rgba(0,0,0,0.32)] sm:max-h-[90vh] sm:max-w-[90vw]"
-              />
-            </div>
-          </div>
-        </div>
-      ) : null}
+              <div
+                className="relative flex h-full w-full items-center justify-center overflow-hidden"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="absolute right-1 top-1 z-10 rounded-full bg-white/92 px-3 py-2 text-sm font-medium text-[var(--foreground)] shadow-[0_12px_24px_rgba(67,45,33,0.18)] sm:right-3 sm:top-3"
+                >
+                  Close
+                </button>
+                <Image
+                  src={src}
+                  alt={alt}
+                  width={1800}
+                  height={1200}
+                  unoptimized={shouldBypassImageOptimization(src)}
+                  priority
+                  className="mx-auto h-auto max-h-[92dvh] w-auto max-w-[94vw] rounded-[0.9rem] object-contain shadow-[0_20px_50px_rgba(0,0,0,0.32)] sm:max-h-[90vh] sm:max-w-[90vw]"
+                />
+              </div>
+            </div>,
+            document.body
+          )
+        : null}
     </>
   );
 }
