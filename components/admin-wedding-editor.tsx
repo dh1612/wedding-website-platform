@@ -239,6 +239,7 @@ export function AdminWeddingEditor({
   const galleryDescriptionHtml = weddingData.gallery.descriptionHtml
     ? weddingData.gallery.descriptionHtml
     : simpleTextHtml(weddingData.gallery.description);
+  const storyTimelineSlots = Array.from({ length: 6 }, (_, index) => weddingData.story.timeline?.[index]);
   const scheduleHeadingHtml = weddingData.scheduleHeadingHtml
     ? weddingData.scheduleHeadingHtml
     : simpleTextHtml(weddingData.scheduleHeading ?? "What’s Happening And When");
@@ -1333,6 +1334,56 @@ export function AdminWeddingEditor({
                       <input
                         name={urlName}
                         defaultValue={existingImage}
+                        placeholder="https://..."
+                        className="mt-3 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
+                <p className="eyebrow">Story Timeline</p>
+                <p className="prose-copy mt-3">
+                  Add up to six milestones for the romantic timeline layout. Keep each one short and meaningful,
+                  with an optional circular image beside the moment.
+                </p>
+                {storyTimelineSlots.map((item, index) => {
+                  const slot = index + 1;
+                  return (
+                    <div key={slot} className="mt-4 rounded-[1rem] border border-[var(--border)] bg-[var(--panel)] p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--muted)]">
+                        Milestone {slot}
+                      </p>
+                      <div className="mt-3 grid gap-3 md:grid-cols-2">
+                        <input
+                          name={`storyTimelineDateLabel${slot}`}
+                          defaultValue={item?.dateLabel ?? ""}
+                          placeholder="Summer 2020"
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        />
+                        <input
+                          name={`storyTimelineTitle${slot}`}
+                          defaultValue={item?.title ?? ""}
+                          placeholder="We met"
+                          className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                        />
+                      </div>
+                      <textarea
+                        name={`storyTimelineNote${slot}`}
+                        defaultValue={item?.note ?? ""}
+                        rows={3}
+                        placeholder="A short line about the moment..."
+                        className="mt-3 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+                      />
+                      <input
+                        name={`storyTimelineImageFile${slot}`}
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/avif"
+                        className="mt-3 block w-full text-sm text-[var(--foreground)] file:mr-4 file:rounded-full file:border-0 file:bg-[#184b38] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+                      />
+                      <input
+                        name={`storyTimelineImage${slot}`}
+                        defaultValue={item?.image ?? ""}
                         placeholder="https://..."
                         className="mt-3 w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                       />

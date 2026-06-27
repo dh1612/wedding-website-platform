@@ -394,6 +394,15 @@ export async function updateWeddingContentAction(formData: FormData) {
   const storyFeatureImageField = String(formData.get("storyFeatureImage") || "").trim();
   const storyFeatureImageFieldTwo = String(formData.get("storyFeatureImage2") || "").trim();
   const storyFeatureImageFieldThree = String(formData.get("storyFeatureImage3") || "").trim();
+  const storyTimelineFields = Array.from({ length: 6 }, (_, index) => {
+    const slot = index + 1;
+    return {
+      dateLabel: String(formData.get(`storyTimelineDateLabel${slot}`) || "").trim(),
+      title: String(formData.get(`storyTimelineTitle${slot}`) || "").trim(),
+      note: String(formData.get(`storyTimelineNote${slot}`) || "").trim(),
+      image: String(formData.get(`storyTimelineImage${slot}`) || "").trim()
+    };
+  });
   const travelSneakPeekImageField = String(formData.get("travelSneakPeekImage") || "").trim();
   const galleryImagesField = String(formData.get("galleryImages") || "");
 
@@ -541,6 +550,7 @@ export async function updateWeddingContentAction(formData: FormData) {
   let uploadedTravelMapImage: string | null = null;
   let uploadedSneakPeekImage: string | null = null;
   let uploadedGalleryImages: string[] = [];
+  let uploadedStoryTimelineImages: Array<string | null> = [];
 
   try {
     uploadedHeroImage = await uploadImageFile({
@@ -602,6 +612,17 @@ export async function updateWeddingContentAction(formData: FormData) {
     uploadedGalleryImages = galleryFileUploads.filter(
       (value): value is string => Boolean(value)
     );
+
+    uploadedStoryTimelineImages = await Promise.all(
+      Array.from({ length: 6 }, (_, index) =>
+        uploadImageFile({
+          file: formData.get(`storyTimelineImageFile${index + 1}`) as File | null,
+          weddingSlug: nextSlug,
+          folder: "story-timeline",
+          fallbackLabel: `milestone-${index + 1}`
+        })
+      )
+    );
   } catch (error) {
     console.error("Image upload failed", error);
     redirect(`${getAdminWeddingEditPath(currentSlug)}?error=upload`);
@@ -620,6 +641,18 @@ export async function updateWeddingContentAction(formData: FormData) {
     .map((item) => item.trim())
     .filter(Boolean)
     .filter(isValidImageSource);
+  const storyTimeline = storyTimelineFields
+    .map((item, index) => {
+      const resolvedImage = (uploadedStoryTimelineImages[index] || item.image).trim();
+      return {
+        dateLabel: item.dateLabel,
+        title: item.title,
+        note: item.note || undefined,
+        image: isValidImageSource(resolvedImage) ? resolvedImage : undefined
+      };
+    })
+    .filter((item) => item.dateLabel && item.title)
+    .slice(0, 6);
   const travelMapImageField = String(formData.get("travelMapImage") || "").trim();
 
   const nextContent = {
@@ -679,7 +712,8 @@ export async function updateWeddingContentAction(formData: FormData) {
             : weddingData.story.paragraphs,
       html: storyRichText || weddingData.story.html,
       featureImage: mergedStoryFeatureImages[0] || undefined,
-      featureImages: mergedStoryFeatureImages
+      featureImages: mergedStoryFeatureImages,
+      timeline: storyTimeline
     },
     gallery: {
       ...weddingData.gallery,

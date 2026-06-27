@@ -77,28 +77,62 @@ export function GalleryRegistrySection({
                       )}
                     </div>
                     {storyTimeline.length ? (
-                      <div className="mt-8 space-y-4">
-                        {storyTimeline.map((item, index) => (
-                          <article
-                            key={`${item.dateLabel}-${item.title}-${index}`}
-                            className="accent-panel rounded-[1.35rem] p-5"
-                          >
-                            {item.image ? (
-                              <div className="relative mb-4 min-h-[180px] overflow-hidden rounded-[1.1rem]">
-                                <Image
-                                  src={item.image}
-                                  alt={`${item.title} photo`}
-                                  fill
-                                  unoptimized={shouldBypassImageOptimization(item.image)}
-                                  className="object-cover"
-                                />
-                              </div>
-                            ) : null}
-                            <p className="eyebrow">{item.dateLabel}</p>
-                            <h3 className="mt-3 text-2xl">{item.title}</h3>
-                            {item.note ? <p className="prose-copy mt-2">{item.note}</p> : null}
-                          </article>
-                        ))}
+                      <div className="mt-10 rounded-[1.6rem] border border-[var(--border)] bg-white/60 px-4 py-6 sm:px-6 sm:py-8">
+                        <div className="relative space-y-6 sm:space-y-7">
+                          <div className="absolute bottom-2 left-[1.55rem] top-2 w-px bg-[color:var(--accent)]/25 md:left-1/2 md:-translate-x-1/2" />
+                          {storyTimeline.slice(0, 6).map((item, index) => {
+                            const isEven = index % 2 === 0;
+
+                            return (
+                              <article
+                                key={`${item.dateLabel}-${item.title}-${index}`}
+                                className="relative grid gap-4 md:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] md:items-center"
+                              >
+                                <div
+                                  className={`pl-12 md:pl-0 ${
+                                    isEven ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"
+                                  }`}
+                                >
+                                  <div className="accent-panel rounded-[1.35rem] px-5 py-4">
+                                    <p className="eyebrow">{item.dateLabel}</p>
+                                    <h3 className="mt-2 text-[1.45rem] leading-tight sm:text-[1.65rem]">
+                                      {item.title}
+                                    </h3>
+                                    {item.note ? (
+                                      <p className="prose-copy mt-2 text-base leading-7">{item.note}</p>
+                                    ) : null}
+                                  </div>
+                                </div>
+
+                                <div className="absolute left-[1.05rem] top-5 z-10 md:static md:left-auto md:top-auto md:col-start-2 md:flex md:justify-center">
+                                  <span className="block h-4 w-4 rounded-full border-2 border-[var(--accent)] bg-[var(--panel)] shadow-[0_0_0_6px_rgba(255,251,245,0.96)]" />
+                                </div>
+
+                                <div
+                                  className={`pl-12 md:pl-0 ${
+                                    isEven ? "md:col-start-3 md:justify-self-start" : "md:col-start-1 md:justify-self-end"
+                                  }`}
+                                >
+                                  {item.image ? (
+                                    <div className="relative h-24 w-24 overflow-hidden rounded-full border-[8px] border-white/95 shadow-[0_14px_34px_rgba(62,42,24,0.14)] sm:h-28 sm:w-28 md:h-32 md:w-32">
+                                      <Image
+                                        src={item.image}
+                                        alt={`${item.title} photo`}
+                                        fill
+                                        unoptimized={shouldBypassImageOptimization(item.image)}
+                                        className="object-cover"
+                                      />
+                                    </div>
+                                  ) : (
+                                    <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--panel)] text-[0.7rem] uppercase tracking-[0.22em] text-[var(--muted)] sm:h-28 sm:w-28 md:h-32 md:w-32">
+                                      Moment
+                                    </div>
+                                  )}
+                                </div>
+                              </article>
+                            );
+                          })}
+                        </div>
                       </div>
                     ) : null}
                   </>
