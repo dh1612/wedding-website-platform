@@ -7,11 +7,23 @@ type TravelVisualMapProps = {
 function toneClasses(tone: TravelVisualMapNode["tone"]) {
   switch (tone) {
     case "highlight":
-      return "border-[var(--accent-strong)] bg-[var(--accent-strong)] text-[var(--accent-contrast)]";
+      return {
+        pin: "bg-[var(--accent-strong)] border-white",
+        badge: "bg-[var(--accent-strong)] text-[var(--accent-contrast)]",
+        card: "border-[var(--accent-strong)]/25 bg-[var(--accent-soft)]/55"
+      };
     case "secondary":
-      return "border-[var(--gold)] bg-[var(--accent-soft)] text-[var(--accent-strong)]";
+      return {
+        pin: "bg-[var(--gold)] border-white",
+        badge: "bg-[var(--gold)]/18 text-[var(--accent-strong)]",
+        card: "border-[var(--gold)]/30 bg-[#fff7ea]"
+      };
     default:
-      return "border-[var(--border)] bg-white/86 text-[var(--foreground)]";
+      return {
+        pin: "bg-[#86b6b0] border-white",
+        badge: "bg-[#edf6f4] text-[#3f726c]",
+        card: "border-[var(--border)] bg-white/88"
+      };
   }
 }
 
@@ -58,129 +70,115 @@ export function TravelVisualMap({ visualMap }: TravelVisualMapProps) {
         </div>
       ) : null}
 
-      <div className="relative overflow-hidden rounded-[1.35rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.42),rgba(255,248,236,0.72))] px-4 py-6 sm:px-6">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-70"
-          style={{
-            background:
-              "radial-gradient(circle at 10% 12%, rgba(255,255,255,0.84), transparent 18%), radial-gradient(circle at 84% 16%, rgba(215,176,106,0.14), transparent 20%), linear-gradient(180deg, rgba(255,255,255,0.08), transparent 18%)"
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-[7%] opacity-55"
-          style={{
-            background:
-              "radial-gradient(circle at 24% 26%, rgba(203, 228, 237, 0.58), transparent 18%), radial-gradient(circle at 50% 48%, rgba(203, 228, 237, 0.48), transparent 22%), radial-gradient(circle at 78% 70%, rgba(203, 228, 237, 0.42), transparent 18%)"
-          }}
-        />
-        <svg
-          className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] opacity-18"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M20 18C28 10 42 8 54 13C62 16 72 23 78 31C83 37 87 45 84 54C81 62 72 66 66 72C58 79 54 89 45 91C35 94 26 86 19 79C10 70 9 57 11 46C13 34 11 25 20 18Z"
-            fill="rgba(191, 222, 214, 0.85)"
+      <div className="rounded-[1.35rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.48),rgba(255,248,236,0.72))] p-4 sm:p-5">
+        <div className="relative overflow-hidden rounded-[1.2rem] border border-[var(--border)] bg-[linear-gradient(180deg,#f7fbfc,#f3eee5)] px-4 py-5 sm:px-6 sm:py-6">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-70"
+            style={{
+              background:
+                "radial-gradient(circle at 18% 26%, rgba(190,225,232,0.6), transparent 16%), radial-gradient(circle at 42% 54%, rgba(190,225,232,0.48), transparent 24%), radial-gradient(circle at 74% 72%, rgba(190,225,232,0.35), transparent 18%), radial-gradient(circle at 82% 18%, rgba(221,192,136,0.16), transparent 18%)"
+            }}
           />
-          <path
-            d="M34 16C45 18 55 25 60 36C65 47 64 59 57 69C52 76 43 83 34 83"
-            fill="none"
-            stroke="rgba(79, 133, 123, 0.45)"
-            strokeWidth="1.4"
-            strokeDasharray="4 5"
-            strokeLinecap="round"
-          />
-        </svg>
-
-        <div className="relative h-[640px] sm:h-[520px]">
-          <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
-            {connections.map((connection, index) => {
-              const from = byId.get(connection.from);
-              const to = byId.get(connection.to);
-
-              if (!from || !to) {
-                return null;
-              }
-
-              const x1 = `${from.x}%`;
-              const y1 = `${from.y}%`;
-              const x2 = `${to.x}%`;
-              const y2 = `${to.y}%`;
-              const midX = (from.x + to.x) / 2;
-              const midY = (from.y + to.y) / 2;
-
-              return (
-                <g key={`${connection.from}-${connection.to}-${index}`}>
-                  <line
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke="rgba(184,141,74,0.38)"
-                    strokeWidth="2"
-                    strokeDasharray="8 8"
-                  />
-                  {connection.label ? (
-                    <text
-                      x={`${midX}%`}
-                      y={`${midY - 1.5}%`}
-                      textAnchor="middle"
-                      fill="rgba(111,92,70,0.9)"
-                      fontSize="12"
-                      letterSpacing="0.06em"
-                    >
-                      {connection.label}
-                    </text>
-                  ) : null}
-                </g>
-              );
-            })}
+          <svg
+            className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] opacity-20"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M18 22C24 12 40 8 54 11C69 14 82 24 86 39C90 56 82 72 67 82C54 91 39 90 28 82C15 72 9 54 11 40C12 33 14 27 18 22Z"
+              fill="rgba(196, 225, 218, 0.88)"
+            />
+            <path
+              d="M30 18C42 20 52 26 58 35C64 44 66 56 62 67C58 76 50 82 40 85"
+              fill="none"
+              stroke="rgba(79,133,123,0.46)"
+              strokeWidth="1.6"
+              strokeDasharray="4 5"
+              strokeLinecap="round"
+            />
           </svg>
 
+          <div className="relative h-[320px] sm:h-[360px]">
+            <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
+              {connections.map((connection, index) => {
+                const from = byId.get(connection.from);
+                const to = byId.get(connection.to);
+
+                if (!from || !to) {
+                  return null;
+                }
+
+                return (
+                  <line
+                    key={`${connection.from}-${connection.to}-${index}`}
+                    x1={`${from.x}%`}
+                    y1={`${from.y}%`}
+                    x2={`${to.x}%`}
+                    y2={`${to.y}%`}
+                    stroke="rgba(184,141,74,0.34)"
+                    strokeWidth="2"
+                    strokeDasharray="7 7"
+                  />
+                );
+              })}
+            </svg>
+
+            {nodes.map((node) => {
+              const detail = getDetailParts(node.detail);
+              const tones = toneClasses(node.tone);
+
+              return (
+                <div
+                  key={node.id}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                >
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <span
+                      className={`h-5 w-5 rounded-full border-2 shadow-[0_8px_16px_rgba(67,45,33,0.14)] ${tones.pin}`}
+                    />
+                    <div className="max-w-[8rem] rounded-full bg-white/92 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--foreground)] shadow-[0_8px_16px_rgba(67,45,33,0.08)]">
+                      {node.label}
+                    </div>
+                    {detail.badge ? (
+                      <span className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${tones.badge}`}>
+                        {detail.badge}
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {nodes.map((node) => {
             const detail = getDetailParts(node.detail);
+            const tones = toneClasses(node.tone);
 
             return (
               <div
-                key={node.id}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                key={`${node.id}-detail`}
+                className={`rounded-[1.1rem] border p-4 shadow-[0_10px_24px_rgba(67,45,33,0.06)] ${tones.card}`}
               >
-                <div
-                  className={`relative w-[12.5rem] max-w-[42vw] rounded-[1.2rem] border p-3 pl-4 shadow-[0_16px_34px_rgba(67,45,33,0.12)] sm:w-[13.5rem] ${toneClasses(node.tone)}`}
-                >
-                  <span
-                    className={`absolute -left-3 top-4 h-6 w-6 rounded-full border-2 border-white shadow-[0_8px_18px_rgba(67,45,33,0.18)] ${
-                      node.tone === "highlight"
-                        ? "bg-[var(--accent-strong)]"
-                        : node.tone === "secondary"
-                          ? "bg-[var(--gold)]"
-                          : "bg-[#86b6b0]"
-                    }`}
-                  />
-                  <p className="text-sm font-semibold uppercase tracking-[0.16em]">{node.label}</p>
-                  {detail.badge ? (
-                    <span
-                      className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${
-                        node.tone === "highlight"
-                          ? "bg-white/18 text-[var(--accent-contrast)]"
-                          : "bg-white/72 text-[var(--accent-strong)]"
-                      }`}
-                    >
-                      {detail.badge}
-                    </span>
-                  ) : null}
-                  {detail.text ? (
-                    <p
-                      className={`mt-2 text-sm leading-6 ${
-                        node.tone === "highlight" ? "text-[var(--accent-contrast)]/92" : ""
-                      }`}
-                    >
-                      {detail.text}
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--foreground)]">
+                      {node.label}
                     </p>
-                  ) : null}
+                    {detail.badge ? (
+                      <span className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${tones.badge}`}>
+                        {detail.badge}
+                      </span>
+                    ) : null}
+                  </div>
+                  <span className={`mt-1 h-3 w-3 rounded-full ${tones.pin.split(" ")[0]}`} />
                 </div>
+                {detail.text ? (
+                  <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{detail.text}</p>
+                ) : null}
               </div>
             );
           })}
