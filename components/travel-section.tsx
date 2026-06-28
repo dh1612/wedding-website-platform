@@ -32,6 +32,7 @@ export function TravelSection({
   const hasLocationOverview = Boolean(
     wedding.travel.locationOverviewTitle || wedding.travel.locationOverviewHtml
   );
+  const shouldShowLocationOverview = hasLocationOverview || (previewMode && !weddingData);
   const showCeremony = previewMode || (visibility?.ceremonyCard ?? true);
   const showReception = previewMode || (visibility?.receptionCard ?? true);
   const showTransport = previewMode || (visibility?.transportCard ?? true);
@@ -51,9 +52,12 @@ export function TravelSection({
 
   const resolvedDescription =
     wedding.travel.description?.trim() || fallback?.travelDescription || "";
-  const resolvedLocationOverviewTitle =
-    wedding.travel.locationOverviewTitle || fallback?.travelLocationOverviewTitle;
-  const resolvedLocationOverviewText = fallback?.travelLocationOverviewText;
+  const resolvedLocationOverviewTitle = hasLocationOverview
+    ? wedding.travel.locationOverviewTitle
+    : fallback?.travelLocationOverviewTitle;
+  const resolvedLocationOverviewText = hasLocationOverview
+    ? undefined
+    : fallback?.travelLocationOverviewText;
   const resolvedMapUtilityTitle =
     wedding.travel.mapUtilityTitle || fallback?.travelMapUtilityTitle;
   const resolvedMapUtilityDescription =
@@ -76,7 +80,7 @@ export function TravelSection({
   }
 
   const locationOverviewPanel =
-    hasLocationOverview || previewMode ? (
+    shouldShowLocationOverview ? (
       <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
         <SectionHeading
           eyebrow="About The Location"
@@ -146,7 +150,6 @@ export function TravelSection({
                     </div>
                     {showRelaxedNote ? (
                       <div className="rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)] lg:max-w-xl">
-                        <strong className="text-[var(--foreground)]">Relaxed itinerary note:</strong>{" "}
                         {wedding.travel.relaxedNote}
                       </div>
                     ) : null}
