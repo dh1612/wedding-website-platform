@@ -37,6 +37,12 @@ export function TravelSection({
   const showTransport = previewMode || (visibility?.transportCard ?? true);
   const showDirections = previewMode || (visibility?.directionsCard ?? true);
   const showRelaxedNote = (visibility?.relaxedNote ?? true) && Boolean(wedding.travel.relaxedNote);
+  const sameVenueForCeremonyAndReception =
+    showCeremony &&
+    showReception &&
+    Boolean(wedding.ceremony.location?.trim()) &&
+    Boolean(wedding.reception.location?.trim()) &&
+    wedding.ceremony.location.trim().toLowerCase() === wedding.reception.location.trim().toLowerCase();
   const showMapUtility =
     Boolean(wedding.travel.mapLink) ||
     showRelaxedNote ||
@@ -181,7 +187,57 @@ export function TravelSection({
                 </div>
               </article>
             ) : null}
-            {showCeremony && (hasCeremonyDetails || previewMode) ? (
+            {sameVenueForCeremonyAndReception ? (
+              <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
+                <p className="eyebrow">Wedding Day Venue</p>
+                <h3 className="mt-3 text-2xl">
+                  {wedding.ceremony.location || wedding.reception.location || fallback?.ceremony.location}
+                </h3>
+                <div className="mt-4 grid gap-5 md:grid-cols-2">
+                  <div>
+                    <p className="eyebrow">Ceremony</p>
+                    <p className="prose-copy mt-2">{wedding.ceremony.time || fallback?.ceremony.time}</p>
+                    <p className="prose-copy">
+                      {wedding.ceremony.address || fallback?.ceremony.address}
+                    </p>
+                    {wedding.ceremony.descriptionHtml ? (
+                      <RichTextContent html={wedding.ceremony.descriptionHtml} className="mt-3" />
+                    ) : wedding.ceremony.description || fallback?.ceremony.description ? (
+                      <p className="prose-copy mt-3">
+                        {wedding.ceremony.description || fallback?.ceremony.description}
+                      </p>
+                    ) : null}
+                  </div>
+                  <div>
+                    <p className="eyebrow">Reception</p>
+                    <p className="prose-copy mt-2">
+                      {wedding.reception.time || fallback?.reception.time}
+                    </p>
+                    <p className="prose-copy">
+                      {wedding.reception.address || fallback?.reception.address}
+                    </p>
+                    {wedding.reception.descriptionHtml ? (
+                      <RichTextContent html={wedding.reception.descriptionHtml} className="mt-3" />
+                    ) : wedding.reception.description || fallback?.reception.description ? (
+                      <p className="prose-copy mt-3">
+                        {wedding.reception.description || fallback?.reception.description}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+                {wedding.ceremony.mapLink || wedding.reception.mapLink ? (
+                  <a
+                    href={wedding.ceremony.mapLink || wedding.reception.mapLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex text-sm font-medium text-[var(--accent-strong)]"
+                  >
+                    Open venue map
+                  </a>
+                ) : null}
+              </article>
+            ) : null}
+            {!sameVenueForCeremonyAndReception && showCeremony && (hasCeremonyDetails || previewMode) ? (
               <article className="accent-panel rounded-[1.5rem] p-6">
                 <p className="eyebrow">Ceremony</p>
                 <h3 className="mt-3 text-2xl">
@@ -213,7 +269,7 @@ export function TravelSection({
                 ) : null}
               </article>
             ) : null}
-            {showReception && (hasReceptionDetails || previewMode) ? (
+            {!sameVenueForCeremonyAndReception && showReception && (hasReceptionDetails || previewMode) ? (
               <article className="accent-panel rounded-[1.5rem] p-6">
                 <p className="eyebrow">Reception</p>
                 <h3 className="mt-3 text-2xl">

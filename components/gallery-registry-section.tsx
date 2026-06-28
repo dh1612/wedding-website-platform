@@ -65,7 +65,7 @@ export function GalleryRegistrySection({
       <div className="space-y-8">
         {(showStory || showGallery) ? (
           <div className="section-shell rounded-[2rem] p-8 sm:p-10">
-            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+            <div className={`grid gap-10 ${timelineOnly ? "" : "lg:grid-cols-[0.85fr_1.15fr]"}`}>
               <div className="space-y-5">
                 {showStory ? (
                   <>
@@ -160,7 +160,7 @@ export function GalleryRegistrySection({
                   />
                 )}
               </div>
-              {(hasStoryImage || (showGallery && hasGalleryImages)) ? (
+              {!timelineOnly && (hasStoryImage || (showGallery && hasGalleryImages)) ? (
                 <div>
                   {!timelineOnly && hasStoryImage ? (
                     <div
