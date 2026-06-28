@@ -59,6 +59,7 @@ export type TravelInfo = {
   locationOverviewTitle?: string;
   locationOverviewTitleHtml?: string;
   locationOverviewHtml?: string;
+  locationOverviewPlacement?: "top" | "before-sneak-peek";
   mapImage?: string;
   sneakPeekImage?: string;
   relaxedNote?: string;

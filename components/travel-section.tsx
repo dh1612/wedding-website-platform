@@ -55,6 +55,8 @@ export function TravelSection({
   const resolvedMapSpots =
     wedding.travel.mapSpots?.length ? wedding.travel.mapSpots : fallback?.mapSpots ?? [];
   const hasMapImage = Boolean(wedding.travel.mapImage);
+  const renderLocationOverviewBeforeSneakPeek =
+    wedding.travel.locationOverviewPlacement === "before-sneak-peek";
 
   if (
     !previewMode &&
@@ -66,6 +68,22 @@ export function TravelSection({
   ) {
     return null;
   }
+
+  const locationOverviewPanel =
+    hasLocationOverview || previewMode ? (
+      <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
+        <SectionHeading
+          eyebrow="About The Location"
+          title={resolvedLocationOverviewTitle || "About the area"}
+          titleHtml={wedding.travel.locationOverviewTitleHtml}
+        />
+        {wedding.travel.locationOverviewHtml ? (
+          <RichTextContent html={wedding.travel.locationOverviewHtml} className="mt-4" />
+        ) : resolvedLocationOverviewText ? (
+          <p className="prose-copy mt-4">{resolvedLocationOverviewText}</p>
+        ) : null}
+      </article>
+    ) : null;
 
   return (
     <section
@@ -85,20 +103,7 @@ export function TravelSection({
             />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
-            {hasLocationOverview || previewMode ? (
-              <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
-                <SectionHeading
-                  eyebrow="About The Location"
-                  title={resolvedLocationOverviewTitle || "About the area"}
-                  titleHtml={wedding.travel.locationOverviewTitleHtml}
-                />
-                {wedding.travel.locationOverviewHtml ? (
-                  <RichTextContent html={wedding.travel.locationOverviewHtml} className="mt-4" />
-                ) : resolvedLocationOverviewText ? (
-                  <p className="prose-copy mt-4">{resolvedLocationOverviewText}</p>
-                ) : null}
-              </article>
-            ) : null}
+            {!renderLocationOverviewBeforeSneakPeek ? locationOverviewPanel : null}
             {showMapUtility ? (
               <article className="accent-panel rounded-[1.5rem] p-6 sm:col-span-2">
                 <div className="space-y-6">
@@ -283,6 +288,7 @@ export function TravelSection({
                 ) : null}
               </article>
             ) : null}
+            {renderLocationOverviewBeforeSneakPeek ? locationOverviewPanel : null}
             {wedding.travel.sneakPeekImage ? (
               <article className="sm:col-span-2">
                 <VenueSneakPeek
