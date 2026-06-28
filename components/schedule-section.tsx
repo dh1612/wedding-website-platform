@@ -20,7 +20,8 @@ export function ScheduleSection({
   const scheduleItems = wedding.schedule.length ? wedding.schedule : fallback?.schedule ?? [];
   const description =
     wedding.scheduleDescription?.trim() || fallback?.scheduleDescription || "";
-  const note = wedding.scheduleNote?.trim() || fallback?.scheduleNote || "";
+  const note =
+    wedding.scheduleNote?.trim() || (previewMode && !weddingData ? fallback?.scheduleNote : "") || "";
   const stepLabel = typeof wedding.scheduleStepLabel === "string" ? wedding.scheduleStepLabel.trim() : "Moment";
 
   return (
