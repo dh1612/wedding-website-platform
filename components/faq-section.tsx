@@ -41,7 +41,7 @@ export function FAQSection({
               <SectionHeading
                 eyebrow="AI Concierge"
                 title="Ask About The Wedding"
-                description="Guests can quickly ask practical questions and get instant help with the details already shared on the site."
+                description="If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
               />
               <div>
                 <ConciergeCard apiPath={conciergeApiPath} />
@@ -55,11 +55,7 @@ export function FAQSection({
               <SectionHeading
                 eyebrow="FAQ"
                 title="Questions Guests Usually Ask"
-                description={
-                  previewMode
-                    ? "Even when the first draft is still light, this section can show the kind of clear guest guidance the finished website can hold."
-                    : "A quick place to check the details guests usually want before travelling."
-                }
+                description="A simple place to check the practical details guests usually want before travelling and over the weekend."
               />
             </div>
             <div className="section-shell rounded-[2rem] p-8 sm:p-10">
