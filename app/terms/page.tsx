@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { BRAND_NAME, SUPPORT_EMAIL } from "@/lib/brand";
+
+export const metadata: Metadata = {
+  title: `Terms & Conditions | ${BRAND_NAME}`,
+  description:
+    "Read the Crafted Wedding Sites terms and conditions covering wedding website services, payments, hosting, customer responsibilities, and AI-assisted features."
+};
 
 const lastUpdated = "07 June 2026";
 

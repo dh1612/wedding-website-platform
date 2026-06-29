@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
-import { buildSampleWebsiteHref } from "@/lib/brand";
+import { BRAND_NAME, buildSampleWebsiteHref } from "@/lib/brand";
 import { packageOffers } from "@/lib/package-offers";
 import { sampleWebsiteShowcases } from "@/lib/sample-websites";
+
+export const metadata: Metadata = {
+  title: `Wedding Website Brochure | ${BRAND_NAME}`,
+  description:
+    "Browse the Crafted Wedding Sites brochure for design examples, package comparisons, and an overview of the done-for-you wedding website service."
+};
 
 const portalCards = [
   {

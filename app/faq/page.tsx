@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import { FAQSection } from "@/components/faq-section";
 import { PageHero } from "@/components/page-hero";
 import { SiteFrame } from "@/components/site-frame";
+import { BRAND_NAME } from "@/lib/brand";
 import { getThemeById } from "@/lib/themes";
 import { getWeddingData } from "@/lib/wedding-data";
+
+export const metadata: Metadata = {
+  title: `Wedding Website FAQs | ${BRAND_NAME}`,
+  description:
+    "See the kinds of practical questions wedding guests often ask and how Crafted Wedding Sites keeps guest information clear and easy to find."
+};
 
 type FAQPageProps = {
   searchParams?: Promise<{

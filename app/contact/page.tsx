@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { ContactForm } from "@/components/contact-form";
 import { MarketingFooter } from "@/components/marketing-footer";
-import { SUPPORT_EMAIL } from "@/lib/brand";
+import { BRAND_NAME, SUPPORT_EMAIL } from "@/lib/brand";
+
+export const metadata: Metadata = {
+  title: `Contact ${BRAND_NAME}`,
+  description:
+    "Contact Crafted Wedding Sites with questions about packages, timings, previews, and the best fit for your wedding website."
+};
 
 export default function ContactPage() {
   return (

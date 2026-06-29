@@ -1,8 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
-import { buildSampleWebsiteHref } from "@/lib/brand";
+import { BRAND_NAME, buildSampleWebsiteHref } from "@/lib/brand";
 import { packageOffers } from "@/lib/package-offers";
 import { defaultSampleWebsiteShowcase } from "@/lib/sample-websites";
 
@@ -12,6 +13,22 @@ type PackagePageProps = {
 
 export function generateStaticParams() {
   return packageOffers.map((offer) => ({ slug: offer.id }));
+}
+
+export async function generateMetadata({ params }: PackagePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const offer = packageOffers.find((item) => item.id === slug);
+
+  if (!offer) {
+    return {
+      title: `Wedding Website Packages | ${BRAND_NAME}`
+    };
+  }
+
+  return {
+    title: `${offer.name} Wedding Website Package | ${BRAND_NAME}`,
+    description: `${offer.summary} ${offer.valueNote}`
+  };
 }
 
 export default async function PackagePage({ params }: PackagePageProps) {

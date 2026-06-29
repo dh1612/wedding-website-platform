@@ -34,8 +34,24 @@ const greatVibes = Great_Vibes({
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${BRAND_DOMAIN}`),
-  title: BRAND_NAME,
-  description: `Done-for-you wedding websites from ${BRAND_DOMAIN}, thoughtfully curated around each couple's style, with polished templates and a guided draft-to-live workflow.`
+  title: {
+    default: BRAND_NAME,
+    template: `%s | ${BRAND_NAME}`
+  },
+  description: `Done-for-you wedding websites from ${BRAND_DOMAIN}, thoughtfully curated around each couple's style, with polished templates and a guided draft-to-live workflow.`,
+  openGraph: {
+    title: BRAND_NAME,
+    description: `Done-for-you wedding websites from ${BRAND_DOMAIN}, thoughtfully curated around each couple's style, with polished templates and a guided draft-to-live workflow.`,
+    url: `https://${BRAND_DOMAIN}`,
+    siteName: BRAND_NAME,
+    locale: "en_IE",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: BRAND_NAME,
+    description: `Done-for-you wedding websites from ${BRAND_DOMAIN}, thoughtfully curated around each couple's style, with polished templates and a guided draft-to-live workflow.`
+  }
 };
 
 export default function RootLayout({

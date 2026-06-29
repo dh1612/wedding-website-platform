@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { BRAND_NAME, SUPPORT_EMAIL } from "@/lib/brand";
+
+export const metadata: Metadata = {
+  title: `Privacy Policy | ${BRAND_NAME}`,
+  description:
+    "Read the Crafted Wedding Sites privacy policy, including how personal data, RSVP details, payments, and hosted wedding website information are handled."
+};
 
 const sections = [
   {

@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingFooter } from "@/components/marketing-footer";
-import { SUPPORT_EMAIL } from "@/lib/brand";
+import { BRAND_NAME, SUPPORT_EMAIL } from "@/lib/brand";
+
+export const metadata: Metadata = {
+  title: `Refund Policy | ${BRAND_NAME}`,
+  description:
+    "Read the Crafted Wedding Sites refund policy for personalised wedding website services, including when work is considered to have started."
+};
 
 const sections = [
   {

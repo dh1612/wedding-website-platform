@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketingMobileMenu } from "@/components/marketing-mobile-menu";
 import { MarketingFooter } from "@/components/marketing-footer";
-import { buildSampleWebsiteHref } from "@/lib/brand";
+import { BRAND_NAME, buildSampleWebsiteHref } from "@/lib/brand";
 import { defaultSampleWebsiteShowcase, sampleWebsiteShowcases } from "@/lib/sample-websites";
+
+export const metadata: Metadata = {
+  title: `Done-For-You Wedding Websites in Ireland | ${BRAND_NAME}`,
+  description:
+    "Done-for-you wedding websites in Ireland with RSVP, digital invites, and private couple portals. Crafted Wedding Sites builds the website for you with personal support throughout."
+};
 
 const exampleHref = buildSampleWebsiteHref();
 
@@ -106,9 +113,35 @@ const featuredTestimonial = {
   href: "/showcase/fionadavid2026"
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: BRAND_NAME,
+  url: "https://craftedweddingsites.ie",
+  areaServed: "Ireland",
+  serviceType: "Done-for-you wedding website design service",
+  description:
+    "Crafted Wedding Sites creates done-for-you wedding websites with RSVP, digital invites, and private couple portals.",
+  brand: {
+    "@type": "Brand",
+    name: BRAND_NAME
+  },
+  offers: packageCards.map((item) => ({
+    "@type": "Offer",
+    name: `${item.name} wedding website package`,
+    priceCurrency: "EUR",
+    price: item.price.replace("EUR", ""),
+    description: item.summary
+  }))
+};
+
 export default function MarketingHomePage() {
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] pb-24 text-[#1f1d1a] md:pb-0">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <header className="sticky top-0 z-30 border-b border-black/5 bg-white/90 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
           <BrandLogo />

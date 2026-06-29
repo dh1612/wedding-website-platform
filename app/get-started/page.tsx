@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { ClientIntakeForm } from "@/components/client-intake-form";
 import { MarketingFooter } from "@/components/marketing-footer";
-import { buildSampleWebsiteHref } from "@/lib/brand";
+import { BRAND_NAME, buildSampleWebsiteHref } from "@/lib/brand";
 import type { IntakePackage } from "@/lib/intake";
+
+export const metadata: Metadata = {
+  title: `Start Your Wedding Website | ${BRAND_NAME}`,
+  description:
+    "Start your wedding website with Crafted Wedding Sites. Share the essentials and receive a polished first draft with guided, done-for-you support."
+};
 
 type GetStartedPageProps = {
   searchParams?: Promise<{
