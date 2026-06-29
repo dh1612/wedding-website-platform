@@ -25,6 +25,7 @@ export default function robots(): MetadataRoute.Robots {
           "/admin",
           "/api",
           "/preview",
+          "/private-preview",
           "/unlock",
           "/portal-login",
           "/portal-reset",

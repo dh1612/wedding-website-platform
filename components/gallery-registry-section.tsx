@@ -69,26 +69,28 @@ export function GalleryRegistrySection({
               <div className="space-y-5">
                 {showStory ? (
                   <>
+                    <SectionHeading
+                      eyebrow="Our Story"
+                      title={wedding.story.heading}
+                      titleHtml={wedding.story.headingHtml}
+                      description={
+                        timelineOnly
+                          ? "A few favourite moments along the way."
+                          : "A few favourite moments and a little of the story behind the day."
+                      }
+                    />
                     {!timelineOnly ? (
-                      <>
-                        <SectionHeading
-                          eyebrow="Our Story"
-                          title={wedding.story.heading}
-                          titleHtml={wedding.story.headingHtml}
-                          description="A few favourite moments and a little of the story behind the day."
-                        />
-                        <div className="space-y-4">
-                          {wedding.story.html ? (
-                            <RichTextContent html={wedding.story.html} className="text-lg leading-8" />
-                          ) : (
-                            storyParagraphs.map((paragraph) => (
-                              <p key={paragraph} className="prose-copy text-lg">
-                                {paragraph}
-                              </p>
-                              ))
-                          )}
-                        </div>
-                      </>
+                      <div className="space-y-4">
+                        {wedding.story.html ? (
+                          <RichTextContent html={wedding.story.html} className="text-lg leading-8" />
+                        ) : (
+                          storyParagraphs.map((paragraph) => (
+                            <p key={paragraph} className="prose-copy text-lg">
+                              {paragraph}
+                            </p>
+                          ))
+                        )}
+                      </div>
                     ) : null}
                     {storyTimeline.length ? (
                       <div className="mt-10 rounded-[1.6rem] border border-[var(--border)] bg-white/60 px-4 py-6 sm:px-6 sm:py-8">
