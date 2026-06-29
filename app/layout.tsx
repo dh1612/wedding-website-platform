@@ -33,6 +33,7 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`https://${BRAND_DOMAIN}`),
   title: BRAND_NAME,
   description: `Done-for-you wedding websites from ${BRAND_DOMAIN}, thoughtfully curated around each couple's style, with polished templates and a guided draft-to-live workflow.`
 };
