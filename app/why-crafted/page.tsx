@@ -17,17 +17,17 @@ const reasons = [
   {
     title: "Time",
     copy:
-      "A free platform may cost less in money, but it can cost more in evenings, decision-making, and headspace. Crafted is for couples who would rather not build the whole thing themselves."
+      "A free platform may cost less in money, but it can cost more in evenings, second-guessing, and headspace. Crafted is for couples who would rather not make the website another job on the list."
   },
   {
     title: "Polish",
     copy:
-      "The difference is often not one dramatic feature. It is the quieter things: structure, pacing, wording, guest clarity, and a final result that feels more considered from start to finish."
+      "The difference is often not one dramatic feature. It is the quieter things: structure, pacing, wording, day-two plans, accommodation guidance, and a final result that feels more considered from start to finish."
   },
   {
     title: "Support",
     copy:
-      "Instead of being left inside a builder with help articles, you have direct support for questions, amendments, and refinement. The process stays hands-on, calm, and package-led."
+      "No ticket queues, no generic chatbot replies, and no trying to explain your wedding to a platform. When you need an amendment or update, it stays direct, human, and hands-on."
   }
 ];
 
@@ -89,7 +89,7 @@ export default function WhyCraftedPage() {
           <div className="space-y-5">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Why Crafted</p>
             <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
-              For couples who value time, polish, and real support
+              Your wedding website should not feel like another job
             </h1>
             <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
               There are free wedding website options, and for some couples they are exactly the
@@ -168,20 +168,19 @@ export default function WhyCraftedPage() {
             <div className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-7">
               <h3 className="text-3xl leading-tight">With a typical builder</h3>
               <ul className="mt-5 space-y-3 pl-5 text-base leading-7 text-[#5f564e] marker:text-[#b48c58]">
-                <li>You choose the template</li>
-                <li>You work out the structure</li>
-                <li>You decide how much detail guests need</li>
-                <li>You refine the wording</li>
-                <li>You keep adjusting spacing, layout, and flow until it feels finished</li>
+                <li>You choose the template and work out the structure</li>
+                <li>You decide how to organise guest information and travel details</li>
+                <li>You refine wording, spacing, layout, and mobile flow yourself</li>
+                <li>You troubleshoot the final details if something looks off</li>
               </ul>
             </div>
 
             <div className="rounded-[1.8rem] border border-[#184b38]/12 bg-[#f6fbf8] p-7">
               <h3 className="text-3xl leading-tight text-[#184b38]">With Crafted Wedding Sites</h3>
               <ul className="mt-5 space-y-3 pl-5 text-base leading-7 text-[#486159] marker:text-[#184b38]">
-                <li>You share the key details</li>
+                <li>You share the key details and choose a design direction</li>
                 <li>We shape the first version for you</li>
-                <li>We help guide tone, structure, and guest-facing clarity</li>
+                <li>We guide tone, structure, and guest-facing clarity</li>
                 <li>You review privately before anything is shared</li>
                 <li>The final website feels more bespoke without becoming another job on your list</li>
               </ul>
@@ -207,21 +206,36 @@ export default function WhyCraftedPage() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-12 pt-4 lg:px-8 lg:pb-16">
         <div className="rounded-[2.2rem] border border-black/6 bg-[#184b38] p-8 text-white shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="max-w-4xl space-y-5">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#d9c39f]">Who it is for</p>
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#d9c39f]">What happens next</p>
             <h2 className="text-4xl leading-none sm:text-5xl">
-              Crafted is for couples who want it handled beautifully
+              Start with a first draft, then refine it together
             </h2>
-            <p className="text-lg leading-8 text-white/84">
-              If you would rather keep full DIY control and save every euro, a free option may be
-              right for you. If you want more support, more polish, and less friction, that is
-              where Crafted earns its place.
-            </p>
+            <div className="grid gap-5 pt-2 lg:grid-cols-3">
+              <div className="rounded-[1.5rem] border border-white/12 bg-white/6 p-5">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9c39f]">Step 1</p>
+                <p className="mt-3 text-base leading-7 text-white/84">
+                  Choose a design direction and share your rough details.
+                </p>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/12 bg-white/6 p-5">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9c39f]">Step 2</p>
+                <p className="mt-3 text-base leading-7 text-white/84">
+                  Review your private first draft and see the direction clearly.
+                </p>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/12 bg-white/6 p-5">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9c39f]">Step 3</p>
+                <p className="mt-3 text-base leading-7 text-white/84">
+                  Refine it together and go live with something polished.
+                </p>
+              </div>
+            </div>
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <Link
                 href="/get-started"
                 className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-medium text-[#184b38] transition hover:bg-[#f3ece2]"
               >
-                Get My Website Started
+                Start Your First Draft
               </Link>
               <Link
                 href={exampleHref}
