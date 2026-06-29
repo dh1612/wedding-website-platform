@@ -125,6 +125,27 @@ main[data-theme] .section-title {
   font-weight: 400;
 }
 
+.armada-concept-page h1,
+.armada-concept-page .section-title {
+  font-family: var(--font-great-vibes), "Snell Roundhand", cursive;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.armada-concept-page .eyebrow,
+.armada-concept-page .prose-copy,
+.armada-concept-page p,
+.armada-concept-page summary,
+.armada-concept-page a,
+.armada-concept-page li,
+.armada-concept-page span,
+.armada-concept-page label,
+.armada-concept-page input,
+.armada-concept-page textarea,
+.armada-concept-page button {
+  font-family: var(--font-montserrat), Arial, sans-serif;
+}
+
 main[data-theme="christmas-candlelight"] {
   position: relative;
   isolation: isolate;

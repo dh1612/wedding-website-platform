@@ -4,7 +4,7 @@ import { getThemeById } from "@/lib/themes";
 import type { WeddingData } from "@/types/wedding";
 
 export const metadata: Metadata = {
-  title: "Private Coastal Concept",
+  title: "Spanish Point Wedding Weekend",
   robots: {
     index: false,
     follow: false
@@ -18,7 +18,7 @@ const weddingData: WeddingData = {
   date: "September 18, 2027",
   theme: "summer-coast",
   hero: {
-    eyebrow: "Private Coastal Concept",
+    eyebrow: "Wedding Weekend",
     previewNote:
       "This is a private concept page prepared for selective sharing and venue outreach only.",
     primaryActionLabel: "View the weekend",
@@ -28,9 +28,9 @@ const weddingData: WeddingData = {
   },
   locationSummary: "Spanish Point, Co. Clare",
   tagline:
-    "A west coast wedding weekend shaped around sea views, good food, and the kind of atmosphere that lets guests settle in properly.",
+    "A west coast wedding weekend shaped around sea views, warm hospitality, and a setting guests will still be talking about after the last dance.",
   announcement:
-    "This concept shows how a venue-led wedding website can feel both beautifully personal and genuinely useful from the first glance.",
+    "Set above the Atlantic in Spanish Point, Armada brings together the drama of the Clare coastline with the kind of comfort and atmosphere that makes a full wedding weekend feel effortless.",
   heroImage: "/armada-concept/shoreline-wide.jpg",
   story: {
     heading: "Our Story So Far",
@@ -95,7 +95,7 @@ const weddingData: WeddingData = {
   scheduleEyebrow: "Wedding Weekend",
   scheduleHeading: "A Celebration Across The Coast",
   scheduleDescription:
-    "A clear outline of the wedding day and the relaxed moments around it, so guests can enjoy the trip without over-planning every hour.",
+    "A clear outline of the wedding day and the relaxed moments around it, so guests can enjoy the weekend without over-planning every hour.",
   scheduleNote:
     "With so much close at hand, the weekend can feel easy from the moment guests arrive.",
   scheduleStepLabel: "Moment",
@@ -145,14 +145,14 @@ const weddingData: WeddingData = {
   travel: {
     heading: "Travel & Key Locations",
     description:
-      "Everything guests usually want first, from where to stay and arrive to how the weekend fits together on the coast.",
+      "Everything guests usually want first, from where to stay and arrive to how the weekend fits together along this beautiful stretch of coast.",
     mapUtilityEyebrow: "Map & Area",
     mapUtilityTitle: "The shape of the weekend",
     mapUtilityDescription:
       "A quick look at the places guests are most likely to need when planning where to stay and how to move around Spanish Point.",
     locationOverviewTitle: "Why this stretch of coast works so well",
     locationOverviewHtml:
-      "<p>Spanish Point gives guests that lovely balance of sea views, a strong sense of place, and the feeling that the wedding can unfold over more than a few hurried hours.</p><p>It works especially well for couples who want the website to feel like part invitation, part practical guide, and part glimpse of the atmosphere guests are arriving into.</p>",
+      "<p>Spanish Point gives guests that lovely balance of dramatic sea views, a real sense of occasion, and the feeling that the wedding can unfold over more than a few hurried hours.</p><p>Armada suits that especially well, with its Atlantic setting, polished rooms, and the kind of atmosphere that encourages guests to settle in and make a proper weekend of it.</p>",
     mapSpots: [
       {
         label: "Shannon Airport",
@@ -161,7 +161,7 @@ const weddingData: WeddingData = {
       },
       {
         label: "Armada House",
-        detail: "Ceremony, drinks, dinner, and the main celebration all in one place.",
+        detail: "Ceremony, drinks, dinner, and the main celebration all in one beautiful coastal setting.",
         href: "https://maps.google.com/?q=Armada+Hotel+Spanish+Point"
       },
       {
@@ -187,12 +187,12 @@ const weddingData: WeddingData = {
   accommodationEyebrow: "Accommodation",
   accommodationTitle: "Places To Stay",
   accommodationDescription:
-    "A mix of nearby options that let guests choose between staying on the coast, keeping close to the venue, or making a fuller west coast weekend of it.",
+    "A mix of nearby options that let guests choose between staying right at Armada, keeping close to the celebrations, or making a fuller west coast weekend of it.",
   accommodation: [
     {
-      name: "Stay on site",
+      name: "The Armada Hotel",
       note:
-        "Ideal for close family, the wedding party, or guests who want everything in one polished place."
+        "The most seamless option for guests who want the full Armada experience, with the views, atmosphere, and celebrations all in one place."
     },
     {
       name: "Spanish Point & Miltown Malbay",
@@ -224,21 +224,21 @@ const weddingData: WeddingData = {
     },
     {
       q: "Could this also include RSVP and meal choices?",
-      a: "Yes. In a live version, replies, dietary notes, and guest questions can all be gathered through the website."
+      a: "Yes. Replies, dietary notes, and guest questions can all be gathered through the website in one place."
     }
   ],
   rsvp: {
     eyebrow: "Guest Replies",
     title: "RSVP & Guest Details",
-    label: "Ask about this concept",
+    label: "RSVP example",
     description:
-      "In a live wedding version, this section can gather replies, meal choices, and practical guest notes cleanly in one place.",
+      "This section can gather replies, meal choices, and practical guest notes cleanly in one place.",
     url: "mailto:hello@craftedweddingsites.ie?subject=Armada%20coastal%20concept",
     interactiveFormEnabled: false,
-    deadlineEyebrow: "Example",
+    deadlineEyebrow: "Typical timeline",
     deadline: "Replies by six to eight weeks before the wedding",
     panelDescription:
-      "This concept keeps the guest journey visible without turning the page into a public-facing live RSVP."
+      "In a live wedding version, guests would reply here while keeping everything calm, clear, and easy to manage."
   },
   gallery: {
     heading: "Coastal Details",
@@ -252,7 +252,7 @@ const weddingData: WeddingData = {
   contact: {
     email: "hello@craftedweddingsites.ie",
     note:
-      "If you would like a private venue-tailored concept page prepared like this, you can get in touch directly."
+      "For couples, this kind of page keeps the guest experience polished from the first look through to RSVPs, timings, and travel details."
   },
   aiConciergeEnabled: false,
   styleOptions: {
@@ -289,14 +289,23 @@ const weddingData: WeddingData = {
 };
 
 export default function ArmadaSpanishPointConceptPage() {
-  const theme = getThemeById("summer-coast");
+  const baseTheme = getThemeById("summer-coast");
+  const theme = {
+    ...baseTheme,
+    style: {
+      ...baseTheme.style,
+      "--font-body": "var(--font-montserrat), Arial, sans-serif"
+    }
+  };
 
   return (
-    <WeddingSitePage
-      currentPath={routePath}
-      siteBasePath={routePath}
-      activeTheme={theme}
-      weddingData={weddingData}
-    />
+    <div className="armada-concept-page">
+      <WeddingSitePage
+        currentPath={routePath}
+        siteBasePath={routePath}
+        activeTheme={theme}
+        weddingData={weddingData}
+      />
+    </div>
   );
 }
