@@ -13,6 +13,9 @@ export function MarketingFooter() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3 text-sm text-[#4e453f]">
+            <Link href="/why-crafted" className="rounded-full border border-black/8 px-4 py-2 hover:bg-white">
+              Why Crafted
+            </Link>
             <Link href="/contact" className="rounded-full border border-black/8 px-4 py-2 hover:bg-white">
               Contact
             </Link>

@@ -165,6 +165,12 @@ export default function MarketingHomePage() {
             >
               Contact
             </Link>
+            <Link
+              href="/why-crafted"
+              className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white"
+            >
+              Why Crafted
+            </Link>
             <a href="#designs" className="rounded-full px-4 py-2 text-sm text-[#6b5c50] transition hover:bg-white">
               Designs
             </a>
@@ -190,6 +196,7 @@ export default function MarketingHomePage() {
               { href: exampleHref, label: "View Example Website" },
               { href: "/couple-area", label: "View Premium Couple Area Demo" },
               { href: "/contact", label: "Contact" },
+              { href: "/why-crafted", label: "Why Crafted" },
               { href: "#designs", label: "Designs" },
               { href: "#how-it-works", label: "How It Works" },
               { href: "#packages", label: "Packages" }
@@ -410,74 +417,56 @@ export default function MarketingHomePage() {
 
       <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-10">
         <div className="rounded-[2.2rem] border border-black/6 bg-[#f6fbf8] p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-            <div className="space-y-4">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div className="space-y-5">
               <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-                Why this service
+                Why Crafted
               </p>
               <h2 className="text-4xl leading-none sm:text-5xl">
-                A more personal alternative to doing it all in a builder
+                A clearer explanation of where this fits
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
-                This is a small Irish business, and the support stays direct and hands-on. You are
-                not left inside a generic template builder or routed through a support queue. We
-                shape the website with you, keep the process manageable, and help you get it to a
-                version you feel happy to share.
+                Free website builders can be absolutely right for some couples. Crafted exists for
+                the couples who care about time, polish, and having real support while the website
+                is shaped properly.
               </p>
-              <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-white px-5 py-4 text-sm leading-7 text-[#486159]">
-                If you would rather not spend evenings trying to bend a template builder into the
-                right shape, this is built for that exact couple.
+              <div className="pt-1">
+                <Link
+                  href="/why-crafted"
+                  className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
+                >
+                  Read Why Crafted
+                </Link>
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[1.6rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                  Direct support
+            <div className="grid gap-6 sm:grid-cols-3">
+              <article className="space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Time</p>
+                <h3 className="text-3xl leading-tight">Less builder fatigue</h3>
+                <p className="text-sm leading-7 text-[#5f564e]">
+                  You are not left dragging sections around and trying to make everything feel
+                  finished by yourself.
                 </p>
-                <h3 className="mt-3 text-2xl leading-tight">You will always deal directly with me</h3>
-                <p className="mt-3 text-sm leading-7 text-[#5f564e]">
-                  Questions, edits, and support stay personal. The aim is to keep the process clear
-                  and responsive, without overcomplicating it or disappearing behind generic
-                  customer support.
-                </p>
-              </div>
+              </article>
 
-              <div className="rounded-[1.6rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                  Tailored around you
+              <article className="space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Polish</p>
+                <h3 className="text-3xl leading-tight">A more considered result</h3>
+                <p className="text-sm leading-7 text-[#5f564e]">
+                  Structure, wording, and guest flow are shaped with the final experience in mind,
+                  not just filled into a template.
                 </p>
-                <h3 className="mt-3 text-2xl leading-tight">The website is shaped around your day</h3>
-                <p className="mt-3 text-sm leading-7 text-[#5f564e]">
-                  The wording, structure, guest details, and final styling are adjusted around what
-                  matters to you, rather than forcing everything into a rigid one-size-fits-all
-                  setup.
-                </p>
-              </div>
+              </article>
 
-              <div className="rounded-[1.6rem] border border-black/6 bg-white p-6 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">
-                  Boundaries built in
+              <article className="space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Support</p>
+                <h3 className="text-3xl leading-tight">Real help when you need it</h3>
+                <p className="text-sm leading-7 text-[#5f564e]">
+                  Questions, edits, and refinement stay direct and hands-on rather than hidden
+                  behind a generic platform.
                 </p>
-                <h3 className="mt-3 text-2xl leading-tight">Support stays clear, calm, and package-led</h3>
-                <p className="mt-3 text-sm leading-7 text-[#5f564e]">
-                  The level of input and support is matched to the package chosen, so couples get
-                  real help without unclear expectations about what is included.
-                </p>
-              </div>
-
-              <div className="rounded-[1.6rem] border border-black/6 bg-[#184b38] p-6 text-white shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9c39f]">
-                  Built to be shared
-                </p>
-                <h3 className="mt-3 text-2xl leading-tight">
-                  The goal is a polished website you feel confident sending out
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-white/82">
-                  From a beautifully simple guest website to the full planning portal, the aim is
-                  the same: a wedding website that feels considered, useful, and genuinely yours.
-                </p>
-              </div>
+              </article>
             </div>
           </div>
         </div>

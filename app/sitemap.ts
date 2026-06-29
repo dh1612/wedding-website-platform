@@ -6,6 +6,7 @@ const baseUrl = `https://${BRAND_DOMAIN}`;
 const marketingRoutes = [
   "",
   "/contact",
+  "/why-crafted",
   "/get-started",
   "/templates",
   "/brochure",
