@@ -292,19 +292,11 @@ export default function ArmadaSpanishPointConceptPage() {
   const theme = getThemeById("summer-coast");
 
   return (
-    <>
-      <div className="mx-auto w-full max-w-6xl px-6 pt-6 lg:px-8">
-        <div className="rounded-full border border-slate-200 bg-white/95 px-5 py-3 text-center text-sm text-slate-600 shadow-sm">
-          Private concept page for selective sharing only. It is not linked publicly or indexed in
-          search.
-        </div>
-      </div>
-      <WeddingSitePage
-        currentPath={routePath}
-        siteBasePath={routePath}
-        activeTheme={theme}
-        weddingData={weddingData}
-      />
-    </>
+    <WeddingSitePage
+      currentPath={routePath}
+      siteBasePath={routePath}
+      activeTheme={theme}
+      weddingData={weddingData}
+    />
   );
 }
