@@ -1024,11 +1024,13 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "The lodge setting",
     extraAreaDetail: "A more immersive luxury stay for guests who want the full riverside feel.",
     tagline:
-      "A refined countryside-lodge wedding website shaped around scenery, hospitality, and a guest experience that feels thoughtful from the very first click.",
+      "A refined countryside-lodge wedding website shaped around scenery, hospitality, and celebrating at Sheen Falls Lodge in a way that feels thoughtful from the very first guest click.",
     announcement:
-      "Sheen Falls Lodge is exactly the kind of venue where a website can do more than deliver information. It can begin the atmosphere early, giving guests a real sense of the place, the pace, and the level of care behind the weekend.",
+      "Sheen Falls Lodge is exactly the kind of venue where a wedding website can do more than deliver information. It can begin the atmosphere early, giving guests a real sense of the place, the pace, and the level of care behind the weekend.",
+    announcementHtml:
+      "<p>Set within the beautiful riverside surroundings of <strong>Sheen Falls Lodge</strong>, this kind of wedding website gives guests a polished introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the wedding weekend begins.</p>",
     locationOverviewHtml:
-      "<p>Kenmare and the lodge setting together create a particularly strong destination feeling. Guests understand quickly that this is not just a ceremony location, but a weekend worth sinking into properly.</p><p>That is why a more tailored digital experience fits so naturally here.</p>",
+      "<p><strong>Sheen Falls Lodge</strong> and Kenmare together create a particularly strong destination feeling. Guests understand quickly that this is not just a ceremony location, but a weekend worth sinking into properly.</p><p>The riverside setting, the calm luxury of the lodge, and the standard of hospitality give guests a real sense of what it will feel like to celebrate at Sheen Falls before they even arrive.</p>",
     stayDescription:
       "A riverside luxury stay with beautiful food, a calm sense of privacy, and the kind of setting guests often remember as much as the celebration itself.",
     scheduleHeading: "A Lodge Weekend In Kenmare",
@@ -1117,7 +1119,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-lato), Arial, sans-serif",
     fontDisplay: "var(--font-playfair), Didot, serif",
-    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at Sheen Falls Lodge. It is not affiliated with or endorsed by Sheen Falls Lodge."
   }
 ];
 
