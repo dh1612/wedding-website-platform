@@ -546,13 +546,15 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "Castle estate",
     extraAreaDetail: "The venue itself feels like a full destination experience, not only a ceremony setting.",
     tagline:
-      "A grand Irish-castle wedding website that keeps the guest experience polished, luxurious, and easy to follow from the first invitation link.",
+      "A grand Irish-castle wedding website that keeps celebrating at Dromoland Castle polished, luxurious, and easy to follow from the very first invitation link.",
     announcement:
       "Dromoland is the sort of venue that benefits from a website matching its standard: confident, beautifully structured, and clear enough that guests can enjoy the grandeur rather than puzzle through the logistics.",
+    announcementHtml:
+      "<p>Set within the distinguished surroundings of <strong>Dromoland Castle</strong>, this kind of wedding website gives guests a polished and confidence-building introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the wedding weekend begins.</p>",
     locationOverviewHtml:
-      "<p>Because Dromoland already feels like a destination in its own right, the website can do two jobs at once: reassure guests practically and build anticipation for the venue itself.</p><p>That is especially valuable for higher-end celebrations where polish matters before anyone even arrives.</p>",
+      "<p>Because <strong>Dromoland Castle</strong> already feels like a destination in its own right, the website can do two jobs at once: reassure guests practically and build anticipation for the venue itself.</p><p>The grandeur of the estate, the luxury feel, and the clarity of the guest experience are especially valuable for higher-end celebrations where polish matters before anyone even arrives.</p>",
     stayDescription:
-      "A memorable luxury stay where the estate itself becomes part of the wedding experience, with all the ease that comes from keeping guests close to the celebration.",
+      "A memorable luxury stay where the Dromoland Castle estate itself becomes part of the wedding experience, with all the ease that comes from keeping guests close to the celebration.",
     scheduleHeading: "A Castle Estate Weekend",
     scheduleDescription:
       "The first-draft structure can stay beautifully clear while reflecting the more elevated tone of a venue like Dromoland.",
@@ -639,7 +641,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-lato), Arial, sans-serif",
     fontDisplay: "var(--font-playfair), Didot, serif",
-    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at Dromoland Castle. It is not affiliated with or endorsed by Dromoland Castle."
   },
   {
     slug: "adare-manor",
