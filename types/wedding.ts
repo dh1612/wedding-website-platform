@@ -252,6 +252,8 @@ export type WeddingData = {
     email: string;
     note: string;
     rsvpNotificationEmail?: string;
+    footerLine?: string;
+    legalNote?: string;
   };
   aiConciergeEnabled: boolean;
   styleOptions?: {

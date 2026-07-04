@@ -21,6 +21,16 @@ export function SiteFooter({ weddingData, demoMode = false }: SiteFooterProps) {
             ? "In the finished version, this area can point guests to the couple's preferred contact route for travel questions, updates, or RSVP support."
             : wedding.contact.note}
         </p>
+        {!demoMode && wedding.contact.footerLine ? (
+          <p className="mt-4 text-sm tracking-[0.12em] text-[var(--muted)]">
+            {wedding.contact.footerLine}
+          </p>
+        ) : null}
+        {!demoMode && wedding.contact.legalNote ? (
+          <p className="prose-copy mt-4 text-sm leading-6 text-[var(--muted)]">
+            {wedding.contact.legalNote}
+          </p>
+        ) : null}
       </div>
     </footer>
   );

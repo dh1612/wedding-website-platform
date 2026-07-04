@@ -23,6 +23,7 @@ type VenuePreviewConfig = {
   extraAreaDetail: string;
   tagline: string;
   announcement: string;
+  announcementHtml?: string;
   locationOverviewHtml: string;
   stayDescription: string;
   scheduleHeading: string;
@@ -38,6 +39,8 @@ type VenuePreviewConfig = {
   fontBody: string;
   fontDisplay: string;
   fontScript: string;
+  footerLine?: string;
+  legalNote?: string;
 };
 
 type VenuePreviewPageData = {
@@ -67,13 +70,15 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "Cork City",
     extraAreaDetail: "A fuller city stay for guests who may turn the weekend into an extra night away.",
     tagline:
-      "A polished country-resort wedding website shaped around elegant hosting, easy guest logistics, and a venue that already feels like a full weekend away.",
+      "A polished country-resort wedding website shaped around elegant hosting, easy guest logistics, and celebrating at Fota Island Resort from the very first guest click.",
     announcement:
       "Fota Island Resort suits the kind of wedding weekend where everything feels calm from the first arrival, with golf-course greenery, beautifully finished interiors, and the sort of hospitality guests settle into very quickly.",
+    announcementHtml:
+      "<p>Nestled within the beautiful grounds of <strong>Fota Island Resort</strong>, this kind of wedding website gives guests a polished introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before they land in the inbox.</p>",
     locationOverviewHtml:
-      "<p>For couples who want resort comfort without losing that sense of occasion, Fota works beautifully. Guests can arrive, stay well, and feel looked after without the day becoming over-complicated.</p><p>The venue also gives plenty to talk about before and after the wedding itself, which makes the website feel less like a list of timings and more like a proper introduction to the weekend.</p>",
+      "<p>For couples who want resort comfort without losing that sense of occasion, <strong>Fota Island Resort</strong> works beautifully. Guests can arrive, stay well, and feel looked after without the day becoming over-complicated.</p><p>The grounds, the resort setting, and the sense of a full weekend away give guests plenty to look forward to before and after the wedding itself, which makes the website feel less like a list of timings and more like a proper introduction to celebrating at Fota.</p>",
     stayDescription:
-      "A stay that feels properly elevated, with spacious rooms, resort comfort, and the ease of having the main celebrations centred in one polished destination.",
+      "A stay that feels properly elevated, with spacious rooms, resort comfort, and the ease of having the main celebrations centred within Fota Island Resort.",
     scheduleHeading: "A Weekend At The Resort",
     scheduleDescription:
       "A first-draft view of how a Fota wedding weekend can unfold with space for arrivals, the main celebration, and a softer close the following morning.",
@@ -160,7 +165,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-lato), Arial, sans-serif",
     fontDisplay: "var(--font-playfair), Didot, serif",
-    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at Fota Island Resort. It is not affiliated with or endorsed by Fota Island Resort."
   },
   {
     slug: "castlemartyr-resort",
@@ -1095,6 +1103,7 @@ function buildWeddingData(config: VenuePreviewConfig, baseTheme: ThemeDefinition
     locationSummary: config.location,
     tagline: config.tagline,
     announcement: config.announcement,
+    announcementHtml: config.announcementHtml,
     heroImage: config.heroImage ?? baseTheme.heroImage,
     story: {
       heading: "Our Story So Far",
@@ -1109,7 +1118,9 @@ function buildWeddingData(config: VenuePreviewConfig, baseTheme: ThemeDefinition
       address: config.location,
       mapLink: `https://maps.google.com/?q=${encodeURIComponent(config.mapQuery)}`,
       description:
-        "Guests are welcomed into a setting where the atmosphere is already doing some of the work before the ceremony begins."
+        config.slug === "fota-island-resort"
+          ? "Guests are welcomed into Fota Island Resort with enough time to settle into the grounds and enjoy the setting before the ceremony begins."
+          : "Guests are welcomed into a setting where the atmosphere is already doing some of the work before the ceremony begins."
     },
     reception: {
       title: "Reception",
@@ -1118,7 +1129,9 @@ function buildWeddingData(config: VenuePreviewConfig, baseTheme: ThemeDefinition
       address: config.location,
       mapLink: `https://maps.google.com/?q=${encodeURIComponent(config.mapQuery)}`,
       description:
-        "Dinner, drinks, and the evening celebration continue in the same venue, keeping the guest experience smooth and beautifully contained."
+        config.slug === "fota-island-resort"
+          ? "Dinner, drinks, and the evening celebration continue at Fota Island Resort, keeping the guest experience smooth, elegant, and beautifully contained in one destination."
+          : "Dinner, drinks, and the evening celebration continue in the same venue, keeping the guest experience smooth and beautifully contained."
     },
     scheduleEyebrow: "Wedding Weekend",
     scheduleHeading: config.scheduleHeading,
@@ -1228,6 +1241,9 @@ function buildWeddingData(config: VenuePreviewConfig, baseTheme: ThemeDefinition
       email: "hello@craftedweddingsites.ie",
       note:
         "For couples, this kind of page keeps the guest experience polished from the first look through to replies, timings, and travel details."
+      ,
+      footerLine: config.footerLine,
+      legalNote: config.legalNote
     },
     aiConciergeEnabled: false,
     styleOptions: {
