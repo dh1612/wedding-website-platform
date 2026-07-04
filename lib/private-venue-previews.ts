@@ -427,13 +427,15 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "Castle grounds",
     extraAreaDetail: "A more immersive overnight stay for guests who want the full estate feeling.",
     tagline:
-      "A castle wedding website with warmth, romance, and enough structure to make a destination-style Irish weekend feel effortless for guests.",
+      "A castle wedding website with warmth, romance, and enough structure to make celebrating at Ballyseede Castle feel effortless for guests from the very first click.",
     announcement:
       "Ballyseede has that rare combination of character and warmth: a castle setting that feels distinctive from the first look, but still welcoming enough for guests to relax into the weekend very quickly.",
+    announcementHtml:
+      "<p>Set within the character-filled surroundings of <strong>Ballyseede Castle</strong>, this kind of wedding website gives guests a warm and polished introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the wedding weekend begins.</p>",
     locationOverviewHtml:
-      "<p>For couples drawn to classic Irish castle atmosphere without losing guest comfort, Ballyseede offers a lot. The website can set expectations gently while also showcasing why the venue itself is part of the celebration.</p><p>That makes it easier for guests to understand not only when and where they need to be, but why staying close is worth it.</p>",
+      "<p>For couples drawn to classic Irish castle atmosphere without losing guest comfort, <strong>Ballyseede Castle</strong> offers a lot. The website can set expectations gently while also showcasing why the venue itself is part of the celebration.</p><p>The castle setting, welcoming feel, and sense of occasion make it easier for guests to understand not only when and where they need to be, but why staying close is worth it.</p>",
     stayDescription:
-      "A genuinely atmospheric castle stay that lets guests feel part of the celebration from the moment they arrive through to the final morning.",
+      "A genuinely atmospheric castle stay that lets guests feel part of the celebration at Ballyseede Castle from the moment they arrive through to the final morning.",
     scheduleHeading: "A Castle Weekend In Kerry",
     scheduleDescription:
       "A romantic outline that keeps the guest journey clear while still letting the castle atmosphere lead the mood.",
@@ -520,7 +522,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-montserrat), Arial, sans-serif",
     fontDisplay: "var(--font-cormorant), Garamond, serif",
-    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at Ballyseede Castle. It is not affiliated with or endorsed by Ballyseede Castle."
   },
   {
     slug: "dromoland-castle",
