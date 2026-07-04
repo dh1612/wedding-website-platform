@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import {
+  Alex_Brush,
   Cormorant_Garamond,
   Great_Vibes,
+  Lato,
   Montserrat,
   Playfair_Display
 } from "next/font/google";
@@ -30,6 +32,18 @@ const greatVibes = Great_Vibes({
   subsets: ["latin"],
   variable: "--font-great-vibes",
   weight: "400"
+});
+
+const alexBrush = Alex_Brush({
+  subsets: ["latin"],
+  variable: "--font-alex-brush",
+  weight: "400"
+});
+
+const lato = Lato({
+  subsets: ["latin"],
+  variable: "--font-lato",
+  weight: ["400", "700"]
 });
 
 export const metadata: Metadata = {
@@ -62,7 +76,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfairDisplay.variable} ${cormorantGaramond.variable} ${montserrat.variable} ${greatVibes.variable}`}
+        className={`${playfairDisplay.variable} ${cormorantGaramond.variable} ${montserrat.variable} ${greatVibes.variable} ${alexBrush.variable} ${lato.variable}`}
       >
         {children}
       </body>
