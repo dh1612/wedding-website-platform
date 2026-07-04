@@ -489,14 +489,14 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
             <div className="accent-panel rounded-[1.6rem] p-6">
               <p className="eyebrow">{wedding.ceremony.title}</p>
               <p className="mt-3 text-2xl leading-tight">{wedding.ceremony.time}</p>
-              <p className="mt-4 text-lg leading-7 text-[var(--accent-contrast)]/92">
+              <p className="mt-4 text-lg leading-7 text-current">
                 {displayDate}
               </p>
-              <p className="mt-1 text-base leading-7 text-[var(--accent-contrast)]/80">
+              <p className="mt-1 text-base leading-7 text-current/80">
                 {wedding.ceremony.location}
               </p>
               {wedding.ceremony.address ? (
-                <p className="mt-1 text-sm leading-6 text-[var(--accent-contrast)]/72">
+                <p className="mt-1 text-sm leading-6 text-current/72">
                   {wedding.ceremony.address}
                 </p>
               ) : null}
