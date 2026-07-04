@@ -77,7 +77,7 @@ const weddingData: WeddingData = {
   ceremony: {
     title: "Ceremony",
     time: "3:00 PM",
-    location: "Armada House",
+    location: "Armada Hotel",
     address: "Spanish Point, Co. Clare",
     mapLink: "https://maps.google.com/?q=Armada+Hotel+Spanish+Point",
     description:
@@ -86,11 +86,11 @@ const weddingData: WeddingData = {
   reception: {
     title: "Reception",
     time: "5:00 PM",
-    location: "Armada House",
+    location: "Armada Hotel",
     address: "Spanish Point, Co. Clare",
     mapLink: "https://maps.google.com/?q=Armada+Hotel+Spanish+Point",
     description:
-      "Drinks, dinner, and the evening celebration all continue in one place overlooking the Atlantic."
+      "Drinks, dinner, and the evening celebration all continue in one place overlooking the Atlantic, with Armada's beautiful food and setting carrying the whole evening effortlessly."
   },
   scheduleEyebrow: "Wedding Weekend",
   scheduleHeading: "A Celebration Across The Coast",
@@ -108,7 +108,7 @@ const weddingData: WeddingData = {
     },
     {
       time: "Saturday, 1:30 PM",
-      title: "Guests arrive at Armada House",
+      title: "Guests arrive at Armada Hotel",
       details:
         "A little breathing room before the ceremony begins, with time to greet people and take in the view."
     },
@@ -152,7 +152,7 @@ const weddingData: WeddingData = {
       "A quick look at the places guests are most likely to need when planning where to stay and how to move around Spanish Point.",
     locationOverviewTitle: "Why this stretch of coast works so well",
     locationOverviewHtml:
-      "<p>Spanish Point gives guests that lovely balance of dramatic sea views, a real sense of occasion, and the feeling that the wedding can unfold over more than a few hurried hours.</p><p>Armada suits that especially well, with its Atlantic setting, polished rooms, and the kind of atmosphere that encourages guests to settle in and make a proper weekend of it.</p>",
+      "<p>Spanish Point gives guests that lovely balance of dramatic sea views, a real sense of occasion, and the feeling that the wedding can unfold over more than a few hurried hours.</p><p>Armada suits that especially well, with its Atlantic setting, beautifully designed hotel spaces, memorable food, and the kind of atmosphere that encourages guests to settle in and make a proper weekend of it.</p>",
     mapSpots: [
       {
         label: "Shannon Airport",
@@ -160,7 +160,7 @@ const weddingData: WeddingData = {
         href: "https://maps.google.com/?q=Shannon+Airport"
       },
       {
-        label: "Armada House",
+        label: "Armada Hotel",
         detail: "Ceremony, drinks, dinner, and the main celebration all in one beautiful coastal setting.",
         href: "https://maps.google.com/?q=Armada+Hotel+Spanish+Point"
       },
@@ -192,17 +192,23 @@ const weddingData: WeddingData = {
     {
       name: "The Armada Hotel",
       note:
-        "The most seamless option for guests who want the full Armada experience, with the views, atmosphere, and celebrations all in one place."
+        "The most seamless option for guests who want the full Armada experience, with beautiful rooms, standout food, ocean views, and the celebrations all in one place.",
+      link: "https://www.armadahotel.com/",
+      linkLabel: "View Armada Hotel"
     },
     {
-      name: "Spanish Point & Miltown Malbay",
+      name: "Bellbridge House Hotel",
       note:
-        "A relaxed local base for guests who want to stay near the coast and keep the wedding day easy."
+        "A nearby Spanish Point option for guests who want to stay close to the coast and within easy reach of the wedding weekend.",
+      link: "https://www.bellbridgehousehotelclare.com/",
+      linkLabel: "View Bellbridge House Hotel"
     },
     {
-      name: "Lahinch",
+      name: "Lahinch Coast Hotel",
       note:
-        "A good option for anyone who would like a livelier seaside base with extra restaurants and accommodation choices."
+        "A good option for anyone who would like a livelier seaside base with extra restaurants, surf-town energy, and a slightly broader range of plans around the weekend.",
+      link: "https://www.lahinchcoasthotel.ie/",
+      linkLabel: "View Lahinch Coast Hotel"
     }
   ],
   suppliersEyebrow: "Suppliers",
