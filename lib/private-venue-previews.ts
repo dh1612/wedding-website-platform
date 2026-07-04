@@ -189,13 +189,15 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "Midleton",
     extraAreaDetail: "A wider guest base with extra dining and accommodation options nearby.",
     tagline:
-      "A romantic, country-estate wedding website designed for couples who want elegance, soft structure, and guests who feel guided rather than overwhelmed.",
+      "A romantic country-estate wedding website designed for couples who want elegance, soft structure, and celebrating at Castlemartyr Resort from the very first guest click.",
     announcement:
       "Castlemartyr already carries that sense of arrival couples hope for: historic character, refined rooms, and a weekend atmosphere that feels grand without becoming stiff.",
+    announcementHtml:
+      "<p>Set within the beautiful estate setting of <strong>Castlemartyr Resort</strong>, this kind of wedding website gives guests a graceful introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the weekend itself begins.</p>",
     locationOverviewHtml:
-      "<p>Some venues naturally hold a more romantic pacing, and Castlemartyr is one of them. Guests can understand the shape of the weekend quickly while still feeling like they are being invited into something beautiful.</p><p>That makes the website especially useful as both a practical guide and an early glimpse of the tone the couple wants to set.</p>",
+      "<p>Some venues naturally hold a more romantic pacing, and <strong>Castlemartyr Resort</strong> is one of them. Guests can understand the shape of the weekend quickly while still feeling like they are being invited into something beautiful.</p><p>The estate setting, refined interiors, and sense of occasion give guests something to feel excited about early, which makes the website especially useful as both a practical guide and an early glimpse of the tone the couple wants to set.</p>",
     stayDescription:
-      "A country-estate stay that feels special from arrival onward, with the comfort of keeping the most important moments anchored in one destination.",
+      "A country-estate stay that feels special from arrival onward, with the comfort of keeping the most important moments anchored within Castlemartyr Resort.",
     scheduleHeading: "A Country Estate Weekend",
     scheduleDescription:
       "The first draft can show a clear guest journey without losing the softer, romantic pace couples usually want for a venue like this.",
@@ -282,7 +284,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-montserrat), Arial, sans-serif",
     fontDisplay: "var(--font-cormorant), Garamond, serif",
-    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at Castlemartyr Resort. It is not affiliated with or endorsed by Castlemartyr Resort."
   },
   {
     slug: "hayfield-manor",
