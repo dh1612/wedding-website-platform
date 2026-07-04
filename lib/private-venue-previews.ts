@@ -665,11 +665,13 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "The manor estate",
     extraAreaDetail: "An immersive luxury stay for guests who want the full destination feel.",
     tagline:
-      "A luxury-manor wedding website for couples who want a guest experience that feels seamless, high-end, and unmistakably considered.",
+      "A luxury-manor wedding website for couples who want celebrating at Adare Manor to feel seamless, high-end, and unmistakably considered from the very first guest click.",
     announcement:
       "Adare Manor is a venue where the digital experience matters almost as much as the physical one. Guests expect clarity, polish, and a sense of anticipation before they arrive, and the website can do all three beautifully.",
+    announcementHtml:
+      "<p>Set within the extraordinary surroundings of <strong>Adare Manor</strong>, this kind of wedding website gives guests a polished, confidence-building introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the wedding weekend begins.</p>",
     locationOverviewHtml:
-      "<p>For a venue at this level, the website should never feel like an afterthought. It needs to guide guests clearly while reflecting the standard, confidence, and elegance couples have chosen for the celebration itself.</p><p>That is exactly where a tailored format makes more sense than a generic builder page.</p>",
+      "<p>For a venue at this level, the website should never feel like an afterthought. It needs to guide guests clearly while reflecting the standard, confidence, and elegance of <strong>Adare Manor</strong> itself.</p><p>The grandeur of the estate and the expectation of a luxury guest experience are exactly where a tailored format makes more sense than a generic builder page.</p>",
     stayDescription:
       "A highly luxurious stay that keeps guests inside the full Adare Manor experience from the first arrival through to the final farewell.",
     scheduleHeading: "A Manor Weekend Of Real Occasion",
@@ -758,7 +760,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-lato), Arial, sans-serif",
     fontDisplay: "var(--font-playfair), Didot, serif",
-    fontScript: "var(--font-great-vibes), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-great-vibes), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at Adare Manor. It is not affiliated with or endorsed by Adare Manor."
   },
   {
     slug: "the-europe-hotel-resort",
