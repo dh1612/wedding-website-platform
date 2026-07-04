@@ -308,13 +308,15 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "The manor setting",
     extraAreaDetail: "A more intimate, luxury hotel feel that keeps the celebration contained and elegant.",
     tagline:
-      "A city-luxury wedding website tailored to couples who want a graceful guest experience, rich hospitality, and a venue with unmistakable polish.",
+      "A city-luxury wedding website tailored to couples who want a graceful guest experience, rich hospitality, and celebrating at Hayfield Manor with polish from the very first guest click.",
     announcement:
       "Hayfield Manor brings together the warmth of a privately run luxury hotel with the confidence couples want from a wedding venue: beautiful rooms, attentive service, and a setting that feels quietly elevated throughout.",
+    announcementHtml:
+      "<p>Set within the refined surroundings of <strong>Hayfield Manor</strong>, this kind of wedding website gives guests a polished introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the weekend itself begins.</p>",
     locationOverviewHtml:
-      "<p>Because Hayfield sits so well between city access and luxury-hotel atmosphere, the website can help guests understand both the practical ease and the sense of occasion very quickly.</p><p>That makes it ideal for couples who want a refined wedding page without pages of explanation.</p>",
+      "<p>Because <strong>Hayfield Manor</strong> sits so well between city access and luxury-hotel atmosphere, the website can help guests understand both the practical ease and the sense of occasion very quickly.</p><p>The hotel's warmth, service, and beautifully finished spaces give guests something to feel excited about early, which makes it ideal for couples who want a refined wedding page without pages of explanation.</p>",
     stayDescription:
-      "A luxury-hotel stay with city access, excellent food, and the sort of atmosphere that makes guests feel instantly looked after.",
+      "A luxury-hotel stay with city access, excellent food, and the sort of atmosphere that makes guests feel instantly looked after at Hayfield Manor.",
     scheduleHeading: "A Manor Weekend In The City",
     scheduleDescription:
       "A polished guest outline that shows how a Cork city-luxury wedding can feel calm, elegant, and easy to follow.",
@@ -401,7 +403,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-lato), Arial, sans-serif",
     fontDisplay: "var(--font-playfair), Didot, serif",
-    fontScript: "var(--font-great-vibes), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-great-vibes), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at Hayfield Manor. It is not affiliated with or endorsed by Hayfield Manor."
   },
   {
     slug: "ballyseede-castle",
