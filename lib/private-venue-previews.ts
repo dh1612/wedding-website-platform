@@ -891,7 +891,7 @@ const venueConfigs: VenuePreviewConfig[] = [
     metadataTitle: "The Dunloe Hotel & Gardens wedding website concept",
     couple: "Aisling & Tom",
     date: "May 30, 2028",
-    themeId: "summer-garden",
+    themeId: "summer-coast",
     location: "Killarney, Kerry",
     mapQuery: "The Dunloe Hotel and Gardens Killarney",
     officialUrl: "https://www.thedunloe.com/",
@@ -912,7 +912,7 @@ const venueConfigs: VenuePreviewConfig[] = [
       "<p>For a venue with scenery and breathing room like this, the website can do a lovely job of helping guests understand the full mood of <strong>The Dunloe Hotel &amp; Gardens</strong>.</p><p>The gardens, wider landscape, and sense of a proper getaway make the page less about over-explaining and more about guiding people clearly into the setting and the plans around it.</p>",
     stayDescription:
       "A scenic hotel stay with gardens, mountain atmosphere, and the kind of peaceful setting at The Dunloe Hotel & Gardens that naturally extends a wedding into a fuller weekend.",
-    heroImageBrightness: 0.74,
+    heroImageBrightness: 0.94,
     heroImageObjectPosition: "center center",
     scheduleHeading: "A Garden Weekend In Kerry",
     scheduleDescription:
