@@ -784,13 +784,15 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "The lakeside setting",
     extraAreaDetail: "A more immersive stay for guests who want the full resort experience.",
     tagline:
-      "A lakeside wedding website that blends striking scenery, resort comfort, and the kind of calm guest guidance a destination-style weekend deserves.",
+      "A lakeside wedding website that blends striking scenery, resort comfort, and the kind of calm guest guidance celebrating at The Europe Hotel & Resort deserves from the very first click.",
     announcement:
       "The Europe lends itself beautifully to a wedding website because the setting is such a core part of the appeal: lake views, resort comfort, and the feeling that the celebration begins long before the ceremony itself.",
+    announcementHtml:
+      "<p>Set beside the extraordinary lakeside setting of <strong>The Europe Hotel &amp; Resort</strong>, this kind of wedding website gives guests a polished, confidence-building introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the wedding weekend begins.</p>",
     locationOverviewHtml:
-      "<p>For couples choosing a venue with scenery this strong, the website should help guests understand the shape of the weekend while also giving the venue space to shine.</p><p>That is where a more tailored page feels especially useful: practical, yes, but also part of the anticipation.</p>",
+      "<p>For couples choosing a venue with scenery this strong, the website should help guests understand the shape of the weekend while also giving <strong>The Europe Hotel &amp; Resort</strong> space to shine.</p><p>The lake views, resort atmosphere, and sense of a full destination stay make a more tailored page especially useful: practical, yes, but also part of the anticipation.</p>",
     stayDescription:
-      "A standout lakeside stay with resort comfort, memorable dining, and the ease of having the main celebration centred in one destination.",
+      "A standout lakeside stay with resort comfort, memorable dining, and the ease of having the main celebration centred at The Europe Hotel & Resort.",
     scheduleHeading: "A Lakeside Wedding Weekend",
     scheduleDescription:
       "A clean first-draft structure that helps guests picture the celebration without draining any romance from it.",
@@ -877,7 +879,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-montserrat), Arial, sans-serif",
     fontDisplay: "var(--font-cormorant), Garamond, serif",
-    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-alex-brush), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at The Europe Hotel & Resort. It is not affiliated with or endorsed by The Europe Hotel & Resort."
   },
   {
     slug: "the-dunloe-hotel-gardens",
