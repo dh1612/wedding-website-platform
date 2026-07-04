@@ -912,6 +912,8 @@ const venueConfigs: VenuePreviewConfig[] = [
       "<p>For a venue with scenery and breathing room like this, the website can do a lovely job of helping guests understand the full mood of <strong>The Dunloe Hotel &amp; Gardens</strong>.</p><p>The gardens, wider landscape, and sense of a proper getaway make the page less about over-explaining and more about guiding people clearly into the setting and the plans around it.</p>",
     stayDescription:
       "A scenic hotel stay with gardens, mountain atmosphere, and the kind of peaceful setting at The Dunloe Hotel & Gardens that naturally extends a wedding into a fuller weekend.",
+    heroImageBrightness: 0.74,
+    heroImageObjectPosition: "center center",
     scheduleHeading: "A Garden Weekend In Kerry",
     scheduleDescription:
       "A calm outline that gives guests the practical shape of the celebration while still letting the setting feel spacious and romantic.",
@@ -1133,7 +1135,7 @@ function buildWeddingData(config: VenuePreviewConfig, baseTheme: ThemeDefinition
       primaryActionLabel: "View the weekend",
       primaryActionHref: "#schedule",
       secondaryActionLabel: "Explore stay options",
-      secondaryActionHref: "#stay"
+      secondaryActionHref: "#accommodation"
     },
     locationSummary: config.location,
     tagline: config.tagline,

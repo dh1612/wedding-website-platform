@@ -24,7 +24,7 @@ const weddingData: WeddingData = {
     primaryActionLabel: "View the weekend",
     primaryActionHref: "#schedule",
     secondaryActionLabel: "Stay nearby",
-    secondaryActionHref: "#stay"
+    secondaryActionHref: "#accommodation"
   },
   locationSummary: "Spanish Point, Co. Clare",
   tagline:

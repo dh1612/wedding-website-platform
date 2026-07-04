@@ -38,7 +38,7 @@ function SharedActions({
         href={secondaryActionHref}
         className={
           secondaryButtonClassName ??
-          "accent-outline rounded-full bg-white/90 px-6 py-3 text-center text-sm font-medium shadow-[0_10px_26px_rgba(34,24,20,0.12)] backdrop-blur-sm transition hover:bg-white"
+          "accent-outline rounded-full bg-white/92 px-6 py-3 text-center text-sm font-medium text-[var(--foreground)] shadow-[0_10px_26px_rgba(34,24,20,0.12)] backdrop-blur-sm transition hover:bg-white"
         }
       >
         {secondaryActionLabel}
@@ -118,7 +118,7 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
     wedding.announcement?.trim() || previewFallback?.heroAnnouncement || "";
   const shouldShowResolvedTagline = showTagline && Boolean(resolvedTagline);
   const shouldShowResolvedAnnouncement = showAnnouncement && Boolean(resolvedAnnouncement);
-  const heroImageStyle = {
+          const heroImageStyle = {
     objectPosition: wedding.styleOptions?.heroImageObjectPosition,
     filter:
       typeof wedding.styleOptions?.heroImageBrightness === "number"
