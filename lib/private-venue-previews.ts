@@ -903,13 +903,15 @@ const venueConfigs: VenuePreviewConfig[] = [
     extraAreaLabel: "The Gap of Dunloe setting",
     extraAreaDetail: "A stay that feels scenic, spacious, and strongly connected to the landscape.",
     tagline:
-      "A garden-and-mountain wedding website designed for couples who want scenery, guest comfort, and a weekend that feels gently curated rather than crowded.",
+      "A garden-and-mountain wedding website designed for couples who want scenery, guest comfort, and celebrating at The Dunloe Hotel & Gardens to feel gently curated from the very first guest click.",
     announcement:
       "The Dunloe stands out because it offers guests more than a single venue moment. The setting, gardens, and wider Killarney landscape all help the wedding feel like a proper escape.",
+    announcementHtml:
+      "<p>Set within the scenic surroundings of <strong>The Dunloe Hotel &amp; Gardens</strong>, this kind of wedding website gives guests a calm and polished introduction to the day before they even arrive.</p><p><strong>Perfect for keeping guests informed before the big day:</strong></p><ul><li>Directions</li><li>Accommodation</li><li>RSVP</li><li>Gift list</li><li>FAQs</li><li>Timeline</li></ul><p>For coordinators, it helps answer the questions couples and guests usually ask long before the wedding weekend begins.</p>",
     locationOverviewHtml:
-      "<p>For a venue with scenery and breathing room like this, the website can do a lovely job of helping guests understand the full mood of the weekend.</p><p>It becomes less about over-explaining and more about guiding people clearly into the setting and the plans around it.</p>",
+      "<p>For a venue with scenery and breathing room like this, the website can do a lovely job of helping guests understand the full mood of <strong>The Dunloe Hotel &amp; Gardens</strong>.</p><p>The gardens, wider landscape, and sense of a proper getaway make the page less about over-explaining and more about guiding people clearly into the setting and the plans around it.</p>",
     stayDescription:
-      "A scenic hotel stay with gardens, mountain atmosphere, and the kind of peaceful setting that naturally extends a wedding into a fuller weekend.",
+      "A scenic hotel stay with gardens, mountain atmosphere, and the kind of peaceful setting at The Dunloe Hotel & Gardens that naturally extends a wedding into a fuller weekend.",
     scheduleHeading: "A Garden Weekend In Kerry",
     scheduleDescription:
       "A calm outline that gives guests the practical shape of the celebration while still letting the setting feel spacious and romantic.",
@@ -996,7 +998,10 @@ const venueConfigs: VenuePreviewConfig[] = [
     ],
     fontBody: "var(--font-lato), Arial, sans-serif",
     fontDisplay: "var(--font-cormorant), Garamond, serif",
-    fontScript: "var(--font-great-vibes), 'Snell Roundhand', cursive"
+    fontScript: "var(--font-great-vibes), 'Snell Roundhand', cursive",
+    footerLine: "Crafted Wedding Sites • Cork, Ireland",
+    legalNote:
+      "This website is an independent concept created by Crafted Wedding Sites to demonstrate how a bespoke wedding website could complement weddings at The Dunloe Hotel & Gardens. It is not affiliated with or endorsed by The Dunloe Hotel & Gardens."
   },
   {
     slug: "sheen-falls-lodge",
