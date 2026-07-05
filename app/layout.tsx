@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import {
   Alex_Brush,
   Cormorant_Garamond,
@@ -79,6 +80,7 @@ export default function RootLayout({
         className={`${playfairDisplay.variable} ${cormorantGaramond.variable} ${montserrat.variable} ${greatVibes.variable} ${alexBrush.variable} ${lato.variable}`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
