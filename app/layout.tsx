@@ -7,6 +7,7 @@ import {
   Montserrat,
   Playfair_Display
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { BRAND_DOMAIN, BRAND_NAME } from "@/lib/brand";
 import "./globals.css";
 
@@ -79,6 +80,7 @@ export default function RootLayout({
         className={`${playfairDisplay.variable} ${cormorantGaramond.variable} ${montserrat.variable} ${greatVibes.variable} ${alexBrush.variable} ${lato.variable}`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
