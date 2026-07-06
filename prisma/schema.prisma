@@ -226,3 +226,12 @@ model CalendarItem {
   @@index([weddingId, startDate])
   @@index([weddingId, sortOrder])
 }
+
+model HomeHub {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  contentJson Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
