@@ -106,6 +106,31 @@ const portalPreviewCards = [
   }
 ];
 
+const twoExperienceCards = [
+  {
+    title: "For your guests",
+    points: [
+      "Schedule and timings",
+      "Travel and directions",
+      "Accommodation details",
+      "FAQs",
+      "RSVP online",
+      "Local recommendations"
+    ]
+  },
+  {
+    title: "For you",
+    points: [
+      "Private couple portal",
+      "Guest tracking",
+      "RSVP dashboard",
+      "Seating planner",
+      "Checklist tools",
+      "Key dates and planning notes"
+    ]
+  }
+];
+
 const featuredTestimonial = {
   quote:
     "The website felt elegant, personal and genuinely reflective of us as a couple, while also making everything much easier for our guests. Having support on hand for questions and amendments made the whole process feel calm and well looked after, and the one-hour couple portal call was especially helpful for understanding how everything worked.",
@@ -214,11 +239,11 @@ export default function MarketingHomePage() {
               Wedding websites tailored for you
             </p>
             <h1 className="max-w-3xl text-[3.1rem] leading-none sm:text-[4.4rem] lg:text-6xl">
-              Wedding websites tailored to your style, your guests, and your day.
+              Everything your guests need. Everything you need to plan.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              Everything you and your guests need, gathered in one polished place, with dedicated
-              support and without the friction of a restrictive template builder.
+              Beautiful guest websites with a private couple portal behind the scenes — built for
+              you, tailored to your wedding, and easy for everyone to use.
             </p>
           </div>
 
@@ -244,22 +269,22 @@ export default function MarketingHomePage() {
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/get-started"
+              href={exampleHref}
               className="hidden items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-center text-sm font-medium text-white transition hover:bg-[#215b45] md:inline-flex"
             >
-              Get My Website Started
+              View live example
             </Link>
-            <Link
-              href={exampleHref}
+            <a
+              href="#packages"
               className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-center text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
             >
-              View Example Website
-            </Link>
+              See packages
+            </a>
           </div>
 
           <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 text-base leading-7 text-[#486159]">
-            Start with a strong first draft, then choose whether you want a simple guest website,
-            RSVP through the website, or the full private planning side as well.
+            A polished guest website on the front, and a private planning space behind it when you
+            want the fuller experience.
           </div>
         </div>
 
@@ -337,6 +362,39 @@ export default function MarketingHomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="space-y-4">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it fits together</p>
+            <h2 className="text-4xl leading-none sm:text-5xl">Two experiences. One wedding.</h2>
+          </div>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            {twoExperienceCards.map((card) => (
+              <article
+                key={card.title}
+                className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)]"
+              >
+                <h3 className="text-3xl leading-tight">{card.title}</h3>
+                <div className="mt-5 space-y-3">
+                  {card.points.map((point) => (
+                    <div key={point} className="flex gap-3">
+                      <span className="mt-2 h-2.5 w-2.5 rounded-full bg-[#b48c58]" />
+                      <span className="text-sm leading-6 text-[#423a34]">{point}</span>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#5f564e]">
+            Your guests get a polished place to find the details. You get a calmer way to keep
+            everything organised.
+          </p>
         </div>
       </section>
 
