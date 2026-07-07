@@ -38,20 +38,17 @@ export default async function GetStartedPage({
             Start Your Website
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            Start with the heart of the day, and we&apos;ll shape the website around it.
+            Let&apos;s start your wedding website.
           </h1>
           <p className="text-lg leading-8 text-[#5f564e]">
-            You don&apos;t need to build this alone. Share the essentials, and we&apos;ll turn them
-            into a wedding website that feels thoughtful, personal, and ready to share.
+            Share a few simple details and I&apos;ll create your first private draft. Nothing goes
+            live until you&apos;ve reviewed it together.
           </p>
-          <p className="max-w-3xl text-base leading-7 text-[#5f564e]">
-            There&apos;s no pressure to have every detail perfectly written. Start with what you know,
-            and we&apos;ll shape a strong first draft around the parts that matter most to your guests.
-          </p>
-          <div className="space-y-2 text-sm leading-6 text-[#6d655d]">
-            <p>• Most couples complete this in under 2 minutes</p>
-            <p>• Light details are absolutely fine for the first draft</p>
-            <p>• Nothing is shared publicly before you have reviewed it</p>
+          <div className="grid gap-3 rounded-[1.5rem] border border-black/6 bg-white/70 px-5 py-4 text-sm leading-6 text-[#6d655d] sm:grid-cols-2">
+            <p>✓ Takes around 2 minutes</p>
+            <p>✓ Rough details are absolutely fine</p>
+            <p>✓ Nothing is shared publicly</p>
+            <p>✓ Personal support throughout</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
@@ -66,6 +63,29 @@ export default async function GetStartedPage({
             >
               View Example Website
             </Link>
+          </div>
+        </div>
+      </section>
+      <section className="mx-auto w-full max-w-6xl px-6 pb-6 lg:px-8 lg:pb-8">
+        <div className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+          <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+            What happens next?
+          </p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {[
+              ["Step 1", "Complete the short form."],
+              ["Step 2", "I build your first private draft."],
+              ["Step 3", "We refine it together."],
+              ["Step 4", "Only then is your website shared with guests."]
+            ].map(([step, copy]) => (
+              <div
+                key={step}
+                className="rounded-[1.4rem] border border-[#eadac9] bg-[#fcfaf7] px-5 py-5"
+              >
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">{step}</p>
+                <p className="mt-3 text-base leading-7 text-[#5f564e]">{copy}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

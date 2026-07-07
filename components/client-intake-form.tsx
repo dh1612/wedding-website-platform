@@ -542,6 +542,16 @@ export function ClientIntakeForm({
                 Once the basics are in, choose the level of support that feels right.
               </p>
             </div>
+            <div className="rounded-[1.2rem] border border-[#184b38]/12 bg-[#f6fbf8] px-4 py-4 text-sm leading-6 text-[#486159]">
+              <p className="font-medium">Not sure which package you&apos;ll need?</p>
+              <p className="mt-2">
+                Don&apos;t worry.
+              </p>
+              <p className="mt-2">
+                Choose the option that feels closest today. If another package suits your wedding
+                better after seeing the first draft, we&apos;ll simply adjust it together.
+              </p>
+            </div>
             <div className="grid gap-3 md:grid-cols-3">
               {intakePackages.map((pkg) => (
                 <div
@@ -656,31 +666,54 @@ export function ClientIntakeForm({
             </div>
           ) : (
             <div className="mt-8">
+              <p className="mb-4 max-w-3xl text-sm leading-6 text-[#486159]">
+                You&apos;re not committing to a finished website today.
+              </p>
+              <p className="mb-5 max-w-3xl text-sm leading-6 text-[#486159]">
+                You&apos;re simply giving me enough to start creating something personal for your
+                wedding.
+              </p>
               <button
                 type="button"
                 onClick={submitIntake}
                 disabled={isSubmitting}
                 className="hidden w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-4 text-base font-medium text-white transition hover:bg-[#133c2d] disabled:cursor-not-allowed disabled:opacity-70 md:inline-flex"
               >
-                {isSubmitting ? "Preparing..." : "Prepare My Website"}
+                {isSubmitting ? "Preparing..." : "Create My First Draft"}
               </button>
               <p className="mt-3 hidden text-center text-sm leading-6 text-[#486159] md:block">
                 No payment needed to get your first version started.
               </p>
             </div>
           )}
+
+          {!result && !showSubmissionFeedback ? (
+            <div className="mt-8 rounded-[1.4rem] border border-black/6 bg-[#faf7f2] px-5 py-5 text-sm leading-7 text-[#6d655d]">
+              Every website is personally reviewed and refined before guests ever see it.
+              <br />
+              No DIY builders.
+              <br />
+              No complicated setup.
+              <br />
+              Just a calm, guided process from first draft to finished website.
+            </div>
+          ) : null}
         </div>
       </div>
 
       {!result && !showSubmissionFeedback ? (
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/6 bg-white/95 p-4 shadow-[0_-12px_30px_rgba(52,35,24,0.1)] backdrop-blur md:hidden">
+          <p className="mb-3 text-center text-xs leading-5 text-[#486159]">
+            You&apos;re simply giving me enough to start creating something personal for your
+            wedding.
+          </p>
           <button
             type="button"
             onClick={submitIntake}
             disabled={isSubmitting}
             className="inline-flex w-full items-center justify-center rounded-full bg-[#184b38] px-6 py-3.5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {isSubmitting ? "Preparing..." : "Prepare My Website"}
+            {isSubmitting ? "Preparing..." : "Create My First Draft"}
           </button>
           <p className="mt-2 text-center text-xs leading-5 text-[#486159]">
             No payment needed to get your first version started.
