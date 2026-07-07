@@ -51,32 +51,72 @@ export default async function CoupleAreaPage() {
             Premium Couple Portal
           </p>
           <h1 className="text-5xl leading-none sm:text-6xl">
-            A calm private planning space, alongside the wedding website
+            Your private planning space, behind the wedding website.
           </h1>
           <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-            Premium adds a private couple area for the planning side of the wedding. It is where
-            couples can review RSVPs, keep key dates together, work through a checklist, and see a
-            clearer live picture of what still needs attention.
+            While your guests use the wedding website for timings, travel, accommodation and
+            RSVPs, you get a private Couple Portal to manage the planning side — guest replies,
+            checklists, seating, key dates and final details.
           </p>
-          <div className="rounded-[1.3rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-sm leading-7 text-[#486159]">
-            Premium includes digital invites, the full private planning area, AI concierge access,
-            and a more dedicated level of support while everything is being finalised. You can
-            explore the live demo below without affecting any real wedding data.
-          </div>
           <div className="flex flex-wrap gap-3 pt-2">
             <Link
               href="/couple-area/demo"
               className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#215b45]"
             >
-              Open Live Portal Demo
+              Explore Live Portal Demo
             </Link>
             <Link
-              href="/get-started?package=premium"
+              href="/packages/premium"
               className="inline-flex items-center justify-center rounded-full border border-[#d9c7b5] bg-white px-6 py-3 text-sm font-medium text-[#5f564e] transition hover:bg-[#faf7f2]"
             >
-              Start A Premium Draft
+              View Premium Package
             </Link>
           </div>
+          <p className="text-sm leading-7 text-[#7b6d62]">
+            The Couple Portal is included with Premium.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 pb-8 lg:px-8">
+        <div className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+          <p className="text-[12px] uppercase tracking-[0.32em] text-[#9a7d64]">
+            Two Sides Of The Experience
+          </p>
+          <h2 className="mt-4 text-4xl leading-tight">
+            Guest website on the outside. Planning portal on the inside.
+          </h2>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            <div className="rounded-[1.5rem] border border-[#eadac9] bg-[#fffaf5] p-6">
+              <p className="text-[12px] uppercase tracking-[0.28em] text-[#9a7d64]">
+                For your guests
+              </p>
+              <ul className="mt-4 space-y-3 text-[15px] leading-7 text-[#5f564e]">
+                <li>Wedding details</li>
+                <li>Timings</li>
+                <li>Travel and accommodation</li>
+                <li>FAQs</li>
+                <li>RSVP</li>
+              </ul>
+            </div>
+            <div className="rounded-[1.5rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6">
+              <p className="text-[12px] uppercase tracking-[0.28em] text-[#6b8b80]">
+                For you
+              </p>
+              <ul className="mt-4 space-y-3 text-[15px] leading-7 text-[#486159]">
+                <li>RSVP dashboard</li>
+                <li>Guest tracking</li>
+                <li>Seating planner</li>
+                <li>Checklist</li>
+                <li>Key dates</li>
+                <li>Planning notes</li>
+              </ul>
+            </div>
+          </div>
+          <p className="mt-6 text-sm leading-7 text-[#7b6d62]">
+            Your guests get a polished place to find the details. You get a calmer way to keep
+            everything organised.
+          </p>
         </div>
       </section>
 
