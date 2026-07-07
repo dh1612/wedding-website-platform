@@ -20,12 +20,11 @@ export default function ContactPage() {
             <BrandLogo subtitle="Contact" />
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Contact</p>
             <h1 className="text-5xl leading-none sm:text-6xl">
-              Have a question before you get started?
+              Let&apos;s talk about your wedding.
             </h1>
             <p className="text-lg leading-8 text-[#5f564e]">
-              If you want to ask about packages, timings, what happens after the preview, or
-              whether the service is the right fit, send a note and I&apos;ll point you in the
-              right direction.
+              Whether you&apos;re comparing packages, wondering if a wedding website is right for
+              you, or simply have a quick question, I&apos;d be happy to help.
             </p>
             <div className="rounded-[1.5rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5">
               <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Direct email</p>
@@ -54,11 +53,17 @@ export default function ContactPage() {
             <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Send a message</p>
             <h2 className="mt-4 text-3xl leading-tight">Tell me what you need help with</h2>
             <p className="mt-3 text-base leading-7 text-[#5f564e]">
-              A quick question is absolutely fine. I&apos;ll be in touch within 1 working day with
-              a response.
+              No sales pressure. A quick question is absolutely fine.
             </p>
             <div className="mt-6">
               <ContactForm />
+            </div>
+            <div className="mt-6 rounded-[1.35rem] border border-[#eadac9] bg-white/80 p-5">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a7d64]">Personal note</p>
+              <p className="mt-3 text-base leading-7 text-[#5f564e]">
+                Hi, I&apos;m David. I&apos;ll personally reply to every enquiry, usually within one
+                working day.
+              </p>
             </div>
           </div>
         </div>
