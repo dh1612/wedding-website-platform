@@ -124,9 +124,6 @@ export default function WhyCraftedPage() {
       <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="max-w-3xl space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              What you&apos;re really paying for
-            </p>
             <h2 className="text-4xl leading-none sm:text-5xl">What you&apos;re really paying for</h2>
           </div>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
@@ -153,9 +150,6 @@ export default function WhyCraftedPage() {
       <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="max-w-4xl space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              Calm comparison
-            </p>
             <h2 className="text-4xl leading-none sm:text-5xl">DIY builder vs Crafted Wedding Sites</h2>
           </div>
 

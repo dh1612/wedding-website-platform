@@ -29,6 +29,19 @@ export function PageHero({
   summarySecondaryActionLabel
 }: PageHeroProps) {
   const wedding = weddingData ?? getWeddingData();
+  const formattedWeddingDate = (() => {
+    const parsed = new Date(wedding.date);
+
+    if (Number.isNaN(parsed.getTime())) {
+      return wedding.date;
+    }
+
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }).format(parsed);
+  })();
 
   return (
     <section className="mx-auto w-full max-w-6xl px-6 pb-2 pt-4 lg:px-8">
@@ -43,7 +56,7 @@ export function PageHero({
             <div className="accent-panel rounded-[1.5rem] p-6">
               <p className="eyebrow">Wedding Day</p>
               <p className="mt-3 text-3xl">{wedding.couple}</p>
-              <p className="mt-3 text-base text-[var(--foreground)]">{wedding.date}</p>
+              <p className="mt-3 text-base text-[var(--foreground)]">{formattedWeddingDate}</p>
               <p className="mt-1 text-base text-[var(--muted)]">{wedding.locationSummary}</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <Link

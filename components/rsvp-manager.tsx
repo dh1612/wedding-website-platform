@@ -46,6 +46,10 @@ const emptyDraft: DraftGuest = {
   dietary: ""
 };
 
+function pluralize(count: number, singular: string, plural = `${singular}s`) {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
 export function RSVPManager({
   guests,
   apiBasePath = "/api/portal",
@@ -630,11 +634,9 @@ export function RSVPManager({
                           <div className="mt-3 grid gap-3 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
                             <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
                               <p className="text-sm text-[var(--muted)]">Summary</p>
-                              <p className="mt-2 text-2xl">
-                                {estimatedGuests} guest{estimatedGuests === 1 ? "" : "s"}
-                              </p>
+                              <p className="mt-2 text-2xl">{pluralize(estimatedGuests, "guest")}</p>
                               <p className="mt-1 text-sm text-[var(--muted)]">
-                                across {totalResponses} submission{totalResponses === 1 ? "" : "s"}
+                                across {pluralize(totalResponses, "submission")}
                               </p>
                             </div>
                             <div className="rounded-[1rem] border border-[var(--border)] bg-[#fafcfb] px-4 py-4">
@@ -647,9 +649,7 @@ export function RSVPManager({
                                   >
                                     <p className="text-sm text-[var(--muted)]">{option}</p>
                                     <p className="mt-2 text-xl">{count}</p>
-                                    <p className="mt-1 text-xs text-[var(--muted)]">
-                                      submission{count === 1 ? "" : "s"}
-                                    </p>
+                                    <p className="mt-1 text-xs text-[var(--muted)]">{pluralize(count, "submission")}</p>
                                   </div>
                                 ))}
                               </div>
@@ -686,7 +686,7 @@ export function RSVPManager({
                     <div>
                       <p className="eyebrow">{group.label}</p>
                       <p className="mt-2 text-sm text-[var(--muted)]">
-                        {group.guestCount} guest{group.guestCount === 1 ? "" : "s"} · {group.guests.length} submission{group.guests.length === 1 ? "" : "s"}
+                        {pluralize(group.guestCount, "guest")} · {pluralize(group.guests.length, "submission")}
                       </p>
                     </div>
                     <span className="text-sm font-medium text-[var(--accent-strong)]">

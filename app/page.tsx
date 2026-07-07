@@ -242,29 +242,9 @@ export default function MarketingHomePage() {
               Everything your guests need. Everything you need to plan.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-[#5f564e] sm:text-xl">
-              Beautiful guest websites with a private couple portal behind the scenes — built for
-              you, tailored to your wedding, and easy for everyone to use.
+              Beautiful guest websites, with a private Couple Portal available for couples who want
+              the full planning experience — all built for you and tailored to your wedding.
             </p>
-          </div>
-
-          <div id="how-it-works" className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 sm:p-6">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it works</p>
-            <h2 className="mt-3 text-2xl leading-tight text-[#184b38] sm:text-3xl">
-              A guided, curated process from first draft to final website
-            </h2>
-            <div className="mt-5 space-y-4">
-              {flowSteps.map((step, index) => (
-                <div key={step.title} className="flex gap-4">
-                  <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#184b38] text-xs font-medium text-white">
-                    {index + 1}
-                  </span>
-                  <div>
-                    <p className="text-base font-medium leading-6 text-[#2d241f]">{step.title}</p>
-                    <p className="mt-1 text-sm leading-6 text-[#6d655d]">{step.copy}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -312,6 +292,68 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
+      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="space-y-4">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it fits together</p>
+            <h2 className="text-4xl leading-none sm:text-5xl">Two experiences. One wedding.</h2>
+          </div>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            {twoExperienceCards.map((card) => (
+              <article
+                key={card.title}
+                className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)]"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-3xl leading-tight">{card.title}</h3>
+                  {card.title === "For you" ? (
+                    <span className="text-[11px] uppercase tracking-[0.22em] text-[#9a7d64]">
+                      Available with Premium
+                    </span>
+                  ) : null}
+                </div>
+                <div className="mt-5 space-y-3">
+                  {card.points.map((point) => (
+                    <div key={point} className="flex gap-3">
+                      <span className="mt-2 h-2.5 w-2.5 rounded-full bg-[#b48c58]" />
+                      <span className="text-sm leading-6 text-[#423a34]">{point}</span>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#5f564e]">
+            Your guests get a polished place to find the details. You get a calmer way to keep
+            everything organised.
+          </p>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
+        <div className="rounded-[1.7rem] border border-[#184b38]/10 bg-[#f6fbf8] p-5 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-6 lg:p-8">
+          <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it works</p>
+          <h2 className="mt-3 text-2xl leading-tight text-[#184b38] sm:text-3xl">
+            A guided, curated process from first draft to final website
+          </h2>
+          <div className="mt-5 space-y-4">
+            {flowSteps.map((step, index) => (
+              <div key={step.title} className="flex gap-4">
+                <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#184b38] text-xs font-medium text-white">
+                  {index + 1}
+                </span>
+                <div>
+                  <p className="text-base font-medium leading-6 text-[#2d241f]">{step.title}</p>
+                  <p className="mt-1 text-sm leading-6 text-[#6d655d]">{step.copy}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="designs" className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -323,9 +365,8 @@ export default function MarketingHomePage() {
                 Explore a few richer design directions first
               </h2>
               <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-                Couples found it much easier to imagine the final result when they could browse a few
-                complete example websites. These are the fuller, finished-feeling versions rather than
-                sparse starter drafts.
+                Browse complete example websites to see how different design directions can feel in
+                practice.
               </p>
             </div>
             <Link
@@ -362,39 +403,6 @@ export default function MarketingHomePage() {
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
-        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
-          <div className="space-y-4">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">How it fits together</p>
-            <h2 className="text-4xl leading-none sm:text-5xl">Two experiences. One wedding.</h2>
-          </div>
-
-          <div className="mt-8 grid gap-5 lg:grid-cols-2">
-            {twoExperienceCards.map((card) => (
-              <article
-                key={card.title}
-                className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-6 shadow-[0_18px_50px_rgba(52,35,24,0.08)]"
-              >
-                <h3 className="text-3xl leading-tight">{card.title}</h3>
-                <div className="mt-5 space-y-3">
-                  {card.points.map((point) => (
-                    <div key={point} className="flex gap-3">
-                      <span className="mt-2 h-2.5 w-2.5 rounded-full bg-[#b48c58]" />
-                      <span className="text-sm leading-6 text-[#423a34]">{point}</span>
-                    </div>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#5f564e]">
-            Your guests get a polished place to find the details. You get a calmer way to keep
-            everything organised.
-          </p>
         </div>
       </section>
 
@@ -481,7 +489,7 @@ export default function MarketingHomePage() {
                 Why Crafted
               </p>
               <h2 className="text-4xl leading-none sm:text-5xl">
-                A clearer explanation of where this fits
+                Done for you, not left to you.
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#5f564e]">
                 Free website builders can be absolutely right for some couples. Crafted exists for

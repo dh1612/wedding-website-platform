@@ -40,11 +40,18 @@ export function FAQSection({
         {showConcierge ? (
           <div className="section-shell rounded-[2rem] p-8 sm:p-10">
             <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-              <SectionHeading
-                eyebrow="AI Concierge"
-                title="Ask About The Wedding"
-                description="If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
-              />
+              <div>
+                {demoMode ? (
+                  <p className="mb-4 text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">
+                    Premium feature
+                  </p>
+                ) : null}
+                <SectionHeading
+                  eyebrow="AI Concierge"
+                  title="Ask About The Wedding"
+                  description="If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
+                />
+              </div>
               <div>
                 <ConciergeCard apiPath={conciergeApiPath} />
               </div>

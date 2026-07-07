@@ -125,12 +125,12 @@ export function WeddingSitePage({
         <section className="mx-auto w-full max-w-6xl px-6 py-8 lg:px-8 lg:py-10">
           <div className="section-shell rounded-[2rem] px-8 py-8 text-center sm:px-10 sm:py-10">
             <p className="mx-auto max-w-3xl text-lg leading-8 text-[var(--foreground)]">
-              Behind every guest website is a private Couple Portal for RSVPs, guest tracking,
-              seating, checklists and key planning details.
+              With Premium, the guest website can sit alongside a private Couple Portal for RSVP
+              tracking, seating, checklists and key planning details.
             </p>
             <div className="mx-auto mt-6 max-w-2xl">
               <p className="text-2xl leading-tight sm:text-3xl">
-                Want something like this for your wedding?
+                Want a guest website like this, with private planning available behind the scenes?
               </p>
             </div>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">

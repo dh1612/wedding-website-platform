@@ -50,20 +50,18 @@ export default function CoupleAreaDemoPage() {
         <PageHero
           eyebrow="Interactive Demo"
           title="Explore the Premium couple portal"
-          description="The public wedding website is for your guests. This private portal is for you — a calmer place to track replies, manage tasks, plan seating and keep key details together."
+          description="Your guests use their wedding website for the details they need. This private Premium portal is the couple’s side behind the scenes — for tasks, key dates, RSVPs, guest tracking and seating."
           themeId={theme.id}
           weddingData={weddingData}
-          summaryActionHref="/couple-area"
-          summaryActionLabel="Back to portal overview"
+          summaryActionHref="/wedding?theme=soft-blush&sample=manor-house"
+          summaryActionLabel="View matching guest website"
           summarySecondaryActionHref="/packages/premium"
           summarySecondaryActionLabel="View Premium Package"
         />
 
         <section className="mx-auto w-full max-w-6xl px-6 pb-2 pt-2 lg:px-8">
           <div className="rounded-[1.5rem] border border-[var(--border)] bg-white/78 px-5 py-4 text-sm leading-7 text-[var(--muted)]">
-            Demo mode is active across this portal. You can tick items off, add dates, filter the
-            RSVP dashboard, and explore the seating view freely, but nothing here is stored once
-            you leave the page.
+            This is a fully interactive demo. Click around freely — nothing is saved.
           </div>
         </section>
 
@@ -95,7 +93,7 @@ export default function CoupleAreaDemoPage() {
         <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-2 lg:px-8">
           <div className="rounded-[2rem] border border-[var(--border)] bg-white/86 px-8 py-8 text-center shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:px-10 sm:py-10">
             <p className="mx-auto max-w-3xl text-lg leading-8 text-[var(--foreground)]">
-              Like the idea of a guest website with a private planning portal behind it?
+              Like the idea of a beautiful guest website with a private planning portal behind it?
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
@@ -103,12 +101,6 @@ export default function CoupleAreaDemoPage() {
                 className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#215b45]"
               >
                 View Premium Package
-              </a>
-              <a
-                href="/contact"
-                className="text-sm font-medium text-[#6b5c50] underline-offset-4 transition hover:underline"
-              >
-                Contact David
               </a>
             </div>
           </div>

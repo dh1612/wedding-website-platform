@@ -60,6 +60,10 @@ function getGeneratedLabel() {
   return `${hours}:${minutes}`;
 }
 
+function pluralize(count: number, singular: string, plural = `${singular}s`) {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
 function toInputDate(date: Date) {
   return date.toISOString().slice(0, 10);
 }
@@ -382,9 +386,7 @@ export function WeddingCalendarPlanner({
             <div className="rounded-[1.6rem] border border-[var(--border)] bg-white/75 p-6">
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-2xl">Saved Planning Dates</h3>
-                <span className="text-sm text-[var(--muted)]">
-                  {tasks.length} items
-                </span>
+                <span className="text-sm text-[var(--muted)]">{pluralize(tasks.length, "item")}</span>
               </div>
               <div className="mt-5 space-y-3">
                 {tasks.map((task) => (
@@ -529,7 +531,7 @@ export function WeddingCalendarPlanner({
                         <span className="font-medium">{month.label}</span>
                         <span className="text-[var(--muted)]">
                           {" "}
-                          · {month.tasks.length} item{month.tasks.length === 1 ? "" : "s"}
+                          · {pluralize(month.tasks.length, "item")}
                         </span>
                       </div>
                     ))}

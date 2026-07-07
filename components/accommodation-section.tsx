@@ -39,7 +39,7 @@ export function AccommodationSection({
           />
           {demoMode ? (
             <p className="prose-copy mt-4 text-base">
-              Travel, parking, accommodation and local details gathered clearly for everyone.
+              Clear stay options so guests can choose what works best for their plans.
             </p>
           ) : null}
         </div>

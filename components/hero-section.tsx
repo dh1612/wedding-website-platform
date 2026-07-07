@@ -269,11 +269,6 @@ export function HeroSection({
                 secondaryButtonClassName={softBlushSecondaryButtonClassName}
               />
             ) : null}
-            {demoMode ? (
-              <p className="max-w-xl text-sm leading-6 text-[var(--muted)]">
-                Everything your guests need, beautifully organised in one place.
-              </p>
-            ) : null}
           </div>
         </div>
         <div className="soft-blush-hero-stack grid gap-5 lg:grid-rows-[minmax(0,1fr)_auto]">
@@ -355,11 +350,6 @@ export function HeroSection({
                 />
               </div>
             ) : null}
-            {demoMode ? (
-              <p className="mx-auto max-w-2xl text-sm leading-6 text-[var(--muted)]">
-                Everything your guests need, beautifully organised in one place.
-              </p>
-            ) : null}
           </div>
         </div>
       </section>
@@ -432,11 +422,6 @@ export function HeroSection({
                     secondaryActionHref={hero.secondaryActionHref}
                   />
                 ) : null}
-                {demoMode ? (
-                  <p className="text-sm leading-6 text-[var(--muted)]">
-                    Everything your guests need, beautifully organised in one place.
-                  </p>
-                ) : null}
               </div>
             </div>
           </div>
@@ -493,11 +478,6 @@ export function HeroSection({
                 secondaryActionLabel={hero.secondaryActionLabel}
                 secondaryActionHref={hero.secondaryActionHref}
               />
-            ) : null}
-            {demoMode ? (
-              <p className="max-w-xl text-sm leading-6 text-[var(--muted)]">
-                Everything your guests need, beautifully organised in one place.
-              </p>
             ) : null}
           </div>
         </div>
