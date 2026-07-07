@@ -8,7 +8,7 @@ import { BRAND_NAME, buildSampleWebsiteHref } from "@/lib/brand";
 export const metadata: Metadata = {
   title: `Why Crafted | ${BRAND_NAME}`,
   description:
-    "Why Crafted Wedding Sites exists as a done-for-you alternative to free wedding website builders, with a focus on time, polish, and personal support."
+    "Why couples choose Crafted Wedding Sites for a calmer, more supported route to a polished wedding website."
 };
 
 const exampleHref = buildSampleWebsiteHref();
@@ -17,17 +17,21 @@ const reasons = [
   {
     title: "Time",
     copy:
-      "A free platform may cost less in money, but it can cost more in evenings, second-guessing, and headspace. Crafted is for couples who would rather not make the website another job on the list."
+      "Skip hours spent building and tweaking a website yourself."
   },
   {
-    title: "Polish",
+    title: "Clarity",
     copy:
-      "The difference is often not one dramatic feature. It is the quieter things: structure, pacing, wording, day-two plans, accommodation guidance, and a final result that feels more considered from start to finish."
+      "Your guests always know where to find timings, travel, accommodation and RSVP details."
   },
   {
     title: "Support",
     copy:
-      "No ticket queues, no generic chatbot replies, and no trying to explain your wedding to a platform. When you need an amendment or update, it stays direct, human, and hands-on."
+      "Real guidance and refinements from a real person, not a support ticket."
+  },
+  {
+    title: "Peace of mind",
+    copy: "Nothing goes live until you're genuinely happy with it."
   }
 ];
 
@@ -89,18 +93,20 @@ export default function WhyCraftedPage() {
           <div className="space-y-5">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Why Crafted</p>
             <h1 className="text-5xl leading-none sm:text-6xl lg:text-7xl">
-              Your wedding website should not feel like another job
+              Why couples choose Crafted Wedding Sites
             </h1>
             <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
-              There are free wedding website options, and for some couples they are exactly the
-              right fit. Crafted Wedding Sites exists for the couples who do not want to build it
-              all themselves, and who care about how the final result feels for both them and their
-              guests.
+              You could absolutely build a wedding website yourself.
             </p>
-            <div className="rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] px-5 py-4 text-base leading-7 text-[#486159]">
-              This is not about pretending free options are bad. It is about being honest that
-              time, calm, and quality have value too.
-            </div>
+            <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">Many couples do.</p>
+            <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
+              Crafted Wedding Sites is for couples who would rather spend their time planning their
+              wedding than learning another website builder.
+            </p>
+            <p className="max-w-3xl text-lg leading-8 text-[#5f564e]">
+              We build it with you, refine it with you, and make sure both you and your guests have
+              a better experience.
+            </p>
           </div>
 
           <div className="overflow-hidden rounded-[2rem] bg-[#184b38] p-4 shadow-[0_24px_80px_rgba(18,39,31,0.18)]">
@@ -116,36 +122,31 @@ export default function WhyCraftedPage() {
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
-        <div className="grid gap-6 lg:grid-cols-2">
-          <article className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
+        <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
+          <div className="max-w-3xl space-y-4">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              Free options are valid
+              What you&apos;re really paying for
             </p>
-            <h2 className="mt-4 text-4xl leading-none sm:text-5xl">
-              Who a free builder can be perfect for
-            </h2>
-            <ul className="mt-6 space-y-3 pl-5 text-base leading-7 text-[#5f564e] marker:text-[#b48c58]">
-              <li>Couples who enjoy editing and building things themselves</li>
-              <li>Couples who want the lowest possible cost</li>
-              <li>Couples who are happy to work within a template structure</li>
-              <li>Couples who do not mind spending evenings refining layout and wording</li>
-            </ul>
-          </article>
-
-          <article className="rounded-[2rem] border border-[#184b38]/12 bg-[#f6fbf8] p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10">
-            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              Where Crafted fits in
-            </p>
-            <h2 className="mt-4 text-4xl leading-none text-[#184b38] sm:text-5xl">
-              What you are really paying for here
-            </h2>
-            <ul className="mt-6 space-y-3 pl-5 text-base leading-7 text-[#486159] marker:text-[#184b38]">
-              <li>Someone shaping the website for you rather than handing you a blank canvas</li>
-              <li>A more considered, premium-feeling guest experience</li>
-              <li>Direct support for questions, amendments, and refinement</li>
-              <li>Less time spent fighting a builder and more time spent on your wedding</li>
-            </ul>
-          </article>
+            <h2 className="text-4xl leading-none sm:text-5xl">What you&apos;re really paying for</h2>
+          </div>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {reasons.map((reason, index) => (
+              <article
+                key={reason.title}
+                className={
+                  index % 2 === 1
+                    ? "rounded-[1.6rem] border border-[#184b38]/12 bg-[#f6fbf8] p-6"
+                    : "rounded-[1.6rem] border border-black/6 bg-[#fcfaf7] p-6"
+                }
+              >
+                <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+                  {reason.title}
+                </p>
+                <h3 className="mt-4 text-3xl leading-tight sm:text-[2rem]">{reason.title}</h3>
+                <p className="mt-4 text-base leading-7 text-[#5f564e]">{reason.copy}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -153,53 +154,34 @@ export default function WhyCraftedPage() {
         <div className="rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="max-w-4xl space-y-4">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-              An honest comparison
+              Calm comparison
             </p>
-            <h2 className="text-4xl leading-none sm:text-5xl">
-              It is not software access you are really buying
-            </h2>
-            <p className="text-lg leading-8 text-[#5f564e]">
-              You are buying time back, design judgement, support, and a calmer route to something
-              that feels polished.
-            </p>
+            <h2 className="text-4xl leading-none sm:text-5xl">DIY builder vs Crafted Wedding Sites</h2>
           </div>
 
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
             <div className="rounded-[1.8rem] border border-black/6 bg-[#fcfaf7] p-7">
-              <h3 className="text-3xl leading-tight">With a typical builder</h3>
+              <h3 className="text-3xl leading-tight">DIY Builder</h3>
               <ul className="mt-5 space-y-3 pl-5 text-base leading-7 text-[#5f564e] marker:text-[#b48c58]">
-                <li>You choose the template and work out the structure</li>
-                <li>You decide how to organise guest information and travel details</li>
-                <li>You refine wording, spacing, layout, and mobile flow yourself</li>
-                <li>You troubleshoot the final details if something looks off</li>
+                <li>Build everything yourself</li>
+                <li>Choose layouts yourself</li>
+                <li>Write all wording yourself</li>
+                <li>Troubleshoot issues yourself</li>
+                <li>Generic support</li>
               </ul>
             </div>
 
             <div className="rounded-[1.8rem] border border-[#184b38]/12 bg-[#f6fbf8] p-7">
-              <h3 className="text-3xl leading-tight text-[#184b38]">With Crafted Wedding Sites</h3>
+              <h3 className="text-3xl leading-tight text-[#184b38]">Crafted Wedding Sites</h3>
               <ul className="mt-5 space-y-3 pl-5 text-base leading-7 text-[#486159] marker:text-[#184b38]">
-                <li>You share the key details and choose a design direction</li>
-                <li>We shape the first version for you</li>
-                <li>We guide tone, structure, and guest-facing clarity</li>
-                <li>You review privately before anything is shared</li>
-                <li>The final website feels more bespoke without becoming another job on your list</li>
+                <li>Done-for-you first draft</li>
+                <li>Personal refinements</li>
+                <li>Guest-focused structure</li>
+                <li>Private review before launch</li>
+                <li>Direct support from David</li>
               </ul>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-6xl px-6 py-4 lg:px-8 lg:py-8">
-        <div className="grid gap-10 rounded-[2.2rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:grid-cols-3 lg:p-14">
-          {reasons.map((reason) => (
-            <article key={reason.title} className="space-y-3">
-              <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-                {reason.title}
-              </p>
-              <h2 className="text-4xl leading-none sm:text-[2.8rem]">{reason.title}</h2>
-              <p className="text-base leading-7 text-[#5f564e]">{reason.copy}</p>
-            </article>
-          ))}
         </div>
       </section>
 
@@ -207,6 +189,13 @@ export default function WhyCraftedPage() {
         <div className="rounded-[2.2rem] border border-black/6 bg-[#184b38] p-8 text-white shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="max-w-4xl space-y-5">
             <p className="text-[12px] uppercase tracking-[0.34em] text-[#d9c39f]">What happens next</p>
+            <div className="space-y-1 text-lg leading-8 text-white/84">
+              <p>You&apos;re not paying for access to software.</p>
+              <p>
+                You&apos;re paying to save time, reduce stress, and give your guests a better
+                experience.
+              </p>
+            </div>
             <h2 className="text-4xl leading-none sm:text-5xl">
               Start with a first draft, then refine it together
             </h2>
