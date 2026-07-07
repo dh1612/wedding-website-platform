@@ -41,6 +41,17 @@ export default async function PackagePage({ params }: PackagePageProps) {
 
   const isSmart = offer.id === "smart";
   const isPremium = offer.id === "premium";
+  const isBasic = offer.id === "basic";
+  const perfectForCopy = isBasic
+    ? "Perfect for couples who simply want a beautiful guest website without the DIY work."
+    : isSmart
+      ? "Perfect for couples who want guest RSVPs and a much easier way to manage responses."
+      : "Perfect for couples who want both a beautiful guest website and a complete private planning hub.";
+  const howCouplesChooseCopy = isBasic
+    ? "We just want somewhere beautiful for guests to find everything."
+    : isSmart
+      ? "We'd like guests to RSVP online without chasing everyone."
+      : "We want the whole experience — guest website, planning tools and personal support.";
 
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#f3ece2_55%,#e8ddd0_100%)] text-[#1f1d1a]">
@@ -134,6 +145,15 @@ export default async function PackagePage({ params }: PackagePageProps) {
         </div>
       </section>
 
+      <section className="mx-auto w-full max-w-6xl px-6 pb-6 lg:px-8 lg:pb-8">
+        <div className="rounded-[2rem] border border-black/6 bg-white/88 p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+          <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+            Who this is perfect for
+          </p>
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-[#5f564e]">{perfectForCopy}</p>
+        </div>
+      </section>
+
       <section className="mx-auto w-full max-w-6xl px-6 pb-16 lg:px-8 lg:pb-24">
         <div className="rounded-[2.3rem] border border-black/6 bg-white/88 p-8 shadow-[0_20px_60px_rgba(52,35,24,0.08)] sm:p-10 lg:p-14">
           <div className="space-y-4">
@@ -145,6 +165,13 @@ export default async function PackagePage({ params }: PackagePageProps) {
               This package is designed to reduce effort, remove guesswork, and make the couple feel
               supported rather than handed a tool.
             </p>
+            {isBasic ? (
+              <p className="max-w-3xl text-base leading-7 text-[#184b38]">
+                Sometimes simple is exactly what&apos;s needed. Basic focuses on creating a
+                beautiful, organised place for your guests without adding planning tools you may
+                never use.
+              </p>
+            ) : null}
           </div>
 
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
@@ -176,6 +203,16 @@ export default async function PackagePage({ params }: PackagePageProps) {
             ))}
           </div>
 
+          <div className="mt-10 rounded-[2rem] border border-black/6 bg-[#fcfaf7] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+              How couples usually choose
+            </p>
+            <div className="mt-4 max-w-3xl">
+              <h3 className="text-3xl leading-tight">{offer.name}</h3>
+              <p className="mt-4 text-lg leading-8 text-[#5f564e]">&ldquo;{howCouplesChooseCopy}&rdquo;</p>
+            </div>
+          </div>
+
           {isSmart ? (
             <div className="mt-10 rounded-[2rem] border border-[#184b38]/12 bg-[#f6fbf8] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
               <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -190,6 +227,10 @@ export default async function PackagePage({ params }: PackagePageProps) {
                     Smart brings the RSVP experience much closer to the front. It helps couples
                     collect replies cleanly through the website, keep track of guests in one place,
                     and still have a calm walkthrough of how it all works.
+                  </p>
+                  <p className="text-base leading-7 text-[#184b38]">
+                    For many couples, Smart becomes the sweet spot between a beautiful guest
+                    website and a much easier RSVP experience.
                   </p>
                   <Link
                     href={buildSampleWebsiteHref(
@@ -225,79 +266,123 @@ export default async function PackagePage({ params }: PackagePageProps) {
           ) : null}
 
           {isPremium ? (
-            <div className="mt-10 rounded-[2rem] border border-[#184b38]/12 bg-[#f6fbf8] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
-              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-                <div className="space-y-4">
-                  <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
-                    Premium Demo
-                  </p>
-                  <h3 className="text-4xl leading-none sm:text-5xl">
-                    A read-only look inside the private couple area
-                  </h3>
-                  <p className="text-lg leading-8 text-[#5f564e]">
-                    This is where the visual sell matters. The demo shows the checklist, RSVP
-                    overview, key dates, seating-plan layout, and the broader premium side in a
-                    read-only format, so couples can understand the value without needing to click
-                    around or edit anything.
-                  </p>
-                  <p className="text-base leading-7 text-[#184b38]">
-                    Premium also includes digital invites styled to match the website, plus a more
-                    dedicated level of direct support while everything is being finalised.
-                  </p>
-                  <Link
-                    href="/couple-area"
-                    className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
-                  >
-                    View Full Premium Demo
-                  </Link>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Checklist</p>
-                    <div className="mt-4 space-y-3">
-                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">
-                        Confirm final guest list
-                      </div>
-                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">
-                        Share wedding-week timings
+            <>
+              <div className="mt-10 rounded-[1.7rem] border border-[#184b38]/12 bg-[#f6fbf8] px-6 py-5 text-base leading-7 text-[#486159] shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:px-8">
+                Most couples choose Premium because it combines everything guests need with a
+                private planning space that keeps the final months before the wedding organised and
+                stress-free.
+              </div>
+              <div className="mt-6 rounded-[2rem] border border-[#184b38]/12 bg-[#f6fbf8] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+                <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+                  <div className="space-y-4">
+                    <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">
+                      Premium Demo
+                    </p>
+                    <h3 className="text-4xl leading-none sm:text-5xl">
+                      A read-only look inside the private couple area
+                    </h3>
+                    <p className="text-lg leading-8 text-[#5f564e]">
+                      This is where the visual sell matters. The demo shows the checklist, RSVP
+                      overview, key dates, seating-plan layout, and the broader premium side in a
+                      read-only format, so couples can understand the value without needing to click
+                      around or edit anything.
+                    </p>
+                    <p className="text-base leading-7 text-[#184b38]">
+                      Premium also includes digital invites styled to match the website, plus a
+                      more dedicated level of direct support while everything is being finalised.
+                    </p>
+                    <Link
+                      href="/couple-area"
+                      className="inline-flex items-center justify-center rounded-full bg-[#184b38] px-7 py-3.5 text-sm font-medium text-white transition hover:bg-[#215b45]"
+                    >
+                      View Full Premium Demo
+                    </Link>
+                  </div>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                      <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Checklist</p>
+                      <div className="mt-4 space-y-3">
+                        <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">
+                          Confirm final guest list
+                        </div>
+                        <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">
+                          Share wedding-week timings
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">RSVP overview</p>
-                    <div className="mt-4 grid grid-cols-3 gap-2">
-                      <div className="rounded-[1rem] bg-[#edf6f2] p-3 text-center">
-                        <p className="text-[10px] uppercase tracking-[0.18em] text-[#3e6b59]">Yes</p>
-                        <p className="mt-2 text-2xl text-[#184b38]">82</p>
-                      </div>
-                      <div className="rounded-[1rem] bg-[#faf7f2] p-3 text-center">
-                        <p className="text-[10px] uppercase tracking-[0.18em] text-[#9a7d64]">Pending</p>
-                        <p className="mt-2 text-2xl text-[#4e453f]">26</p>
-                      </div>
-                      <div className="rounded-[1rem] bg-[#faf7f2] p-3 text-center">
-                        <p className="text-[10px] uppercase tracking-[0.18em] text-[#9a7d64]">No</p>
-                        <p className="mt-2 text-2xl text-[#4e453f]">9</p>
+                    <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                      <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">RSVP overview</p>
+                      <div className="mt-4 grid grid-cols-3 gap-2">
+                        <div className="rounded-[1rem] bg-[#edf6f2] p-3 text-center">
+                          <p className="text-[10px] uppercase tracking-[0.18em] text-[#3e6b59]">Yes</p>
+                          <p className="mt-2 text-2xl text-[#184b38]">82</p>
+                        </div>
+                        <div className="rounded-[1rem] bg-[#faf7f2] p-3 text-center">
+                          <p className="text-[10px] uppercase tracking-[0.18em] text-[#9a7d64]">Pending</p>
+                          <p className="mt-2 text-2xl text-[#4e453f]">26</p>
+                        </div>
+                        <div className="rounded-[1rem] bg-[#faf7f2] p-3 text-center">
+                          <p className="text-[10px] uppercase tracking-[0.18em] text-[#9a7d64]">No</p>
+                          <p className="mt-2 text-2xl text-[#4e453f]">9</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Key dates</p>
-                    <div className="mt-4 space-y-3">
-                      <div className="rounded-[1rem] bg-[#184b38] px-4 py-3 text-sm text-white">RSVP reminder</div>
-                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">Final payments</div>
+                    <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                      <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Key dates</p>
+                      <div className="mt-4 space-y-3">
+                        <div className="rounded-[1rem] bg-[#184b38] px-4 py-3 text-sm text-white">RSVP reminder</div>
+                        <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">Final payments</div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
-                    <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Seating plan</p>
-                    <div className="mt-4 grid gap-2">
-                      <div className="rounded-[1rem] bg-[#184b38] px-4 py-3 text-sm text-white">Top Table</div>
-                      <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">Family Table</div>
+                    <div className="rounded-[1.5rem] border border-black/6 bg-white p-5 shadow-[0_18px_50px_rgba(52,35,24,0.06)]">
+                      <p className="text-[11px] uppercase tracking-[0.24em] text-[#9a7d64]">Seating plan</p>
+                      <div className="mt-4 grid gap-2">
+                        <div className="rounded-[1rem] bg-[#184b38] px-4 py-3 text-sm text-white">Top Table</div>
+                        <div className="rounded-[1rem] bg-[#faf7f2] px-4 py-3 text-sm text-[#184b38]">Family Table</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           ) : null}
+
+          <div className="mt-10 rounded-[2rem] border border-[#184b38]/10 bg-[#f6fbf8] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Every package includes</p>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                "A professionally built website",
+                "Personal guidance",
+                "Private review before launch",
+                "Mobile-friendly experience",
+                "Direct support from David"
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-[1.1rem] border border-[#eadac9] bg-white/82 px-4 py-3 text-sm leading-6 text-[#5f564e]"
+                >
+                  ✓ {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 rounded-[2rem] border border-black/6 bg-[#fcfaf7] p-8 shadow-[0_18px_50px_rgba(52,35,24,0.06)] sm:p-10">
+            <p className="text-[12px] uppercase tracking-[0.34em] text-[#9a7d64]">Still not sure?</p>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-[#5f564e]">
+              If you&apos;re unsure which package is right for your wedding, get in touch and
+              I&apos;ll happily recommend the option that best suits your plans. There&apos;s
+              absolutely no pressure.
+            </p>
+            <div className="mt-6">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-full border border-[#d8cfc5] bg-white px-7 py-3.5 text-sm font-medium text-[#4e453f] transition hover:bg-[#faf7f2]"
+              >
+                Ask David
+              </Link>
+            </div>
+          </div>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
