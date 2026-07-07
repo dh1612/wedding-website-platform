@@ -10,6 +10,7 @@ import type { WeddingData } from "@/types/wedding";
 type HeroSectionProps = {
   themeId: string;
   weddingData?: WeddingData;
+  demoMode?: boolean;
   previewMode?: boolean;
 };
 
@@ -87,7 +88,12 @@ function InlineCopy({
   return <div className={className}>{text}</div>;
 }
 
-export function HeroSection({ themeId, weddingData, previewMode = false }: HeroSectionProps) {
+export function HeroSection({
+  themeId,
+  weddingData,
+  demoMode = false,
+  previewMode = false
+}: HeroSectionProps) {
   const wedding = weddingData ?? getWeddingData();
   const theme = getThemeById(themeId);
   const previewFallback = previewMode ? getPreviewFallbackContent(themeId, wedding) : null;
@@ -263,6 +269,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 secondaryButtonClassName={softBlushSecondaryButtonClassName}
               />
             ) : null}
+            {demoMode ? (
+              <p className="max-w-xl text-sm leading-6 text-[var(--muted)]">
+                Everything your guests need, beautifully organised in one place.
+              </p>
+            ) : null}
           </div>
         </div>
         <div className="soft-blush-hero-stack grid gap-5 lg:grid-rows-[minmax(0,1fr)_auto]">
@@ -285,7 +296,9 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
           <div className="soft-blush-note-card section-shell rounded-[1.6rem] p-6 backdrop-blur">
             <p className="eyebrow">Welcome</p>
             <p className="mt-3 text-lg leading-7 text-[var(--foreground)]">
-              Everything guests need for the day is gathered here, from timings and travel to key details for the celebration.
+              {demoMode
+                ? "Everything your guests need, beautifully organised in one place."
+                : "Everything guests need for the day is gathered here, from timings and travel to key details for the celebration."}
             </p>
           </div>
         </div>
@@ -341,6 +354,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                   secondaryButtonClassName={softBlushSecondaryButtonClassName}
                 />
               </div>
+            ) : null}
+            {demoMode ? (
+              <p className="mx-auto max-w-2xl text-sm leading-6 text-[var(--muted)]">
+                Everything your guests need, beautifully organised in one place.
+              </p>
             ) : null}
           </div>
         </div>
@@ -414,6 +432,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                     secondaryActionHref={hero.secondaryActionHref}
                   />
                 ) : null}
+                {demoMode ? (
+                  <p className="text-sm leading-6 text-[var(--muted)]">
+                    Everything your guests need, beautifully organised in one place.
+                  </p>
+                ) : null}
               </div>
             </div>
           </div>
@@ -470,6 +493,11 @@ export function HeroSection({ themeId, weddingData, previewMode = false }: HeroS
                 secondaryActionLabel={hero.secondaryActionLabel}
                 secondaryActionHref={hero.secondaryActionHref}
               />
+            ) : null}
+            {demoMode ? (
+              <p className="max-w-xl text-sm leading-6 text-[var(--muted)]">
+                Everything your guests need, beautifully organised in one place.
+              </p>
             ) : null}
           </div>
         </div>

@@ -44,7 +44,7 @@ export function RSVPSection({
             titleHtml={wedding.rsvp.titleHtml}
             description={
               demoMode
-                ? "In the finished version, this becomes the couple's RSVP form and response flow, shaped around exactly what they want guests to answer."
+                ? "Simple online RSVPs, with responses organised for the couple."
                 : resolvedDescription
             }
             descriptionHtml={demoMode ? undefined : wedding.rsvp.descriptionHtml}

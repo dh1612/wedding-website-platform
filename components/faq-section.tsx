@@ -7,6 +7,7 @@ import { ConciergeCard } from "@/components/concierge-card";
 type FAQSectionProps = {
   weddingData?: WeddingData;
   conciergeApiPath?: string;
+  demoMode?: boolean;
   previewMode?: boolean;
   themeId?: string;
 };
@@ -14,6 +15,7 @@ type FAQSectionProps = {
 export function FAQSection({
   weddingData,
   conciergeApiPath,
+  demoMode = false,
   previewMode = false,
   themeId
 }: FAQSectionProps) {
@@ -57,6 +59,11 @@ export function FAQSection({
                 title="Questions Guests Usually Ask"
                 description="A simple place to check the practical details guests usually want before travelling and over the weekend."
               />
+              {demoMode ? (
+                <p className="prose-copy mt-4 text-base">
+                  Fewer repeated questions. Guests can find the answers before they need to ask.
+                </p>
+              ) : null}
             </div>
             <div className="section-shell rounded-[2rem] p-8 sm:p-10">
               <div className="space-y-4">

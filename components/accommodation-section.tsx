@@ -5,12 +5,14 @@ import { SectionHeading } from "@/components/section-heading";
 
 type AccommodationSectionProps = {
   weddingData?: WeddingData;
+  demoMode?: boolean;
   previewMode?: boolean;
   themeId?: string;
 };
 
 export function AccommodationSection({
   weddingData,
+  demoMode = false,
   previewMode = false,
   themeId
 }: AccommodationSectionProps) {
@@ -35,6 +37,11 @@ export function AccommodationSection({
             description={description}
             descriptionHtml={wedding.accommodationDescriptionHtml}
           />
+          {demoMode ? (
+            <p className="prose-copy mt-4 text-base">
+              Travel, parking, accommodation and local details gathered clearly for everyone.
+            </p>
+          ) : null}
         </div>
         <div className="section-shell rounded-[1.75rem] p-6 sm:p-8">
           <div className="space-y-4">

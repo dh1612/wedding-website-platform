@@ -6,12 +6,14 @@ import { SectionHeading } from "@/components/section-heading";
 
 type ScheduleSectionProps = {
   weddingData?: WeddingData;
+  demoMode?: boolean;
   previewMode?: boolean;
   themeId?: string;
 };
 
 export function ScheduleSection({
   weddingData,
+  demoMode = false,
   previewMode = false,
   themeId
 }: ScheduleSectionProps) {
@@ -39,6 +41,11 @@ export function ScheduleSection({
             description={description}
             descriptionHtml={wedding.scheduleDescriptionHtml}
           />
+          {demoMode ? (
+            <p className="prose-copy mt-4 text-base">
+              No more wondering what happens next — guests can check the schedule anytime.
+            </p>
+          ) : null}
           {(wedding.scheduleNoteHtml || note) ? (
             <div className="mt-6 rounded-[1.2rem] border border-[var(--border)] bg-white/72 px-5 py-4 text-sm leading-6 text-[var(--muted)]">
               {wedding.scheduleNoteHtml ? (

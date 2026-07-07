@@ -9,12 +9,14 @@ import { VenueSneakPeek } from "@/components/venue-sneak-peek";
 
 type TravelSectionProps = {
   weddingData?: WeddingData;
+  demoMode?: boolean;
   previewMode?: boolean;
   themeId?: string;
 };
 
 export function TravelSection({
   weddingData,
+  demoMode = false,
   previewMode = false,
   themeId
 }: TravelSectionProps) {
@@ -111,6 +113,11 @@ export function TravelSection({
               description={resolvedDescription}
               descriptionHtml={wedding.travel.descriptionHtml}
             />
+            {demoMode ? (
+              <p className="prose-copy text-base">
+                Travel, parking, accommodation and local details gathered clearly for everyone.
+              </p>
+            ) : null}
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
             {!renderLocationOverviewBeforeSneakPeek ? locationOverviewPanel : null}
