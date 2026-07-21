@@ -8,6 +8,7 @@ import {
   Montserrat,
   Playfair_Display
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { BRAND_DOMAIN, BRAND_NAME } from "@/lib/brand";
 import "./globals.css";
 
