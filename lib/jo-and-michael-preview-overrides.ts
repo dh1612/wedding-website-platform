@@ -25,6 +25,7 @@ function normaliseDayOneNode(node: TravelVisualMapNode): TravelVisualMapNode {
 
   return {
     ...node,
+    label: "Wine & Pizza",
     detail: `Day 1: Wine and pizza at ${DAY_ONE_VENUE_NAME}`
   };
 }
@@ -42,6 +43,7 @@ function normaliseMapSpot(spot: MapSpot): MapSpot {
   if (/day\s*1|welcome/i.test(spot.label)) {
     return {
       ...spot,
+      label: "Day 1",
       detail: `Wine and pizza at ${DAY_ONE_VENUE_NAME}.`,
       href: DAY_ONE_VENUE_URL
     };
@@ -70,6 +72,7 @@ function normaliseScheduleItem(item: WeddingData["schedule"][number]): WeddingDa
 
   return {
     ...item,
+    title: "Wine and pizza",
     details: `Wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings will be shared once everything is confirmed.`,
     time: item.time
   };

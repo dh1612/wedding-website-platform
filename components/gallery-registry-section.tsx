@@ -143,17 +143,29 @@ export function GalleryRegistrySection({
                                   }`}
                                 >
                                   {item.image ? (
-                                    <div className="relative h-24 w-24 overflow-hidden rounded-full border-[8px] border-white/95 shadow-[0_14px_34px_rgba(62,42,24,0.14)] sm:h-28 sm:w-28 md:h-32 md:w-32">
+                                    <div
+                                      className={`relative overflow-hidden border-[8px] border-white/95 shadow-[0_14px_34px_rgba(62,42,24,0.14)] ${
+                                        stackTimeline
+                                          ? "h-36 w-28 rounded-[1.5rem] bg-[var(--panel)] sm:h-40 sm:w-32 md:h-48 md:w-36"
+                                          : "h-24 w-24 rounded-full sm:h-28 sm:w-28 md:h-32 md:w-32"
+                                      }`}
+                                    >
                                       <Image
                                         src={item.image}
                                         alt={`${item.title} photo`}
                                         fill
                                         unoptimized={shouldBypassImageOptimization(item.image)}
-                                        className="object-cover"
+                                        className={stackTimeline ? "object-contain" : "object-cover"}
                                       />
                                     </div>
                                   ) : (
-                                    <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--panel)] text-[0.7rem] uppercase tracking-[0.22em] text-[var(--muted)] sm:h-28 sm:w-28 md:h-32 md:w-32">
+                                    <div
+                                      className={`flex items-center justify-center border border-[var(--border)] bg-[var(--panel)] text-[0.7rem] uppercase tracking-[0.22em] text-[var(--muted)] ${
+                                        stackTimeline
+                                          ? "h-36 w-28 rounded-[1.5rem] sm:h-40 sm:w-32 md:h-48 md:w-36"
+                                          : "h-24 w-24 rounded-full sm:h-28 sm:w-28 md:h-32 md:w-32"
+                                      }`}
+                                    >
                                       Moment
                                     </div>
                                   )}
