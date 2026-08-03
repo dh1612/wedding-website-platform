@@ -63,6 +63,18 @@ function normaliseTimelineItem(item: StoryTimelineItem, index: number): StoryTim
   return updated;
 }
 
+function normaliseScheduleItem(item: WeddingData["schedule"][number]): WeddingData["schedule"][number] {
+  if (!/day\s*1|welcome|wine|pizza/i.test(`${item.title} ${item.details}`)) {
+    return item;
+  }
+
+  return {
+    ...item,
+    details: `Wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings will be shared once everything is confirmed.`,
+    time: item.time
+  };
+}
+
 export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: WeddingData): WeddingData {
   if (slug !== JO_AND_MICHAEL_SLUG) {
     return weddingData;
@@ -70,6 +82,7 @@ export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: Wed
 
   const nextTimeline = (weddingData.story.timeline ?? []).map(normaliseTimelineItem);
   const nextMapSpots = (weddingData.travel.mapSpots ?? []).map(normaliseMapSpot);
+  const nextSchedule = (weddingData.schedule ?? []).map(normaliseScheduleItem);
   const nextVisualMapNodes = weddingData.travel.visualMap?.nodes?.map((node) =>
     normaliseDayOneNode(normaliseAgiaMarinaNode(node))
   );
@@ -77,10 +90,15 @@ export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: Wed
   return {
     ...weddingData,
     heroImage: JO_AND_MICHAEL_IMAGE,
+    schedule: nextSchedule,
+    scheduleNote:
+      weddingData.scheduleNote?.trim() ||
+      `Day 1 plans are for wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings can stay light here until the couple is ready to confirm them.`,
     styleOptions: {
       ...weddingData.styleOptions,
       heroImageObjectPosition: "center 22%",
-      heroImageBrightness: 1.02
+      heroImageBrightness: 1.02,
+      storyTimelineStacked: true
     },
     story: {
       ...weddingData.story,

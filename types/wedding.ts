@@ -262,6 +262,7 @@ export type WeddingData = {
     heroImageBrightness?: number;
     heroImageObjectPosition?: string;
     hideHeaderCorners?: boolean;
+    storyTimelineStacked?: boolean;
   };
   sectionVisibility?: {
     heroEyebrow: boolean;

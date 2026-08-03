@@ -779,7 +779,8 @@ export function coerceWeddingData(input: unknown): WeddingData {
         source.styleOptions.heroImageObjectPosition.trim()
           ? source.styleOptions.heroImageObjectPosition.trim()
           : undefined,
-      hideHeaderCorners: Boolean(source.styleOptions?.hideHeaderCorners)
+      hideHeaderCorners: Boolean(source.styleOptions?.hideHeaderCorners),
+      storyTimelineStacked: Boolean(source.styleOptions?.storyTimelineStacked)
     },
     sectionVisibility: {
       heroEyebrow: source.sectionVisibility?.heroEyebrow ?? true,

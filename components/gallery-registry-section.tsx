@@ -23,6 +23,7 @@ export function GalleryRegistrySection({
   const showStory = previewMode || (wedding.sectionVisibility?.story ?? true);
   const storyTimeline = wedding.story.timeline ?? [];
   const timelineOnly = Boolean(wedding.story.timelineOnly) && storyTimeline.length > 0;
+  const stackTimeline = Boolean(wedding.styleOptions?.storyTimelineStacked);
   const showGallery = timelineOnly ? false : previewMode || (wedding.sectionVisibility?.gallery ?? true);
   const showRegistry = wedding.sectionVisibility?.registry ?? true;
   const storyImages = timelineOnly
@@ -102,11 +103,19 @@ export function GalleryRegistrySection({
                             return (
                               <article
                                 key={`${item.dateLabel}-${item.title}-${index}`}
-                                className="relative grid gap-4 md:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] md:items-center"
+                                className={`relative grid gap-4 md:items-center ${
+                                  stackTimeline
+                                    ? "md:grid-cols-[minmax(0,1fr)_72px_auto]"
+                                    : "md:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)]"
+                                }`}
                               >
                                 <div
                                   className={`pl-12 md:pl-0 ${
-                                    isEven ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"
+                                    stackTimeline
+                                      ? "md:col-start-1 md:text-right"
+                                      : isEven
+                                        ? "md:col-start-1 md:text-right"
+                                        : "md:col-start-3 md:text-left"
                                   }`}
                                 >
                                   <div className="accent-panel rounded-[1.35rem] px-5 py-4">
@@ -126,7 +135,11 @@ export function GalleryRegistrySection({
 
                                 <div
                                   className={`pl-12 md:pl-0 ${
-                                    isEven ? "md:col-start-3 md:justify-self-start" : "md:col-start-1 md:justify-self-end"
+                                    stackTimeline
+                                      ? "md:col-start-3 md:justify-self-start"
+                                      : isEven
+                                        ? "md:col-start-3 md:justify-self-start"
+                                        : "md:col-start-1 md:justify-self-end"
                                   }`}
                                 >
                                   {item.image ? (
