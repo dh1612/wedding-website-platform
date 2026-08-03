@@ -2,6 +2,7 @@ import type { MapSpot, StoryTimelineItem, TravelVisualMapNode, WeddingData } fro
 
 const JO_AND_MICHAEL_SLUG = "jo-and-michael";
 const JO_AND_MICHAEL_IMAGE = "/jo-and-michael-met.jpeg";
+const JO_AND_MICHAEL_MAP_IMAGE = "/jo-and-mike-weekend-map-day1.svg";
 const DAY_ONE_VENUE_URL = "https://www.instagram.com/mulino_veneziano";
 const DAY_ONE_VENUE_NAME = "Mulino Veneziano";
 
@@ -65,19 +66,6 @@ function normaliseTimelineItem(item: StoryTimelineItem, index: number): StoryTim
   return updated;
 }
 
-function normaliseScheduleItem(item: WeddingData["schedule"][number]): WeddingData["schedule"][number] {
-  if (!/day\s*1|welcome|wine|pizza/i.test(`${item.title} ${item.details}`)) {
-    return item;
-  }
-
-  return {
-    ...item,
-    title: "Wine and pizza",
-    details: `Wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings will be shared once everything is confirmed.`,
-    time: item.time
-  };
-}
-
 export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: WeddingData): WeddingData {
   if (slug !== JO_AND_MICHAEL_SLUG) {
     return weddingData;
@@ -85,22 +73,36 @@ export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: Wed
 
   const nextTimeline = (weddingData.story.timeline ?? []).map(normaliseTimelineItem);
   const nextMapSpots = (weddingData.travel.mapSpots ?? []).map(normaliseMapSpot);
-  const nextSchedule = (weddingData.schedule ?? []).map(normaliseScheduleItem);
   const nextVisualMapNodes = weddingData.travel.visualMap?.nodes?.map((node) =>
     normaliseDayOneNode(normaliseAgiaMarinaNode(node))
   );
+  const nextSchedule: WeddingData["schedule"] = [
+    {
+      time: "",
+      title: "Day 1",
+      details: `Wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings will be shared once everything is confirmed.`
+    },
+    {
+      time: "",
+      title: "Day 2",
+      details: "The ceremony and reception will both take place at Sea View for the main wedding day."
+    },
+    {
+      time: "",
+      title: "Day 3",
+      details: "The final day will be at our villa. Full details will follow in due course."
+    }
+  ];
 
   return {
     ...weddingData,
     heroImage: JO_AND_MICHAEL_IMAGE,
     schedule: nextSchedule,
-    scheduleNote:
-      weddingData.scheduleNote?.trim() ||
-      `Day 1 plans are for wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings can stay light here until the couple is ready to confirm them.`,
+    scheduleNote: `Day 1 plans are for wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings can stay light here until the couple is ready to confirm them.`,
     styleOptions: {
       ...weddingData.styleOptions,
       heroImageObjectPosition: "center 22%",
-      heroImageBrightness: 1.02,
+      heroImageBrightness: 1.14,
       storyTimelineStacked: true
     },
     story: {
@@ -109,6 +111,7 @@ export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: Wed
     },
     travel: {
       ...weddingData.travel,
+      mapImage: JO_AND_MICHAEL_MAP_IMAGE,
       mapSpots: nextMapSpots,
       visualMap: weddingData.travel.visualMap
         ? {

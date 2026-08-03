@@ -1,0 +1,20 @@
+<svg width="1024" height="1536" viewBox="0 0 1024 1536" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <image href="/jo-and-mike-weekend-map.original.png" x="0" y="0" width="1024" height="1536" preserveAspectRatio="none"/>
+  <rect x="626" y="286" width="210" height="258" rx="26" fill="#FBF6EC" stroke="#D9B878" stroke-width="3"/>
+  <text x="731" y="362" text-anchor="middle" fill="#B48A34" font-size="28" font-family="Georgia, 'Times New Roman', serif" font-style="italic">
+    Day 1
+  </text>
+  <text x="731" y="405" text-anchor="middle" fill="#7F6030" font-size="20" font-family="Georgia, 'Times New Roman', serif" letter-spacing="1.5">
+    MULINO VENEZIANO
+  </text>
+  <line x1="676" y1="426" x2="786" y2="426" stroke="#D9B878" stroke-width="2"/>
+  <text x="731" y="463" text-anchor="middle" fill="#7F6030" font-size="15" font-family="Georgia, 'Times New Roman', serif">
+    Wine and pizza
+  </text>
+  <text x="731" y="489" text-anchor="middle" fill="#7F6030" font-size="15" font-family="Georgia, 'Times New Roman', serif">
+    to start the weekend
+  </text>
+  <text x="731" y="526" text-anchor="middle" fill="#A68345" font-size="14" font-family="Georgia, 'Times New Roman', serif">
+    Final timings to follow
+  </text>
+</svg>
