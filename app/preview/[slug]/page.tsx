@@ -11,6 +11,7 @@ import {
   getWeddingSiteBySlug
 } from "@/lib/production-repositories";
 import { coerceWeddingData } from "@/lib/wedding-data";
+import { applyJoAndMichaelPreviewOverrides } from "@/lib/jo-and-michael-preview-overrides";
 import { redirect } from "next/navigation";
 
 type PreviewPageProps = {
@@ -27,7 +28,10 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
     redirect("/");
   }
 
-  const weddingData = coerceWeddingData(weddingRecord.contentJson);
+  const weddingData = applyJoAndMichaelPreviewOverrides(
+    slug,
+    coerceWeddingData(weddingRecord.contentJson)
+  );
   const activeTheme = getThemeById(weddingData.theme);
   const plannerSettings = (weddingRecord.plannerSettingsJson ?? {}) as {
     packageTier?: "basic" | "smart" | "premium";
