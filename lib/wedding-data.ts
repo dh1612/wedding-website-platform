@@ -774,6 +774,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.styleOptions?.heroImageBrightness === "number"
           ? source.styleOptions.heroImageBrightness
           : undefined,
+      heroImageOverlayOpacity:
+        typeof source.styleOptions?.heroImageOverlayOpacity === "number"
+          ? source.styleOptions.heroImageOverlayOpacity
+          : undefined,
       heroImageObjectPosition:
         typeof source.styleOptions?.heroImageObjectPosition === "string" &&
         source.styleOptions.heroImageObjectPosition.trim()

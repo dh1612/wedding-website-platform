@@ -102,7 +102,8 @@ export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: Wed
     styleOptions: {
       ...weddingData.styleOptions,
       heroImageObjectPosition: "center 22%",
-      heroImageBrightness: 1.14,
+      heroImageBrightness: 1.26,
+      heroImageOverlayOpacity: 0.12,
       storyTimelineStacked: true
     },
     story: {

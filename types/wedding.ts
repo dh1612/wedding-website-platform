@@ -260,6 +260,7 @@ export type WeddingData = {
     disableSectionOrnaments?: boolean;
     compactSplitHero?: boolean;
     heroImageBrightness?: number;
+    heroImageOverlayOpacity?: number;
     heroImageObjectPosition?: string;
     hideHeaderCorners?: boolean;
     storyTimelineStacked?: boolean;

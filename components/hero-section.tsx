@@ -135,6 +135,10 @@ export function HeroSection({
     themeId === "soft-blush"
       ? "rounded-full border border-white/58 bg-white/96 px-6 py-3 text-center text-sm font-semibold text-[#5e3c1f] shadow-[0_14px_32px_rgba(42,28,18,0.18)] backdrop-blur-sm transition hover:bg-white"
       : undefined;
+  const splitHeroOverlayOpacity =
+    typeof wedding.styleOptions?.heroImageOverlayOpacity === "number"
+      ? wedding.styleOptions.heroImageOverlayOpacity
+      : 0.5;
 
   if (theme.heroLayout === "full-bleed") {
     return (
@@ -545,7 +549,15 @@ export function HeroSection({
             className="object-cover"
             style={heroImageStyle}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,28,24,0.2)_0%,rgba(17,28,24,0.5)_100%)]" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(180deg, rgba(17,28,24,${Math.max(
+                splitHeroOverlayOpacity * 0.4,
+                0
+              )}) 0%, rgba(17,28,24,${Math.max(splitHeroOverlayOpacity, 0)}) 100%)`
+            }}
+          />
         </div>
         <div
           className={`section-shell relative overflow-hidden rounded-[1.6rem] p-5 sm:rounded-[2rem] sm:p-8 lg:p-14 ${
