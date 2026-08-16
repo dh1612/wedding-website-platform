@@ -648,6 +648,20 @@ export function coerceWeddingData(input: unknown): WeddingData {
         : undefined,
     suppliers: coerceSuppliers(source.suppliers),
     faq: Array.isArray(source.faq) ? source.faq : fallback.faq,
+    aiConcierge: {
+      eyebrow:
+        typeof source.aiConcierge?.eyebrow === "string"
+          ? source.aiConcierge.eyebrow.trim()
+          : "AI Concierge",
+      title:
+        typeof source.aiConcierge?.title === "string"
+          ? source.aiConcierge.title.trim()
+          : "Ask about the wedding",
+      description:
+        typeof source.aiConcierge?.description === "string"
+          ? source.aiConcierge.description.trim()
+          : "If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
+    },
     rsvp: {
       eyebrow:
         typeof source.rsvp?.eyebrow === "string"

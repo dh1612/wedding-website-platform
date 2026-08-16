@@ -47,9 +47,9 @@ export function FAQSection({
                   </p>
                 ) : null}
                 <SectionHeading
-                  eyebrow="AI Concierge"
-                  title="Ask About The Wedding"
-                  description="If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
+                  eyebrow={wedding.aiConcierge.eyebrow}
+                  title={wedding.aiConcierge.title}
+                  description={wedding.aiConcierge.description}
                 />
               </div>
               <div>

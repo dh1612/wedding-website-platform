@@ -1425,6 +1425,27 @@ export function AdminWeddingEditor({
                 label="Show AI concierge"
                 checked={visibility?.aiConcierge ?? true}
               />
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  name="aiConciergeEyebrow"
+                  defaultValue={weddingData.aiConcierge.eyebrow ?? ""}
+                  placeholder="AI Concierge"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+                <input
+                  name="aiConciergeTitle"
+                  defaultValue={weddingData.aiConcierge.title ?? ""}
+                  placeholder="Ask about the wedding"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
+              <textarea
+                name="aiConciergeDescription"
+                defaultValue={weddingData.aiConcierge.description ?? ""}
+                rows={3}
+                placeholder="If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
+                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"
+              />
               <div className="rounded-[1.3rem] border border-[var(--border)] bg-white/80 p-5">
                 <p className="eyebrow">How this works</p>
                 <p className="prose-copy mt-3">

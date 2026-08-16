@@ -864,6 +864,11 @@ export async function updateWeddingContentAction(formData: FormData) {
       suppliersDescriptionRichText || undefined,
     suppliers: supplierItems,
     faq: faqItems.length ? faqItems : weddingData.faq,
+    aiConcierge: {
+      eyebrow: String(formData.get("aiConciergeEyebrow") || "").trim(),
+      title: String(formData.get("aiConciergeTitle") || "").trim(),
+      description: String(formData.get("aiConciergeDescription") || "").trim()
+    },
     invitation: {
       eyebrow:
         String(formData.get("invitationEyebrow") || "").trim() ||

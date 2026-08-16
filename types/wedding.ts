@@ -205,6 +205,11 @@ export type WeddingData = {
   suppliersDescriptionHtml?: string;
   suppliers: SupplierItem[];
   faq: FAQItem[];
+  aiConcierge: {
+    eyebrow?: string;
+    title?: string;
+    description?: string;
+  };
   rsvp: {
     eyebrow?: string;
     title?: string;
