@@ -1454,6 +1454,9 @@ export function AdminWeddingEditor({
                   enabled for non-basic packages, but this toggle lets you hide or show the guest-facing card
                   for this specific wedding.
                 </p>
+                <p className="mt-4 text-sm text-[#b86a53]">
+                  Live code test: this is appearing.
+                </p>
               </div>
             </div>
           </EditorAccordionSection>
