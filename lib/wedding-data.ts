@@ -494,6 +494,10 @@ export function coerceWeddingData(input: unknown): WeddingData {
         typeof source.travel?.descriptionHtml === "string" && source.travel.descriptionHtml.trim()
           ? source.travel.descriptionHtml
           : undefined,
+      showMapButtons:
+        typeof source.travel?.showMapButtons === "boolean"
+          ? source.travel.showMapButtons
+          : true,
       mapUtilityEyebrow:
         typeof source.travel?.mapUtilityEyebrow === "string" && source.travel.mapUtilityEyebrow.trim()
           ? source.travel.mapUtilityEyebrow
@@ -814,6 +818,7 @@ export function coerceWeddingData(input: unknown): WeddingData {
       receptionCard: source.sectionVisibility?.receptionCard ?? true,
       transportCard: source.sectionVisibility?.transportCard ?? true,
       directionsCard: source.sectionVisibility?.directionsCard ?? true,
+      travelMapButtons: source.sectionVisibility?.travelMapButtons ?? true,
       relaxedNote: source.sectionVisibility?.relaxedNote ?? true,
       accommodation: source.sectionVisibility?.accommodation ?? true,
       suppliers: source.sectionVisibility?.suppliers ?? false,

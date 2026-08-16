@@ -794,6 +794,7 @@ export async function updateWeddingContentAction(formData: FormData) {
         stripHtml(travelDescriptionRichText) || weddingData.travel.description,
       descriptionHtml:
         travelDescriptionRichText || weddingData.travel.descriptionHtml,
+      showMapButtons: formData.has("showTravelMapButtons"),
       mapUtilityEyebrow:
         mapUtilityEyebrow || weddingData.travel.mapUtilityEyebrow,
       mapUtilityTitle:
@@ -994,6 +995,7 @@ export async function updateWeddingContentAction(formData: FormData) {
       receptionCard: formData.has("showReceptionCard"),
       transportCard: formData.has("showTransportCard"),
       directionsCard: formData.has("showDirectionsCard"),
+      travelMapButtons: formData.has("showTravelMapButtons"),
       relaxedNote: formData.has("showRelaxedNote"),
       accommodation: formData.has("showAccommodation"),
       suppliers: formData.has("showSuppliers"),

@@ -197,7 +197,7 @@ export function SiteHeader({
           href={resolvedHomeHref}
           className="min-w-0 flex-1 space-y-1 rounded-full px-1 pr-16 md:pr-1"
         >
-          <p className="eyebrow">{adminView ? "Wedding Portal" : "Wedding Day"}</p>
+          <p className="eyebrow">{adminView ? "Wedding Portal" : wedding.hero?.eyebrow || "Wedding Day"}</p>
           <p className="break-words text-lg font-semibold [text-wrap:balance]">
             {adminView
               ? portalType === "operator"

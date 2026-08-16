@@ -539,12 +539,15 @@ export function AdminWeddingEditor({
                   checked={visibility?.heroActions ?? true}
                 />
               </div>
-              <input
-                name="heroEyebrow"
-                defaultValue={weddingData.hero?.eyebrow ?? "Wedding Day"}
-                placeholder="Wedding Day"
-                className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
-              />
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-[#2f473f]">Top header label</label>
+                <input
+                  name="heroEyebrow"
+                  defaultValue={weddingData.hero?.eyebrow ?? "Wedding Day"}
+                  placeholder="Wedding Day"
+                  className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
+                />
+              </div>
               <RichTextEditorField
                 name="locationSummary"
                 label="Location summary"
@@ -799,6 +802,11 @@ export function AdminWeddingEditor({
                   name="showDirectionsCard"
                   label="Show parking & directions card"
                   checked={visibility?.directionsCard ?? true}
+                />
+                <SectionToggle
+                  name="showTravelMapButtons"
+                  label="Show map buttons and links"
+                  checked={visibility?.travelMapButtons ?? weddingData.travel.showMapButtons ?? true}
                 />
                 <SectionToggle
                   name="showRelaxedNote"

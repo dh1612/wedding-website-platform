@@ -39,6 +39,8 @@ export function TravelSection({
   const showReception = previewMode || (visibility?.receptionCard ?? true);
   const showTransport = previewMode || (visibility?.transportCard ?? true);
   const showDirections = previewMode || (visibility?.directionsCard ?? true);
+  const showTravelMapButtons =
+    previewMode || (visibility?.travelMapButtons ?? wedding.travel.showMapButtons ?? true);
   const showRelaxedNote = (visibility?.relaxedNote ?? true) && Boolean(wedding.travel.relaxedNote);
   const sameVenueForCeremonyAndReception =
     showCeremony &&
@@ -143,7 +145,7 @@ export function TravelSection({
                         descriptionHtml={wedding.travel.mapUtilityDescriptionHtml}
                       />
                       <div className="flex flex-wrap gap-3">
-                        {wedding.travel.mapLink ? (
+                        {showTravelMapButtons && wedding.travel.mapLink ? (
                           <a
                             href={wedding.travel.mapLink}
                             target="_blank"
@@ -181,7 +183,7 @@ export function TravelSection({
                         <p className="mt-3 text-base leading-7 text-[var(--foreground)]">
                           {spot.detail}
                         </p>
-                        {spot.href ? (
+                        {showTravelMapButtons && spot.href ? (
                           <a
                             href={spot.href}
                             target="_blank"
@@ -235,7 +237,7 @@ export function TravelSection({
                     ) : null}
                   </div>
                 </div>
-                {wedding.ceremony.mapLink || wedding.reception.mapLink ? (
+                {showTravelMapButtons && (wedding.ceremony.mapLink || wedding.reception.mapLink) ? (
                   <a
                     href={wedding.ceremony.mapLink || wedding.reception.mapLink}
                     target="_blank"
@@ -267,7 +269,7 @@ export function TravelSection({
                     {wedding.ceremony.description || fallback?.ceremony.description}
                   </p>
                 ) : null}
-                {wedding.ceremony.mapLink ? (
+                {showTravelMapButtons && wedding.ceremony.mapLink ? (
                   <a
                     href={wedding.ceremony.mapLink}
                     target="_blank"
@@ -301,7 +303,7 @@ export function TravelSection({
                     {wedding.reception.description || fallback?.reception.description}
                   </p>
                 ) : null}
-                {wedding.reception.mapLink ? (
+                {showTravelMapButtons && wedding.reception.mapLink ? (
                   <a
                     href={wedding.reception.mapLink}
                     target="_blank"
@@ -342,7 +344,7 @@ export function TravelSection({
                     {wedding.travel.directions || fallback?.directions}
                   </p>
                 )}
-                {wedding.travel.mapLink ? (
+                {showTravelMapButtons && wedding.travel.mapLink ? (
                   <a
                     href={wedding.travel.mapLink}
                     target="_blank"

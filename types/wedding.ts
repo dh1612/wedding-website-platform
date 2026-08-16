@@ -51,6 +51,7 @@ export type TravelInfo = {
   headingHtml?: string;
   description: string;
   descriptionHtml?: string;
+  showMapButtons?: boolean;
   mapUtilityEyebrow?: string;
   mapUtilityTitle?: string;
   mapUtilityTitleHtml?: string;
@@ -284,6 +285,7 @@ export type WeddingData = {
     receptionCard: boolean;
     transportCard: boolean;
     directionsCard: boolean;
+    travelMapButtons?: boolean;
     relaxedNote: boolean;
     accommodation: boolean;
     suppliers: boolean;
