@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { WeddingSitePage } from "@/components/wedding-site-page";
-import { applyJoAndMichaelPreviewOverrides } from "@/lib/jo-and-michael-preview-overrides";
 import { getWeddingSiteBySlug } from "@/lib/production-repositories";
 import { getThemeById } from "@/lib/themes";
 import { coerceWeddingData } from "@/lib/wedding-data";
@@ -34,10 +33,7 @@ export default async function LiveWeddingBySlugPage({
     redirect("/");
   }
 
-  const weddingData = applyJoAndMichaelPreviewOverrides(
-    slug,
-    coerceWeddingData(publicContent)
-  );
+  const weddingData = coerceWeddingData(publicContent);
   const activeTheme = getThemeById(weddingData.theme);
 
   return (
