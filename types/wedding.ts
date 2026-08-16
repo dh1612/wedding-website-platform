@@ -205,7 +205,7 @@ export type WeddingData = {
   suppliersDescriptionHtml?: string;
   suppliers: SupplierItem[];
   faq: FAQItem[];
-  aiConcierge: {
+  aiConcierge?: {
     eyebrow?: string;
     title?: string;
     description?: string;

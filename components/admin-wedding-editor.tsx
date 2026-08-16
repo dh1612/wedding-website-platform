@@ -129,6 +129,7 @@ export function AdminWeddingEditor({
   const portalUser = record.adminUsers?.[0] ?? null;
   const theme = getThemeById(weddingData.theme);
   const selectedFontPreset = getFontPresetById(weddingData.fontPreset);
+  const aiConciergeContent = weddingData.aiConcierge ?? {};
   const accommodationLines = weddingData.accommodation
     .map((item) => [item.name, item.link, item.note, item.linkLabel].filter(Boolean).join(" | "))
     .join("\n");
@@ -1428,20 +1429,20 @@ export function AdminWeddingEditor({
               <div className="grid gap-4 md:grid-cols-2">
                 <input
                   name="aiConciergeEyebrow"
-                  defaultValue={weddingData.aiConcierge.eyebrow ?? ""}
+                  defaultValue={aiConciergeContent.eyebrow ?? ""}
                   placeholder="AI Concierge"
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                 />
                 <input
                   name="aiConciergeTitle"
-                  defaultValue={weddingData.aiConcierge.title ?? ""}
+                  defaultValue={aiConciergeContent.title ?? ""}
                   placeholder="Ask about the wedding"
                   className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] outline-none"
                 />
               </div>
               <textarea
                 name="aiConciergeDescription"
-                defaultValue={weddingData.aiConcierge.description ?? ""}
+                defaultValue={aiConciergeContent.description ?? ""}
                 rows={3}
                 placeholder="If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
                 className="w-full rounded-[1rem] border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--foreground)] outline-none"

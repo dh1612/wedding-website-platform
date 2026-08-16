@@ -21,6 +21,12 @@ export function FAQSection({
 }: FAQSectionProps) {
   const wedding = weddingData ?? getWeddingData();
   const fallback = previewMode ? getPreviewFallbackContent(themeId ?? wedding.theme, wedding) : null;
+  const conciergeContent = wedding.aiConcierge ?? {
+    eyebrow: "AI Concierge",
+    title: "Ask about the wedding",
+    description:
+      "If anything is unclear, guests can send a quick question and get help with the details already shared on the site."
+  };
   const showFaq = previewMode || (wedding.sectionVisibility?.faq ?? true);
   const showConcierge =
     wedding.aiConciergeEnabled && (wedding.sectionVisibility?.aiConcierge ?? true);
@@ -47,9 +53,9 @@ export function FAQSection({
                   </p>
                 ) : null}
                 <SectionHeading
-                  eyebrow={wedding.aiConcierge.eyebrow}
-                  title={wedding.aiConcierge.title}
-                  description={wedding.aiConcierge.description}
+                  eyebrow={conciergeContent.eyebrow}
+                  title={conciergeContent.title}
+                  description={conciergeContent.description}
                 />
               </div>
               <div>
