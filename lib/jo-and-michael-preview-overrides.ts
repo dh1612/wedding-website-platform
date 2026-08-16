@@ -97,6 +97,16 @@ export function applyJoAndMichaelPreviewOverrides(slug: string, weddingData: Wed
   return {
     ...weddingData,
     heroImage: JO_AND_MICHAEL_IMAGE,
+    hero: {
+      eyebrow: "Wedding in Greece",
+      previewNote:
+        weddingData.hero?.previewNote ??
+        "This first draft is here to show the direction of your website. Final wording and guest-facing details will be refined before anything goes live.",
+      primaryActionLabel: weddingData.hero?.primaryActionLabel ?? "RSVP Details",
+      primaryActionHref: weddingData.hero?.primaryActionHref ?? "#rsvp",
+      secondaryActionLabel: weddingData.hero?.secondaryActionLabel ?? "Wedding Details",
+      secondaryActionHref: weddingData.hero?.secondaryActionHref ?? "#faq"
+    },
     schedule: nextSchedule,
     scheduleNote: `Day 1 plans are for wine and pizza at ${DAY_ONE_VENUE_NAME}. Final timings can stay light here until the couple is ready to confirm them.`,
     styleOptions: {
